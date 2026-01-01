@@ -26,10 +26,14 @@
 
 ### Business Acronyms
 - **MOH** - Ministry of Health
+- **DMP** - Directorate of Medicines and Pharmacy
 - **IPC** - Industrial Pharmaceutical Company
-- **AAMS** - Annual Average Market Share
-- **MSQ** - Market Share Quota
-- **WSL** - Wholesaler Stock Level
+- **AAMS** - Annual Average Monthly Sales (Quantities)
+- **MSQ** - Monthly Sales Quantities
+- **WSL** - Weekly Stock Levels
+- **XAMS** - X Months Average Monthly Sales (Quantities)
+- **ATC** - Anatomical Therapeutic Chemical (classification system)
+- **SKU** - Stock Keeping Unit
 
 ---
 

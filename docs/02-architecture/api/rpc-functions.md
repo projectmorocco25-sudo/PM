@@ -195,7 +195,7 @@ SELECT rmm_create_company(
 **Parameters:**
 - `company_id` (uuid) - Company ID
 - `year` (integer) - Year
-- `aams_value` (numeric) - AAMS value
+- `aams_value` (numeric) - AAMS value (quantity of units sold per month average)
 - `submission_data` (jsonb) - Full submission data (monthly breakdown)
 
 **Returns:** JSON with submission data
@@ -331,7 +331,7 @@ SELECT rmm_create_company(
 **Parameters:**
 - `company_id` (uuid) - Company ID
 - `sku_id` (uuid) - SKU ID
-- `quantity` (numeric) - Export quantity
+- `quantity` (numeric) - Export quantity (units to export)
 - `destination_country` (text) - Destination country
 - `destination_details` (text) - Destination details
 - `requested_export_date` (date) - Requested export date
@@ -396,7 +396,7 @@ SELECT rmm_create_company(
 **Parameters:**
 - `authorization_id` (uuid) - Authorization ID
 - `actual_export_date` (date) - Actual export date
-- `actual_quantity` (numeric) - Actual quantity
+- `actual_quantity` (numeric) - Actual quantity exported (units)
 - `shipping_details` (text) - Shipping details
 - `destination_confirmation` (text) - Destination confirmation
 

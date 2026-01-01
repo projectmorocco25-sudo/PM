@@ -182,14 +182,20 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 ---
 
 ### skus
-**Purpose:** SKUs belong to products
+**Purpose:** SKUs belong to products and contain complete pharmaceutical product specifications
+
+**Important:** SKU includes all product details (name, dosage, form, pack size) so that submissions (AAMS, MSQ, WSL) only need to reference **SKU_ID + Quantity**.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | SKU ID |
 | product_id | uuid | REFERENCES products(id), NOT NULL | Product ID |
-| sku_code | text | NOT NULL | SKU code |
-| name | text | NOT NULL | SKU name |
+| sku_code | text | NOT NULL | SKU code (company's internal code) |
+| name | text | NOT NULL | Full SKU name (e.g., "Paracetamol 500mg Tablets 30-pack") |
+| dosage_strength | text | NOT NULL | Dosage/strength (e.g., "500mg", "10mg/ml", "250mg/5ml") |
+| dosage_form | text | NOT NULL | Pharmaceutical form (e.g., "Tablet", "Capsule", "Syrup", "Injection", "Cream", "Ointment") |
+| pack_size | text | NOT NULL | Pack size (e.g., "30 tablets", "100ml bottle", "50 capsules") |
+| unit_of_measure | text | NOT NULL | Unit of measure for quantities (e.g., "tablets", "ml", "capsules", "vials", "boxes") |
 | atc_code_id | uuid | REFERENCES atc_codes(id), NULLABLE | ATC code ID |
 | is_moh_authorized_unregistered | boolean | DEFAULT false | MOH-authorized unregistered product |
 | is_active | boolean | DEFAULT true | Active status |
@@ -203,6 +209,12 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - `idx_skus_product_id` on `product_id`
 - `idx_skus_atc_code_id` on `atc_code_id`
 - `idx_skus_is_active` on `is_active`
+- `idx_skus_dosage_form` on `dosage_form`
+
+**Notes:**
+- SKU contains all pharmaceutical specifications
+- Submissions (AAMS, MSQ, WSL) only reference SKU_ID + quantity
+- Full SKU details retrieved via JOIN for display/reporting
 
 ---
 
@@ -301,15 +313,16 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 ## VCI Module Tables
 
 ### aams_submissions
-**Purpose:** Annual Average Monthly Sales submissions
+**Purpose:** Annual Average Monthly Sales (Quantities) submissions  
+**Note:** AAMS represents **quantities of units sold**, NOT financial values or prices.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Submission ID |
 | company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
 | year | integer | NOT NULL | Year (calendar year) |
-| aams_value | numeric(15,2) | NOT NULL | AAMS value |
-| submission_data | jsonb | NULLABLE | Full submission data (monthly breakdown) |
+| aams_value | numeric(15,2) | NULLABLE | Company-wide AAMS value (optional aggregate) |
+| submission_data | jsonb | NOT NULL | SKU-level data: array of {sku_id, quantity}. Example: [{"sku_id": "uuid", "quantity": 10000}, ...] |
 | status | text | NOT NULL, DEFAULT 'draft' | Status (draft, submitted, tier2_verified, tier1_approved, completed, rejected) |
 | is_late | boolean | DEFAULT false | Late submission flag |
 | correction_of | uuid | REFERENCES aams_submissions(id), NULLABLE | Original submission ID (if correction) |
@@ -334,7 +347,8 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 ---
 
 ### msq_submissions
-**Purpose:** Monthly Sales Quantities submissions
+**Purpose:** Monthly Sales Quantities submissions  
+**Note:** MSQ represents **quantities of units sold**, NOT financial values or prices.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
@@ -363,14 +377,15 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 ---
 
 ### wsl_submissions
-**Purpose:** Weekly Stock Levels submissions
+**Purpose:** Weekly Stock Levels submissions  
+**Note:** WSL represents **quantities of units in stock**, NOT financial values.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Submission ID |
 | company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
 | week_ending_date | date | NOT NULL | Week ending date (Friday) |
-| submission_data | jsonb | NOT NULL | Submission data (all SKUs with stock levels) |
+| submission_data | jsonb | NOT NULL | SKU-level data: array of {sku_id, quantity, breach_reason?, replenishment_date?}. Example: [{"sku_id": "uuid", "quantity": 45000}, ...] |
 | status | text | NOT NULL, DEFAULT 'submitted' | Status (submitted, late, non_compliant, accepted) |
 | is_late | boolean | DEFAULT false | Late submission flag |
 | is_non_compliant | boolean | DEFAULT false | Non-compliant flag |
@@ -431,7 +446,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
 | wsl_submission_id | uuid | REFERENCES wsl_submissions(id), NOT NULL | WSL submission ID |
 | threshold_id | uuid | REFERENCES thresholds(id), NOT NULL | Threshold ID |
-| stock_level | numeric(15,2) | NOT NULL | Stock level at breach |
+| stock_level | numeric(15,2) | NOT NULL | Stock level (quantity) at time of breach |
 | threshold_value | numeric(15,2) | NOT NULL | Threshold value |
 | breach_date | date | NOT NULL | Breach date |
 | breach_reason | text | NULLABLE | Company-provided reason |
@@ -479,7 +494,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Request ID |
 | company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
 | sku_id | uuid | REFERENCES skus(id), NOT NULL | SKU ID |
-| quantity | numeric(15,2) | NOT NULL | Export quantity |
+| quantity | numeric(15,2) | NOT NULL | Export quantity (units to export) |
 | destination_country | text | NOT NULL | Destination country |
 | destination_details | text | NULLABLE | Destination details |
 | requested_export_date | date | NOT NULL | Requested export date |

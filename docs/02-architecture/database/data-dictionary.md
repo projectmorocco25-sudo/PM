@@ -153,9 +153,9 @@ This data dictionary defines all fields across all database tables, including da
 | id | uuid | No | Threshold ID | Primary key |
 | sku_id | uuid | Yes | SKU ID | Foreign key to skus.id. NULL = global threshold |
 | threshold_type | text | No | Threshold type | Enum: vci, ecs |
-| threshold_value | numeric(15,2) | No | Threshold value | Calculated threshold value |
+| threshold_value | numeric(15,2) | No | Threshold value (quantity) | Calculated threshold **quantity** (minimum stock units required). NOT a financial value. |
 | multiplier_b | numeric(5,2) | No | Multiplier B | Default: 3.0 (standard), 3.5 (critical medicines) |
-| aams_value | numeric(15,2) | No | AAMS value used | AAMS value used for calculation |
+| aams_value | numeric(15,2) | No | AAMS value used (quantity) | AAMS **quantity** used for threshold calculation (units). NOT a financial value. |
 | effective_from | date | No | Effective from date | When threshold becomes effective |
 | effective_to | date | Yes | Effective to date | NULL for current threshold |
 | is_current | boolean | No | Current threshold flag | Default: true. Only one current threshold per SKU/type |
@@ -171,13 +171,16 @@ This data dictionary defines all fields across all database tables, including da
 
 ### aams_submissions
 
+**Purpose:** Annual Average Monthly Sales (Quantities) submissions  
+**Note:** AAMS represents **quantities of units sold**, NOT financial values or prices.
+
 | Field | Type | Nullable | Description | Business Rules |
 |-------|------|----------|-------------|----------------|
 | id | uuid | No | Submission ID | Primary key |
 | company_id | uuid | No | Company ID | Foreign key to companies.id |
 | year | integer | No | Year | Calendar year (e.g., 2024) |
-| aams_value | numeric(15,2) | No | AAMS value | Annual Average Monthly Sales value |
-| submission_data | jsonb | Yes | Full submission data | JSON with monthly breakdown |
+| aams_value | numeric(15,2) | Yes | Company-wide AAMS (optional) | Optional aggregate AAMS value. NOT a financial value. |
+| submission_data | jsonb | No | SKU-level quantities | Array of {sku_id, quantity}. Example: [{"sku_id": "uuid", "quantity": 10000}, ...]. Each entry represents AAMS quantity for that SKU. |
 | status | text | No | Status | Enum: draft, submitted, tier2_verified, tier1_approved, completed, rejected. Default: draft |
 | is_late | boolean | No | Late submission flag | Default: false. True if submitted after January 31st |
 | correction_of | uuid | Yes | Original submission ID | Foreign key to aams_submissions.id. Set if this is a correction |
@@ -198,6 +201,9 @@ This data dictionary defines all fields across all database tables, including da
 ---
 
 ### msq_submissions
+
+**Purpose:** Monthly Sales Quantities submissions  
+**Note:** MSQ represents **quantities of units sold**, NOT financial values or prices.
 
 | Field | Type | Nullable | Description | Business Rules |
 |-------|------|----------|-------------|----------------|
@@ -221,6 +227,9 @@ This data dictionary defines all fields across all database tables, including da
 ---
 
 ### wsl_submissions
+
+**Purpose:** Weekly Stock Levels submissions  
+**Note:** WSL represents **quantities of units in stock**, NOT financial values.
 
 | Field | Type | Nullable | Description | Business Rules |
 |-------|------|----------|-------------|----------------|
@@ -251,7 +260,7 @@ This data dictionary defines all fields across all database tables, including da
 | company_id | uuid | No | Company ID | Foreign key to companies.id |
 | wsl_submission_id | uuid | No | WSL submission ID | Foreign key to wsl_submissions.id |
 | threshold_id | uuid | No | Threshold ID | Foreign key to thresholds.id |
-| stock_level | numeric(15,2) | No | Stock level at breach | Stock level when breach detected |
+| stock_level | numeric(15,2) | No | Stock level at breach (quantity) | Stock **quantity** when breach detected (units). NOT a financial value. |
 | threshold_value | numeric(15,2) | No | Threshold value | Threshold value at time of breach |
 | breach_date | date | No | Breach date | Date when breach occurred |
 | breach_reason | text | Yes | Company-provided reason | Reason provided by company |

@@ -10,6 +10,8 @@
 
 ERP systems (from IPCs and Wholesalers) submit data to the PM platform via REST API. This API supports MSQ, WSL, and AAMS submissions.
 
+**Important Note:** All sales and stock data represents **quantities/units**, NOT financial values or prices. AAMS, MSQ, and WSL submissions contain quantity data only.
+
 ## Base URL
 
 **Development:** `https://{dev-ref}.supabase.co/api/v1`  

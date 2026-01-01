@@ -1,0 +1,585 @@
+# Frontend Routing Structure - Pharmaceutical Governance Value Chain Platform (PM)
+
+**Purpose:** This document defines the Next.js App Router structure, route organization, navigation patterns, and protected route implementation.
+
+**Last Updated:** 2025-12-31  
+**Status:** ✅ Complete (Phase 0, Gap Resolution)  
+**Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+
+## Overview
+
+The PM platform uses Next.js 13+ App Router for frontend routing, organized by module (RMM, VCI, ECS, CMC) with role-based access control and protected routes.
+
+## Routing Principles
+
+1. **Module-Based Organization:** Routes organized by module
+2. **Role-Based Access:** Different routes for different user roles
+3. **Protected Routes:** Authentication and authorization checks
+4. **Deep Linking:** Support for direct links to specific resources
+5. **Navigation Consistency:** Consistent navigation patterns
+
+## Next.js App Router Structure
+
+### Directory Structure
+
+```
+app/
+├── (public)/
+│   ├── page.tsx (Homepage - MOH Governance & Regulation Mission)
+│   ├── layout.tsx (Public layout)
+│   ├── about/
+│   │   └── page.tsx
+│   ├── support/
+│   │   ├── page.tsx
+│   │   ├── faq/
+│   │   │   └── page.tsx
+│   │   ├── contact/
+│   │   │   └── page.tsx
+│   │   └── documentation/
+│   │       └── page.tsx
+│   ├── legal/
+│   │   ├── terms/
+│   │   │   └── page.tsx
+│   │   ├── privacy/
+│   │   │   └── page.tsx
+│   │   └── cookies/
+│   │       └── page.tsx
+│   └── status/
+│       └── page.tsx (System status page)
+├── (auth)/
+│   ├── login/
+│   │   └── page.tsx
+│   ├── register/
+│   │   └── page.tsx
+│   ├── forgot-password/
+│   │   └── page.tsx
+│   ├── reset-password/
+│   │   └── page.tsx
+│   └── layout.tsx
+├── (dashboard)/
+│   ├── layout.tsx (Protected layout)
+│   ├── page.tsx (Dashboard home)
+│   ├── notifications/
+│   │   └── page.tsx
+│   ├── profile/
+│   │   └── page.tsx
+│   ├── rmm/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── companies/
+│   │   │   ├── page.tsx (List)
+│   │   │   ├── [id]/
+│   │   │   │   ├── page.tsx (Detail)
+│   │   │   │   ├── edit/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── products/
+│   │   │   │       └── page.tsx
+│   │   │   └── new/
+│   │   │       └── page.tsx
+│   │   ├── products/
+│   │   │   ├── page.tsx
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx
+│   │   │   └── new/
+│   │   │       └── page.tsx
+│   │   └── skus/
+│   │       ├── page.tsx
+│   │       ├── [id]/
+│   │       │   └── page.tsx
+│   │       └── new/
+│   │           └── page.tsx
+│   ├── vci/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx (Dashboard)
+│   │   ├── submissions/
+│   │   │   ├── aams/
+│   │   │   │   ├── page.tsx
+│   │   │   │   ├── [id]/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── new/
+│   │   │   │       └── page.tsx
+│   │   │   ├── msq/
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── [id]/
+│   │   │   │       └── page.tsx
+│   │   │   └── wsl/
+│   │   │       ├── page.tsx
+│   │   │       └── [id]/
+│   │   │           └── page.tsx
+│   │   ├── thresholds/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── breaches/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   └── governance/
+│   │       └── page.tsx (MOH only)
+│   ├── ecs/
+│   │   ├── layout.tsx (Module activation check)
+│   │   ├── page.tsx
+│   │   ├── export-requests/
+│   │   │   ├── page.tsx
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx
+│   │   │   └── new/
+│   │   │       └── page.tsx
+│   │   └── authorizations/
+│   │       ├── page.tsx
+│   │       └── [id]/
+│   │           └── page.tsx
+│   └── cmc/
+│       ├── layout.tsx (Module activation check)
+│       ├── page.tsx
+│       ├── scores/
+│       │   ├── page.tsx
+│       │   └── [id]/
+│       │       └── page.tsx
+│       ├── disputes/
+│       │   ├── page.tsx
+│       │   └── [id]/
+│       │       └── page.tsx
+│       └── reports/
+│           ├── page.tsx
+│           └── [id]/
+│               └── page.tsx
+└── layout.tsx (Root layout)
+```
+
+---
+
+## Route Organization
+
+### Route Groups
+
+**`(public)` - Public Routes (No Authentication Required):**
+- `/` - Homepage (MOH Governance & Regulation Mission)
+- `/about` - About MOH's regulatory mission
+- `/support` - Support center
+- `/support/faq` - Frequently asked questions
+- `/support/contact` - Contact support
+- `/support/documentation` - User documentation
+- `/legal/terms` - Terms of service
+- `/legal/privacy` - Privacy policy
+- `/legal/cookies` - Cookie policy
+- `/status` - System status page
+- **Access:** Anyone (authenticated or unauthenticated)
+
+**`(auth)` - Authentication Routes (No Authentication Required, Redirect if Already Authenticated):**
+- `/login` - User login
+- `/register` - User registration (if applicable)
+- `/forgot-password` - Password reset request
+- `/reset-password` - Password reset (with token)
+- **Access:** 
+  - Unauthenticated users: Can access
+  - Authenticated users: Redirected to dashboard
+
+**`(dashboard)` - Protected Dashboard Routes (Authentication Required):**
+- All routes require authentication
+- Role-based access control
+- Module-based organization
+- **Access:**
+  - Authenticated users: Can access (with role-based authorization)
+  - Unauthenticated users: Redirected to `/login`
+
+---
+
+## Public Routes
+
+### Homepage (`/`)
+
+**Purpose:** Landing page that communicates MOH's governance and regulatory mission
+
+**Content:**
+- **MOH Mission:** Governance and regulation of pharmaceutical value chain
+- **Partnership Focus:** How MOH works with pharmaceutical partners (IPCs and Wholesalers)
+- **Public Health Purpose:** Fulfilling pharmaceutical needs of the Moroccan people
+- **Regulatory Framework:** Overview of MOH's regulatory approach and oversight
+- **Platform as Tool:** Brief mention that the platform supports this mission (secondary focus)
+- **Call to Action:** Login for partners, information for public
+
+**Tone:**
+- Government/public service focused
+- Mission-driven, not product-focused
+- Emphasizes partnership and collaboration
+- Highlights public health outcomes
+
+**Target Audience:**
+- Pharmaceutical companies (IPCs, Wholesalers) - primary users
+- General public - information about MOH's regulatory work
+- MOH staff - internal reference
+
+**Access:** Public (no authentication required)
+
+---
+
+### About (`/about`)
+
+**Purpose:** Information about MOH's regulatory mission and approach
+
+**Content:**
+- MOH's role in pharmaceutical governance
+- Regulatory framework overview
+- Partnership with pharmaceutical companies
+- Public health objectives
+- Contact information
+
+**Access:** Public (no authentication required)
+
+---
+
+### Support Routes
+
+**`/support` - Support Center:**
+- Main support page
+- Links to FAQ, contact, documentation
+- Help resources
+- Support hours and response times
+
+**`/support/faq` - Frequently Asked Questions:**
+- Common questions and answers
+- Searchable FAQ
+- Category-based organization
+- Topics: Registration, submissions, compliance, etc.
+
+**`/support/contact` - Contact Support:**
+- Contact form
+- Support email
+- Support hours
+- Response time expectations
+- Escalation procedures
+
+**`/support/documentation` - User Documentation:**
+- User guides
+- API documentation (if public)
+- Video tutorials
+- Getting started guides
+- Submission procedures
+
+**Access:** Public (no authentication required)
+
+---
+
+### Legal Routes
+
+**`/legal/terms` - Terms of Service:**
+- Platform terms and conditions
+- User agreements
+- Service level agreements
+- MOH regulatory requirements
+
+**`/legal/privacy` - Privacy Policy:**
+- Data privacy policy
+- Data collection practices
+- User rights
+- GDPR compliance (if applicable)
+- MOH data handling procedures
+
+**`/legal/cookies` - Cookie Policy:**
+- Cookie usage
+- Cookie types
+- Cookie preferences
+- Opt-out options
+
+**Access:** Public (no authentication required)
+
+---
+
+### System Status (`/status`)
+
+**Purpose:** System status and uptime information
+
+**Content:**
+- Current system status
+- Service availability
+- Incident history
+- Maintenance schedule
+- System health indicators
+
+**Access:** Public (no authentication required)
+
+---
+
+## Route Patterns
+
+### Pattern 1: List Routes
+
+**Format:** `/{module}/{entity}/page.tsx`
+
+**Examples:**
+- `/rmm/companies` - List all companies
+- `/vci/submissions/aams` - List AAMS submissions
+- `/ecs/export-requests` - List export requests
+
+**Implementation:**
+```typescript
+// app/(dashboard)/rmm/companies/page.tsx
+export default async function CompaniesPage() {
+  const { data: companies } = await getCompanies();
+  
+  return (
+    <div>
+      <h1>Companies</h1>
+      <CompaniesList companies={companies} />
+    </div>
+  );
+}
+```
+
+---
+
+### Pattern 2: Detail Routes
+
+**Format:** `/{module}/{entity}/[id]/page.tsx`
+
+**Examples:**
+- `/rmm/companies/[id]` - Company detail
+- `/vci/submissions/aams/[id]` - AAMS submission detail
+- `/ecs/export-requests/[id]` - Export request detail
+
+**Implementation:**
+```typescript
+// app/(dashboard)/rmm/companies/[id]/page.tsx
+export default async function CompanyDetailPage({ params }: { params: { id: string } }) {
+  const { data: company } = await getCompany(params.id);
+  
+  return (
+    <div>
+      <h1>{company.name}</h1>
+      <CompanyDetail company={company} />
+    </div>
+  );
+}
+```
+
+---
+
+### Pattern 3: Create/Edit Routes
+
+**Format:** `/{module}/{entity}/new/page.tsx` or `/{module}/{entity}/[id]/edit/page.tsx`
+
+**Examples:**
+- `/rmm/companies/new` - Create company
+- `/rmm/companies/[id]/edit` - Edit company
+- `/vci/submissions/aams/new` - Create AAMS submission
+
+---
+
+## Protected Routes
+
+### Authentication Check
+
+**Middleware:**
+```typescript
+// middleware.ts
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
+  
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  
+  const pathname = req.nextUrl.pathname;
+  
+  // Public routes (no authentication required)
+  const publicRoutes = [
+    '/',
+    '/about',
+    '/support',
+    '/legal',
+    '/status',
+  ];
+  
+  // Auth routes (no authentication required, but redirect if already authenticated)
+  const authRoutes = [
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/reset-password',
+  ];
+  
+  // Check if route is public
+  const isPublicRoute = publicRoutes.some(route => 
+    pathname === route || pathname.startsWith(route + '/')
+  );
+  
+  // Check if route is auth route
+  const isAuthRoute = authRoutes.some(route => 
+    pathname === route || pathname.startsWith(route + '/')
+  );
+  
+  // Redirect authenticated users away from auth pages
+  if (session && isAuthRoute) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+  
+  // Protect dashboard routes (redirect to login if not authenticated)
+  if (!isPublicRoute && !isAuthRoute && !session) {
+    return NextResponse.redirect(new URL('/login', req.url));
+  }
+  
+  return res;
+}
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+};
+```
+
+---
+
+### Authorization Check
+
+**Component-Level:**
+```typescript
+// components/ProtectedRoute.tsx
+'use client';
+
+import { useUser } from '@/hooks/useUser';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+export function ProtectedRoute({ 
+  children, 
+  requiredRole 
+}: { 
+  children: React.ReactNode;
+  requiredRole?: string[];
+}) {
+  const { user, loading } = useUser();
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+      return;
+    }
+    
+    if (requiredRole && user && !requiredRole.includes(user.role)) {
+      router.push('/dashboard');
+      return;
+    }
+  }, [user, loading, requiredRole, router]);
+  
+  if (loading || !user) {
+    return <div>Loading...</div>;
+  }
+  
+  if (requiredRole && !requiredRole.includes(user.role)) {
+    return <div>Access Denied</div>;
+  }
+  
+  return <>{children}</>;
+}
+```
+
+**Usage:**
+```typescript
+// app/(dashboard)/vci/governance/page.tsx
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+
+export default function GovernancePage() {
+  return (
+    <ProtectedRoute requiredRole={['tier1', 'tier2_officer']}>
+      <GovernanceDashboard />
+    </ProtectedRoute>
+  );
+}
+```
+
+---
+
+## Navigation Structure
+
+### Public Navigation (Unauthenticated Users)
+
+**Header Navigation:**
+- Home
+- About
+- Support
+- Legal
+- Status
+- Login
+
+**Footer Navigation:**
+- About
+- Support (FAQ, Contact, Documentation)
+- Legal (Terms, Privacy, Cookies)
+- Status
+- Contact Information
+
+---
+
+### Authenticated Navigation
+
+**Company Users:**
+- Dashboard
+- RMM (Companies, Products, SKUs)
+- VCI (Submissions, Thresholds, Breaches)
+- ECS (if active) - Export Requests
+- CMC (if active) - Scores, Disputes
+- Notifications
+- Profile
+- Support (link to public support)
+- Logout
+
+**MOH Users:**
+- Dashboard
+- RMM (All Companies, Governance)
+- VCI (All Submissions, Governance Dashboard)
+- ECS (if active) - All Export Requests, Authorizations
+- CMC (if active) - All Scores, Reports
+- Notifications
+- Profile
+- Support (link to public support)
+- Logout
+
+---
+
+## Deep Linking
+
+### Supported Deep Links
+
+**Format:** `/{module}/{entity}/{id}`
+
+**Examples:**
+- `/rmm/companies/{company_id}` - Direct link to company
+- `/vci/submissions/aams/{submission_id}` - Direct link to AAMS submission
+- `/ecs/export-requests/{request_id}` - Direct link to export request
+
+**Implementation:**
+- All detail routes support direct access
+- Authorization checked on page load
+- Redirect if user doesn't have access
+
+---
+
+## Route Protection Checklist
+
+### For Each Route:
+
+- [ ] Authentication check (middleware or component)
+- [ ] Authorization check (role-based)
+- [ ] Module activation check (for optional modules)
+- [ ] Error handling (404, 403)
+- [ ] Loading states
+- [ ] Breadcrumbs (if applicable)
+
+---
+
+## Related Documents
+
+- [System Architecture](../system-architecture.md) - System overview
+- [Security Architecture](../security/security-architecture.md) - Security details
+
+---
+
+**Next Review Date:** [To be scheduled]  
+**Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+

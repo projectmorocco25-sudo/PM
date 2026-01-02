@@ -123,16 +123,51 @@ The PM platform uses a consistent navigation and layout structure across all mod
     </SidebarItem>
   </SidebarGroup>
   
-  {/* Module activation check */}
-  {isECSActive && (
+  {/* History link - always visible */}
+  <SidebarItem href="/history" icon={History}>
+    History
+  </SidebarItem>
+  
+  {/* Module activation check OR historical data exists */}
+  {(isECSActive || hasHistoricalECSData) && (
     <SidebarGroup label="ECS" icon={Plane}>
       <SidebarItem href="/ecs" icon={PlaneTakeoff}>
         Export Requests
+        {!isECSActive && hasHistoricalECSData && (
+          <Badge variant="outline" className="ml-2">Historical</Badge>
+        )}
       </SidebarItem>
+      {hasHistoricalECSData && (
+        <SidebarItem href="/ecs/exports/history" icon={History}>
+          Export History
+        </SidebarItem>
+      )}
+    </SidebarGroup>
+  )}
+  
+  {(isCMCActive || hasHistoricalCMCData) && (
+    <SidebarGroup label="CMC" icon={BarChart}>
+      <SidebarItem href="/cmc" icon={BarChart2}>
+        Compliance Scores
+        {!isCMCActive && hasHistoricalCMCData && (
+          <Badge variant="outline" className="ml-2">Historical</Badge>
+        )}
+      </SidebarItem>
+      {hasHistoricalCMCData && (
+        <SidebarItem href="/cmc/scores/history" icon={History}>
+          Score History
+        </SidebarItem>
+      )}
     </SidebarGroup>
   )}
 </Sidebar>
 ```
+
+**Inactive Module Indicators:**
+- Show module in navigation if active OR historical data exists
+- Display "Historical" badge if module inactive but data exists
+- Show historical sub-navigation items (Export History, Score History) if data exists
+- Informational banner on historical data pages when module is inactive
 
 ### Main Content Area
 
@@ -203,6 +238,16 @@ The PM platform uses a consistent navigation and layout structure across all mod
 </Breadcrumbs>
 ```
 
+**Historical Route Breadcrumbs:**
+- `/history` → Home > History
+- `/audit/logs` → Home > Audit > Logs
+- `/audit/reports` → Home > Audit > Reports
+- `/vci/submissions/history` → Home > VCI > Submissions > History
+- `/vci/submissions/history/trends` → Home > VCI > Submissions > History > Trends
+- `/ecs/exports/history` → Home > ECS > Exports > History
+- `/cmc/scores/history` → Home > CMC > Scores > History
+- `/rmm/companies/[id]?tab=history` → Home > RMM > Companies > [Company Name] > History
+
 ### Tab Navigation
 
 **Purpose:** Organize content within a page
@@ -271,13 +316,25 @@ The PM platform uses a consistent navigation and layout structure across all mod
 **Sidebar Structure:**
 ```
 ├── Dashboard
+├── RMM
+│   ├── Products (links to /rmm/products - RLS filters to own company)
+│   └── SKUs (links to /rmm/skus - RLS filters to own company)
 ├── Submissions
 │   ├── AAMS
 │   ├── MSQ
 │   └── WSL
-├── Export Requests (if ECS active)
+├── History (links to /history)
+├── Export Requests (if ECS active OR historical data exists)
+│   └── Export History (if historical data exists)
+├── Compliance Scores (if CMC active OR historical data exists)
+│   └── Score History (if historical data exists)
 └── Profile
 ```
+
+**Historical Data Navigation:**
+- History link always visible (personal historical overview)
+- ECS/CMC navigation shows "Historical" badge if module inactive but data exists
+- Export History and Score History links shown if historical data exists
 
 ### MOH User Layout
 
@@ -296,12 +353,26 @@ The PM platform uses a consistent navigation and layout structure across all mod
 │   └── SKUs
 ├── VCI
 │   ├── Submissions
+│   ├── Submissions History (links to /vci/submissions/history)
+│   ├── Trends (Tier 1 only - links to /vci/submissions/history/trends)
 │   ├── Thresholds
 │   └── Breaches
-├── ECS (if active)
-├── CMC (if active)
-└── System Configuration
+├── History (links to /history - system-wide historical overview)
+├── Audit (Tier 1/2 - links to /audit/logs)
+├── ECS (if active OR historical data exists)
+│   ├── Export Requests
+│   └── Export History (if historical data exists)
+├── CMC (if active OR historical data exists)
+│   ├── Compliance Scores
+│   └── Score History (if historical data exists)
+└── System Configuration (Tier 1 only)
 ```
+
+**Historical Data Navigation:**
+- History link always visible (system-wide historical overview)
+- Audit link visible for Tier 1/2 (full access for Tier 1, read-only for Tier 2)
+- ECS/CMC navigation shows "Historical" badge if module inactive but data exists
+- Export History and Score History links shown if historical data exists
 
 ### Auditor Layout
 
@@ -313,10 +384,17 @@ The PM platform uses a consistent navigation and layout structure across all mod
 
 **Sidebar Structure:**
 ```
-├── Audit Logs
-├── Reports
-└── Compliance Overview
+├── Audit Logs (primary - links to /audit/logs)
+├── Audit Reports (links to /audit/reports)
+├── Activity Summary (links to /audit/activity)
+└── Profile
 ```
+
+**Historical Data Navigation:**
+- Audit Logs is primary navigation item
+- Full access to historical audit logs with search and filtering
+- Read-only access to historical compliance data
+- Export functionality for audit logs and reports
 
 ## Responsive Design
 
@@ -613,12 +691,38 @@ The PM platform uses a consistent navigation and layout structure across all mod
 
 - [Next.js Layout Documentation](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts)
 - [WCAG Navigation Guidelines](https://www.w3.org/WAI/WCAG21/quickref/#navigable)
+- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns
 
 ---
 
+## Historical Data Navigation Updates
+
+**Status:** ✅ Historical data navigation items added  
+**Implementation:** See [Historical Data Routing Proposal](./historical-data-routing-proposal.md) for complete specifications
+
+**Navigation Updates:**
+- **History Link:** Added to all role sidebars (links to `/history`)
+- **Audit Link:** Added to MOH Tier 1/2 sidebars (links to `/audit/logs`)
+- **Submissions History:** Added to VCI section (links to `/vci/submissions/history`)
+- **Trends Link:** Added to VCI section for Tier 1 (links to `/vci/submissions/history/trends`)
+- **Export History:** Added to ECS section if historical data exists
+- **Score History:** Added to CMC section if historical data exists
+- **Inactive Module Indicators:** "Historical" badge shown when module inactive but data exists
+- **Breadcrumb Updates:** Historical route breadcrumbs documented
+
+**Key Features:**
+- Navigation items check data existence, not module status
+- Clear visual indicators for inactive modules with historical data
+- Role-based navigation (History/Audit links per role)
+- Breadcrumb patterns for all historical routes
+
+---
+
+**Last Updated:** 2025-12-31  
 **Next Steps:**
 1. Implement layout components
 2. Create responsive breakpoint utilities
 3. Build navigation components
 4. Test keyboard navigation and accessibility
+5. Implement historical data navigation items
 

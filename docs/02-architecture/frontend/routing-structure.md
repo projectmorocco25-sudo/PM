@@ -59,6 +59,15 @@ app/
 ├── (dashboard)/
 │   ├── layout.tsx (Protected layout)
 │   ├── page.tsx (Dashboard home)
+│   ├── history/
+│   │   └── page.tsx (Role-based historical overview)
+│   ├── audit/
+│   │   ├── logs/
+│   │   │   ├── page.tsx (Audit log list - MOH/Auditors only)
+│   │   │   └── [id]/
+│   │   │       └── page.tsx (Audit log detail)
+│   │   └── reports/
+│   │       └── page.tsx (Audit reports - MOH/Auditors only)
 │   ├── notifications/
 │   │   └── page.tsx
 │   ├── profile/
@@ -69,7 +78,7 @@ app/
 │   │   ├── companies/
 │   │   │   ├── page.tsx (List)
 │   │   │   ├── [id]/
-│   │   │   │   ├── page.tsx (Detail)
+│   │   │   │   ├── page.tsx (Detail - Tabs: Overview | Products | History)
 │   │   │   │   ├── edit/
 │   │   │   │   │   └── page.tsx
 │   │   │   │   └── products/
@@ -79,13 +88,13 @@ app/
 │   │   ├── products/
 │   │   │   ├── page.tsx
 │   │   │   ├── [id]/
-│   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx (Detail - Tabs: Overview | SKUs | History)
 │   │   │   └── new/
 │   │   │       └── page.tsx
 │   │   └── skus/
 │   │       ├── page.tsx
 │   │       ├── [id]/
-│   │       │   └── page.tsx
+│   │       │   └── page.tsx (Detail - Tabs: Overview | History)
 │   │       └── new/
 │   │           └── page.tsx
 │   ├── vci/
@@ -93,59 +102,151 @@ app/
 │   │   ├── page.tsx (Dashboard)
 │   │   ├── submissions/
 │   │   │   ├── aams/
-│   │   │   │   ├── page.tsx
+│   │   │   │   ├── page.tsx (List - supports ?year=2023 query param)
 │   │   │   │   ├── [id]/
-│   │   │   │   │   └── page.tsx
+│   │   │   │   │   └── page.tsx (Detail - Tabs: Details | History | Corrections)
 │   │   │   │   └── new/
 │   │   │   │       └── page.tsx
 │   │   │   ├── msq/
-│   │   │   │   ├── page.tsx
+│   │   │   │   ├── page.tsx (List - supports ?year=2023&month=6 query params)
 │   │   │   │   └── [id]/
-│   │   │   │       └── page.tsx
-│   │   │   └── wsl/
-│   │   │       ├── page.tsx
-│   │   │       └── [id]/
-│   │   │           └── page.tsx
+│   │   │   │       └── page.tsx (Detail - Tabs: Details | History | Corrections)
+│   │   │   ├── wsl/
+│   │   │   │   ├── page.tsx (List - supports ?week=2023-W01 query param)
+│   │   │   │   └── [id]/
+│   │   │   │       └── page.tsx (Detail - Tabs: Details | History)
+│   │   │   └── history/
+│   │   │       ├── page.tsx (All past submissions - filterable by type, year, company)
+│   │   │       └── trends/
+│   │   │           └── page.tsx (Trend analysis charts - MOH only)
 │   │   ├── thresholds/
 │   │   │   ├── page.tsx
 │   │   │   └── [id]/
-│   │   │       └── page.tsx
+│   │   │       └── page.tsx (Detail - includes threshold modification history)
 │   │   ├── breaches/
-│   │   │   ├── page.tsx
+│   │   │   ├── page.tsx (List - supports ?status=resolved&year=2023 query params)
 │   │   │   └── [id]/
-│   │   │       └── page.tsx
+│   │   │       └── page.tsx (Detail - Tabs: Details | History | Analysis)
 │   │   └── governance/
 │   │       └── page.tsx (MOH only)
 │   ├── ecs/
-│   │   ├── layout.tsx (Module activation check)
+│   │   ├── layout.tsx (Module activation check OR historical data exists)
 │   │   ├── page.tsx
 │   │   ├── export-requests/
 │   │   │   ├── page.tsx
 │   │   │   ├── [id]/
-│   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx (Detail - includes export history)
 │   │   │   └── new/
 │   │   │       └── page.tsx
+│   │   ├── exports/
+│   │   │   └── history/
+│   │   │       └── page.tsx (Historical export authorizations - checks has_historical_ecs_data())
 │   │   └── authorizations/
 │   │       ├── page.tsx
 │   │       └── [id]/
-│   │           └── page.tsx
+│   │           └── page.tsx (Historical authorization detail)
 │   └── cmc/
-│       ├── layout.tsx (Module activation check)
+│       ├── layout.tsx (Module activation check OR historical data exists)
 │       ├── page.tsx
 │       ├── scores/
-│       │   ├── page.tsx
-│       │   └── [id]/
-│       │       └── page.tsx
+│       │   ├── page.tsx (List - supports ?year=2023 query param)
+│       │   ├── [id]/
+│       │   │   └── page.tsx (Detail - Tabs: Current | History | Trends)
+│       │   └── history/
+│       │       └── page.tsx (Historical compliance scores - checks has_historical_cmc_data())
 │       ├── disputes/
 │       │   ├── page.tsx
-│       │   └── [id]/
-│       │       └── page.tsx
+│       │   ├── [id]/
+│       │   │   └── page.tsx
+│       │   └── history/
+│       │       └── page.tsx (Historical disputes)
 │       └── reports/
 │           ├── page.tsx
 │           └── [id]/
 │               └── page.tsx
 └── layout.tsx (Root layout)
 ```
+
+---
+
+## Historical Data Routes
+
+### Overview
+
+Historical data routes provide access to past submissions, compliance scores, audit logs, and registry changes. These routes support the 7-year data retention requirement and enable trend analysis, compliance monitoring, and regulatory reporting.
+
+**Key Principles:**
+- Historical data is accessible based on data existence and user permissions, not module activation status
+- All historical data is read-only (immutable for regulatory compliance)
+- Routes check for data existence using RPC functions (`has_historical_ecs_data()`, `has_historical_cmc_data()`)
+- Module activation status is indicated via UI (banners, badges) but doesn't block access
+
+### Historical Data Access Patterns
+
+**1. History Tabs on Detail Pages:**
+- Companies: `/rmm/companies/[id]` → History tab
+- Products: `/rmm/products/[id]` → History tab
+- SKUs: `/rmm/skus/[id]` → History tab
+- Submissions: `/vci/submissions/{type}/[id]` → History tab
+- Breaches: `/vci/breaches/[id]` → History tab
+- Compliance Scores: `/cmc/scores/[id]` → History tab
+
+**2. Filtered List Views:**
+- AAMS: `/vci/submissions/aams?year=2023`
+- MSQ: `/vci/submissions/msq?year=2023&month=6`
+- WSL: `/vci/submissions/wsl?week=2023-W01`
+- Breaches: `/vci/breaches?status=resolved&year=2023`
+- Scores: `/cmc/scores?year=2023`
+
+**3. Dedicated History Routes:**
+- `/history` - Role-based historical overview
+- `/audit/logs` - Audit log viewer (MOH/Auditors only)
+- `/audit/reports` - Audit reports (MOH/Auditors only)
+- `/vci/submissions/history` - All past submissions (filterable)
+- `/vci/submissions/history/trends` - Trend analysis charts (MOH only)
+- `/ecs/exports/history` - Historical export authorizations
+- `/cmc/scores/history` - Historical compliance scores
+- `/cmc/disputes/history` - Historical disputes
+
+### Module Activation Considerations
+
+**For Optional Modules (ECS, CMC):**
+
+Historical routes for ECS and CMC check for **data existence**, not module activation status:
+
+```typescript
+// Route protection pattern
+export default async function ECSExportHistoryPage() {
+  // Check data existence, not module status
+  const { data: hasData } = await supabase.rpc('has_historical_ecs_data', {
+    p_company_id: companyId || null
+  });
+  
+  if (!hasData) {
+    return <EmptyState>No historical export data available</EmptyState>;
+  }
+  
+  // Check permissions
+  if (!canAccessHistoricalData(userRole, 'ecs', companyId)) {
+    return <Unauthorized />;
+  }
+  
+  // Show module status indicator if inactive
+  const isActive = await isModuleActive('ecs');
+  return (
+    <div>
+      {!isActive && <InactiveModuleAlert module="ECS" />}
+      <ExportHistory data={historicalData} readOnly={!isActive} />
+    </div>
+  );
+}
+```
+
+**UI Indicators:**
+- Informational banner when module is inactive but historical data exists
+- "Historical Data (Read-Only)" badge
+- Module activation period display (from/to dates)
+- Navigation shows module with "Historical" badge if inactive but data exists
 
 ---
 
@@ -522,20 +623,44 @@ export default function GovernancePage() {
 - Dashboard
 - RMM (Companies, Products, SKUs)
 - VCI (Submissions, Thresholds, Breaches)
-- ECS (if active) - Export Requests
-- CMC (if active) - Scores, Disputes
+- History (links to `/history` - personal historical overview)
+- ECS (if active OR historical data exists) - Export Requests, History
+- CMC (if active OR historical data exists) - Scores, Disputes, History
 - Notifications
 - Profile
 - Support (link to public support)
 - Logout
 
-**MOH Users:**
+**MOH Users (Tier 1):**
+- Dashboard
+- RMM (All Companies, Governance)
+- VCI (All Submissions, Governance Dashboard, Trends)
+- History (links to `/history` - system-wide historical overview)
+- Audit (links to `/audit/logs` - full audit log viewer)
+- ECS (if active OR historical data exists) - All Export Requests, Authorizations, History
+- CMC (if active OR historical data exists) - All Scores, Reports, History
+- Notifications
+- Profile
+- Support (link to public support)
+- Logout
+
+**MOH Users (Tier 2):**
 - Dashboard
 - RMM (All Companies, Governance)
 - VCI (All Submissions, Governance Dashboard)
-- ECS (if active) - All Export Requests, Authorizations
-- CMC (if active) - All Scores, Reports
+- History (links to `/history` - oversight historical overview)
+- Audit (links to `/audit/logs` - audit log viewer, read-only)
+- ECS (if active OR historical data exists) - All Export Requests, Authorizations, History
+- CMC (if active OR historical data exists) - All Scores, Reports, History
 - Notifications
+- Profile
+- Support (link to public support)
+- Logout
+
+**Auditors:**
+- Audit Logs (primary - links to `/audit/logs`)
+- Audit Reports (links to `/audit/reports`)
+- Activity Summary
 - Profile
 - Support (link to public support)
 - Logout
@@ -577,9 +702,25 @@ export default function GovernancePage() {
 
 - [System Architecture](../system-architecture.md) - System overview
 - [Security Architecture](../security/security-architecture.md) - Security details
+- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns and implementation details
 
 ---
 
+## Historical Data Routes Implementation
+
+**Status:** ✅ Historical data routes added to routing structure  
+**Implementation:** See [Historical Data Routing Proposal](./historical-data-routing-proposal.md) for complete specifications
+
+**Key Additions:**
+- History tabs on detail pages (companies, products, submissions, breaches, scores)
+- Filtered list views with query parameters (year, month, status)
+- Dedicated history routes (`/history`, `/audit/logs`, `/vci/submissions/history`, etc.)
+- Module activation considerations (data existence checks, not module status)
+- Navigation updates (history/audit links for all roles)
+
+---
+
+**Last Updated:** 2025-12-31  
 **Next Review Date:** [To be scheduled]  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
 

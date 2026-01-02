@@ -322,6 +322,45 @@ SELECT rmm_create_company(
 
 ---
 
+### vci_get_historical_submissions(...)
+
+**Purpose:** Get historical submissions (AAMS, MSQ, WSL) with filtering and pagination
+
+**Parameters:**
+- `p_submission_type` (text) - Submission type ('aams', 'msq', 'wsl')
+- `p_company_id` (uuid, DEFAULT NULL) - Company ID (NULL for MOH - all companies)
+- `p_year` (integer, DEFAULT NULL) - Filter by year
+- `p_month` (integer, DEFAULT NULL) - Filter by month (for MSQ)
+- `p_limit` (integer, DEFAULT 100) - Number of records to return
+- `p_offset` (integer, DEFAULT 0) - Offset for pagination
+
+**Returns:** TABLE with submission data
+
+**Access Control:**
+- Company users: Only own company's submissions
+- MOH users: All companies' submissions
+- RLS automatically applied via SECURITY DEFINER
+
+**Example:**
+```sql
+SELECT * FROM vci_get_historical_submissions(
+  'aams',
+  NULL,  -- MOH: all companies
+  2023,  -- Year filter
+  NULL,  -- No month filter for AAMS
+  100,   -- Limit
+  0      -- Offset
+);
+```
+
+**Business Rules:**
+- Returns submissions ordered by year DESC, month DESC (for MSQ), week_ending DESC (for WSL)
+- Applies RLS policies automatically
+- Logs access via audit_logs table
+- Supports 7-year lookback (regulatory requirement)
+
+---
+
 ## ECS Module Functions
 
 ### ecs_submit_export_request(...)
@@ -469,15 +508,208 @@ SELECT rmm_create_company(
 
 ---
 
+### cmc_get_historical_scores(...)
+
+**Purpose:** Get historical compliance scores with filtering and pagination
+
+**Parameters:**
+- `p_company_id` (uuid, DEFAULT NULL) - Company ID (NULL for MOH - all companies)
+- `p_start_date` (date, DEFAULT NULL) - Start date filter
+- `p_end_date` (date, DEFAULT NULL) - End date filter
+- `p_limit` (integer, DEFAULT 100) - Number of records to return
+- `p_offset` (integer, DEFAULT 0) - Offset for pagination
+
+**Returns:** TABLE with score data including trend information
+
+**Access Control:**
+- Company users: Only own company's scores
+- MOH users: All companies' scores
+- RLS automatically applied via SECURITY DEFINER
+
+**Example:**
+```sql
+SELECT * FROM cmc_get_historical_scores(
+  NULL,           -- MOH: all companies
+  '2023-01-01',   -- Start date
+  '2023-12-31',   -- End date
+  100,            -- Limit
+  0               -- Offset
+);
+```
+
+**Business Rules:**
+- Returns scores ordered by score_month DESC
+- Includes component breakdown (submission compliance, deadline compliance, breach history)
+- Applies RLS policies automatically
+- Logs access via audit_logs table
+- Supports 7-year lookback (regulatory requirement)
+
+---
+
+## Historical Data Helper Functions
+
+### has_historical_ecs_data(p_company_id uuid DEFAULT NULL)
+
+**Purpose:** Check if historical ECS (export) data exists for a company or system-wide
+
+**Parameters:**
+- `p_company_id` (uuid, DEFAULT NULL) - Company ID (NULL for MOH - check system-wide)
+
+**Returns:** boolean
+
+**Access Control:**
+- Company users: Checks only their company's data
+- MOH users: Checks system-wide data
+
+**Example:**
+```sql
+SELECT has_historical_ecs_data(NULL);  -- MOH: check system-wide
+SELECT has_historical_ecs_data('company-uuid');  -- Company: check own data
+```
+
+**Business Rules:**
+- Returns true if any export_requests exist (for company or system-wide)
+- Used for route protection (check data existence, not module status)
+- Does not check module activation status
+
+---
+
+### has_historical_cmc_data(p_company_id uuid DEFAULT NULL)
+
+**Purpose:** Check if historical CMC (compliance score) data exists for a company or system-wide
+
+**Parameters:**
+- `p_company_id` (uuid, DEFAULT NULL) - Company ID (NULL for MOH - check system-wide)
+
+**Returns:** boolean
+
+**Access Control:**
+- Company users: Checks only their company's data
+- MOH users: Checks system-wide data
+
+**Example:**
+```sql
+SELECT has_historical_cmc_data(NULL);  -- MOH: check system-wide
+SELECT has_historical_cmc_data('company-uuid');  -- Company: check own data
+```
+
+**Business Rules:**
+- Returns true if any compliance_scores exist (for company or system-wide)
+- Used for route protection (check data existence, not module status)
+- Does not check module activation status
+
+---
+
+## Audit Functions
+
+### audit_get_historical_logs(...)
+
+**Purpose:** Get historical audit logs with filtering and pagination (MOH/Auditors only)
+
+**Parameters:**
+- `p_table_name` (text, DEFAULT NULL) - Filter by table name
+- `p_user_id` (uuid, DEFAULT NULL) - Filter by user ID
+- `p_start_date` (timestamptz, DEFAULT NULL) - Start date filter
+- `p_end_date` (timestamptz, DEFAULT NULL) - End date filter
+- `p_limit` (integer, DEFAULT 100) - Number of records to return
+- `p_offset` (integer, DEFAULT 0) - Offset for pagination
+
+**Returns:** TABLE with audit log data
+
+**Access Control:**
+- MOH Tier 1/2: Full access
+- Auditors: Full access
+- Company users: No access (returns empty)
+- Role check performed within function
+
+**Example:**
+```sql
+SELECT * FROM audit_get_historical_logs(
+  'aams_submissions',  -- Table filter
+  NULL,                -- All users
+  '2023-01-01 00:00:00+00',  -- Start date
+  '2023-12-31 23:59:59+00',  -- End date
+  100,                 -- Limit
+  0                    -- Offset
+);
+```
+
+**Business Rules:**
+- Returns audit logs ordered by created_at DESC
+- Includes hash chain information for integrity verification
+- Logs access to audit logs (meta-audit)
+- Supports 7-year lookback (regulatory requirement)
+- Virtual scrolling recommended for large result sets
+
+---
+
+### log_historical_data_access(...)
+
+**Purpose:** Log access to historical data for audit trail
+
+**Parameters:**
+- `p_user_id` (uuid) - User ID
+- `p_data_type` (text) - Data type ('submissions', 'scores', 'breaches', 'audit_logs')
+- `p_date_range` (daterange) - Date range accessed
+- `p_exported` (boolean, DEFAULT false) - Whether data was exported
+
+**Returns:** void
+
+**Access Control:**
+- Called automatically by historical data RPC functions
+- No direct user access required
+
+**Example:**
+```sql
+SELECT log_historical_data_access(
+  auth.uid(),
+  'submissions',
+  '[2023-01-01,2023-12-31)',
+  false
+);
+```
+
+**Business Rules:**
+- Creates audit log entry with action 'VIEW_HISTORICAL_DATA'
+- Includes metadata: date_range, exported flag, accessed_at timestamp
+- Required for regulatory compliance (track who accessed what historical data)
+- Used for monitoring unusual access patterns
+
+---
+
 ## Related Documents
 
 - [API Specification](api-specification.md) - API design overview
 - [Edge Function Specifications](edge-functions.md) - Edge Function specs
 - [Workflow Architecture](../workflow-architecture.md) - Workflow state machines
+- [Historical Data Routing Proposal](../frontend/historical-data-routing-proposal.md) - Historical data access patterns
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---
 
+## Historical Data RPC Functions
+
+**Status:** ✅ Historical data RPC functions added  
+**Implementation:** See [Historical Data Routing Proposal](../frontend/historical-data-routing-proposal.md) for complete specifications
+
+**Functions Added:**
+- `vci_get_historical_submissions()` - Get historical AAMS, MSQ, WSL submissions
+- `cmc_get_historical_scores()` - Get historical compliance scores
+- `audit_get_historical_logs()` - Get historical audit logs (MOH/Auditors only)
+- `has_historical_ecs_data()` - Check if historical ECS data exists
+- `has_historical_cmc_data()` - Check if historical CMC data exists
+- `log_historical_data_access()` - Log historical data access for audit trail
+
+**Key Features:**
+- All functions apply RLS automatically via SECURITY DEFINER
+- Support pagination (limit/offset)
+- Support filtering (year, month, date range, company)
+- Log access for regulatory compliance
+- Support 7-year data retention requirement
+
+---
+
+**Last Updated:** 2025-12-31  
 **Next Review Date:** [To be scheduled]  
 **Owner:** Maya
 

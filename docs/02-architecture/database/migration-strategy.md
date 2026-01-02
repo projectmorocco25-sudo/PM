@@ -552,6 +552,55 @@ supabase db push
 
 ---
 
+## Historical Data Migrations
+
+**Status:** ✅ Documented - To be implemented in Phase 1.1  
+**Reference:** See [Historical Data Routing Proposal](../../frontend/historical-data-routing-proposal.md) and [RPC Functions](../../api/rpc-functions.md)
+
+### Required Migrations
+
+**1. Historical Data Indexes Migration:**
+```sql
+-- Migration: add_historical_data_indexes
+-- Purpose: Create indexes for historical data queries (7-year lookback support)
+
+-- Audit logs indexes
+CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_user_created ON audit_logs(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_table_created ON audit_logs(table_name, created_at DESC);
+
+-- AAMS submissions indexes
+CREATE INDEX IF NOT EXISTS idx_aams_submissions_company_year ON aams_submissions(company_id, year DESC);
+
+-- MSQ submissions indexes
+CREATE INDEX IF NOT EXISTS idx_msq_submissions_company_year_month ON msq_submissions(company_id, year DESC, month DESC);
+
+-- WSL submissions indexes
+CREATE INDEX IF NOT EXISTS idx_wsl_submissions_company_week ON wsl_submissions(company_id, week_ending_date DESC);
+
+-- Compliance scores indexes
+CREATE INDEX IF NOT EXISTS idx_compliance_scores_company_month ON compliance_scores(company_id, score_month DESC);
+
+-- Breaches indexes
+CREATE INDEX IF NOT EXISTS idx_breaches_company_status_date ON breaches(company_id, status, detected_at DESC);
+```
+
+**2. Historical Data RPC Functions Migration:**
+- `has_historical_ecs_data()` - Check if historical ECS data exists
+- `has_historical_cmc_data()` - Check if historical CMC data exists
+- `vci_get_historical_submissions()` - Get historical submissions with filtering
+- `cmc_get_historical_scores()` - Get historical compliance scores
+- `audit_get_historical_logs()` - Get historical audit logs (MOH/Auditors only)
+- `log_historical_data_access()` - Log historical data access
+
+**Implementation Notes:**
+- All RPC functions must apply RLS automatically via SECURITY DEFINER
+- All functions must log access via `log_historical_data_access()`
+- Indexes should be created before RPC functions for optimal performance
+- See [RPC Functions](../../api/rpc-functions.md) for complete function specifications
+
+---
+
 ## Related Documents
 
 - [Database Schema Design](schema-design.md)

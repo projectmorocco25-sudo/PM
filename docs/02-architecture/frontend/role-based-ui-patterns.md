@@ -102,6 +102,9 @@ export function CompanyDashboard() {
 
 **Sidebar Items:**
 - Dashboard
+- RMM
+  - Products (links to `/rmm/products` - RLS filters to own company)
+  - SKUs (links to `/rmm/skus` - RLS filters to own company)
 - Submissions (AAMS, MSQ, WSL)
 - Export Requests (if ECS active, IPC only)
 - Profile
@@ -117,6 +120,14 @@ export function CompanyDashboard() {
   <SidebarItem href="/dashboard" icon={LayoutDashboard}>
     Dashboard
   </SidebarItem>
+  <SidebarGroup label="RMM">
+    <SidebarItem href="/rmm/products" icon={Package}>
+      Products
+    </SidebarItem>
+    <SidebarItem href="/rmm/skus" icon={Box}>
+      SKUs
+    </SidebarItem>
+  </SidebarGroup>
   <SidebarGroup label="Submissions">
     <SidebarItem href="/submissions/aams" icon={FileText}>
       AAMS
@@ -138,6 +149,8 @@ export function CompanyDashboard() {
   </SidebarItem>
 </Sidebar>
 ```
+
+**Note:** Company users access the same routes as MOH users (`/rmm/products`, `/rmm/skus`), but RLS policies automatically filter the data to show only their own company's products and SKUs. No separate routes needed.
 
 ### Action Buttons
 
@@ -213,6 +226,58 @@ function CompanyList() {
 }
 ```
 
+### Historical Data Access
+
+**Accessible Routes:**
+- `/history` - Personal historical overview
+- `/vci/submissions/aams?year=2023` - Own AAMS submissions for specific year
+- `/vci/submissions/msq?year=2023&month=6` - Own MSQ submissions for specific month
+- `/vci/submissions/wsl?week=2023-W01` - Own WSL submissions for specific week
+- `/cmc/scores/[company_id]` - Own compliance score history (tabs: Current | History | Trends)
+- `/vci/breaches?status=resolved&year=2023` - Own resolved breaches for specific year
+- `/rmm/companies/[id]` - Own company detail with History tab
+
+**History Tabs on Detail Pages:**
+- Company detail: History tab shows registry changes, submission history, compliance history
+- Submission detail: History tab shows corrections, status changes
+- Breach detail: History tab shows resolution timeline
+- Compliance score detail: History tab shows score trends over time
+
+**Filtered List Views:**
+- Year filter on submission lists (defaults to current year)
+- Month filter on MSQ lists
+- Week filter on WSL lists
+- Status filter on breach lists (active, resolved, all)
+
+**Restrictions:**
+- ❌ Cannot access other companies' historical data
+- ❌ Cannot access audit logs
+- ❌ Cannot access trend analysis (MOH only)
+- ❌ Cannot export other companies' data
+
+**Implementation:**
+```tsx
+function CompanyHistoryPage() {
+  const { companyId } = useUserRole();
+  const [year, setYear] = useState(new Date().getFullYear());
+  
+  const { data: submissions } = useQuery({
+    queryKey: ['historical-submissions', companyId, year],
+    queryFn: () => getHistoricalSubmissions(companyId, year),
+  });
+  
+  return (
+    <div>
+      <PageHeader>
+        <PageTitle>Submission History</PageTitle>
+        <YearSelect value={year} onChange={setYear} />
+      </PageHeader>
+      <SubmissionsTable submissions={submissions} />
+    </div>
+  );
+}
+```
+
 ## MOH User UI Patterns
 
 ### Dashboard
@@ -270,11 +335,12 @@ export function MOHDashboard() {
 **Sidebar Items:**
 - Governance Dashboard
 - RMM (Companies, Products, SKUs)
-- VCI (Submissions, Thresholds, Breaches)
-- ECS (if active)
-- CMC (if active)
+- VCI (Submissions, Submissions History, Trends (Tier 1 only), Thresholds, Breaches)
+- History (links to `/history` - system-wide historical overview)
+- Audit (Tier 1/2 - links to `/audit/logs`)
+- ECS (if active OR historical data exists - Export Requests, Export History)
+- CMC (if active OR historical data exists - Compliance Scores, Score History)
 - System Configuration (Tier 1 only)
-- Audit Logs
 
 **Implementation:**
 ```tsx
@@ -299,6 +365,14 @@ export function MOHDashboard() {
     <SidebarItem href="/vci/submissions" icon={FileText}>
       Submissions
     </SidebarItem>
+    <SidebarItem href="/vci/submissions/history" icon={History}>
+      Submissions History
+    </SidebarItem>
+    {isTier1 && (
+      <SidebarItem href="/vci/submissions/history/trends" icon={TrendingUp}>
+        Trends
+      </SidebarItem>
+    )}
     <SidebarItem href="/vci/thresholds" icon={BarChart}>
       Thresholds
     </SidebarItem>
@@ -306,6 +380,48 @@ export function MOHDashboard() {
       Breaches
     </SidebarItem>
   </SidebarGroup>
+  
+  <SidebarItem href="/history" icon={History}>
+    History
+  </SidebarItem>
+  
+  {(isTier1 || isTier2) && (
+    <SidebarItem href="/audit/logs" icon={FileSearch}>
+      Audit
+    </SidebarItem>
+  )}
+  
+  {(isECSActive || hasHistoricalECSData) && (
+    <SidebarGroup label="ECS">
+      <SidebarItem href="/ecs" icon={PlaneTakeoff}>
+        Export Requests
+        {!isECSActive && hasHistoricalECSData && (
+          <Badge variant="outline" className="ml-2">Historical</Badge>
+        )}
+      </SidebarItem>
+      {hasHistoricalECSData && (
+        <SidebarItem href="/ecs/exports/history" icon={History}>
+          Export History
+        </SidebarItem>
+      )}
+    </SidebarGroup>
+  )}
+  
+  {(isCMCActive || hasHistoricalCMCData) && (
+    <SidebarGroup label="CMC">
+      <SidebarItem href="/cmc" icon={BarChart2}>
+        Compliance Scores
+        {!isCMCActive && hasHistoricalCMCData && (
+          <Badge variant="outline" className="ml-2">Historical</Badge>
+        )}
+      </SidebarItem>
+      {hasHistoricalCMCData && (
+        <SidebarItem href="/cmc/scores/history" icon={History}>
+          Score History
+        </SidebarItem>
+      )}
+    </SidebarGroup>
+  )}
   
   {isTier1 && (
     <SidebarItem href="/system/config" icon={Settings}>
@@ -418,6 +534,98 @@ function SubmissionList() {
 }
 ```
 
+### Historical Data Access
+
+**MOH Tier 1 Accessible Routes:**
+- `/history` - System-wide historical overview
+- `/audit/logs` - Full audit log viewer with search and filtering
+- `/audit/reports` - Historical compliance reports
+- `/vci/submissions/history` - All past submissions (filterable by type, year, company)
+- `/vci/submissions/history/trends` - Trend analysis charts (AAMS, MSQ, WSL trends)
+- `/cmc/scores?year=2023` - All compliance scores for specific year
+- `/vci/breaches?status=resolved&year=2023` - All resolved breaches for specific year
+- `/ecs/exports/history` - Historical export authorizations (if ECS data exists)
+- `/cmc/scores/history` - Historical compliance scores (if CMC data exists)
+
+**MOH Tier 2 Accessible Routes:**
+- `/history` - Oversight historical overview
+- `/audit/logs` - Audit log viewer (read-only)
+- `/vci/submissions/history` - All past submissions (filterable)
+- `/cmc/scores?year=2023` - All compliance scores for specific year
+- `/vci/breaches?status=resolved&year=2023` - All resolved breaches for specific year
+- `/ecs/exports/history` - Historical export authorizations (read-only, if ECS data exists)
+- `/cmc/scores/history` - Historical compliance scores (read-only, if CMC data exists)
+
+**History Tabs on Detail Pages:**
+- Company detail: History tab shows all registry changes, submission history, compliance history
+- Submission detail: History tab shows all corrections, status changes, approval workflow
+- Breach detail: History tab shows resolution timeline, actions taken
+- Compliance score detail: History tab shows score trends, component breakdown over time
+- Threshold detail: History tab shows threshold modification history and impact analysis
+
+**Filtered List Views:**
+- Year/month filters on all submission lists
+- Company filter on all lists
+- Status filter on breach lists
+- Date range filter on all historical views
+- Quick filter chips: "This Year", "Last Year", "Last 3 Years", "All Time"
+
+**Trend Analysis (Tier 1 Only):**
+- `/vci/submissions/history/trends` - Multi-year comparison charts
+- AAMS trends: Year-over-year comparison, seasonal patterns
+- MSQ trends: Monthly patterns, growth trends, anomalies
+- WSL trends: Stock level patterns, stockout identification
+- Cross-metric analysis: AAMS vs MSQ vs WSL correlations
+
+**Export Functionality:**
+- Export all historical data (PDF, Excel, CSV)
+- Export includes regulatory metadata (export date, exported by, date range, data source)
+- Export history tracking (what was exported, when)
+- Progress indicator for large exports
+
+**Module Activation Considerations:**
+- Historical data from inactive modules (ECS, CMC) is accessible if data exists
+- UI shows informational banner when viewing historical data from inactive modules
+- "Historical Data (Read-Only)" badge displayed
+- Module activation period shown (from/to dates)
+
+**Implementation:**
+```tsx
+function MOHHistoryPage() {
+  const { isTier1, isTier2 } = useUserRole();
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
+  
+  const { data: historicalData } = useQuery({
+    queryKey: ['historical-overview', dateRange],
+    queryFn: () => getHistoricalOverview(dateRange),
+  });
+  
+  return (
+    <div>
+      <PageHeader>
+        <PageTitle>Historical Overview</PageTitle>
+        <DateRangePicker
+          value={dateRange}
+          onChange={setDateRange}
+          quickFilters={[
+            { label: 'Last 7 years', value: '7y' },
+            { label: 'Last 3 years', value: '3y' },
+            { label: 'Last year', value: '1y' },
+          ]}
+        />
+        <ExportButton onExport={handleExport} />
+      </PageHeader>
+      <HistoricalOverview data={historicalData} />
+      {isTier1 && (
+        <Link href="/vci/submissions/history/trends">
+          <Button>View Trend Analysis</Button>
+        </Link>
+      )}
+    </div>
+  );
+}
+```
+
 ## Auditor UI Patterns
 
 ### Dashboard
@@ -505,6 +713,77 @@ function AuditLogViewer() {
         data={auditLogs}
         // No action column for auditors
       />
+    </div>
+  );
+}
+```
+
+### Historical Data Access
+
+**Accessible Routes:**
+- `/audit/logs` - Primary audit log viewer (full access, search, filter, export)
+- `/audit/reports` - Historical compliance reports (read-only)
+- `/audit/activity` - Activity summary (read-only)
+- Historical compliance data (read-only access to all companies)
+- Historical reports (read-only)
+
+**Audit Log Features:**
+- Full search functionality (user, table, action, date range)
+- Virtual scrolling for large result sets (thousands of entries)
+- Export functionality (PDF, Excel, CSV) with regulatory metadata
+- Hash chain verification for data integrity
+- 7-year lookback support (regulatory requirement)
+- Debounced search for performance
+
+**Restrictions:**
+- ❌ No edit/approval actions (read-only)
+- ❌ Cannot modify historical data
+- ❌ Cannot access trend analysis (MOH only)
+- ❌ Cannot access system configuration
+
+**Implementation:**
+```tsx
+function AuditLogViewer() {
+  const [filters, setFilters] = useState({
+    tableName: null,
+    userId: null,
+    startDate: null,
+    endDate: null,
+    search: '',
+  });
+  
+  const { data: auditLogs, isLoading } = useQuery({
+    queryKey: ['audit-logs', filters],
+    queryFn: () => getHistoricalAuditLogs(filters),
+  });
+  
+  return (
+    <div>
+      <PageHeader>
+        <PageTitle>Audit Logs</PageTitle>
+        <div className="flex gap-2">
+          <Input
+            placeholder="Search..."
+            value={filters.search}
+            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+          />
+          <DateRangePicker
+            value={{ start: filters.startDate, end: filters.endDate }}
+            onChange={(range) => setFilters({ ...filters, startDate: range.start, endDate: range.end })}
+            quickFilters={[
+              { label: 'Last 7 years', value: '7y' },
+              { label: 'Last 3 years', value: '3y' },
+              { label: 'Last year', value: '1y' },
+            ]}
+          />
+          <ExportButton onExport={handleExport} />
+        </div>
+      </PageHeader>
+      {isLoading ? (
+        <Loading spinner />
+      ) : (
+        <VirtualizedAuditLogList logs={auditLogs} />
+      )}
     </div>
   );
 }
@@ -636,26 +915,94 @@ function ModuleIndicator({ module }) {
 
 ### Conditional Navigation
 
-**Pattern:** Hide navigation for inactive modules
+**Pattern:** Show navigation for active modules OR if historical data exists
 
 ```tsx
 function Sidebar() {
   const { isECSActive, isCMCActive } = useModuleStatus();
+  const { hasHistoricalECSData, hasHistoricalCMCData } = useHistoricalData();
   
   return (
     <Sidebar>
       {/* Always visible */}
       <SidebarGroup label="RMM">...</SidebarGroup>
       <SidebarGroup label="VCI">...</SidebarGroup>
+      <SidebarItem href="/history" icon={History}>
+        History
+      </SidebarItem>
       
-      {/* Conditionally visible */}
-      {isECSActive && (
-        <SidebarGroup label="ECS">...</SidebarGroup>
+      {/* Show if active OR historical data exists */}
+      {(isECSActive || hasHistoricalECSData) && (
+        <SidebarGroup label="ECS">
+          <SidebarItem href="/ecs" icon={Plane}>
+            Export Requests
+            {!isECSActive && hasHistoricalECSData && (
+              <Badge variant="outline" className="ml-2">Historical</Badge>
+            )}
+          </SidebarItem>
+          {hasHistoricalECSData && (
+            <SidebarItem href="/ecs/exports/history" icon={History}>
+              Export History
+            </SidebarItem>
+          )}
+        </SidebarGroup>
       )}
-      {isCMCActive && (
-        <SidebarGroup label="CMC">...</SidebarGroup>
+      {(isCMCActive || hasHistoricalCMCData) && (
+        <SidebarGroup label="CMC">
+          <SidebarItem href="/cmc" icon={BarChart}>
+            Compliance Scores
+            {!isCMCActive && hasHistoricalCMCData && (
+              <Badge variant="outline" className="ml-2">Historical</Badge>
+            )}
+          </SidebarItem>
+          {hasHistoricalCMCData && (
+            <SidebarItem href="/cmc/scores/history" icon={History}>
+              Score History
+            </SidebarItem>
+          )}
+        </SidebarGroup>
       )}
     </Sidebar>
+  );
+}
+```
+
+### Historical Data from Inactive Modules
+
+**Pattern:** Display historical data from inactive modules with clear indicators
+
+```tsx
+function InactiveModuleAlert({ module, moduleName }) {
+  return (
+    <Alert variant="info">
+      <AlertIcon />
+      <AlertTitle>Historical Data - Module Currently Inactive</AlertTitle>
+      <AlertDescription>
+        The {moduleName} module is currently inactive. You are viewing historical 
+        data from when the module was active. This data is read-only and cannot be modified.
+      </AlertDescription>
+    </Alert>
+  );
+}
+
+function HistoricalDataPage({ module, moduleName }) {
+  const isActive = useModuleStatus(module);
+  const hasHistoricalData = useHistoricalData(module);
+  
+  if (!hasHistoricalData) {
+    return <EmptyState>No historical data available</EmptyState>;
+  }
+  
+  return (
+    <div>
+      {!isActive && (
+        <InactiveModuleAlert module={module} moduleName={moduleName} />
+      )}
+      <Badge variant="outline" className="mb-4">
+        Historical Data (Read-Only)
+      </Badge>
+      <HistoricalDataView readOnly={!isActive} />
+    </div>
   );
 }
 ```
@@ -704,12 +1051,36 @@ export function useRole() {
 
 - [RBAC Specification](../../security/rls-policy-framework.md)
 - [User Roles Documentation](../../../00-overview/Project%20Brief%20–%20PM.md)
+- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns
 
 ---
 
+## Historical Data Access Patterns
+
+**Status:** ✅ Historical data access patterns added  
+**Implementation:** See [Historical Data Routing Proposal](./historical-data-routing-proposal.md) for complete specifications
+
+**Patterns Added:**
+- **Company Users:** Historical data access patterns (own company only)
+- **MOH Users:** Historical data access patterns (all companies, trend analysis for Tier 1)
+- **Auditors:** Historical data access patterns (audit logs, compliance reports)
+- **Module Activation:** UI patterns for inactive modules with historical data
+- **Navigation Updates:** History/audit links for all roles
+
+**Key Features:**
+- Role-specific historical data routes
+- History tabs on detail pages
+- Filtered list views with query parameters
+- Module activation considerations (data existence checks)
+- Inactive module indicators (banners, badges)
+
+---
+
+**Last Updated:** 2025-12-31  
 **Next Steps:**
 1. Implement role detection hooks
 2. Create role-based components
 3. Build permission checking utilities
 4. Test role-based UI rendering
+5. Implement historical data access patterns
 

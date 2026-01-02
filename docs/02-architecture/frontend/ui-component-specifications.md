@@ -345,6 +345,58 @@ components/
 />
 ```
 
+### DateRangePicker
+
+**Purpose:** Date range selection component for filtering historical data.
+
+**Features:**
+- Start and end date selection
+- Quick filter presets ("Last 7 days", "Last 30 days", "Last 3 months", "Last year", "Last 7 years", "Custom range")
+- Timezone support (Morocco timezone - Africa/Casablanca)
+- Min/max date constraints (supports 7-year lookback for regulatory compliance)
+- Clear selection button
+- Visual date range display
+
+**Quick Filters:**
+- Last 7 days
+- Last 30 days
+- Last 3 months
+- Last year
+- Last 7 years (regulatory requirement)
+- Custom range
+
+**Usage:**
+```tsx
+<DateRangePicker
+  label="Date Range"
+  value={dateRange}
+  onChange={setDateRange}
+  quickFilters={[
+    { label: 'Last 7 days', value: '7d' },
+    { label: 'Last 30 days', value: '30d' },
+    { label: 'Last 3 months', value: '3m' },
+    { label: 'Last year', value: '1y' },
+    { label: 'Last 7 years', value: '7y' },
+    { label: 'Custom range', value: 'custom' },
+  ]}
+  maxDateRange={7 * 365} // 7 years in days
+  timezone="Africa/Casablanca"
+/>
+```
+
+**Use Cases:**
+- Historical data filtering (submissions, scores, breaches, audit logs)
+- Trend analysis date range selection
+- Export date range selection
+- Compliance reporting date ranges
+
+**Accessibility:**
+- Keyboard navigable
+- Screen reader friendly
+- Clear visual indication of selected range
+
+---
+
 ### FileUpload
 
 **Purpose:** File upload component with drag-and-drop.
@@ -485,6 +537,61 @@ components/
   <DataListItem label="Status" value={<Badge>Active</Badge>} />
 </DataList>
 ```
+
+### Timeline
+
+**Purpose:** Display chronological history of changes, events, or activities.
+
+**Features:**
+- Vertical timeline layout
+- Date/time display
+- User attribution (who made the change)
+- Action description
+- Old value → New value display
+- Expandable details on click
+- Filter by date range
+- Color-coded by action type
+
+**Variants:**
+- `default` - Standard timeline
+- `compact` - Condensed view (fewer details)
+- `detailed` - Full details always visible
+
+**Usage:**
+```tsx
+<Timeline>
+  <TimelineItem
+    date="2024-01-15 10:30"
+    user="John Doe"
+    action="Updated"
+    entity="Company"
+    oldValue="ABC Pharma"
+    newValue="ABC Pharmaceuticals Ltd"
+    details="Updated company name for legal compliance"
+  />
+  <TimelineItem
+    date="2024-01-10 14:20"
+    user="Jane Smith"
+    action="Created"
+    entity="Product"
+    newValue="Paracetamol 500mg"
+  />
+</Timeline>
+```
+
+**Use Cases:**
+- Registry change history (companies, products, SKUs)
+- Submission history (corrections, status changes)
+- Compliance score history
+- Breach resolution timeline
+- Audit trail visualization
+
+**Accessibility:**
+- Keyboard navigable
+- Screen reader friendly (announces date, user, action)
+- High contrast for action types
+
+---
 
 ## Navigation Components
 
@@ -636,6 +743,66 @@ toast.info('Processing...', { duration: 3000 });
 />
 ```
 
+### ExportButton
+
+**Purpose:** Button component for exporting data with format options and progress indication.
+
+**Features:**
+- Dropdown menu with export format options (PDF, Excel, CSV)
+- Progress indicator during export
+- Export history tracking (what was exported, when)
+- Consistent placement in page headers
+- Disabled state during export
+
+**Export Formats:**
+- PDF - For reports and documentation
+- Excel - For data analysis
+- CSV - For data import/export
+
+**Usage:**
+```tsx
+<ExportButton
+  onExport={handleExport}
+  formats={['pdf', 'excel', 'csv']}
+  dataType="submissions"
+  dateRange={dateRange}
+>
+  <ExportIcon />
+  Export
+</ExportButton>
+```
+
+**With Progress:**
+```tsx
+<ExportButton
+  onExport={handleExport}
+  formats={['pdf', 'excel', 'csv']}
+  isExporting={isExporting}
+  exportProgress={exportProgress}
+>
+  <ExportIcon />
+  {isExporting ? `Exporting... ${exportProgress}%` : 'Export'}
+</ExportButton>
+```
+
+**Use Cases:**
+- Export historical submissions (AAMS, MSQ, WSL)
+- Export compliance scores
+- Export audit logs (MOH/Auditors)
+- Export breach history
+- Export trend analysis data
+
+**Export Metadata:**
+All exports include metadata for regulatory compliance:
+- Export date
+- Exported by (user name and ID)
+- Date range
+- Data source
+- Export format
+- Record count
+
+---
+
 ## Overlay Components
 
 ### Modal
@@ -714,6 +881,165 @@ toast.info('Processing...', { duration: 3000 });
   <Button>Hover me</Button>
 </Tooltip>
 ```
+
+### Modal Patterns for Historical Data
+
+**Purpose:** Specific modal patterns for accessing historical data without full page navigation.
+
+**Pattern 1: Quick History Preview Modal**
+
+**Use Case:** View recent history (last 5-10 changes) without leaving current page.
+
+**Size:** `md` or `lg`
+
+**Features:**
+- Last 5-10 items displayed
+- Timeline or compact list view
+- "View Full History" button → navigates to full history page
+- Maintains context (stays on current page)
+
+**Usage:**
+```tsx
+<Modal open={showHistoryModal} onClose={() => setShowHistoryModal(false)} size="lg">
+  <ModalHeader>
+    <ModalTitle>Recent History - {company.name}</ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <Timeline>
+      {/* Last 10 registry changes */}
+    </Timeline>
+  </ModalBody>
+  <ModalFooter>
+    <Button variant="outline" onClick={() => router.push(`/rmm/companies/${id}?tab=history`)}>
+      View Full History
+    </Button>
+    <Button onClick={() => setShowHistoryModal(false)}>Close</Button>
+  </ModalFooter>
+</Modal>
+```
+
+**Pattern 2: Comparison Modal**
+
+**Use Case:** Compare current vs historical data side-by-side.
+
+**Size:** `xl` or `full`
+
+**Features:**
+- Side-by-side comparison layout
+- Current data on left, historical on right
+- Highlight differences
+- Easy to close and return
+
+**Usage:**
+```tsx
+<Modal open={showCompareModal} onClose={() => setShowCompareModal(false)} size="xl">
+  <ModalHeader>
+    <ModalTitle>Compare AAMS Submissions</ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <div className="grid grid-cols-2 gap-4">
+      <Card>
+        <CardHeader>2024 Submission</CardHeader>
+        <CardBody>{/* Current data */}</CardBody>
+      </Card>
+      <Card>
+        <CardHeader>2023 Submission</CardHeader>
+        <CardBody>{/* Historical data */}</CardBody>
+      </Card>
+    </div>
+  </ModalBody>
+</Modal>
+```
+
+**Pattern 3: Export Options Modal**
+
+**Use Case:** Export historical data with format options and date range selection.
+
+**Size:** `md`
+
+**Features:**
+- Export format selection (PDF, Excel, CSV)
+- Date range picker
+- Progress indicator during export
+- Export metadata display
+
+**Usage:**
+```tsx
+<Modal open={showExportModal} onClose={() => setShowExportModal(false)} size="md">
+  <ModalHeader>
+    <ModalTitle>Export Historical Data</ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <FormGroup label="Export Format">
+      <RadioGroup value={exportFormat} onChange={setExportFormat}>
+        <Radio value="pdf" label="PDF" />
+        <Radio value="excel" label="Excel" />
+        <Radio value="csv" label="CSV" />
+      </RadioGroup>
+    </FormGroup>
+    <FormGroup label="Date Range">
+      <DateRangePicker
+        value={dateRange}
+        onChange={setDateRange}
+        quickFilters={[
+          { label: 'Last 3 months', value: '3m' },
+          { label: 'Last year', value: '1y' },
+          { label: 'Custom range', value: 'custom' },
+        ]}
+      />
+    </FormGroup>
+    {isExporting && (
+      <ProgressBar value={exportProgress} />
+    )}
+  </ModalBody>
+  <ModalFooter>
+    <Button variant="outline" onClick={() => setShowExportModal(false)}>Cancel</Button>
+    <Button onClick={handleExport} loading={isExporting}>
+      Export
+    </Button>
+  </ModalFooter>
+</Modal>
+```
+
+**Pattern 4: Detail Inspection Modal**
+
+**Use Case:** Quick detail view of historical record from list.
+
+**Size:** `lg` or `xl`
+
+**Features:**
+- Full record details
+- "View Full Page" button for deeper navigation
+- Better than opening new page for quick checks
+
+**Usage:**
+```tsx
+<Modal open={!!selectedSubmission} onClose={() => setSelectedSubmission(null)} size="lg">
+  <ModalHeader>
+    <ModalTitle>AAMS Submission - {selectedSubmission?.year}</ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <SubmissionDetail submission={selectedSubmission} />
+  </ModalBody>
+  <ModalFooter>
+    <Button variant="outline" onClick={() => router.push(`/vci/submissions/aams/${selectedSubmission.id}`)}>
+      View Full Page
+    </Button>
+    <Button onClick={() => setSelectedSubmission(null)}>Close</Button>
+  </ModalFooter>
+</Modal>
+```
+
+**When NOT to Use Modals:**
+- ❌ Full history browsing (use dedicated pages)
+- ❌ Audit log browsing (use dedicated page - thousands of entries)
+- ❌ Trend analysis (use dedicated page - charts need space)
+- ❌ Long-form historical data (use full pages - better for reading, printing)
+
+**Best Practice:**
+- ✅ Use modals for: Quick views, comparisons, actions (export), previews
+- ❌ Use pages for: Full browsing, long content, complex filtering, printing
+- Always provide "View Full Page" escape hatch in modals
 
 ## Layout Components
 
@@ -817,12 +1143,34 @@ interface ButtonProps {
 - [shadcn/ui Documentation](https://ui.shadcn.com/)
 - [Radix UI Primitives](https://www.radix-ui.com/)
 - [React Aria Components](https://react-spectrum.adobe.com/react-aria/)
+- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns
 
 ---
 
+## Historical Data Components
+
+**Status:** ✅ Historical data components added  
+**Implementation:** See [Historical Data Routing Proposal](./historical-data-routing-proposal.md) for complete specifications
+
+**Components Added:**
+- **Timeline** - Chronological history display (registry changes, submission history)
+- **DateRangePicker** - Date range selection with quick filters (7-year lookback support)
+- **ExportButton** - Export functionality with format options and progress indication
+- **Modal Patterns** - Quick preview, comparison, export, and detail inspection modals
+
+**Key Features:**
+- Timeline component for registry change history
+- DateRangePicker with Morocco timezone support and 7-year regulatory lookback
+- ExportButton with PDF, Excel, CSV formats and regulatory metadata
+- Modal patterns for quick historical data access without full page navigation
+
+---
+
+**Last Updated:** 2025-12-31  
 **Next Steps:**
 1. Install shadcn/ui components
 2. Customize components with design system
 3. Create component documentation site
 4. Build component examples and tests
+5. Implement Timeline, DateRangePicker, and ExportButton components
 

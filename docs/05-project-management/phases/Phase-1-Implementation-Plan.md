@@ -2,7 +2,163 @@
 
 **Phase:** Phase 1 - Development with Mock Data (Months 2-6)  
 **Status:** Ready to Begin  
-**Prerequisites:** Phase 0 (Technical Foundation) ✅ COMPLETE
+**Prerequisites:** 
+- Phase 0 (Technical Foundation) ✅ COMPLETE
+- Phase 0.5 (UI/UX Wireframes) ⚠️ RECOMMENDED (1-2 weeks before Phase 1.1)
+
+---
+
+## Phase 0.5: UI/UX Wireframes & Design Validation (Pre-Phase 1)
+
+**Duration:** 1-2 weeks (before Phase 1.1)  
+**Objective:** Create wireframes for all critical pages and workflows to validate UX, align stakeholders, and guide implementation  
+**Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+
+### Why Wireframes Before Implementation?
+
+1. **Stakeholder Alignment:** Validate layouts with MOH and company users before coding
+2. **Early UX Validation:** Catch usability issues before development
+3. **Development Efficiency:** Clear visual specs reduce rework and speed up implementation
+4. **Risk Mitigation:** Identify complex UI patterns and workflow issues early
+
+### Wireframe Principles
+
+- **Low-Fidelity Focus:** Quick sketches focusing on layout, hierarchy, and flow (not visual design)
+- **Component-Based:** Reference existing design system and component specifications
+- **Role-Aware:** Different wireframes for different user roles (Company, MOH Tier 1, Tier 2)
+- **Responsive Considerations:** Wireframe key breakpoints (desktop, tablet)
+- **Workflow-Focused:** Emphasize user flows and state transitions
+
+---
+
+## Subphase 0.5.1: Core Foundation Wireframes (Days 1-3)
+
+### Authentication & Layout Wireframes
+- [ ] **Task 0.5.1.1:** Wireframe - Public homepage (MOH mission focus, navigation, CTA)
+- [ ] **Task 0.5.1.2:** Wireframe - Login page (email/password, forgot password link, registration link)
+- [ ] **Task 0.5.1.3:** Wireframe - Registration page (form fields, validation indicators)
+- [ ] **Task 0.5.1.4:** Wireframe - Forgot password / Reset password flow
+- [ ] **Task 0.5.1.5:** Wireframe - Dashboard layout structure (header, sidebar, main content area, responsive breakpoints)
+- [ ] **Task 0.5.1.6:** Wireframe - Header component (logo, user menu, notifications badge, search)
+- [ ] **Task 0.5.1.7:** Wireframe - Sidebar navigation (module grouping, active states, role-based items)
+- [ ] **Task 0.5.1.8:** Wireframe - Notification center (dropdown/popover, notification list, read/unread states)
+
+### Dashboard Wireframes (Role-Based)
+- [ ] **Task 0.5.1.9:** Wireframe - Company Dashboard (my submissions, pending approvals, recent activity, key metrics)
+- [ ] **Task 0.5.1.10:** Wireframe - MOH Tier 1 Dashboard (governance overview, pending approvals, system-wide metrics, action items)
+- [ ] **Task 0.5.1.11:** Wireframe - MOH Tier 2 Dashboard (pending verifications, oversight metrics, review queue)
+
+---
+
+## Subphase 0.5.2: RMM Module Wireframes (Days 4-5)
+
+### RMM List & Detail Pages
+- [ ] **Task 0.5.2.1:** Wireframe - Companies list page (table view, filters, search, pagination, role-based actions)
+- [ ] **Task 0.5.2.2:** Wireframe - Company detail page (information sections, tabs, action buttons, related products)
+- [ ] **Task 0.5.2.3:** Wireframe - Products list page (company-scoped, filters, search, product cards/table)
+- [ ] **Task 0.5.2.4:** Wireframe - Product detail page (product info, SKUs list, related submissions)
+- [ ] **Task 0.5.2.5:** Wireframe - SKUs list page (product-scoped, filters, pharmaceutical attributes display)
+- [ ] **Task 0.5.2.6:** Wireframe - SKU detail page (SKU information, pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure)
+
+### RMM Forms
+- [ ] **Task 0.5.2.7:** Wireframe - Company create/edit form (form sections, validation, draft auto-save indicator)
+- [ ] **Task 0.5.2.8:** Wireframe - Product create/edit form (form sections, ATC code selection, validation)
+- [ ] **Task 0.5.2.9:** Wireframe - SKU create/edit form (pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure, validation, form sections)
+
+### RMM Workflow Pages
+- [ ] **Task 0.5.2.10:** Wireframe - Registry submission list page (my submissions, pending approvals, status filters)
+- [ ] **Task 0.5.2.11:** Wireframe - Registry submission detail page (submission data, workflow status indicator, approval history timeline, action buttons)
+- [ ] **Task 0.5.2.12:** Wireframe - Registry submission workflow states (draft, submitted, tier2_verified, tier1_approved, tier2_implemented, completed, rejected)
+
+### RMM MOH-Only Pages
+- [ ] **Task 0.5.2.13:** Wireframe - ATC Codes list page (MOH only, read-only for companies, search, filters)
+- [ ] **Task 0.5.2.14:** Wireframe - Critical Medicines list page (MOH Tier 1 only, designation interface, filters)
+
+---
+
+## Subphase 0.5.3: VCI Module Wireframes (Days 6-8)
+
+### VCI AAMS Wireframes
+- [ ] **Task 0.5.3.1:** Wireframe - AAMS submissions list page (my submissions, all submissions for MOH, year filter, status filter)
+- [ ] **Task 0.5.3.2:** Wireframe - AAMS submission form (year selection, monthly breakdown input grid, validation, deadline indicator)
+- [ ] **Task 0.5.3.3:** Wireframe - AAMS submission detail page (submission data, calculated threshold display, workflow status, threshold visibility timing)
+- [ ] **Task 0.5.3.4:** Wireframe - Threshold management page (MOH Tier 1 - threshold list, filters, bulk actions, modification interface)
+- [ ] **Task 0.5.3.5:** Wireframe - Threshold modification modal (local vs global selector, B multiplier input, advisory suggestions)
+
+### VCI MSQ Wireframes
+- [ ] **Task 0.5.3.6:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter)
+- [ ] **Task 0.5.3.7:** Wireframe - MSQ submission form (month selection, SKU data entry table, bulk upload option, validation preview)
+- [ ] **Task 0.5.3.8:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator)
+- [ ] **Task 0.5.3.9:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form)
+
+### VCI WSL Wireframes
+- [ ] **Task 0.5.3.10:** Wireframe - WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators)
+- [ ] **Task 0.5.3.11:** Wireframe - WSL submission form (week ending date, all SKUs stock levels bulk entry table, spreadsheet-like interface)
+- [ ] **Task 0.5.3.12:** Wireframe - WSL submission detail page (submission data, breach indicators, stock level visualization)
+
+### VCI Breach Wireframes
+- [ ] **Task 0.5.3.13:** Wireframe - Breaches list page (active breaches, resolved breaches, priority/company/SKU filters, date range)
+- [ ] **Task 0.5.3.14:** Wireframe - Breach detail page (breach information, stock level vs threshold comparison, reason, replenishment date, priority indicator)
+- [ ] **Task 0.5.3.15:** Wireframe - Breach analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option)
+- [ ] **Task 0.5.3.16:** Wireframe - Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input)
+
+### VCI Governance Dashboard
+- [ ] **Task 0.5.3.17:** Wireframe - Governance Dashboard (MOH - real-time stock sufficiency charts, breach status overview, action recommendations, widget layout)
+
+---
+
+## Subphase 0.5.4: ECS Module Wireframes (Days 9-10)
+
+### ECS Export Request Wireframes
+- [ ] **Task 0.5.4.1:** Wireframe - Export requests list page (my requests, pending approvals for MOH, status filters)
+- [ ] **Task 0.5.4.2:** Wireframe - Export request form (SKU selection, destination, timeline, documentation upload, file upload component)
+- [ ] **Task 0.5.4.3:** Wireframe - Export request detail page (request data, evaluation status, threshold comparison card: current stock vs VCI threshold vs ECS threshold)
+- [ ] **Task 0.5.4.4:** Wireframe - Export workflow actions (submit, verify, approve, reject, intervene buttons - role-based, intervention window indicator)
+
+### ECS Authorization Wireframes
+- [ ] **Task 0.5.4.5:** Wireframe - Export authorizations list page (active authorizations, expired authorizations, validity filters)
+- [ ] **Task 0.5.4.6:** Wireframe - Export authorization detail page (authorization details, validity period indicator, 90-day countdown, expiration warnings, threshold status)
+- [ ] **Task 0.5.4.7:** Wireframe - Export completion reporting interface (completion form, actual export details, shipping info)
+- [ ] **Task 0.5.4.8:** Wireframe - Replenishment schedule tracking interface (schedule timeline visualization, delay indicators, escalation stages)
+
+---
+
+## Subphase 0.5.5: CMC Module Wireframes (Days 11-12)
+
+### CMC Score Wireframes
+- [ ] **Task 0.5.5.1:** Wireframe - Compliance scores list page (my score for companies, all scores for MOH, period filter)
+- [ ] **Task 0.5.5.2:** Wireframe - Compliance score detail page (total score visualization, component breakdown chart/gauge, category-level tips for companies, formulas/weights hidden)
+- [ ] **Task 0.5.5.3:** Wireframe - Leaderboard page (anonymized for companies - percentile/rank band, full for Tier 1, oversight for Tier 2)
+- [ ] **Task 0.5.5.4:** Wireframe - Score review interface (Tier 2 - flag anomalies, Tier 1 - override modal with justification input)
+
+### CMC Dispute Wireframes
+- [ ] **Task 0.5.5.5:** Wireframe - Dispute creation interface (companies - 30-day window indicator, dispute form, component selection, evidence upload)
+- [ ] **Task 0.5.5.6:** Wireframe - Dispute review interface (Tier 2 - review, Tier 1 - resolution with adjustment notes, dispute details)
+
+### CMC Report Wireframes
+- [ ] **Task 0.5.5.7:** Wireframe - Reports list page (report types, status, download actions, period filters)
+- [ ] **Task 0.5.5.8:** Wireframe - Report detail page (PDF viewer, data tables, charts, download action)
+- [ ] **Task 0.5.5.9:** Wireframe - Report review/approval interface (Tier 2 review checklist, Tier 1 approval actions)
+
+---
+
+## Subphase 0.5.6: Wireframe Review & Iteration (Days 13-14)
+
+### Review Tasks
+- [ ] **Task 0.5.6.1:** Internal team review - All wireframes (Emma, Oliver, Maya review for technical feasibility)
+- [ ] **Task 0.5.6.2:** Stakeholder review - MOH review (Fatima, Tier 1/Tier 2 users review workflows and layouts)
+- [ ] **Task 0.5.6.3:** Stakeholder review - Business review (Dr. Samir review value chain workflows)
+- [ ] **Task 0.5.6.4:** Iterate wireframes based on feedback (update layouts, workflows, add missing states)
+- [ ] **Task 0.5.6.5:** Final wireframe approval (sign-off from all stakeholders)
+
+### Documentation Tasks
+- [ ] **Task 0.5.6.6:** Document wireframe annotations (interactions, state transitions, validation rules, responsive breakpoints)
+- [ ] **Task 0.5.6.7:** Create wireframe-to-component mapping (which components from ui-component-specifications.md map to each wireframe section)
+- [ ] **Task 0.5.6.8:** Export wireframes for development reference (PDF or design tool links, organized by module)
+
+### Phase 0.5 Sign-off
+- [ ] **Task 0.5.6.9:** Phase 0.5 internal review and approval
+- [ ] **Task 0.5.6.10:** Phase 0.5 sign-off and approval to proceed to Phase 1.1
 
 ---
 
@@ -274,6 +430,15 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.5.12:** Create scheduled trigger for WSL deadline check (Friday 5 PM Morocco time)
 - [ ] **Task 1.1.5.12a:** Implement pg_cron setup for WSL deadline check (Friday 5 PM Morocco time, cron expression)
 
+### Historical Data Backend Tasks
+- [ ] **Task 1.1.5.12b:** Create database indexes for historical queries (audit_logs: created_at, user_id+created_at, table_name+created_at; aams_submissions: company_id+year; msq_submissions: company_id+year+month; wsl_submissions: company_id+week_ending; compliance_scores: company_id+score_month; breaches: company_id+status+detected_at)
+- [ ] **Task 1.1.5.12c:** Create RPC function - has_historical_ecs_data (check if historical ECS data exists for company or system-wide)
+- [ ] **Task 1.1.5.12d:** Create RPC function - has_historical_cmc_data (check if historical CMC data exists for company or system-wide)
+- [ ] **Task 1.1.5.12e:** Create RPC function - vci_get_historical_submissions (get historical AAMS/MSQ/WSL submissions with filtering and pagination, RLS applied)
+- [ ] **Task 1.1.5.12f:** Create RPC function - cmc_get_historical_scores (get historical compliance scores with filtering and pagination, RLS applied)
+- [ ] **Task 1.1.5.12g:** Create RPC function - audit_get_historical_logs (get historical audit logs with filtering and pagination, MOH/Auditors only, role check)
+- [ ] **Task 1.1.5.12h:** Create RPC function - log_historical_data_access (log access to historical data for audit trail, called automatically by historical data RPC functions)
+
 ### VCI WSL Frontend Tasks
 - [ ] **Task 1.1.5.13:** Implement WSL submissions list page (my submissions, all submissions for MOH)
 - [ ] **Task 1.1.5.14:** Implement WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure)
@@ -293,6 +458,66 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.5.20c:** Implement responsive dashboard layout (widget stacking on tablet/mobile)
 - [ ] **Task 1.1.5.20d:** Implement dashboard data prefetching and caching strategy
 - [ ] **Task 1.1.5.20e:** Implement stock sufficiency charts (line charts, bar charts)
+
+---
+
+## Subphase 1.1.5.5: Historical Data Frontend Tasks
+
+### Historical Data Component Implementation
+- [ ] **Task 1.1.5.21:** Implement Timeline component (vertical timeline, date/user/action display, expandable details, filter by date range)
+- [ ] **Task 1.1.5.22:** Implement DateRangePicker component (start/end date selection, quick filters: Last 7 days, 30 days, 3 months, year, 7 years, custom range, Morocco timezone support)
+- [ ] **Task 1.1.5.23:** Implement ExportButton component (dropdown with PDF/Excel/CSV options, progress indicator, export metadata tracking)
+- [ ] **Task 1.1.5.24:** Implement virtual scrolling component for large lists (using @tanstack/react-virtual, for audit logs)
+
+### History Tabs on Detail Pages
+- [ ] **Task 1.1.5.25:** Implement History tab on Company detail page (registry changes timeline, submission history, compliance history, lazy loading)
+- [ ] **Task 1.1.5.26:** Implement History tab on Product detail page (product changes timeline, SKU history)
+- [ ] **Task 1.1.5.27:** Implement History tab on SKU detail page (SKU changes timeline)
+- [ ] **Task 1.1.5.28:** Implement History tab on AAMS submission detail page (corrections history, status changes)
+- [ ] **Task 1.1.5.29:** Implement History tab on MSQ submission detail page (corrections history, status changes)
+- [ ] **Task 1.1.5.30:** Implement History tab on WSL submission detail page (submission history)
+- [ ] **Task 1.1.5.31:** Implement History tab on Breach detail page (resolution timeline, actions taken)
+- [ ] **Task 1.1.5.32:** Implement History tab on Compliance Score detail page (score trends, component breakdown over time)
+
+### Filtered List Views
+- [ ] **Task 1.1.5.33:** Add year filter to AAMS submissions list page (query parameter ?year=2023, quick filter chips, default to current year)
+- [ ] **Task 1.1.5.34:** Add year/month filters to MSQ submissions list page (query parameters ?year=2023&month=6, quick filter chips)
+- [ ] **Task 1.1.5.35:** Add week filter to WSL submissions list page (query parameter ?week=2023-W01, quick filter chips)
+- [ ] **Task 1.1.5.36:** Add status/year filters to Breaches list page (query parameters ?status=resolved&year=2023, filter tabs)
+- [ ] **Task 1.1.5.37:** Add year filter to Compliance Scores list page (query parameter ?year=2023, quick filter chips)
+
+### Dedicated History Routes
+- [ ] **Task 1.1.5.38:** Implement `/history` route (role-based historical overview page, company users: personal, MOH: system-wide)
+- [ ] **Task 1.1.5.39:** Implement `/audit/logs` route (audit log list page, MOH/Auditors only, virtual scrolling, search, date range filter)
+- [ ] **Task 1.1.5.40:** Implement `/audit/logs/[id]` route (audit log detail page)
+- [ ] **Task 1.1.5.41:** Implement `/audit/reports` route (audit reports page, MOH/Auditors only)
+- [ ] **Task 1.1.5.42:** Implement `/vci/submissions/history` route (all past submissions, filterable by type, year, company)
+- [ ] **Task 1.1.5.43:** Implement `/vci/submissions/history/trends` route (trend analysis charts, MOH Tier 1 only, AAMS/MSQ/WSL trends, multi-year comparisons)
+
+### Modal Patterns for Historical Data
+- [ ] **Task 1.1.5.44:** Implement Quick History Preview modal (recent 5-10 changes, timeline view, "View Full History" button)
+- [ ] **Task 1.1.5.45:** Implement Comparison modal (current vs historical side-by-side, highlight differences)
+- [ ] **Task 1.1.5.46:** Implement Export Options modal (format selection, date range picker, progress indicator)
+- [ ] **Task 1.1.5.47:** Implement Detail Inspection modal (quick detail view from list, "View Full Page" button)
+
+### Module Activation Impact
+- [ ] **Task 1.1.5.48:** Implement inactive module indicators (informational banners, read-only badges, module activation period display)
+- [ ] **Task 1.1.5.49:** Implement data existence checks for ECS/CMC routes (has_historical_ecs_data, has_historical_cmc_data RPC calls)
+- [ ] **Task 1.1.5.50:** Update navigation to show ECS/CMC if active OR historical data exists (with "Historical" badge if inactive)
+- [ ] **Task 1.1.5.51:** Implement route protection pattern for historical data (check data existence, not module status)
+
+### Navigation Updates
+- [ ] **Task 1.1.5.52:** Add History link to sidebar navigation (all roles, links to `/history`)
+- [ ] **Task 1.1.5.53:** Add Audit link to sidebar navigation (MOH Tier 1/2, links to `/audit/logs`)
+- [ ] **Task 1.1.5.54:** Add Submissions History link to VCI section (links to `/vci/submissions/history`)
+- [ ] **Task 1.1.5.55:** Add Trends link to VCI section (Tier 1 only, links to `/vci/submissions/history/trends`)
+- [ ] **Task 1.1.5.56:** Update breadcrumbs for historical routes (Home > History, Home > Audit > Logs, etc.)
+
+### Trend Analysis Components (MOH Tier 1)
+- [ ] **Task 1.1.5.57:** Implement AAMS trend analysis component (year-over-year comparison, seasonal patterns, line/bar charts)
+- [ ] **Task 1.1.5.58:** Implement MSQ trend analysis component (monthly patterns, growth trends, anomaly detection)
+- [ ] **Task 1.1.5.59:** Implement WSL trend analysis component (stock level patterns, stockout identification)
+- [ ] **Task 1.1.5.60:** Implement cross-metric analysis component (AAMS vs MSQ vs WSL correlations)
 
 ---
 
@@ -740,6 +965,13 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 ## Team Assignments (Recommended)
 
+**Phase 0.5 (Wireframes):**
+- **Emma:** Lead wireframe creation, UX design, stakeholder coordination
+- **Oliver:** Technical feasibility review, integration considerations
+- **Maya:** Workflow validation, state transition review
+- **Fatima:** MOH workflow and regulatory requirement validation
+- **Dr. Samir:** Business process validation
+
 **Phase 1.1:**
 - **Oliver:** Architecture oversight, integration coordination
 - **Nadia:** Database migrations, RLS policies
@@ -747,7 +979,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - **Maya:** RPC functions, workflow implementation
 - **Salim:** Security implementation, audit logging
 - **Leila:** Scheduled triggers, background jobs
-- **Emma:** Frontend development, UI/UX
+- **Emma:** Frontend development, UI/UX (using wireframes as reference)
 - **Hassan:** Testing strategy, test implementation
 - **Farah:** Mock data generation, data validation
 
@@ -799,6 +1031,9 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - Responsive design patterns
 - Performance optimization
 - Frontend testing framework
+- Historical data components (Timeline, DateRangePicker, ExportButton)
+- Historical data routing and access patterns (history tabs, filtered lists, dedicated routes, modals)
+- Module activation impact on historical data (inactive module indicators, data existence checks)
 
 **Architecture & Integration (Oliver):**
 - Module integration contracts (data flow specs between modules)
@@ -832,6 +1067,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - Threshold switching coordination
 - Event-triggered recalculation coordinator
 - RPC function unit test framework
+- Historical data RPC functions (vci_get_historical_submissions, cmc_get_historical_scores, audit_get_historical_logs, has_historical_ecs_data, has_historical_cmc_data, log_historical_data_access)
 
 **Security & Audit (Salim):**
 - Audit logging trigger function (hash chaining logic)
@@ -874,3 +1110,23 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 **Status:** ✅ Updated with All Audit Recommendations  
 **Next Step:** Review this plan, adjust task breakdown as needed, assign team members, begin Phase 1.1
+
+---
+
+## Historical Data Implementation
+
+**Status:** ✅ Historical data tasks added to Phase 1.1  
+**Reference:** See [Historical Data Routing Proposal](../../02-architecture/frontend/historical-data-routing-proposal.md) for complete specifications
+
+**Tasks Added:**
+- **Backend:** Database indexes, RPC functions for historical data access, data existence checks
+- **Frontend:** Timeline, DateRangePicker, ExportButton components, history tabs, filtered lists, dedicated routes, modal patterns
+- **Navigation:** History/audit links, inactive module indicators, breadcrumb updates
+- **Module Activation:** Data existence checks, inactive module UI indicators, route protection patterns
+- **Trend Analysis:** AAMS/MSQ/WSL trend components (MOH Tier 1)
+
+**Key Implementation Points:**
+- Historical data accessible based on data existence and permissions, not module activation status
+- All historical data is read-only (immutable for regulatory compliance)
+- 7-year data retention requirement supported
+- Access controlled via RLS policies through RPC functions

@@ -387,6 +387,10 @@ The PM platform uses a consistent navigation and layout structure across all mod
 ├── Audit Logs (primary - links to /audit/logs)
 ├── Audit Reports (links to /audit/reports)
 ├── Activity Summary (links to /audit/activity)
+├── RMM (read-only for audit purposes)
+│   ├── Companies (links to /rmm/companies - read-only, RLS filters)
+│   ├── Products (links to /rmm/products - read-only, RLS filters)
+│   └── SKUs (links to /rmm/skus - read-only, RLS filters)
 └── Profile
 ```
 

@@ -335,12 +335,11 @@ export function MOHDashboard() {
 **Sidebar Items:**
 - Governance Dashboard
 - RMM (Companies, Products, SKUs)
-- VCI (Submissions, Submissions History, Trends (Tier 1 only), Thresholds, Breaches)
-- History (links to `/history` - system-wide historical overview)
-- Audit (Tier 1/2 - links to `/audit/logs`)
-- ECS (if active OR historical data exists - Export Requests, Export History)
-- CMC (if active OR historical data exists - Compliance Scores, Score History)
+- VCI (Submissions, Thresholds, Breaches)
+- ECS (if active)
+- CMC (if active)
 - System Configuration (Tier 1 only)
+- Audit Logs
 
 **Implementation:**
 ```tsx
@@ -365,14 +364,6 @@ export function MOHDashboard() {
     <SidebarItem href="/vci/submissions" icon={FileText}>
       Submissions
     </SidebarItem>
-    <SidebarItem href="/vci/submissions/history" icon={History}>
-      Submissions History
-    </SidebarItem>
-    {isTier1 && (
-      <SidebarItem href="/vci/submissions/history/trends" icon={TrendingUp}>
-        Trends
-      </SidebarItem>
-    )}
     <SidebarItem href="/vci/thresholds" icon={BarChart}>
       Thresholds
     </SidebarItem>
@@ -380,48 +371,6 @@ export function MOHDashboard() {
       Breaches
     </SidebarItem>
   </SidebarGroup>
-  
-  <SidebarItem href="/history" icon={History}>
-    History
-  </SidebarItem>
-  
-  {(isTier1 || isTier2) && (
-    <SidebarItem href="/audit/logs" icon={FileSearch}>
-      Audit
-    </SidebarItem>
-  )}
-  
-  {(isECSActive || hasHistoricalECSData) && (
-    <SidebarGroup label="ECS">
-      <SidebarItem href="/ecs" icon={PlaneTakeoff}>
-        Export Requests
-        {!isECSActive && hasHistoricalECSData && (
-          <Badge variant="outline" className="ml-2">Historical</Badge>
-        )}
-      </SidebarItem>
-      {hasHistoricalECSData && (
-        <SidebarItem href="/ecs/exports/history" icon={History}>
-          Export History
-        </SidebarItem>
-      )}
-    </SidebarGroup>
-  )}
-  
-  {(isCMCActive || hasHistoricalCMCData) && (
-    <SidebarGroup label="CMC">
-      <SidebarItem href="/cmc" icon={BarChart2}>
-        Compliance Scores
-        {!isCMCActive && hasHistoricalCMCData && (
-          <Badge variant="outline" className="ml-2">Historical</Badge>
-        )}
-      </SidebarItem>
-      {hasHistoricalCMCData && (
-        <SidebarItem href="/cmc/scores/history" icon={History}>
-          Score History
-        </SidebarItem>
-      )}
-    </SidebarGroup>
-  )}
   
   {isTier1 && (
     <SidebarItem href="/system/config" icon={Settings}>
@@ -655,15 +604,20 @@ function MOHHistoryPage() {
 ### Navigation
 
 **Sidebar Items:**
-- Audit Logs
+- Audit Logs (primary)
 - Compliance Reports
 - Activity Summary
+- RMM (read-only for audit purposes)
+  - Companies (read-only, RLS filters)
+  - Products (read-only, RLS filters)
+  - SKUs (read-only, RLS filters)
 - Export Reports
 
 **Hidden Items:**
 - All action buttons
 - Edit capabilities
 - Approval workflows
+- Create/Update/Delete actions
 
 **Implementation:**
 ```tsx
@@ -677,8 +631,25 @@ function MOHHistoryPage() {
   <SidebarItem href="/audit/activity" icon={Activity}>
     Activity Summary
   </SidebarItem>
+  
+  <SidebarGroup label="RMM" icon={Building}>
+    <SidebarItem href="/rmm/companies" icon={Building} disabled={false}>
+      Companies
+      <Badge variant="outline" className="ml-2">Read-Only</Badge>
+    </SidebarItem>
+    <SidebarItem href="/rmm/products" icon={Package} disabled={false}>
+      Products
+      <Badge variant="outline" className="ml-2">Read-Only</Badge>
+    </SidebarItem>
+    <SidebarItem href="/rmm/skus" icon={Box} disabled={false}>
+      SKUs
+      <Badge variant="outline" className="ml-2">Read-Only</Badge>
+    </SidebarItem>
+  </SidebarGroup>
 </Sidebar>
 ```
+
+**Note:** Auditors access the same RMM routes as MOH users (`/rmm/companies`, `/rmm/products`, `/rmm/skus`), but RLS policies ensure read-only access. All action buttons (Create, Edit, Delete) are hidden for auditors. This allows auditors to verify company, product, and SKU data referenced in audit logs.
 
 ### Action Buttons
 

@@ -25,6 +25,23 @@ Create wireframes for all critical pages and workflows to validate UX, align sta
 - **Responsive Considerations:** Wireframe key breakpoints (desktop, tablet)
 - **Workflow-Focused:** Emphasize user flows and state transitions
 
+## Wireframe Storage & Organization
+
+All wireframes are stored in [`docs/04-design/user-experience/wireframes/`](../../04-design/user-experience/wireframes/README.md), organized by module and subphase:
+
+- **00-core-foundation/** - Core foundation wireframes (Subphase 0.5.1)
+- **01-rmm/** - RMM module wireframes (Subphase 0.5.2)
+- **02-vci/** - VCI module wireframes (Subphase 0.5.3)
+- **03-ecs/** - ECS module wireframes (Subphase 0.5.4)
+- **04-cmc/** - CMC module wireframes (Subphase 0.5.5)
+- **05-audit-historical/** - Audit & historical data wireframes (Subphase 0.5.6)
+- **06-documentation/** - Wireframe documentation (index, annotations, mappings, design tool links)
+- **exports/** - PDF exports (if applicable)
+
+**File Naming Convention:** `task-{TASK_ID}-{descriptive-name}.{ext}` (e.g., `task-0.5.1.1-public-homepage.png`)
+
+See the [Wireframes Directory README](../../04-design/user-experience/wireframes/README.md) for complete structure and organization details.
+
 ---
 
 ## Subphase 0.5.1: Core Foundation Wireframes (Days 1-3)
@@ -239,6 +256,8 @@ Create wireframes for all critical pages and workflows to validate UX, align sta
 4. Exported wireframes (PDF or design tool links)
 5. Stakeholder approval documentation
 
+**Storage Location:** All wireframes and documentation are stored in [`docs/04-design/user-experience/wireframes/`](../../04-design/user-experience/wireframes/README.md)
+
 ---
 
 ## Team Assignments
@@ -254,6 +273,14 @@ Create wireframes for all critical pages and workflows to validate UX, align sta
 
 ## Related Documents
 
+### Wireframe Documentation
+- [Wireframes Directory](../../04-design/user-experience/wireframes/README.md) - Wireframe storage structure and organization
+- [Wireframe Index](../../04-design/user-experience/wireframes/06-documentation/wireframe-index.md) - Complete index of all wireframes
+- [Wireframe Annotations](../../04-design/user-experience/wireframes/06-documentation/wireframe-annotations.md) - Detailed annotations and interactions
+- [Component Mapping](../../04-design/user-experience/wireframes/06-documentation/wireframe-to-component-mapping.md) - Wireframe to UI component mappings
+- [Design Tool Links](../../04-design/user-experience/wireframes/06-documentation/design-tool-links.md) - External design tool links (if used)
+
+### Architecture & Design References
 - [Phase 0: Technical Foundation](phase-0-technical-foundation.md)
 - [Phase 1 Overview](phase-1-overview.md)
 - [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md)
@@ -262,6 +289,9 @@ Create wireframes for all critical pages and workflows to validate UX, align sta
 - [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
 - [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
 - [Routing Structure](../../02-architecture/frontend/routing-structure.md)
+- [Design System](../../02-architecture/frontend/design-system.md)
+- [State Management UI Patterns](../../02-architecture/frontend/state-management-ui-patterns.md)
+- [Historical Data Routing Proposal](../../02-architecture/frontend/historical-data-routing-proposal.md)
 
 ---
 

@@ -244,6 +244,8 @@ The PM platform uses a consistent navigation and layout structure across all mod
 - `/audit/reports` → Home > Audit > Reports
 - `/vci/submissions/history` → Home > VCI > Submissions > History
 - `/vci/submissions/history/trends` → Home > VCI > Submissions > History > Trends
+- `/vci/treemap` → Home > VCI > Treemap
+- `/vci/treemap?atc=J01` → Home > VCI > Treemap > J01 - Antibacterials
 - `/ecs/exports/history` → Home > ECS > Exports > History
 - `/cmc/scores/history` → Home > CMC > Scores > History
 - `/rmm/companies/[id]?tab=history` → Home > RMM > Companies > [Company Name] > History
@@ -355,6 +357,7 @@ The PM platform uses a consistent navigation and layout structure across all mod
 │   ├── Submissions
 │   ├── Submissions History (links to /vci/submissions/history)
 │   ├── Trends (Tier 1 only - links to /vci/submissions/history/trends)
+│   ├── Treemap (Tier 1/2 - links to /vci/treemap)
 │   ├── Thresholds
 │   └── Breaches
 ├── History (links to /history - system-wide historical overview)
@@ -709,6 +712,7 @@ The PM platform uses a consistent navigation and layout structure across all mod
 - **Audit Link:** Added to MOH Tier 1/2 sidebars (links to `/audit/logs`)
 - **Submissions History:** Added to VCI section (links to `/vci/submissions/history`)
 - **Trends Link:** Added to VCI section for Tier 1 (links to `/vci/submissions/history/trends`)
+- **Treemap Link:** Added to VCI section for Tier 1/2 (links to `/vci/treemap`)
 - **Export History:** Added to ECS section if historical data exists
 - **Score History:** Added to CMC section if historical data exists
 - **Inactive Module Indicators:** "Historical" badge shown when module inactive but data exists

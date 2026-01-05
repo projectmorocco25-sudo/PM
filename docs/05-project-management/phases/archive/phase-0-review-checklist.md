@@ -1245,5 +1245,5 @@ Minor suggestions provided are non-blocking and can be addressed during Phase 1 
 
 ---
 
-**Next Steps:** After sign-off, proceed to [Phase 1.1: RMM + VCI Development](phase-1-1-rmm-vci.md)
+**Next Steps:** After sign-off, proceed to [Phase 1 Overview](../phase-1-overview.md#phase-11-rmm-vci-development)
 

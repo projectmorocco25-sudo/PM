@@ -61,14 +61,16 @@ This directory contains all project management documentation, including planning
 ## Key Documents by Phase
 
 ### Phase 0: Technical Foundation (Month 1)
-- [Phase 0 Plan](phases/phase-0-technical-foundation.md)
-- Focus: Architecture, database design, API specs, security
+- [Phase 0 Plan](phases/phase-0-technical-foundation.md) - Architecture, database design, API specs, security
+- [Phase 0.5: UI/UX Wireframes](phases/phase-0-5-ui-ux-wireframes.md) - Design validation (recommended, 1-2 weeks before Phase 1.1)
 
 ### Phase 1: Development with Mock Data (Months 2-6)
-- [Phase 1.1: RMM + VCI](phases/phase-1-1-rmm-vci.md)
-- [Phase 1.2: ECS](phases/phase-1-2-ecs.md)
-- [Phase 1.3: CMC](phases/phase-1-3-cmc.md)
-- [Phase 1.4: Holistic Testing](phases/phase-1-4-holistic-testing.md)
+- [Phase 1 Overview](phases/phase-1-overview.md) - All Phase 1 subphases
+  - [Phase 1.1: RMM + VCI](phases/phase-1-overview.md#phase-11-rmm-vci-development)
+  - [Phase 1.2: ECS](phases/phase-1-overview.md#phase-12-ecs-development)
+  - [Phase 1.3: CMC](phases/phase-1-overview.md#phase-13-cmc-development)
+  - [Phase 1.4: Holistic Testing](phases/phase-1-overview.md#phase-14-holistic-mvp-testing)
+- [Phase 1 Implementation Plan](phases/Phase-1-Implementation-Plan.md) - Detailed task breakdown
 
 ### Phase 2: MOH UAT (Month 7)
 - [Phase 2 Plan](phases/phase-2-moh-uat.md)

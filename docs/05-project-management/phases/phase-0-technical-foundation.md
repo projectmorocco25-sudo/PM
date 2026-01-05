@@ -178,8 +178,9 @@ Establish the technical architecture and development foundation for the PM platf
 ✅ **Phase 0 Sign-off:** Complete - All reviewers approved
 
 **Review Documents:**
-- [Phase 0 Review Checklist](phase-0-review-checklist.md) - Complete review with all comments
+- [Phase 0 Review Checklist](../archive/phase-0-review-checklist.md) - Complete review with all comments (archived)
 - [Phase 0 Review Summary](phase-0-review-summary.md) - Combined regulatory/governance and technical review
+- [Phase 0 Corrections and Clarifications](phase-0-corrections-and-clarifications.md) - All Phase 0 corrections and clarifications
 
 ## Review Process
 
@@ -218,6 +219,6 @@ Establish the technical architecture and development foundation for the PM platf
 
 ---
 
-**Next Phase:** [Phase 1.1: RMM + VCI Development](phase-1-1-rmm-vci.md)  
+**Next Phase:** [Phase 0.5: UI/UX Wireframes & Design Validation](phase-0-5-ui-ux-wireframes.md) (recommended) → [Phase 1 Overview](phase-1-overview.md#phase-11-rmm-vci-development)  
 **Owner:** Oliver (Chief Architect)
 

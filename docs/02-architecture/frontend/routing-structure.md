@@ -127,8 +127,10 @@ app/
 │   │   │   ├── page.tsx (List - supports ?status=resolved&year=2023 query params)
 │   │   │   └── [id]/
 │   │   │       └── page.tsx (Detail - Tabs: Details | History | Analysis)
-│   │   └── governance/
-│   │       └── page.tsx (MOH only)
+│   │   ├── governance/
+│   │   │   └── page.tsx (MOH only)
+│   │   └── treemap/
+│   │       └── page.tsx (Tier 1 & Tier 2 - ATC treemap, supports ?atc=J01 query param for products treemap)
 │   ├── ecs/
 │   │   ├── layout.tsx (Module activation check OR historical data exists)
 │   │   ├── page.tsx
@@ -207,6 +209,9 @@ Historical data routes provide access to past submissions, compliance scores, au
 - `/ecs/exports/history` - Historical export authorizations
 - `/cmc/scores/history` - Historical compliance scores
 - `/cmc/disputes/history` - Historical disputes
+
+**4. Analytics Routes:**
+- `/vci/treemap` - Treemap visualization (Tier 1 & Tier 2 - ATC level, supports ?atc=J01 query param for products level)
 
 ### Module Activation Considerations
 
@@ -634,7 +639,7 @@ export default function GovernancePage() {
 **MOH Users (Tier 1):**
 - Dashboard
 - RMM (All Companies, Governance)
-- VCI (All Submissions, Governance Dashboard, Trends)
+- VCI (All Submissions, Governance Dashboard, Trends, Treemap)
 - History (links to `/history` - system-wide historical overview)
 - Audit (links to `/audit/logs` - full audit log viewer)
 - ECS (if active OR historical data exists) - All Export Requests, Authorizations, History
@@ -647,7 +652,7 @@ export default function GovernancePage() {
 **MOH Users (Tier 2):**
 - Dashboard
 - RMM (All Companies, Governance)
-- VCI (All Submissions, Governance Dashboard)
+- VCI (All Submissions, Governance Dashboard, Treemap)
 - History (links to `/history` - oversight historical overview)
 - Audit (links to `/audit/logs` - audit log viewer, read-only)
 - ECS (if active OR historical data exists) - All Export Requests, Authorizations, History

@@ -428,11 +428,12 @@ All Phase 0 deliverables have been reviewed and approved by both regulatory/gove
 ## Related Documents
 
 - [Phase 0: Technical Foundation](phase-0-technical-foundation.md)
-- [Phase 0 Review Checklist](phase-0-review-checklist.md)
+- [Phase 0 Review Checklist](../archive/phase-0-review-checklist.md) - Detailed review checklist (archived)
+- [Phase 0 Corrections and Clarifications](phase-0-corrections-and-clarifications.md) - All Phase 0 corrections and clarifications
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 - [Project Plan](../project-plan.md)
 
 ---
 
-**Next Steps:** After sign-off, proceed to [Phase 1.1: RMM + VCI Development](phase-1-1-rmm-vci.md)
+**Next Steps:** After sign-off, proceed to [Phase 1 Overview](phase-1-overview.md#phase-11-rmm-vci-development)
 

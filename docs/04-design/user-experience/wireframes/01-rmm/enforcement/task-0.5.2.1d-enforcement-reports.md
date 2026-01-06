@@ -243,6 +243,9 @@
 
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Charts, cards, tables
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-based access
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including enforcement action requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including enforcement and reporting policies
 
 ---
 

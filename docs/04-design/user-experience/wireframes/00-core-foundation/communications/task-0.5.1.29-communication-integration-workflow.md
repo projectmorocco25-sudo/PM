@@ -77,6 +77,8 @@
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Panel, Message, Input components
 - [Conversation Detail Wireframe](./task-0.5.1.25-conversation-detail.md) - Full conversation interface reference
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

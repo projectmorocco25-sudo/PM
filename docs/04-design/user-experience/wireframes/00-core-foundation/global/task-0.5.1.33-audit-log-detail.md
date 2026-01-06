@@ -45,6 +45,12 @@
 │ │ Current Hash: def456...                                  ││
 │ │ Status: ✓ Verified                                      ││
 │ │                                                          ││
+│ │ Compliance Information:                                 ││
+│ │ • Retention Period: 7 years minimum (until 2032-01-01) ││
+│ │ • CNDP Compliance: This entry contains personal data   ││
+│ │   protected under Law No. 09-08                        ││
+│ │ • Regulatory Reference: [View Framework]               ││
+│ │                                                          ││
 │ │ [View Previous] [View Next] [View Hash Chain]          ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘
@@ -76,6 +82,14 @@
 - **Previous Hash:** Hash of previous log entry
 - **Current Hash:** Hash of current log entry
 - **Status:** Verified or Invalid
+
+### Compliance Information Section
+- **Retention Period:** Display retention period and expiration date (7 years from log entry date)
+- **CNDP Compliance Notice:** "This audit log entry contains personal data protected under Law No. 09-08 (Protection of Personal Data)"
+- **Data Subject Rights:** Information about data subject rights (if applicable to the log entry)
+- **Regulatory Reference:** Link to regulatory framework document
+- **Display:** Section within log detail card, below hash chain verification
+- **Styling:** Info section with light background, clear labeling
 
 ### Navigation
 - **Previous Log:** Link to previous log entry
@@ -185,6 +199,9 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/audit/logs/[id]`
 - [Audit Logs List Wireframe](./task-0.5.1.32-audit-logs-list.md) - Audit logs list reference
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, Badge, Code Block components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

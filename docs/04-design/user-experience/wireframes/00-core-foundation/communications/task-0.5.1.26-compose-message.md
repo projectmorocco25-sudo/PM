@@ -287,6 +287,8 @@
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Form validation patterns
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Form, Input, File Upload components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

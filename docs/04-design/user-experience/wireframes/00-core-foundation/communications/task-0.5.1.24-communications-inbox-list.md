@@ -250,6 +250,8 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/inbox`
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - List, Filter, Search components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

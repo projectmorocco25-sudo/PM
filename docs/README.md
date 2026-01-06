@@ -190,8 +190,8 @@ Implementation code and configuration files live outside `/docs`:
 - [Project Brief](00-overview/Project%20Brief%20–%20PM.md)
 - [Project Plan](05-project-management/project-plan.md)
 - [System Architecture](02-architecture/system-architecture.md)
-- [Glossary](10-references/glossary.md) _(Placeholder - to be populated)_
-- [Acronyms](10-references/acronyms.md) _(Placeholder - to be populated)_
+- [Glossary](10-references/glossary.md)
+- [Acronyms](10-references/acronyms.md)
 
 ## Document Maintenance
 

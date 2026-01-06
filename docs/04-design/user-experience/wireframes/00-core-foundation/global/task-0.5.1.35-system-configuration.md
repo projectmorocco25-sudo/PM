@@ -50,6 +50,36 @@
 │ │ • Password Policy: [View]                              ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Cloud Services Compliance (2024 Regulation)              ││
+│ │                                                          ││
+│ │ Provider: Supabase                                       ││
+│ │ Qualification Level: [Level 2 ▼] (To be validated)    ││
+│ │ Compliance Status: 🟡 In Progress                       ││
+│ │                                                          ││
+│ │ Compliance Deadline: October 22, 2026                   ││
+│ │ Days Remaining: [XXX days]                              ││
+│ │                                                          ││
+│ │ Compliance Actions:                                      ││
+│ │ ☑ Risk Assessment: [Status: Completed]                 ││
+│ │ ☐ Qualification Validation: [Status: Pending]            ││
+│ │ ☐ Data Residency: [Status: In Review]                   ││
+│ │                                                          ││
+│ │ [View Compliance Details] [View Regulatory Framework]   ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance                                    ││
+│ │                                                          ││
+│ │ CNDP Compliance (Law No. 09-08):                        ││
+│ │ Status: ✓ Compliant                                      ││
+│ │                                                          ││
+│ │ DMP Regulations:                                         ││
+│ │ Status: ⚠️ Validation Pending                           ││
+│ │                                                          ││
+│ │ [View Regulatory Framework]                             ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ [Cancel]                                    [Save Changes] │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -72,6 +102,27 @@
 - **General Settings:** System name, timezone
 - **Notification Settings:** Email, SMS toggles
 - **Security Settings:** Session timeout, password policy
+
+### Cloud Services Compliance Section (2024 Regulation)
+- **Provider:** Supabase (cloud service provider)
+- **Qualification Level:** Dropdown (Level 1 / Level 2) - To be validated
+- **Compliance Status:** Status indicator (🟡 In Progress, ✓ Compliant, ⚠️ Pending)
+- **Compliance Deadline:** October 22, 2026 (24 months from enactment)
+- **Days Remaining:** Countdown display (calculated from current date)
+- **Compliance Actions:**
+  - Risk Assessment: Checkbox with status
+  - Qualification Validation: Checkbox with status
+  - Data Residency: Checkbox with status
+- **Actions:** Links to compliance details and regulatory framework
+- **Display:** Card section with clear status indicators
+- **Styling:** Status colors (green for complete, yellow for in progress, red for pending)
+
+### Regulatory Compliance Section
+- **CNDP Compliance (Law No. 09-08):** Status indicator (✓ Compliant / ⚠️ In Review)
+- **DMP Regulations:** Status indicator (✓ Compliant / ⚠️ Validation Pending)
+- **Regulatory Framework Link:** Link to comprehensive regulatory framework document
+- **Display:** Card section showing overall compliance status
+- **Styling:** Status badges with color coding
 
 ### Action Buttons
 - **Cancel:** Discard changes
@@ -101,6 +152,9 @@
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/system-config`
 - [Historical Data Routing Proposal](../../../../02-architecture/frontend/historical-data-routing-proposal.md)
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Cloud Services Regulation (2024) and Law No. 09-08
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and cloud services compliance
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

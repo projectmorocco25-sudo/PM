@@ -212,6 +212,9 @@
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Cards, buttons, modals
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-based access
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Modals, confirmations
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including enforcement action requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including enforcement and approval policies
 
 ---
 

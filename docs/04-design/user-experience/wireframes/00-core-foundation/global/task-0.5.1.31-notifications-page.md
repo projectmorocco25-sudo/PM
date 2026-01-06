@@ -169,6 +169,8 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/notifications`
 - [Notification Center Component](../layout-navigation/task-0.5.1.17-notification-center-component.md) - Dropdown notification center reference
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - List, Filter, Search components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

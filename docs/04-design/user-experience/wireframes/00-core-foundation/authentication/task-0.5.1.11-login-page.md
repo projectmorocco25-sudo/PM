@@ -258,6 +258,8 @@
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Form patterns and validation
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Input, Button, Checkbox components
 - [Design System](../../../../02-architecture/frontend/design-system.md) - Colors, typography, spacing
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP
 
 ---
 

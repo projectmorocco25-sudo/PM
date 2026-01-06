@@ -18,6 +18,16 @@
 │ Audit Logs                    [Export] [Filters ▼] [Search] │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
+│ │ ℹ️ Compliance Information                                 ││
+│ │                                                          ││
+│ │ • Data Retention: 7 years minimum (per regulatory      ││
+│ │   requirements - Law No. 09-08, DMP regulations)        ││
+│ │ • CNDP Compliance: All audit log access complies with   ││
+│ │   Law No. 09-08 (Protection of Personal Data)           ││
+│ │ • [View Regulatory Framework]                           ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
 │ │ Timestamp      User      Action    Table    Record  Details││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ 2025-01-01     John Doe  CREATE    products 12345   [View]││
@@ -44,6 +54,13 @@
 - **Breadcrumbs:** "Home > Audit > Logs"
 - **Title:** "Audit Logs"
 - **Actions:** Export button (MOH Tier 1 only), Filters, Search
+
+### Compliance Information Section
+- **Data Retention:** "7 years minimum (per regulatory requirements - Law No. 09-08, DMP regulations)"
+- **CNDP Compliance:** "All audit log access complies with Law No. 09-08 (Protection of Personal Data)"
+- **Regulatory Reference:** Link to regulatory framework document
+- **Display:** Info banner at top of page (collapsible)
+- **Styling:** Light blue background (#eff6ff), info icon, dismissible
 
 ### Audit Log Table
 - **Columns:** Timestamp, User, Action, Table, Record ID, Details
@@ -83,6 +100,9 @@
 ## Related Documents
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/audit/logs`
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

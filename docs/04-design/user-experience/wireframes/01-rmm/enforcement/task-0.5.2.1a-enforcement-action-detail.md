@@ -36,6 +36,7 @@
 │ │ Violation Reference: WSL Submission #12345              ││
 │ │                                                          ││
 │ │ Legal Basis: Article 15, Section 3 of Regulation...   ││
+│ │ [View Regulatory Framework]                             ││
 │ │                                                          ││
 │ │ Justification:                                          ││
 │ │ The company failed to submit weekly stock levels (WSL)   ││
@@ -68,6 +69,8 @@
 │ │                                                          ││
 │ │ Status: No Appeal                                       ││
 │ │ Appeal Window: 28 days remaining (30-day window)      ││
+│ │ Appeal Period: 30 calendar days from execution date     ││
+│ │ (per DMP regulations)                                   ││
 │ │                                                          ││
 │ │ [Company users only: Submit Appeal button]              ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -131,7 +134,8 @@
   - **Company:** Company name (link to company detail)
   - **Violation Type:** Violation type description
   - **Violation Reference:** Link to related violation (breach, submission, etc.)
-  - **Legal Basis:** Legal basis text (truncated, expandable)
+  - **Legal Basis:** Legal basis text (truncated, expandable) with link to regulatory framework
+  - **Regulatory Reference:** "See [Regulatory Framework](../../../../03-governance/regulatory-framework.md) for complete regulatory basis"
   - **Justification:** Full justification text (truncated if long, expandable)
 - **Styling:**
   - **Labels:** 14px, color: #6b7280, font-weight: 500
@@ -152,6 +156,8 @@
 - **Status Display:**
   - **Appeal Status:** "No Appeal" or appeal status
   - **Appeal Window:** Countdown (e.g., "28 days remaining")
+  - **Appeal Period:** "30 calendar days from execution date (per DMP regulations)"
+  - **Regulatory Reference:** Note that appeal period is per DMP regulations
 - **Actions (Company users only):**
   - **Submit Appeal Button:** Primary button (if within 30-day window)
   - **View Appeal Link:** If appeal exists
@@ -252,6 +258,9 @@
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Cards, badges, timelines
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-based access
 - [Workflow Architecture](../../../../02-architecture/workflow-architecture.md) - Workflow states
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including enforcement action requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including enforcement and appeal policies
 
 ---
 

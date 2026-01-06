@@ -453,6 +453,9 @@ const violationTypes = [
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-based access
 - [Navigation & Layout Patterns](../../../../02-architecture/frontend/navigation-layout-patterns.md) - Dashboard layout
 - [System Architecture](../../../../02-architecture/system-architecture.md) - Module activation and dependencies
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including enforcement action requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including enforcement policies
 
 ---
 

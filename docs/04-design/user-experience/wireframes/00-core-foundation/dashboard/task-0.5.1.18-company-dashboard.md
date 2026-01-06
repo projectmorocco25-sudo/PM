@@ -60,6 +60,7 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │   Status: Executed  Date: 2 days ago                    ││
 │ │   Violation: WSL submission overdue                      ││
 │ │   [View Details] [Appeal] (30 days remaining)           ││
+│ │   Appeal Period: 30 calendar days (per DMP regulations)││
 │ │                                                          ││
 │ │ ⚠️ Warning - Critical Medicine Non-Compliance          ││
 │ │   Status: Executed  Date: 1 week ago                   ││
@@ -163,6 +164,7 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │   Violation: WSL submission overdue (2 weeks)           ││
 │ │   Legal Basis: Article 12, Section 3                    ││
 │ │   Appeal Deadline: 28 days remaining                    ││
+│ │   (30-day window per DMP regulations)                  ││
 │ │   [View Full Details] [Appeal]                          ││
 │ │                                                          ││
 │ │ ⚠️ Warning - Critical Medicine Non-Compliance          ││
@@ -593,6 +595,9 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, Modal, Dropdown components
 - [Design System](../../../../02-architecture/frontend/design-system.md) - Colors, typography, spacing
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Modal forms
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including appeal policies
 
 ---
 

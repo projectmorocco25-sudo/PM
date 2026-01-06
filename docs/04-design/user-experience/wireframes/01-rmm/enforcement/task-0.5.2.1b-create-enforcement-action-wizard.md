@@ -91,6 +91,9 @@
 │ │                                                          ││
 │ │ Or enter custom legal basis:                            ││
 │ │ [________________________________________________]      ││
+│ │                                                          ││
+│ │ ℹ️ Legal basis must align with DMP regulations.        ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -205,16 +208,19 @@
 
 **Legal Basis Selection:**
 - **Input Type:** Dropdown with common legal bases + custom input
-- **Options:** Pre-defined legal bases from regulations
-- **Custom Option:** Text input for custom legal basis
-- **Validation:** Required field
+- **Options:** Pre-defined legal bases from DMP regulations (to be populated from regulatory framework)
+- **Regulatory Reference:** Link to regulatory framework document
+- **Validation Note:** "Legal basis must align with DMP regulations"
+- **Custom Option:** Text input for custom legal basis (with validation note)
+- **Validation:** Required field, must align with DMP regulations
 
 **Justification:**
 - **Input Type:** Multi-line textarea
-- **Minimum Length:** 50 characters
+- **Minimum Length:** 50 characters (per regulatory requirements)
 - **Character Counter:** Shows current count / minimum
+- **Regulatory Note:** "Justification must reference specific regulatory basis per DMP requirements"
 - **Validation:** Required, minimum 50 characters
-- **Placeholder:** Guidance text on what to include
+- **Placeholder:** Guidance text on what to include (regulatory basis, violation details, previous warnings)
 
 **Internal Notes (Optional):**
 - **Input Type:** Multi-line textarea
@@ -319,6 +325,9 @@
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Form validation, multi-step forms
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Forms, wizards
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-based access
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including enforcement action requirements
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including enforcement policies
 
 ---
 

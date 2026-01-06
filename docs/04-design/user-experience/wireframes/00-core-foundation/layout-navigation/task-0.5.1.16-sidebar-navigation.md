@@ -314,6 +314,8 @@
 - [Navigation & Layout Patterns](../../../../02-architecture/frontend/navigation-layout-patterns.md) - Complete sidebar specifications
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - All route paths
 - [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Role-specific navigation visibility
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

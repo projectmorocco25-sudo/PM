@@ -46,6 +46,12 @@
 │ │ Date Range: [Start Date] to [End Date]                 ││
 │ │ Format: ☑ PDF  ☐ CSV                                   ││
 │ │                                                          ││
+│ │ ℹ️ Compliance Notice:                                   ││
+│ │ Reports generated in compliance with Law No. 09-08     ││
+│ │ (CNDP) and DMP regulations. Reports are retained for   ││
+│ │ minimum 7 years per regulatory requirements.            ││
+│ │ [View Regulatory Framework]                            ││
+│ │                                                          ││
 │ │ [Cancel]                                    [Generate]  ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘
@@ -68,6 +74,11 @@
 - **Report Type:** User Activity, System Changes, Compliance Audit, Enforcement Actions, Custom
 - **Date Range:** Start and end date pickers
 - **Format:** PDF, CSV
+- **Compliance Notice:**
+  - **Text:** "Reports generated in compliance with Law No. 09-08 (CNDP) and DMP regulations. Reports are retained for minimum 7 years per regulatory requirements."
+  - **Regulatory Reference:** Link to regulatory framework document
+  - **Display:** Info banner within modal, above action buttons
+  - **Styling:** Light blue background (#eff6ff), info icon
 - **Enforcement Actions Report:**
   - **Filters:** Action type (Warning/Fine/Suspension), Status, Company, Date range
   - **Includes:** Action details, workflow status, appeals, execution tracking
@@ -178,6 +189,9 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/audit/reports`
 - [Audit Logs List Wireframe](./task-0.5.1.32-audit-logs-list.md) - Audit logs reference
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, List, Modal components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

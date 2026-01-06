@@ -108,6 +108,8 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/history`
 - [Historical Data Routing Proposal](../../../../02-architecture/frontend/historical-data-routing-proposal.md) - Historical data access patterns
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Timeline, Filter, Search components
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including data retention requirements
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including data retention
 
 ---
 

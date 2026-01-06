@@ -411,6 +411,8 @@
 - [Navigation & Layout Patterns](../../../../02-architecture/frontend/navigation-layout-patterns.md) - Header specifications
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Badge, Avatar, Dropdown components
 - [Design System](../../../../02-architecture/frontend/design-system.md) - Colors, spacing
+- [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
 
 ---
 

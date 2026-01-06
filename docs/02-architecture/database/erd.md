@@ -370,6 +370,9 @@ export_authorizations (ECS) ──> Threshold switch trigger ──> thresholds 
 - [Database Schema Design](schema-design.md)
 - [Data Dictionary](data-dictionary.md)
 - [RLS Policy Framework Design](../../security/rls-policy-framework.md)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

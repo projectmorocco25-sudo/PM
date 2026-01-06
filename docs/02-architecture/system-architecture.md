@@ -374,6 +374,9 @@ Each module maintains clear data ownership:
 - [Database Schema Design](database/schema-design.md) - Detailed database design (to be created Week 2)
 - [API Specifications](api/) - Detailed API documentation (to be created Week 3)
 - [Security Architecture](security/security-architecture.md) - Detailed security design (to be created Week 4)
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08 and Cloud Services Regulation
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and cloud services compliance
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Phase 0 Plan](../../05-project-management/phases/phase-0-technical-foundation.md)
 - [Project Plan](../../05-project-management/project-plan.md)
 - [Project Brief](../../00-overview/Project%20Brief%20–%20PM.md)

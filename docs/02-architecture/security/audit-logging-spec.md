@@ -14,7 +14,7 @@ The PM platform implements a comprehensive audit logging system with hash chaini
 
 1. **Comprehensive Coverage:** All data changes, approvals, state transitions, and system operations logged
 2. **Immutability:** Hash chaining ensures audit logs cannot be tampered with
-3. **Regulatory Compliance:** Meets MOH regulatory requirements (7-year retention)
+3. **Regulatory Compliance:** Meets MOH regulatory requirements (7-year retention per [Regulatory Framework](../../03-governance/regulatory-framework.md) and [Compliance Requirements](../../03-governance/compliance-requirements.md))
 4. **Complete Details:** Full context for each operation (who, what, when, why, how)
 5. **Queryable:** Easy to query and analyze audit logs
 6. **Performance:** Efficient logging without impacting system performance
@@ -522,6 +522,9 @@ SELECT * FROM verify_audit_chain() WHERE is_valid = false;
 - [Security Architecture](security-architecture.md) - Security overview
 - [RLS Policy Framework Design](rls-policy-framework.md) - RLS details
 - [Database Schema Design](../database/schema-design.md) - Database schema
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08 and data retention requirements
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

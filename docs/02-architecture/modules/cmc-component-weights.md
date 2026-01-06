@@ -299,6 +299,9 @@ Where:
 - [Phase 1 Implementation Plan](../../../05-project-management/phases/Phase-1-Implementation-Plan.md) - Task 1.3.1.12a (Component weight configuration)
 - [CMC Wireframes](../../../04-design/user-experience/wireframes/04-cmc/README.md) - Score component visibility rules
 - [RPC Functions](../../api/rpc-functions.md) - `cmc_calculate_total_score` function
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ## Approval Status
 

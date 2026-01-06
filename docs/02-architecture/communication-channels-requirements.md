@@ -629,6 +629,9 @@ This communication system must support regulatory compliance, maintain complete 
 - [Security Architecture](./security/security-architecture.md) - Security requirements
 - [RLS Policy Framework](./security/rls-policy-framework.md) - RLS policy design
 - [Audit Logging Specification](./security/audit-logging-spec.md) - Audit logging requirements
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Navigation & Layout Patterns](./frontend/navigation-layout-patterns.md) - Navigation patterns
 - [Routing Structure](./frontend/routing-structure.md) - Routing structure
 - [File Upload & Storage Security](./security/file-upload-storage-security.md) - File upload security

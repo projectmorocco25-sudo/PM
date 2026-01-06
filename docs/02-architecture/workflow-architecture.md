@@ -624,6 +624,10 @@ ORDER BY updated_at DESC;
 
 - [API Specifications](api/api-specification.md) - API design details
 - [RPC Function Specifications](api/rpc-functions.md) - RPC function details
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
+- [Governance Workflows](../../03-governance/governance-workflows.md) - Governance workflow details
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 - [Database Schema Design](database/schema-design.md)
 

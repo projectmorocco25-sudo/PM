@@ -548,6 +548,9 @@ $$;
 - [Backend Input Sanitization Strategy](backend-input-sanitization-strategy.md) - Input sanitization
 - [Security Architecture](security-architecture.md) - Security overview
 - [Audit Logging Specification](audit-logging-spec.md) - Audit logging
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

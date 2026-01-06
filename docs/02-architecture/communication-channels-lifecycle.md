@@ -549,6 +549,9 @@ This lifecycle applies to all communication types:
 - [Database Schema Design](./database/schema-design.md) - Database schema for communications
 - [Audit Logging Specification](./security/audit-logging-spec.md) - Audit logging requirements
 - [RLS Policy Framework](./security/rls-policy-framework.md) - Data isolation policies
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and data retention
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Phase 0.5 Wireframes](../../05-project-management/phases/phase-0-5-ui-ux-wireframes.md) - UI wireframes with status indicators
 - [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md) - Implementation tasks
 

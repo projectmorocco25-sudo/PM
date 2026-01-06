@@ -439,6 +439,9 @@ X-RateLimit-Reset: 1640995200
 - [API Specification](../api/api-specification.md) - API design overview
 - [Integration Architecture](integration-architecture.md) - Integration patterns
 - [Customs API Specification](customs-api-spec.md) - Customs API specs
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

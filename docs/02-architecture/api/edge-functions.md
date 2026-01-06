@@ -481,6 +481,9 @@ SELECT cron.schedule(
 - [API Specification](api-specification.md) - API design overview
 - [RPC Function Specifications](rpc-functions.md) - RPC function specs
 - [Integration API Specifications](../integration/erp-api-spec.md) - ERP API specs
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

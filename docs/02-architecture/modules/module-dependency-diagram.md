@@ -293,6 +293,9 @@ ECS (Export Authorization)
 ## Related Documents
 
 - [System Architecture](../system-architecture.md)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 - [Project Brief](../../00-overview/Project%20Brief%20–%20PM.md)
 

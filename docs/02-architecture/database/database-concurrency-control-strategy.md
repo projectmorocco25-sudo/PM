@@ -537,6 +537,9 @@ WHERE NOT blocked_locks.granted;
 - [Database Transaction Management Strategy](database-transaction-management-strategy.md) - Transaction details
 - [RPC Function Specifications](../api/rpc-functions.md) - RPC function patterns
 - [Database Schema Design](schema-design.md) - Schema details
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

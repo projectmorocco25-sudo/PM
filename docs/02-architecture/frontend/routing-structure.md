@@ -752,6 +752,9 @@ export default function GovernancePage() {
 - [System Architecture](../system-architecture.md) - System overview
 - [Security Architecture](../security/security-architecture.md) - Security details
 - [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns and implementation details
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

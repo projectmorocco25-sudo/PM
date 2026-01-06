@@ -606,6 +606,9 @@ CREATE INDEX IF NOT EXISTS idx_breaches_company_status_date ON breaches(company_
 - [Database Schema Design](schema-design.md)
 - [RLS Policy Framework Design](../security/rls-policy-framework.md)
 - [Development Environment Setup](../../../06-development/development-setup.md) - Setup guide (Week 4)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

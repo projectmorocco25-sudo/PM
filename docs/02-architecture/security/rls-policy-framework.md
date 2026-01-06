@@ -663,6 +663,10 @@ CREATE INDEX idx_system_config_module_name ON system_config(module_name);
 
 - [Database Schema Design](../database/schema-design.md)
 - [Security Architecture](security-architecture.md) - Detailed security architecture (Week 4)
+- [Audit Logging Specification](audit-logging-spec.md) - Audit logging details
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

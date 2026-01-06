@@ -406,6 +406,9 @@ This data dictionary defines all fields across all database tables, including da
 - [Database Schema Design](schema-design.md)
 - [Entity Relationship Diagram](erd.md)
 - [RLS Policy Framework Design](../../security/rls-policy-framework.md)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including data retention requirements
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including data retention
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

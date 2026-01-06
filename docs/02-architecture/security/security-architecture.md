@@ -16,7 +16,7 @@ The PM platform implements a multi-layered security architecture using Supabase 
 2. **Least Privilege:** Users have minimum necessary permissions
 3. **Data Isolation:** Company data isolated at database level (RLS)
 4. **Audit Trail:** All security-relevant events logged
-5. **Regulatory Compliance:** Meets MOH regulatory requirements
+5. **Regulatory Compliance:** Meets MOH regulatory requirements (see [Regulatory Framework](../../03-governance/regulatory-framework.md) and [Compliance Requirements](../../03-governance/compliance-requirements.md))
 6. **Immutability:** Audit logs are immutable (hash-chained)
 
 ## Authentication Architecture
@@ -380,6 +380,9 @@ User → Authenticated → JWT token stored → Token validated on each request 
 - [RLS Policy Framework Design](rls-policy-framework.md) - RLS policy details
 - [Audit Logging Specification](audit-logging-spec.md) - Audit logging details
 - [Database Schema Design](../database/schema-design.md) - Database security
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Law No. 09-08 and Cloud Services Regulation
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements including CNDP and cloud services compliance
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

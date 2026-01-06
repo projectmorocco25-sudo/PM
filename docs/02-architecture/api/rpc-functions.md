@@ -683,6 +683,9 @@ SELECT log_historical_data_access(
 - [Edge Function Specifications](edge-functions.md) - Edge Function specs
 - [Workflow Architecture](../workflow-architecture.md) - Workflow state machines
 - [Historical Data Routing Proposal](../frontend/historical-data-routing-proposal.md) - Historical data access patterns
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

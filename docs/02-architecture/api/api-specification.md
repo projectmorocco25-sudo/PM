@@ -321,6 +321,9 @@ X-RateLimit-Reset: 1640995200
 - [Integration API Specifications](../integration/erp-api-spec.md) - ERP API specs
 - [Integration API Specifications](../integration/customs-api-spec.md) - Customs API specs
 - [Workflow Architecture](../workflow-architecture.md) - Workflow state machines
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

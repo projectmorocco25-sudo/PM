@@ -395,6 +395,9 @@ $$;
 - [Backend Validation Strategy](backend-validation-strategy.md) - Input validation
 - [Security Architecture](security-architecture.md) - Security overview
 - [RPC Function Specifications](../api/rpc-functions.md) - RPC function patterns
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

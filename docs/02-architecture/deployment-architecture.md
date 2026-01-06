@@ -317,6 +317,9 @@ Git Repository
 - [System Architecture](system-architecture.md)
 - [Infrastructure Documentation](../../08-deployment/infrastructure.md) - Detailed infrastructure (Week 4)
 - [Development Environment Setup](../../06-development/development-setup.md) - Setup guide (Week 4)
+- [Regulatory Framework](../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including Cloud Services Regulation (2024)
+- [Compliance Requirements](../../03-governance/compliance-requirements.md) - Detailed compliance requirements including cloud services compliance
+- [Regulatory Policies](../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 - [Project Plan](../../05-project-management/project-plan.md)
 

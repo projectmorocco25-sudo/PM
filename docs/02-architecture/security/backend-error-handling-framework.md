@@ -487,6 +487,9 @@ PERFORM create_audit_log(
 - [API Specification](../api/api-specification.md) - Error response format
 - [Backend Validation Strategy](backend-validation-strategy.md) - Validation errors
 - [Audit Logging Specification](audit-logging-spec.md) - Error logging
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

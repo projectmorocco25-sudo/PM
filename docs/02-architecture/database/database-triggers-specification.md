@@ -383,6 +383,9 @@ EXECUTE FUNCTION create_notification_on_breach();
 - [Database Schema Design](schema-design.md) - Table definitions
 - [Audit Logging Specification](../security/audit-logging-spec.md) - Audit triggers
 - [RPC Function Specifications](../api/rpc-functions.md) - Business logic (preferred over triggers)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

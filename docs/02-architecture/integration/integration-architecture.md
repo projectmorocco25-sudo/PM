@@ -357,6 +357,9 @@ Customs System
 - [System Architecture](../system-architecture.md)
 - [API Specifications](api/) - Detailed API specs (Week 3)
 - [Integration API Specifications](api/) - Detailed integration API specs (Week 3)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 - [Project Brief](../../00-overview/Project%20Brief%20–%20PM.md)
 

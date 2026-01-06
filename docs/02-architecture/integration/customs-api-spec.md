@@ -369,6 +369,9 @@ Real-time integration with customs systems for automatic verification
 - [API Specification](../api/api-specification.md) - API design overview
 - [Integration Architecture](integration-architecture.md) - Integration patterns
 - [ERP API Specification](erp-api-spec.md) - ERP API specs
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including customs regulations
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

@@ -415,6 +415,9 @@ $$;
 - [Security Architecture](security-architecture.md) - Security overview
 - [Infrastructure Documentation](../../08-deployment/infrastructure.md) - Infrastructure secrets
 - [Development Setup Guide](../../06-development/development-setup.md) - Local secrets
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

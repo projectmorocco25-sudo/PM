@@ -1006,6 +1006,9 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - [Data Dictionary](data-dictionary.md)
 - [RLS Policy Framework Design](../../security/rls-policy-framework.md)
 - [Migration Strategy](migration-strategy.md)
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including data retention requirements
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including data retention
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 - [Technical Decision Log](../../../06-development/technical-decisions/decision-log.md)
 
 ---

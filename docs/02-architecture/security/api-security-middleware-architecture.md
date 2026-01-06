@@ -537,6 +537,9 @@ export function handleCORS(req: Request) {
 - [Backend Input Sanitization Strategy](backend-input-sanitization-strategy.md) - Input sanitization
 - [Backend Error Handling Framework](backend-error-handling-framework.md) - Error handling
 - [API Specification](../api/api-specification.md) - API specifications
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
 
 ---
 

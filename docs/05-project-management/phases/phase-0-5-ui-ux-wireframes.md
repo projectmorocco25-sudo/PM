@@ -60,7 +60,7 @@ Wireframes are organized by priority to focus on critical path items first, enab
 | Priority | Focus | Days | Wireframes | Status |
 |----------|-------|------|------------|--------|
 | **Priority 1** 🔴 | Critical Foundation | 1-2 | 20 wireframes | 🟡 Ready for Creation |
-| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 18 wireframes | ⚪ Not Started |
+| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 18 wireframes | 🟡 In Progress |
 | **Priority 3** 🔴 | Critical VCI Workflows | 5-6 | 12 wireframes | ⚪ Not Started |
 | **Priority 4** 🟡 | Supporting VCI & RMM | 7-8 | 8 wireframes | ⚪ Not Started |
 | **Priority 5** 🟡 | ECS Module | 9-10 | 9 wireframes | ⚪ Not Started |
@@ -140,22 +140,22 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 
 **Rationale:** Enforcement actions (warnings, fines, suspensions) are critical MOH governance functions requiring dedicated workflow management, approval processes, and regulatory compliance tracking. Must be wireframed early to support dashboard integration and regulatory requirements.
 
-- [ ] **Task 0.5.2.0:** Wireframe - Enforcement dashboard page (summary, recent actions, pending approvals, enforcement metrics, action type breakdown)
-- [ ] **Task 0.5.2.1:** Wireframe - Enforcement actions list page (all actions, filters: action type/status/company/date range, search, pagination, status indicators)
-- [ ] **Task 0.5.2.1a:** Wireframe - Enforcement action detail page (action information, workflow status, approval chain, violation details, appeal status, execution tracking)
-- [ ] **Task 0.5.2.1b:** Wireframe - Create enforcement action wizard (action type selection, violation selection, amount input for fines, legal basis, justification, approval workflow)
-- [ ] **Task 0.5.2.1c:** Wireframe - Pending approvals page (actions pending Tier 1 approval, approval interface, bulk approval actions)
-- [ ] **Task 0.5.2.1d:** Wireframe - Enforcement reports page (enforcement analytics, trends, action type breakdown, company compliance tracking)
+- [x] **Task 0.5.2.0:** Wireframe - Enforcement dashboard page (summary, recent actions, pending approvals, enforcement metrics, action type breakdown) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.0-enforcement-dashboard.md)
+- [x] **Task 0.5.2.1:** Wireframe - Enforcement actions list page (all actions, filters: action type/status/company/date range, search, pagination, status indicators) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.1-enforcement-actions-list.md)
+- [x] **Task 0.5.2.1a:** Wireframe - Enforcement action detail page (action information, workflow status, approval chain, violation details, appeal status, execution tracking) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.1a-enforcement-action-detail.md)
+- [x] **Task 0.5.2.1b:** Wireframe - Create enforcement action wizard (action type selection, violation selection, amount input for fines, legal basis, justification, approval workflow) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.1b-create-enforcement-action-wizard.md)
+- [x] **Task 0.5.2.1c:** Wireframe - Pending approvals page (actions pending Tier 1 approval, approval interface, bulk approval actions) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.1c-pending-approvals.md)
+- [x] **Task 0.5.2.1d:** Wireframe - Enforcement reports page (enforcement analytics, trends, action type breakdown, company compliance tracking) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.1d-enforcement-reports.md)
 
 **Note:** Enforcement module is MOH Tier 1 and Tier 2 only. Companies can view their own enforcement actions but cannot create or manage them.
 
 ### RMM Core Workflows (Critical)
-- [ ] **Task 0.5.2.2:** Wireframe - Companies list page (table view, filters, search, pagination, role-based actions)
-- [ ] **Task 0.5.2.3:** Wireframe - Company detail page (information sections, tabs: Overview | Products | History, action buttons, related products)
+- [x] **Task 0.5.2.2:** Wireframe - Companies list page (table view, filters, search, pagination, role-based actions) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.2-companies-list.md)
+- [x] **Task 0.5.2.3:** Wireframe - Company detail page (information sections, tabs: Overview | Products | History, action buttons, related products) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.3-company-detail.md)
 - [ ] **Task 0.5.2.8:** Wireframe - Company create/edit form (form sections, validation, draft auto-save indicator)
-- [ ] **Task 0.5.2.11:** Wireframe - Registry submission list page (my submissions, pending approvals, status filters)
-- [ ] **Task 0.5.2.12:** Wireframe - Registry submission detail page (submission data, workflow status indicator, approval history timeline, action buttons)
-- [ ] **Task 0.5.2.13:** Wireframe - Registry submission workflow states (draft, submitted, tier2_verified, tier1_approved, tier2_implemented, completed, rejected)
+- [x] **Task 0.5.2.11:** Wireframe - Registry submission list page (my submissions, pending approvals, status filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.11-registry-submission-list.md)
+- [x] **Task 0.5.2.12:** Wireframe - Registry submission detail page (submission data, workflow status indicator, approval history timeline, action buttons) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.12-registry-submission-detail.md)
+- [x] **Task 0.5.2.13:** Wireframe - Registry submission workflow states (draft, submitted, tier2_verified, tier1_approved, tier2_implemented, completed, rejected) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.13-registry-submission-workflow-states.md)
 
 ### RMM Supporting Pages
 - [ ] **Task 0.5.2.4:** Wireframe - Products list page (company-scoped, filters, search, product cards/table)

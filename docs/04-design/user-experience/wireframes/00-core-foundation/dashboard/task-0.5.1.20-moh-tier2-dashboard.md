@@ -5,9 +5,26 @@
 **File:** `task-0.5.1.20-moh-tier2-dashboard.png`  
 **Priority:** 🔴 Critical Foundation
 
+**Design Approach:** Modern enterprise dashboard with tabbed navigation, modal-based verification actions, and workflow-optimized card organization. Inspired by Stripe, GitHub, Linear, and shadcn/ui best practices.
+
 ---
 
-## Wireframe Layout - Scenario 1: %SC Unaddressed (High Priority)
+## Overview
+
+This dashboard uses a **tabbed interface** to organize content by workflow (Overview, Verification, Follow-ups, Analysis), **modals** for verification actions to maintain context, and **priority-based card layouts** optimized for Tier 2 verification and oversight workflows.
+
+### Key Improvements
+- **Tabs:** Organize content into Overview, Verification, Follow-ups, Analysis
+- **Modals:** Verification actions (Verify, Flag, Request Info) without navigation
+- **Card Consolidation:** Combined verification queues with smart filters
+- **Sticky Header:** Quick actions always accessible
+- **Workflow Focus:** Optimized for verification and follow-up tasks
+
+---
+
+## Wireframe Layout - Overview Tab (Default)
+
+### Scenario 1: %SC Unaddressed (Emergency State)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -16,138 +33,514 @@
 │ Verification Overview            [Filters ▼] [Sort ▼]        │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Submission Compliance (%SC) - PRIORITY                  ││
-│ │                                                          ││
-│ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ Current Period: Week 3 (Jan 15-21)                 │ ││
-│ │ │                                                      │ ││
-│ │ │         ┌─────────────┐                              │ ││
-│ │ │         │             │                              │ ││
-│ │ │         │    68%      │                              │ ││
-│ │ │         │   %SC       │                              │ ││
-│ │ │         │             │                              │ ││
-│ │ │         │ 🔴 Below    │                              │ ││
-│ │ │         │ Threshold   │                              │ ││
-│ │ │         │             │                              │ ││
-│ │ │         │ Threshold:  │                              │ ││
-│ │ │         │    75%      │                              │ ││
-│ │ │         └─────────────┘                              │ ││
-│ │ │                                                      │ ││
-│ │ │    ┌─────────────────────────────────────┐          │ ││
-│ │ │    │ 🟢 On-Time: 45% (112 companies)      │          │ ││
-│ │ │    │ 🟡 Late: 23% (58 companies)         │          │ ││
-│ │ │    │ 🔴 Unsubmitted: 32% (80 companies)  │          │ ││
-│ │ │    └─────────────────────────────────────┘          │ ││
-│ │ │                                                      │ ││
-│ │ │    Total Expected: 250 companies                     │ ││
-│ │ │    Compliant: 68% (On-Time + Late)                   │ ││
-│ │ └─────────────────────────────────────────────────────┘ ││
+│ │ [Overview] [Verification] [Follow-ups] [Analysis]        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Follow-up Queue - Unsubmitted Companies (80)             ││
+│ │ Quick Actions                                            ││
+│ │ [Verify Selected] [Flag Selected] [Request Info]        ││
+│ │ [Export] [Filters ▼]                                    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Submission Compliance (%SC) - PRIORITY        [Collapse]││
 │ │                                                          ││
-│ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ Company ABC Pharma          [Extreme] 🔴            │ ││
-│ │ │ • WSL: 2 weeks overdue  • Critical medicines: 5     │ ││
-│ │ │ • MSQ: 1 month overdue  • Repeated offender         │ ││
-│ │ │ Status: Alerted  Follow-up: Tier 1 Required        │ ││
-│ │ │ Enforcement: 2 warnings, 0 fines                   │ ││
-│ │ │ [Alert] [Escalate to Tier 1] [Create Enforcement]   │ ││
-│ │ │ [View Details]                                      │ ││
-│ │ ├─────────────────────────────────────────────────────┤ ││
-│ │ │ Company DEF Ltd            [Normal] 🟡              │ ││
-│ │ │ • WSL: 3 days overdue                               │ ││
-│ │ │ Status: Not Alerted  Follow-up: Tier 2            │ ││
-│ │ │ Enforcement: 0 warnings, 0 fines                    │ ││
-│ │ │ [Alert] [Start Follow-up] [View Details]           │ ││
-│ │ └─────────────────────────────────────────────────────┘ ││
+│ │         ┌─────────────┐                                  ││
+│ │         │             │                                  ││
+│ │         │    68%      │                                  ││
+│ │         │   %SC       │                                  ││
+│ │         │             │                                  ││
+│ │         │ 🔴 Below    │                                  ││
+│ │         │ Threshold   │                                  ││
+│ │         └─────────────┘                                  ││
 │ │                                                          ││
-│ │ [View All] [Filter: Extreme Cases] [Export]            ││
+│ │    ┌─────────────────────────────────────┐              ││
+│ │    │ 🟢 On-Time: 45% (112 companies)      │              ││
+│ │    │ 🟡 Late: 23% (58 companies)         │              ││
+│ │    │ 🔴 Unsubmitted: 32% (80 companies)  │              ││
+│ │    └─────────────────────────────────────┘              ││
+│ │                                                          ││
+│ │    [View Follow-up Queue →]                              ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Pending      │ │ Oversight    │ │ Review Queue │        ││
+│ │ Verifications│ │ Metrics      │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ 8            │ │ Verification │ │ • Submission │        ││
+│ │              │ │ Rate: 95%    │ │   #12345     │        ││
+│ │ Recent:      │ │              │ │   Company ABC│        ││
+│ │ • Submission │ │ Avg. Time:   │ │   High       │        ││
+│ │   #12345     │ │   2.5 hours  │ │   [Verify]   │        ││
+│ │   Company ABC│ │              │ │              │        ││
+│ │   High       │ │ Trend: ↗ +2% │ │ • Submission │        ││
+│ │   1h ago     │ │              │ │   #12346     │        ││
+│ │              │ │ [Details →] │ │   Company XYZ│        ││
+│ │ • Submission │ │              │ │   Medium     │        ││
+│ │   #12346     │ │              │ │   [Verify]   │        ││
+│ │   Company XYZ│ │              │ │              │        ││
+│ │   Medium     │ │              │ │ [View All →]│        ││
+│ │   2h ago     │ │              │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ [View All →]│ │              │ │              │        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Scenario 2: %SC Addressed (Normal State)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Verification Overview            [Filters ▼] [Sort ▼]        │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Verification (8)] [Follow-ups] [Analysis]    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Quick Actions                                            ││
+│ │ [Verify Selected] [Flag Selected] [Request Info]        ││
+│ │ [Export] [Filters ▼]                                    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Submission Compliance (%SC) - Collapsed       [Expand]  ││
+│ │ %SC: 82%  🟢 Above Threshold (75%)                       ││
+│ │ ✅ All Actions Taken: 80 alerted, 65 in follow-up       ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Pending      │ │ Oversight    │ │ Review Queue │        ││
+│ │ Verifications│ │ Metrics      │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ [Same as Scenario 1]                                    ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Verification Tab
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Verification Overview            [Filters ▼] [Sort ▼]        │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Verification (8)] [Follow-ups] [Analysis]    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Quick Actions                                            ││
+│ │ [Verify Selected] [Flag Selected] [Request Info]        ││
+│ │ [Approve All] [Export] [Filters ▼]                      ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Verification Queue (8 items)                [Collapse]  ││
+│ │                                                          ││
+│ │ [Filter: All | High | Medium | Low]                     ││
+│ │ [Sort: Priority ▼ | Date | Company]                     ││
+│ │                                                          ││
+│ │ ☑ Submission #12345  Company ABC  [High Priority] 🔴   ││
+│ │   Product: XYZ  Submitted: 2 hours ago                  ││
+│ │   Type: WSL  Status: Pending Verification               ││
+│ │   [Verify] [Flag] [Request Info] [View Details]         ││
+│ │                                                          ││
+│ │ ☐ Submission #12346  Company XYZ  [Medium Priority] 🟡 ││
+│ │   Product: DEF  Submitted: 3 hours ago                  ││
+│ │   Type: MSQ  Status: Pending Verification               ││
+│ │   [Verify] [Flag] [Request Info] [View Details]         ││
+│ │                                                          ││
+│ │ ☐ Submission #12347  Company DEF  [Low Priority] 🟢    ││
+│ │   Product: GHI  Submitted: 5 hours ago                  ││
+│ │   Type: AAMS  Status: Pending Verification              ││
+│ │   [Verify] [Flag] [Request Info] [View Details]         ││
+│ │                                                          ││
+│ │ [Load More] [Select All] [Bulk Actions ▼]              ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Today's      │ │ This Week    │ │ Performance  │        ││
+│ │ Progress     │ │ Progress     │ │ Metrics      │        ││
+│ │              │ │              │ │              │        ││
+│ │ Verified: 12 │ │ Verified: 45 │ │ Avg. Time:   │        ││
+│ │ Pending: 8   │ │ Pending: 23  │ │   2.5 hours  │        ││
+│ │ Flagged: 2   │ │ Flagged: 8   │ │              │        ││
+│ │              │ │              │ │ Accuracy:    │        ││
+│ │ Target: 20   │ │ Target: 100  │ │   98.5%      │        ││
+│ │              │ │              │ │              │        ││
+│ │ Progress:    │ │ Progress:    │ │ [Details →] │        ││
+│ │ ████████░░   │ │ ████████░░   │ │              │        ││
+│ │ 60%          │ │ 68%          │ │              │        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Follow-ups Tab
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Verification Overview            [Filters ▼] [Sort ▼]        │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Verification] [Follow-ups (80)] [Analysis]   ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Quick Actions                                            ││
+│ │ [Alert Selected] [Start Follow-up] [Escalate to Tier 1] ││
+│ │ [Export] [Filters ▼]                                    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Follow-up Queue - Unsubmitted Companies (80) [Collapse] ││
+│ │                                                          ││
+│ │ [Filter: All | Extreme | Normal]                        ││
+│ │ [Sort: Priority ▼ | Days Overdue | Company]             ││
+│ │                                                          ││
+│ │ ☑ Company ABC Pharma          [Extreme] 🔴              ││
+│ │   • WSL: 2 weeks overdue  • Critical medicines: 5       ││
+│ │   • MSQ: 1 month overdue  • Repeated offender           ││
+│ │   Status: Alerted  Follow-up: Tier 1 Required          ││
+│ │   Enforcement: 2 warnings, 0 fines                      ││
+│ │   [Alert] [Escalate to Tier 1] [Create Enforcement]     ││
+│ │   [View Details]                                        ││
+│ │                                                          ││
+│ │ ☐ Company DEF Ltd            [Normal] 🟡                ││
+│ │   • WSL: 3 days overdue                                 ││
+│ │   Status: Not Alerted  Follow-up: Tier 2               ││
+│ │   Enforcement: 0 warnings, 0 fines                      ││
+│ │   [Alert] [Start Follow-up] [View Details]              ││
+│ │                                                          ││
+│ │ [Load More] [Select All] [Bulk Actions ▼]              ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ My Active    │ │ Escalated    │ │ Resolved     │        ││
+│ │ Follow-ups   │ │ to Tier 1    │ │ This Week    │        ││
+│ │              │ │              │ │              │        ││
+│ │ Active: 12   │ │ Pending: 5   │ │ Resolved: 18 │        ││
+│ │              │ │              │ │              │        ││
+│ │ • Company ABC│ │ • Company XYZ│ │ • Company GHI│        ││
+│ │   Due: Today │ │   Escalated  │ │   Resolved   │        ││
+│ │   [View]     │ │   2 days ago │ │   Yesterday  │        ││
+│ │              │ │   [View]     │ │              │        ││
+│ │ • Company DEF│ │              │ │ • Company JKL│        ││
+│ │   Due: Tomorrow│ │ [View All →]│ │   Resolved   │        ││
+│ │   [View]     │ │              │ │   2 days ago │        ││
+│ │              │ │              │ │              │        ││
+│ │ [View All →]│ │              │ │ [View All →]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Analysis Tab
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Verification Overview            [Filters ▼] [Sort ▼]        │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Verification] [Follow-ups] [Analysis (13)]   ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Quick Actions                                            ││
+│ │ [Analyze Selected] [Create Report] [Export]             ││
+│ │ [Filters ▼]                                             ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────────────┐ ┌──────────────────────┐          ││
+│ │ VCI - SKUs           │ │ Breach Analysis      │          ││
+│ │                      │ │ Queue                │          ││
+│ │ Action Required: 8   │ │                      │          ││
+│ │ Under Monitor: 15    │ │ 5 Breaches           │          ││
+│ │                      │ │                      │          ││
+│ │ • SKU ABC-123        │ │ • Breach #001        │          ││
+│ │   Company XYZ        │ │   Company ABC        │          ││
+│ │   Breach: 5 days     │ │   Critical           │          ││
+│ │   [View] [Action]    │ │   3 days old         │          ││
+│ │                      │ │   [Analyze]          │          ││
+│ │ • SKU DEF-456        │ │                      │          ││
+│ │   Company ABC        │ │ • Breach #002        │          ││
+│ │   Near threshold     │ │   Company XYZ        │          ││
+│ │   [View] [Monitor]   │ │   High               │          ││
+│ │                      │ │   2 days old         │          ││
+│ │ [View All →]        │ │   [Analyze]          │          ││
+│ │                      │ │                      │          ││
+│ │                      │ │ [View All →]        │          ││
+│ └──────────────────────┘ └──────────────────────┘          ││
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Analysis Reports                            [Collapse]  ││
+│ │                                                          ││
+│ │ Recent Reports:                                          ││
+│ │ • Breach Analysis Report - 2025-01-06  [Download]       ││
+│ │ • Verification Performance - 2025-01-05  [Download]     ││
+│ │ • Follow-up Effectiveness - 2025-01-04  [Download]      ││
+│ │                                                          ││
+│ │ [Create New Report] [View All Reports →]                ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Wireframe Layout - Scenario 2: %SC Addressed (Normal Priority)
+## Modal Designs
+
+### 1. Verify Submission Modal
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Home > Dashboard                                             │
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
 │                                                             │
-│ Verification Overview            [Filters ▼] [Sort ▼]        │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Verify Submission #12345                       [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Company: ABC Pharma                               │  │
+│     │ Product: XYZ                                      │  │
+│     │ Type: WSL  Period: Week 3 (Jan 15-21)           │  │
+│     │ Submitted: 2 hours ago                            │  │
+│     │                                                   │  │
+│     │ Submission Preview:                               │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ SKU: ABC-123                                  ││  │
+│     │ │ Quantity: 1,500 units                         ││  │
+│     │ │ Stock Level: 12,000 units                     ││  │
+│     │ │ Threshold: 10,000 units                       ││  │
+│     │ │ Status: Above Threshold ✓                     ││  │
+│     │ │                                                ││  │
+│     │ │ [View Full Submission →]                      ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Verification Checklist:                           │  │
+│     │ ☑ Data completeness verified                     │  │
+│     │ ☑ Calculations accurate                          │  │
+│     │ ☑ No anomalies detected                          │  │
+│     │ ☐ Supporting documents attached                  │  │
+│     │                                                   │  │
+│     │ Decision:                                         │  │
+│     │ ○ Approve                                         │  │
+│     │ ○ Reject                                          │  │
+│     │ ○ Request More Information                        │  │
+│     │                                                   │  │
+│     │ Notes (Optional):                                 │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │                                                ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Submit Decision] │  │
+│     └───────────────────────────────────────────────────┘  │
 │                                                             │
-│ ┌─────────────────────────────────────────────────────────┐│
-│ │ Submission Compliance (%SC) - Collapsed                  ││
-│ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ %SC: 82%  🟢 Above Threshold (75%)                   │ ││
-│ │ │ ✅ All Actions Taken: 80 alerted, 65 in follow-up    │ ││
-│ │ │ [Expand] [View Details]                              │ ││
-│ │ └─────────────────────────────────────────────────────┘ ││
-│ └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 2. Flag Submission Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
 │                                                             │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
-│ │ Pending         │ │ Oversight       │ │ Review Queue    ││
-│ │ Verifications   │ │ Metrics         │ │                 ││
-│ │                 │ │                 │ │                 ││
-│ │ 8               │ │ Verification    │ │ • Submission #1 ││
-│ │                 │ │ Rate: 95%       │ │   Company ABC   ││
-│ │ Recent:         │ │                 │ │   High Priority ││
-│ │ • Submission #1 │ │ Avg. Time:      │ │   [Verify]      ││
-│ │   Company ABC   │ │   2.5 hours     │ │                 ││
-│ │   High Priority │ │                 │ │ • Submission #2 ││
-│ │   1 hour ago    │ │ Trend: ↗ +2%    │ │   Company XYZ   ││
-│ │                 │ │                 │ │   Medium        ││
-│ │ • Submission #2 │ │ [View Details →]│ │   [Verify]      ││
-│ │   Company XYZ   │ │                 │ │                 ││
-│ │   Medium        │ │                 │ │ [View all →]   ││
-│ │   2 hours ago   │ │                 │ │                 ││
-│ │                 │ │                 │ │                 ││
-│ │ [View all →]   │ │                 │ │                 ││
-│ └─────────────────┘ └─────────────────┘ └─────────────────┘│
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Flag Submission                                [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Submission: #12345 - Company ABC Pharma          │  │
+│     │                                                   │  │
+│     │ Reason for Flagging:                              │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Data Quality Issue ▼]                        ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options:                                          │  │
+│     │ • Data Quality Issue                              │  │
+│     │ • Missing Information                             │  │
+│     │ • Calculation Error                               │  │
+│     │ • Suspicious Activity                             │  │
+│     │ • Other                                           │  │
+│     │                                                   │  │
+│     │ Description:                                      │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ Stock level calculation appears incorrect.    ││  │
+│     │ │ Requires review by senior officer.            ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Severity:                                         │  │
+│     │ ○ Low  ● Medium  ○ High  ○ Critical              │  │
+│     │                                                   │  │
+│     │ ☑ Notify company                                  │  │
+│     │ ☑ Escalate to senior officer                     │  │
+│     │ ☑ Create audit log entry                         │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Flag Submission] │  │
+│     └───────────────────────────────────────────────────┘  │
 │                                                             │
-│ ┌─────────────────────────────────────────────────────────┐│
-│ │ Verification Queue                                        ││
-│ │                                                          ││
-│ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ Submission #12345  Company ABC  [High Priority]    │ ││
-│ │ │ Product: XYZ  Submitted: 2 hours ago               │ ││
-│ │ │ [Verify] [Flag] [Request Info]                     │ ││
-│ │ ├─────────────────────────────────────────────────────┤ ││
-│ │ │ Submission #12346  Company XYZ  [Medium Priority]  │ ││
-│ │ │ Product: DEF  Submitted: 3 hours ago               │ ││
-│ │ │ [Verify] [Flag] [Request Info]                     │ ││
-│ │ ├─────────────────────────────────────────────────────┤ ││
-│ │ │ Submission #12347  Company DEF  [Low Priority]     │ ││
-│ │ │ Product: GHI  Submitted: 5 hours ago               │ ││
-│ │ │ [Verify] [Flag] [Request Info]                     │ ││
-│ │ └─────────────────────────────────────────────────────┘ ││
-│ │                                                          ││
-│ │ [Load More]  [Export Queue]                             ││
-│ └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3. Request Information Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
 │                                                             │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
-│ │ VCI - SKUs      │ │ Breach Analysis │ │ Quick Links     ││
-│ │                 │ │ Queue           │ │                 ││
-│ │ Action Required │ │                 │ │ • Analytics     ││
-│ │ 8 SKUs          │ │ 5 Breaches      │ │ • Reports       ││
-│ │                 │ │                 │ │                 ││
-│ │ • SKU ABC-123   │ │ • Breach #001   │ │                 ││
-│ │   Company XYZ   │ │   Company ABC   │ │                 ││
-│ │   Breach: 5 days│ │   Critical      │ │                 ││
-│ │   [View] [Action]│ │   3 days old    │ │                 ││
-│ │                 │ │   [Analyze]     │ │                 ││
-│ │ • SKU DEF-456   │ │                 │ │                 ││
-│ │   Company ABC   │ │ • Breach #002   │ │                 ││
-│ │   Near threshold│ │   Company XYZ   │ │                 ││
-│ │   [View] [Monitor]│ │   High          │ │                 ││
-│ │                 │ │   2 days old    │ │                 ││
-│ │ Under Monitor   │ │   [Analyze]     │ │                 ││
-│ │ 15 SKUs         │ │                 │ │                 ││
-│ │                 │ │ [View All →]    │ │                 ││
-│ │ [View All →]    │ │                 │ │                 ││
-│ └─────────────────┘ └─────────────────┘ └─────────────────┘│
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Request Additional Information                 [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ To: ABC Pharma                                    │  │
+│     │ Regarding: Submission #12345 (WSL - Week 3)      │  │
+│     │                                                   │  │
+│     │ Information Needed:                               │  │
+│     │ ☑ Supporting documents                            │  │
+│     │ ☑ Clarification on calculations                   │  │
+│     │ ☐ Additional data points                          │  │
+│     │ ☐ Other                                           │  │
+│     │                                                   │  │
+│     │ Message:                                          │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ Dear ABC Pharma,                              ││  │
+│     │ │                                                ││  │
+│     │ │ We require additional information to complete ││  │
+│     │ │ verification of your WSL submission for Week 3:││  │
+│     │ │                                                ││  │
+│     │ │ 1. Please provide supporting documents for    ││  │
+│     │ │    stock level calculations                   ││  │
+│     │ │ 2. Clarify the calculation method used for    ││  │
+│     │ │    SKU ABC-123                                ││  │
+│     │ │                                                ││  │
+│     │ │ Please respond within 48 hours.               ││  │
+│     │ │                                                ││  │
+│     │ │ Regards,                                       ││  │
+│     │ │ MOH Verification Team                          ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Due Date:                                         │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [2025-01-08 📅]  (48 hours)                   ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ☑ Send email notification                        │  │
+│     │ ☑ Send SMS notification                          │  │
+│     │ ☑ Pause verification until response received     │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Send Request]    │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 4. Start Follow-up Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Start Follow-up                                [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Company: DEF Ltd                                  │  │
+│     │ Issue: WSL submission overdue (3 days)           │  │
+│     │                                                   │  │
+│     │ Assign to:                                        │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Me (Tier 2 Officer) ▼]                       ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Priority:                                         │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Normal ▼]                                     ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Due Date:                                         │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [2025-01-09 📅]  (3 business days)            ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Follow-up Actions:                                │  │
+│     │ ☑ Contact company via phone                      │  │
+│     │ ☑ Send reminder email                            │  │
+│     │ ☐ Schedule meeting                               │  │
+│     │                                                   │  │
+│     │ Notes:                                            │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ First-time overdue. Company has good history. ││  │
+│     │ │ Will contact via phone first.                 ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ☑ Create audit log entry                         │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Start Follow-up] │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 5. Escalate to Tier 1 Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Escalate to Tier 1                             [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Company: ABC Pharma                               │  │
+│     │ Issue: Multiple overdue submissions + Critical   │  │
+│     │        medicines affected                         │  │
+│     │                                                   │  │
+│     │ Escalation Reason:                                │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Extreme Case - Critical Medicines ▼]         ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options:                                          │  │
+│     │ • Extreme Case - Critical Medicines               │  │
+│     │ • Repeated Non-Compliance                         │  │
+│     │ • Requires Enforcement Action                     │  │
+│     │ • Complex Issue - Tier 1 Expertise Needed        │  │
+│     │ • Other                                           │  │
+│     │                                                   │  │
+│     │ Details:                                          │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ Company ABC Pharma has:                       ││  │
+│     │ │ • WSL: 2 weeks overdue                        ││  │
+│     │ │ • MSQ: 1 month overdue                        ││  │
+│     │ │ • 5 critical medicines below threshold        ││  │
+│     │ │ • Repeated offender (3rd occurrence)          ││  │
+│     │ │                                                ││  │
+│     │ │ Tier 2 follow-up unsuccessful. Requires Tier 1││  │
+│     │ │ intervention and potential enforcement action.││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Assign to:                                        │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Tier 1 Team ▼]                               ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ☑ Notify Tier 1 team                             │  │
+│     │ ☑ Transfer all follow-up records                 │  │
+│     │ ☑ Create audit log entry                         │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Escalate]        │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -155,340 +548,205 @@
 
 ## Component Specifications
 
-### Page Header
-- **Breadcrumbs:** "Home > Dashboard"
-- **Title:** "Verification Overview"
-  - **Typography:** 24px, font-weight: 600, color: #111827
-- **Actions (Right-aligned):**
-  - **Filters Dropdown:** Filter by priority, company, date range
-  - **Sort Dropdown:** Sort by priority, date, company
-  - **Spacing:** 16px between actions
+### Tab Component
+- **Active Tab:** Underline (3px, primary-500), bold text
+- **Inactive Tab:** Normal text, hover: bg-secondary
+- **Badge:** Count in parentheses, e.g., "Verification (8)"
+- **Spacing:** 24px between tabs
+- **Height:** 48px
+- **Keyboard:** Arrow keys to navigate, Enter to select
 
-### %SC (Submission Compliance) Section
+### Quick Actions Bar
+- **Position:** Sticky below tabs
+- **Background:** White with subtle shadow
+- **Buttons:** Primary, secondary, and ghost variants
+- **Spacing:** 12px between buttons
+- **Height:** 56px
+- **Mobile:** Horizontal scroll
 
-**Priority State: Unaddressed (High Priority)**
-- **Position:** Top of dashboard, full width
-- **Donut Chart:**
-  - **Size:** Large (400px × 400px recommended)
-  - **Center Display:**
-    - **%SC Value:** Large (48px), bold
-    - **Label:** "%SC"
-    - **Status:** 🔴 Below / 🟢 Above Threshold
-    - **Threshold:** Smaller text showing threshold value
-  - **Segments:**
-    - **🟢 Green:** On-Time submissions (45% in example)
-    - **🟡 Yellow/Orange:** Late submissions (23% in example)
-    - **🔴 Red:** Unsubmitted (32% in example)
-  - **Legend:** Below chart with percentages and company counts
-  - **Interactive:** Hover shows tooltip, click segment filters list
+### Modal Overlay
+- **Background:** rgba(0, 0, 0, 0.5)
+- **Blur:** backdrop-filter: blur(4px)
+- **Animation:** Fade in 200ms
+- **Click Outside:** Close modal
+- **Escape Key:** Close modal
 
-**Addressed State (Low Priority)**
-- **Position:** Secondary section, collapsible
-- **Display:** Collapsed by default
-- **Summary View:**
-  - **%SC Value:** Medium size (24px)
-  - **Status Indicator:** 🟢 Above / 🔴 Below Threshold
-  - **Actions Taken Badge:** "✅ All Actions Taken: X alerted, Y in follow-up"
-  - **Actions:** "Expand" button, "View Details" link
-- **Expanded View:** Shows full donut chart (same as unaddressed state)
+### Modal Container
+- **Width:** 600px (max-width: 90vw)
+- **Max Height:** 80vh
+- **Background:** White
+- **Border Radius:** 12px
+- **Shadow:** Large elevation shadow
+- **Animation:** Slide up + fade in 200ms
+- **Padding:** 24px
 
-### Follow-up Queue - Unsubmitted Companies
-
-**Visibility:** Only shown when %SC unaddressed
-- **Title:** "Follow-up Queue - Unsubmitted Companies (X)"
-- **Layout:** Full width, scrollable list
-- **Item Format:**
-  - **Company Name:** Bold, 16px
-  - **Priority Badge:** [Extreme] 🔴 or [Normal] 🟡
-  - **Details:** Bullet list of missing submissions, critical medicines count, repeated offender indicator
-  - **Status:** "Not Alerted" / "Alerted" / "In Follow-up" / "Tier 1 Required"
-  - **Follow-up Assignment:** Shows if assigned to Tier 1 or Tier 2
-  - **Action Buttons:**
-    - **Alert:** Send notification to company
-    - **Start Follow-up:** Begin Tier 2 follow-up process
-    - **Escalate to Tier 1:** Escalate extreme cases to Tier 1
-    - **Create Enforcement:** Open enforcement action creation wizard (warnings only for Tier 2, fines/suspensions require Tier 1)
-    - **View Details:** Navigate to company detail page
-  - **Enforcement History Display:**
-    - **Format:** "Enforcement: X warnings, Y fines, Z suspensions"
-    - **Link:** Click to view all enforcement actions for company
-    - **Color Indicator:** Red if recent enforcement actions exist
-    - **Note:** Tier 2 can create warnings (pending review), but fines/suspensions must be escalated to Tier 1
-- **Footer Actions:**
-  - **View All:** Navigate to full follow-up queue
-  - **Filter: Extreme Cases:** Filter to show only extreme cases
-  - **Export:** Download queue as CSV/PDF
-
-### Pending Verifications Widget
-
-**Priority:** High (after %SC addressed)
-- **Title:** "Pending Verifications"
-- **Count:** Large number (e.g., "8")
-  - **Typography:** 32px, font-weight: 700, color: #f59e0b (warning-500)
-- **Recent Items List:**
-  - **Format:** List items with submission ID, company name, priority badge, timestamp
-  - **Priority Badge:** High (red), Medium (orange), Low (yellow)
-  - **Max Items:** 3-5 recent items
-- **Action Link:** "View all →"
-
-### Oversight Metrics Widget
-
-- **Title:** "Oversight Metrics"
-- **Metrics:**
-  - **Verification Rate:** Percentage (e.g., "95%")
-  - **Average Time:** Duration (e.g., "2.5 hours")
-  - **Trend:** Indicator (e.g., "↗ +2%")
-- **Charts (Optional):** Mini charts showing trends
-- **Action Link:** "View Details →"
-
-### Review Queue Widget
-
-- **Title:** "Review Queue"
-- **Queue Items List:**
-  - **Format:** List items with submission ID, company name, priority badge, action buttons
-  - **Action Buttons:** "Verify", "Flag", "Request Info"
-  - **Max Items:** 3-5 items
-- **Action Link:** "View all →"
-
-### Verification Queue Section
-
-- **Title:** "Verification Queue"
-- **Typography:** 20px, font-weight: 600, color: #111827
-- **Layout:** Full width, table or card list
-
-**Queue Items:**
-- **Format:** Each item shows:
-  - **Submission ID:** Link to submission detail
-  - **Company Name:** Link to company profile
-  - **Product Name:** Product being verified
-  - **Submitted Time:** Timestamp (e.g., "2 hours ago")
-  - **Priority Badge:** High/Medium/Low (color-coded)
-  - **Action Buttons:** "Verify", "Flag", "Request Info"
-- **Item Height:** Auto (min 80px)
-- **Border:** 1px solid #e5e7eb between items
-- **Hover:** Light background (#f9fafb)
-
-**Action Buttons:**
-- **Verify Button:** Primary button, click → Navigate to verification page
-- **Flag Button:** Secondary button, click → Flag item for review
-- **Request Info Button:** Secondary button, click → Open request info modal
-
-**Footer Actions:**
-- **Load More Button:** Load additional queue items
-- **Export Queue Button:** Export queue to CSV/PDF
-
-### VCI Card - SKUs Under Monitor
-
-- **Title:** "VCI - SKUs"
-- **Two Sections:**
-
-**1. Action Required:**
-  - **Count:** Number of SKUs requiring action (e.g., "8")
-  - **Items:**
-    - **SKU Name/ID:** Full SKU description
-    - **Company:** Company name
-    - **Status:** Breach status, days in breach, near threshold
-    - **Priority Badge:** High/Medium/Low
-    - **Action Buttons:** "View" (navigate to SKU detail), "Action" (take action)
-  - **Max Items:** 5 SKUs
-
-**2. Under Monitoring:**
-  - **Count:** Number of SKUs being monitored (e.g., "15")
-  - **Items:**
-    - **SKU Name/ID:** Full SKU description
-    - **Company:** Company name
-    - **Status:** Monitoring reason (near threshold, stable breach, etc.)
-    - **Action Buttons:** "View" (navigate to SKU detail), "Monitor" (continue monitoring)
-  - **Max Items:** 5 SKUs
-
-- **Action Links:** "View All →" for each section
-
-### Breach Analysis Queue
-
-- **Title:** "Breach Analysis Queue"
-- **Count:** Number of breaches requiring analysis (e.g., "5")
-- **Items:**
-  - **Breach ID:** Link to breach detail
-  - **Company:** Company name
-  - **Severity:** Critical/High/Medium (color-coded)
-  - **Age:** Days since breach detected (e.g., "3 days old")
-  - **Action Button:** "Analyze" (navigate to breach analysis page)
-- **Max Items:** 5 breaches
-- **Action Link:** "View All →"
-
-### Quick Links Section
-
-- **Title:** "Quick Links"
-- **Layout:** Button group or link list
-- **Links:**
-  - **Analytics:** Navigate to analytics dashboard
-  - **Reports:** Navigate to report generation page
-- **Format:** Icon buttons or text links with icons
-- **Spacing:** 16px between links
+### Collapsible Sections
+- **Collapsed Height:** 64px (summary only)
+- **Expanded Height:** Auto
+- **Animation:** Smooth expand/collapse 200ms
+- **Icon:** Chevron (rotate 180° when expanded)
+- **Header:** Sticky when scrolling
 
 ---
 
-## Dynamic Priority System
+## Interactions
 
-### Priority Logic
+### Tab Navigation
+- **Click tab** → Switch to tab content, update URL (?tab=verification)
+- **Arrow keys** → Navigate between tabs
+- **Enter key** → Activate selected tab
+- **Badge count** → Real-time update
 
-**When %SC Unaddressed:**
-1. %SC Section: **Top Priority** (full width, large donut chart)
-2. Follow-up Queue: **High Priority** (full width, prominent)
-3. Other widgets: **Secondary** (smaller, below priority sections)
+### Quick Actions
+- **Verify Selected** → Open verify modal for selected submissions
+- **Flag Selected** → Open flag modal for selected submissions
+- **Request Info** → Open request info modal for selected submissions
+- **Export** → Download filtered data as CSV/PDF
+- **Filters** → Open filter dropdown
 
-**When %SC Addressed:**
-1. %SC Section: **Collapsed** (summary view, secondary position)
-2. Pending Verifications: **Top Priority** (prominent widget)
-3. Oversight Metrics: **High Priority** (prominent widget)
-4. Verification Queue: **High Priority** (full width section)
-5. VCI Card: **Medium Priority** (widget)
-6. Breach Analysis Queue: **Medium Priority** (widget)
-7. Quick Links: **Always Visible** (secondary position)
+### Modal Actions
+- **Verify Submission:**
+  - Review submission → Check verification checklist
+  - Select decision → Enable submit button
+  - Submit Decision → Close modal, update submission status, show success toast
+  - Cancel → Close modal, no changes
 
-### Status Indicators
+- **Flag Submission:**
+  - Select reason → Show description field
+  - Select severity → Adjust escalation options
+  - Flag → Close modal, update submission status, notify relevant parties
+  - Cancel → Close modal, no changes
 
-**%SC Status:**
-- **🔴 Below Threshold:** Red indicator
-- **🟢 Above Threshold:** Green indicator
+- **Request Information:**
+  - Select info needed → Auto-populate message template
+  - Edit message → Enable send button
+  - Send Request → Close modal, notify company, pause verification
+  - Cancel → Close modal, no changes
 
-**Actions Taken Status:**
-- **"All Actions Taken" Badge:** Shown when all unsubmitted companies have been alerted and follow-ups initiated
-- **Progress Count:** "X alerted, Y in follow-up, Z resolved"
+- **Start Follow-up:**
+  - Select officer → Show officer details
+  - Select priority → Adjust due date
+  - Start Follow-up → Close modal, create follow-up record, show success toast
+  - Cancel → Close modal, no changes
 
-**Follow-up Status:**
-- **Not Alerted:** Company not yet notified
-- **Alerted:** Notification sent, awaiting follow-up
-- **In Follow-up:** Tier 2 actively following up
-- **Tier 1 Required:** Escalated to Tier 1
+- **Escalate to Tier 1:**
+  - Select reason → Show details field
+  - Escalate → Close modal, transfer to Tier 1, notify team, show success toast
+  - Cancel → Close modal, no changes
 
----
-
-## Annotations
-
-### Blue (Interactions)
-- **Click donut chart segment** → Filter follow-up queue by category
-- **Click "Alert" button** → Send notification to company, update status
-- **Click "Start Follow-up"** → Begin Tier 2 follow-up, update status
-- **Click "Escalate to Tier 1"** → Escalate extreme case, notify Tier 1
-- **Click "Create Enforcement"** → Open enforcement action creation wizard (warnings only for Tier 2, fines/suspensions require escalation to Tier 1)
-- **Click enforcement history link** → Navigate to `/enforcement/actions?company_id=[id]` (filtered by company)
-- **Click "Expand" on %SC** → Expand collapsed %SC section
-- **Click submission/item** → Navigate to submission detail page
-- **Click company name** → Navigate to company profile
-- **Click "Verify" button** → Navigate to verification page
-- **Click "Flag" button** → Flag item, show confirmation
-- **Click "Request Info" button** → Open request info modal
-- **Click "Analyze" button** → Navigate to breach analysis page
-- **Click filter/sort dropdown** → Apply filter/sort
-- **Click "View all"** → Navigate to full queue/list
-- **Click "Load More"** → Load additional items
-- **Click "Export"** → Download as CSV/PDF
-- **Click quick link** → Navigate to respective page
-
-### Orange (Validation)
-- **Threshold validation:** %SC compared against Tier 1-set threshold
-- **Action validation:** Ensure all required fields before alerting/follow-up
-- **Escalation validation:** Confirm escalation to Tier 1 for extreme cases
-
-### Green (States)
-- **%SC Status:** Color-coded (🔴 Below / 🟢 Above Threshold)
-- **Actions Taken:** "All Actions Taken" badge when addressed
-- **Priority indicators:** Color-coded badges (high=red, medium=orange, low=yellow)
-- **Status indicators:** Verified, Pending, Flagged, In Follow-up (color-coded)
-- **Loading state:** Skeleton loaders when fetching queues
-- **Empty state:** "No pending verifications" / "No breaches" messages
-- **Hover state:** Light background on queue items
+### Collapsible Sections
+- **Click header** → Toggle expand/collapse
+- **Click Collapse button** → Collapse section
+- **Click Expand button** → Expand section
+- **Preference** → Save to localStorage
 
 ---
 
 ## Responsive Behavior
 
 ### Desktop (1024px+)
-- **%SC Section (unaddressed):** Full width, large donut chart
-- **Widget Grid:** 3 columns for widgets
-- **Verification Queue:** Full width table/list
-- **Action Buttons:** Inline with items
+- **Tabs:** Horizontal, full width
+- **Quick Actions:** Horizontal, all visible
+- **Cards:** 3-column grid
+- **Modals:** 600px width, centered
 
 ### Tablet (768px - 1023px)
-- **%SC Section:** Full width, medium donut chart
-- **Widget Grid:** 2 columns (or 1 column stacked)
-- **Verification Queue:** Full width, may stack action buttons
-- **Action Buttons:** May stack vertically
+- **Tabs:** Horizontal scroll if needed
+- **Quick Actions:** Horizontal scroll
+- **Cards:** 2-column grid
+- **Modals:** 90vw width, centered
 
 ### Mobile (<768px)
-- **%SC Section:** Full width, smaller donut chart
-- **Widget Grid:** 1 column (stacked)
-- **Verification Queue:** Full width, cards instead of table
-- **Action Buttons:** Full width, stacked vertically
+- **Tabs:** Horizontal scroll
+- **Quick Actions:** Horizontal scroll
+- **Cards:** 1-column stack
+- **Modals:** Full screen
 
 ---
 
 ## Design System References
 
 ### Components Used
-- **Card Component:** Widget containers, queue items
-- **Donut Chart Component:** %SC visualization
-- **List Component:** Recent verifications, review queue, follow-up queue
-- **Badge Component:** Priority indicators, status badges
-- **Button Component:** Action buttons (Verify, Flag, Request Info, Alert, Follow-up)
-- **Table Component (Optional):** Queue table layout
+- **Tab Component:** shadcn/ui tabs
+- **Modal Component:** shadcn/ui dialog
+- **Button Component:** shadcn/ui button
+- **Card Component:** shadcn/ui card
+- **Badge Component:** shadcn/ui badge
+- **Form Components:** shadcn/ui form, input, select, textarea
+- **Checkbox Component:** shadcn/ui checkbox
+- **Radio Component:** shadcn/ui radio
 
-### Colors
-- **Widget Background:** #ffffff (white)
-- **High Priority:** #ef4444 (error-500)
-- **Medium Priority:** #f59e0b (warning-500)
-- **Low Priority:** #eab308 (warning-400)
-- **Verified Status:** #22c55e (success-500)
-- **Pending Status:** #6b7280 (text-secondary)
-- **Flagged Status:** #ef4444 (error-500)
-- **On-Time (Green):** #22c55e (success-500)
-- **Late (Yellow):** #f59e0b (warning-500)
-- **Unsubmitted (Red):** #ef4444 (error-500)
+### Design Inspiration
+- **Stripe Dashboard:** Tab navigation, modal patterns
+- **GitHub:** Quick actions bar, verification workflows
+- **Linear:** Clean tabs, smooth animations
+- **shadcn/ui:** Component patterns, accessibility
 
-### Spacing
-- **Page Padding:** 24px (desktop), 16px (mobile)
-- **Widget Gap:** 24px (desktop), 16px (mobile)
-- **Section Spacing:** 32px between major sections
-- **Item Spacing:** 8px between list items
+### Colors (From Design System)
+- **Tab Active:** #3b82f6 (primary-500)
+- **Tab Inactive:** #6b7280 (text-secondary)
+- **Modal Overlay:** rgba(0, 0, 0, 0.5)
+- **Modal Background:** #ffffff (white)
+- **Quick Actions Bar:** #ffffff (white)
+- **Shadow:** rgba(0, 0, 0, 0.1)
+
+### Typography
+- **Tab Text:** 14px, font-weight: 600 (active), 500 (inactive)
+- **Modal Title:** 20px, font-weight: 600
+- **Modal Body:** 14px, font-weight: 400
+- **Button Text:** 14px, font-weight: 500
+
+### Spacing (8px Grid)
+- **Tab Padding:** 16px horizontal, 12px vertical
+- **Tab Gap:** 24px
+- **Modal Padding:** 24px
+- **Quick Actions Padding:** 16px
+- **Card Gap:** 24px (desktop), 16px (mobile)
+
+### Transitions & Animations
+- **Tab Switch:** 200ms ease-in-out
+- **Modal Open:** 200ms ease-out (fade + slide up)
+- **Modal Close:** 150ms ease-in (fade + slide down)
+- **Collapse/Expand:** 200ms ease-in-out
+
+### Accessibility (WCAG 2.1 AA)
+- **Tab Navigation:** Keyboard accessible (Arrow keys, Enter)
+- **Modal Focus:** Trap focus within modal, focus first input
+- **Modal Close:** Escape key, click outside
+- **Screen Readers:** ARIA labels, roles, descriptions
+- **Color Contrast:** Minimum 4.5:1 for text
+- **Touch Targets:** Minimum 40px × 40px
 
 ---
 
-## Best Practices Implementation
+## Performance Optimizations
 
-### Information Architecture
-- **Progressive Disclosure:** %SC collapses when addressed, verification content becomes primary
-- **Visual Hierarchy:** Priority-based sizing and positioning
-- **Contextual Actions:** Action buttons appear where needed
-- **Status Clarity:** Clear indicators for all states
+### Lazy Loading
+- **Tab Content:** Load on first visit, cache in memory
+- **Modal Content:** Load on open
 
-### Performance
-- **Lazy Loading:** Module-specific content only loads if modules active
-- **Pagination:** Lists show limited items with "View All" links
-- **Data Caching:** Dashboard data cached with refresh option
-- **Progressive Enhancement:** Core metrics load first, detailed data loads after
+### Data Fetching
+- **Overview Tab:** Fetch on page load
+- **Other Tabs:** Fetch on first visit
+- **Real-time Updates:** WebSocket or polling (30s interval)
 
-### Accessibility
-- **Keyboard Navigation:** All interactive elements keyboard accessible
-- **Screen Reader Support:** ARIA labels for charts and status indicators
-- **Color Contrast:** All text meets WCAG 2.1 AA standards
-- **Focus Indicators:** Clear focus states for all interactive elements
-
-### User Experience
-- **Immediate Feedback:** Status updates show immediately
-- **Error Prevention:** Confirmation dialogs for critical actions (escalation)
-- **Contextual Help:** Tooltips and help text where needed
-- **Consistent Patterns:** Same interaction patterns across widgets
+### Caching
+- **Tab State:** localStorage (active tab, collapsed sections)
+- **Filter State:** localStorage (applied filters)
+- **Dashboard Data:** Memory cache with TTL (5 minutes)
 
 ---
 
 ## Related Documents
 
-- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/dashboard`
-- [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - MOH Tier 2 role dashboard
-- [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Button, List, Badge components
+- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/dashboard?tab=overview`
+- [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - MOH Tier 2 role
+- [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Tab, Modal, Card components
+- [Design System](../../../../02-architecture/frontend/design-system.md) - Colors, typography, spacing
+- [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Modal forms
 
 ---
 
-**Last Updated:** 2025-01-01  
-**Status:** 🟡 Ready for Review
+**Last Updated:** 2025-01-06  
+**Status:** 🟢 Updated with Tabbed Layout & Modal Designs  
+**Design Approach:** Modern enterprise dashboard with tabs, modals, and workflow-optimized organization (Stripe/GitHub/Linear/shadcn/ui inspired)

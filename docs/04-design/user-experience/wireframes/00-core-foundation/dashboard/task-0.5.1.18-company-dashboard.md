@@ -5,47 +5,68 @@
 **File:** `task-0.5.1.18-company-dashboard.png`  
 **Priority:** 🔴 Critical Foundation
 
-**Design Approach:** Modern enterprise dashboard pattern inspired by Stripe, GitHub, Linear, and shadcn/ui best practices. Professional, accessible, and optimized for company users managing regulatory compliance workflows.
+**Design Approach:** Modern enterprise dashboard with modal-based quick actions and optional tabbed navigation. Inspired by Stripe, GitHub, Linear, and shadcn/ui best practices. Professional, accessible, and optimized for company users managing regulatory compliance workflows.
 
 ---
 
-## Wireframe Layout
+## Overview
+
+This dashboard uses **modals** for quick actions to maintain context and optionally **tabs** to organize content by workflow area (Overview, Submissions, Enforcement, Activity). The design prioritizes clarity and ease of use for company users.
+
+### Key Improvements
+- **Modals:** Quick actions (Appeal Enforcement, Quick Actions Menu) without navigation
+- **Optional Tabs:** Organize content into Overview, Submissions, Enforcement, Activity
+- **Simplified Layout:** Clearer hierarchy with prominent action items
+- **Quick Actions Menu:** Dropdown for common actions
+
+---
+
+## Wireframe Layout - Overview (Default)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ Home > Dashboard                                             │
 │                                                             │
-│ Welcome, [Company Name]                    [Quick Actions] │
-│                                                             │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
-│ │ My Submissions │ │ Pending         │ │ Recent Activity ││
-│ │                 │ │ Approvals       │ │                 ││
-│ │ 12              │ │ 3               │ │ • Submission #1 ││
-│ │                 │ │                 │ │   Approved      ││
-│ │ Recent:         │ │ • Product ABC   │ │   2 hours ago   ││
-│ │ • Product XYZ   │ │ • Product DEF   │ │                 ││
-│ │   Submitted     │ │ • Product GHI   │ │ • Submission #2 ││
-│ │   1 day ago     │ │                 │ │   Pending       ││
-│ │                 │ │                 │ │   5 hours ago   ││
-│ │ [View all →]   │ │ [View all →]   │ │                 ││
-│ └─────────────────┘ └─────────────────┘ └─────────────────┘│
+│ Welcome, [Company Name]                    [Quick Actions ▼]│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Enforcement Actions (My Company)                         ││
+│ │ [Overview] [Submissions] [Enforcement] [Activity]        ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ My Submissions│ │ Pending      │ │ Recent Activity│      ││
+│ │              │ │ Approvals    │ │              │        ││
+│ │ 12           │ │ 3            │ │ • Submission │        ││
+│ │              │ │              │ │   #12345     │        ││
+│ │ Recent:      │ │ • Product ABC│ │   Approved   │        ││
+│ │ • Product XYZ│ │   High       │ │   2h ago     │        ││
+│ │   Submitted  │ │   1h ago     │ │              │        ││
+│ │   1 day ago  │ │              │ │ • Submission │        ││
+│ │              │ │ • Product DEF│ │   #12346     │        ││
+│ │ • Product ABC│ │   Medium     │ │   Pending    │        ││
+│ │   Approved   │ │   2h ago     │ │   5h ago     │        ││
+│ │   2 days ago │ │              │ │              │        ││
+│ │              │ │ • Product GHI│ │ • New Message│        ││
+│ │ [View All →]│ │   Low        │ │   from MOH   │        ││
+│ │              │ │   3h ago     │ │   1 day ago  │        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │ [View All →]│ │ [View All →]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Enforcement Actions (My Company)            [Collapse]  ││
 │ │                                                          ││
-│ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ ⚠️ Warning - Submission Non-Compliance              │ ││
-│ │ │ Status: Executed  Date: 2 days ago                  │ ││
-│ │ │ Violation: WSL submission overdue                    │ ││
-│ │ │ [View Details] [Appeal] (if within 30 days)         │ ││
-│ │ ├─────────────────────────────────────────────────────┤ ││
-│ │ │ ⚠️ Warning - Critical Medicine Non-Compliance      │ ││
-│ │ │ Status: Executed  Date: 1 week ago                 │ ││
-│ │ │ Violation: Critical medicine stock below threshold  │ ││
-│ │ │ [View Details] [Appeal] (if within 30 days)         │ ││
-│ │ └─────────────────────────────────────────────────────┘ ││
+│ │ ⚠️ Warning - Submission Non-Compliance                  ││
+│ │   Status: Executed  Date: 2 days ago                    ││
+│ │   Violation: WSL submission overdue                      ││
+│ │   [View Details] [Appeal] (30 days remaining)           ││
 │ │                                                          ││
-│ │ [View All Enforcement Actions]                          ││
+│ │ ⚠️ Warning - Critical Medicine Non-Compliance          ││
+│ │   Status: Executed  Date: 1 week ago                   ││
+│ │   Violation: Critical medicine stock below threshold    ││
+│ │   [View Details] [Appeal Expired]                       ││
+│ │                                                          ││
+│ │ [View All Enforcement Actions →]                        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -65,301 +86,516 @@
 
 ---
 
-## Component Specifications
+## Submissions Tab
 
-### Page Header
-- **Breadcrumbs:** "Home > Dashboard"
-- **Typography:** 14px, color: #6b7280
-- **Welcome Message:** "Welcome, [Company Name]"
-  - **Typography:** 24px, font-weight: 600, color: #111827
-- **Quick Actions (Optional):**
-  - **Buttons:** "New Submission", "View Reports", etc.
-  - **Position:** Right-aligned
-  - **Spacing:** 24px below breadcrumbs
-
-### Widget Grid (Top Row)
-- **Layout:** 3-column grid (desktop), 1-column (mobile)
-- **Gap:** 24px between widgets
-- **Widget Height:** Auto (min 200px)
-
-**My Submissions Widget:**
-- **Title:** "My Submissions"
-- **Count:** Large number (e.g., "12")
-  - **Typography:** 32px, font-weight: 700, color: #111827
-- **Recent Submissions List:**
-  - **Format:** List items with title, status, timestamp
-  - **Max Items:** 3-5 recent items
-  - **Item Height:** 48px
-  - **Spacing:** 8px between items
-- **Action Link:** "View all →" (bottom of widget)
-  - **Typography:** 14px, color: #2563eb (text-link)
-  - **Click Action:** Navigate to submissions list
-
-**Pending Approvals Widget:**
-- **Title:** "Pending Approvals"
-- **Count:** Large number (e.g., "3")
-  - **Typography:** 32px, font-weight: 700, color: #f59e0b (warning-500)
-- **Pending Items List:**
-  - **Format:** List items with title, priority indicator
-  - **Max Items:** 3-5 pending items
-  - **Priority Badge:** High/Medium/Low (color-coded)
-- **Action Link:** "View all →" (bottom of widget)
-
-**Recent Activity Widget:**
-- **Title:** "Recent Activity"
-- **Activity Timeline:**
-  - **Format:** Timeline/list with icon, description, timestamp
-  - **Max Items:** 5-7 recent activities
-  - **Filter:** Optional filter by type (dropdown)
-- **Activity Types:**
-  - Submission approved/rejected
-  - New message
-  - Breach alert
-  - Workflow action
-  - Enforcement action (warning, fine, suspension)
-  - Enforcement action appeal status
-
-### Key Metrics Section
-- **Title:** "Key Metrics"
-- **Typography:** 20px, font-weight: 600, color: #111827
-- **Layout:** 4-column grid (desktop), 2-column (tablet), 1-column (mobile)
-- **Gap:** 16px between cards
-
-**Metric Cards:**
-- **Compliance Score Card:**
-  - **Title:** "Compliance Score"
-  - **Value:** Percentage (e.g., "85%")
-  - **Typography:** 36px, font-weight: 700, color: #22c55e (success-500)
-  - **Trend:** "↗ +5%" (green if positive, red if negative)
-  - **Background:** White (#ffffff)
-  - **Border:** 1px solid #e5e7eb
-  - **Border Radius:** 8px
-  - **Padding:** 24px
-
-- **Active Submissions Card:**
-  - **Title:** "Active Submissions"
-  - **Value:** Count (e.g., "12")
-  - **Typography:** 36px, font-weight: 700, color: #3b82f6 (primary-500)
-  - **Action:** "→ View" link
-  - **Click Action:** Navigate to active submissions
-
-- **Pending Actions Card:**
-  - **Title:** "Pending Actions"
-  - **Value:** Count (e.g., "3")
-  - **Typography:** 36px, font-weight: 700, color: #f59e0b (warning-500)
-  - **Action:** "→ View" link
-
-- **Completed This Month Card:**
-  - **Title:** "Completed This Month"
-  - **Value:** Count (e.g., "24")
-  - **Typography:** 36px, font-weight: 700, color: #6b7280 (text-secondary)
-  - **Action:** "→ View" link
-
-### Enforcement Actions Section (Company View)
-
-**Visibility:** Always visible for company users
-- **Title:** "Enforcement Actions (My Company)"
-- **Position:** Below widget grid, full width
-- **Purpose:** Display enforcement actions taken against the company (read-only view)
-- **Layout:** Full width, scrollable list
-- **Item Format:**
-  - **Action Type Badge:** ⚠️ Warning / 💰 Fine / 🚫 Suspension
-  - **Violation Type:** Brief description (e.g., "Submission Non-Compliance", "Critical Medicine Non-Compliance")
-  - **Status:** Executed / Pending Approval / Appealed / Resolved
-  - **Date:** Execution date or creation date
-  - **Status Badge:** Color-coded (Executed: gray, Pending: yellow, Appealed: orange, Resolved: green)
-  - **Action Buttons:**
-    - **View Details:** Navigate to enforcement action detail page (read-only for companies)
-    - **Appeal:** Create appeal (only if within 30-day window and status is Executed)
-- **Footer Actions:**
-  - **View All Enforcement Actions:** Navigate to `/enforcement/actions?company_id=[my_company_id]` (filtered view)
-- **Empty State:**
-  - **Message:** "No enforcement actions"
-  - **Icon:** Checkmark icon
-
-**Note:** Companies can view their enforcement actions but cannot create or manage them. They can appeal executed actions within 30 days.
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Welcome, [Company Name]                    [Quick Actions ▼]│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Submissions (12)] [Enforcement] [Activity]   ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ My Submissions (12)                         [Collapse]  ││
+│ │                                                          ││
+│ │ [Filter: All | Pending | Approved | Rejected]           ││
+│ │ [Sort: Date ▼ | Status | Product]                       ││
+│ │                                                          ││
+│ │ Submission #12345  Product XYZ  [Pending]               ││
+│ │   Type: WSL  Submitted: 1 day ago                       ││
+│ │   Status: Awaiting Verification                          ││
+│ │   [View Details] [Edit] [Withdraw]                      ││
+│ │                                                          ││
+│ │ Submission #12344  Product ABC  [Approved] ✓            ││
+│ │   Type: MSQ  Submitted: 2 days ago                      ││
+│ │   Status: Approved by MOH Tier 2                        ││
+│ │   [View Details] [Download Receipt]                     ││
+│ │                                                          ││
+│ │ Submission #12343  Product DEF  [Rejected] ✗            ││
+│ │   Type: AAMS  Submitted: 5 days ago                     ││
+│ │   Status: Rejected - Data Quality Issue                 ││
+│ │   [View Details] [Resubmit] [View Feedback]             ││
+│ │                                                          ││
+│ │ [Load More] [Export List]                               ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ This Week    │ │ This Month   │ │ Upcoming     │        ││
+│ │              │ │              │ │ Deadlines    │        ││
+│ │ Submitted: 3 │ │ Submitted: 12│ │              │        ││
+│ │ Approved: 2  │ │ Approved: 10 │ │ • WSL Week 4 │        ││
+│ │ Pending: 1   │ │ Pending: 2   │ │   Due: 2 days│        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │              │ │ • MSQ Jan    │        ││
+│ │              │ │              │ │   Due: 5 days│        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │              │ │ [View All →]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## Annotations
+## Enforcement Tab
 
-### Blue (Interactions)
-- **Click widget "View all"** → Navigate to related list page
-- **Click submission/item in widget** → Navigate to item detail page
-- **Click metric card "View"** → Navigate to related page
-- **Click quick action button** → Perform action (e.g., "New Submission")
-- **Click "View Details" in Enforcement Actions** → Navigate to enforcement action detail page (read-only)
-- **Click "Appeal" in Enforcement Actions** → Open appeal creation form (if within 30-day window)
-- **Click "View All Enforcement Actions"** → Navigate to filtered enforcement actions list
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Welcome, [Company Name]                    [Quick Actions ▼]│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Submissions] [Enforcement (2)] [Activity]    ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Enforcement Actions (2)                     [Collapse]  ││
+│ │                                                          ││
+│ │ [Filter: All | Warnings | Fines | Suspensions]         ││
+│ │ [Status: All | Executed | Appealed | Resolved]          ││
+│ │                                                          ││
+│ │ ⚠️ Warning - Submission Non-Compliance                  ││
+│ │   Action ID: ENF-2025-001                               ││
+│ │   Status: Executed  Date: 2 days ago                    ││
+│ │   Violation: WSL submission overdue (2 weeks)           ││
+│ │   Legal Basis: Article 12, Section 3                    ││
+│ │   Appeal Deadline: 28 days remaining                    ││
+│ │   [View Full Details] [Appeal]                          ││
+│ │                                                          ││
+│ │ ⚠️ Warning - Critical Medicine Non-Compliance          ││
+│ │   Action ID: ENF-2024-045                               ││
+│ │   Status: Executed  Date: 1 week ago                   ││
+│ │   Violation: Critical medicine stock below threshold    ││
+│ │   Legal Basis: Article 15, Section 2                    ││
+│ │   Appeal Deadline: Expired                              ││
+│ │   [View Full Details]                                   ││
+│ │                                                          ││
+│ │ [View All Actions →] [View Appeal History →]           ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Total Actions│ │ Active Appeals│ │ Compliance   │        ││
+│ │              │ │              │ │ Status       │        ││
+│ │ Warnings: 2  │ │ Pending: 0   │ │              │        ││
+│ │ Fines: 0     │ │ Resolved: 0  │ │ Current: Good│        ││
+│ │ Suspensions:0│ │              │ │              │        ││
+│ │              │ │              │ │ Last Action: │        ││
+│ │ Total: 2     │ │              │ │ 2 days ago   │        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │              │ │ [View Report]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
 
-### Green (States)
-- **Loading state:** Skeleton loaders for widgets and metrics
-- **Empty state:** "No submissions yet" message in widget
-- **Error state:** Error message if data fetch fails
-- **Real-time updates:** Widget counts update when new data arrives
+---
+
+## Activity Tab
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Home > Dashboard                                             │
+│                                                             │
+│ Welcome, [Company Name]                    [Quick Actions ▼]│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ [Overview] [Submissions] [Enforcement] [Activity]        ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Recent Activity                             [Collapse]  ││
+│ │                                                          ││
+│ │ [Filter: All | Submissions | Messages | Enforcement]    ││
+│ │ [Date Range: Last 7 days ▼]                             ││
+│ │                                                          ││
+│ │ • Submission #12345 Approved                            ││
+│ │   Product XYZ - WSL Week 3                              ││
+│ │   2 hours ago                                           ││
+│ │   [View Details]                                        ││
+│ │                                                          ││
+│ │ • Enforcement Action Issued                             ││
+│ │   Warning - Submission Non-Compliance                   ││
+│ │   2 days ago                                            ││
+│ │   [View Details] [Appeal]                               ││
+│ │                                                          ││
+│ │ • New Message from MOH                                  ││
+│ │   Regarding: Submission #12344                          ││
+│ │   3 days ago                                            ││
+│ │   [View Message]                                        ││
+│ │                                                          ││
+│ │ • Submission #12344 Submitted                           ││
+│ │   Product ABC - MSQ January                             ││
+│ │   5 days ago                                            ││
+│ │   [View Details]                                        ││
+│ │                                                          ││
+│ │ [Load More] [Export Activity Log]                       ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ This Week    │ │ This Month   │ │ Notifications│        ││
+│ │              │ │              │ │              │        ││
+│ │ Activities:  │ │ Activities:  │ │ Unread: 3    │        ││
+│ │ 15           │ │ 48           │ │              │        ││
+│ │              │ │              │ │ • New message│        ││
+│ │ Submissions: │ │ Submissions: │ │   from MOH   │        ││
+│ │ 3            │ │ 12           │ │              │        ││
+│ │              │ │              │ │ • Submission │        ││
+│ │ Messages: 5  │ │ Messages: 18 │ │   approved   │        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │              │ │ [View All →]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Modal Designs
+
+### 1. Appeal Enforcement Action Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Appeal Enforcement Action                      [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Enforcement Action: ENF-2025-001                  │  │
+│     │ Type: Warning                                     │  │
+│     │ Violation: WSL submission overdue (2 weeks)      │  │
+│     │ Executed: 2 days ago                              │  │
+│     │ Appeal Deadline: 28 days remaining                │  │
+│     │                                                   │  │
+│     │ Grounds for Appeal:                               │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Technical Error ▼]                           ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options:                                          │  │
+│     │ • Technical Error                                 │  │
+│     │ • Procedural Issue                                │  │
+│     │ • Factual Inaccuracy                              │  │
+│     │ • Mitigating Circumstances                        │  │
+│     │ • Other                                           │  │
+│     │                                                   │  │
+│     │ Detailed Explanation:                             │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ We experienced a system outage during the     ││  │
+│     │ │ submission period which prevented timely      ││  │
+│     │ │ submission. We have attached evidence of the  ││  │
+│     │ │ outage and subsequent submission attempt.     ││  │
+│     │ │                                                ││  │
+│     │ │ We request that this warning be reconsidered  ││  │
+│     │ │ given the technical circumstances.            ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Supporting Documents:                             │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Upload Files] or [Drag & Drop]               ││  │
+│     │ │                                                ││  │
+│     │ │ • system-outage-report.pdf (2.3 MB)           ││  │
+│     │ │ • submission-attempt-log.pdf (1.1 MB)         ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ⚠️ Note: Appeals are reviewed by MOH Tier 1.     │  │
+│     │    You will be notified of the decision within   │  │
+│     │    14 business days.                              │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Submit Appeal]   │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 2. Quick Actions Menu (Dropdown)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Welcome, [Company Name]                    [Quick Actions ▼]│
+│                                            ┌───────────────┐ │
+│                                            │ New Submission│ │
+│                                            │ View Reports  │ │
+│                                            │ Messages      │ │
+│                                            │ Help & Support│ │
+│                                            │ Settings      │ │
+│                                            └───────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3. New Submission Quick Start Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ New Submission                                 [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Select Submission Type:                           │  │
+│     │                                                   │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ 📊 Weekly Stock Level (WSL)                   ││  │
+│     │ │ Submit weekly stock levels for all products   ││  │
+│     │ │ [Start WSL Submission →]                      ││  │
+│     │ ├───────────────────────────────────────────────┤│  │
+│     │ │ 📈 Monthly Stock Quantity (MSQ)               ││  │
+│     │ │ Submit monthly stock quantity report          ││  │
+│     │ │ [Start MSQ Submission →]                      ││  │
+│     │ ├───────────────────────────────────────────────┤│  │
+│     │ │ 🔄 Anticipated Arrival of Medicines (AAMS)    ││  │
+│     │ │ Submit anticipated medicine arrivals          ││  │
+│     │ │ [Start AAMS Submission →]                     ││  │
+│     │ ├───────────────────────────────────────────────┤│  │
+│     │ │ 📦 Export Request (ECS)                       ││  │
+│     │ │ Request authorization for medicine export     ││  │
+│     │ │ [Start Export Request →]                      ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ [View Submission Templates] [View Help Guide]    │  │
+│     │                                                   │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 4. View Enforcement Details Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Enforcement Action Details                     [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Action ID: ENF-2025-001                           │  │
+│     │ Type: ⚠️ Warning                                  │  │
+│     │ Status: Executed                                  │  │
+│     │                                                   │  │
+│     │ Violation Details:                                │  │
+│     │ • Type: Submission Non-Compliance                 │  │
+│     │ • Description: WSL submission overdue (2 weeks)   │  │
+│     │ • Reference: Submission Period Week 1-2, 2025     │  │
+│     │                                                   │  │
+│     │ Legal Basis:                                      │  │
+│     │ Article 12, Section 3 of the Pharmaceutical       │  │
+│     │ Regulation Act                                    │  │
+│     │                                                   │  │
+│     │ Justification:                                    │  │
+│     │ Company failed to submit required WSL report      │  │
+│     │ within the regulatory deadline. This is the       │  │
+│     │ second occurrence within 6 months.                │  │
+│     │                                                   │  │
+│     │ Timeline:                                         │  │
+│     │ • Created: 2025-01-04 10:00 AM                    │  │
+│     │ • Reviewed: 2025-01-04 02:00 PM                   │  │
+│     │ • Approved: 2025-01-04 04:00 PM                   │  │
+│     │ • Executed: 2025-01-04 05:00 PM                   │  │
+│     │                                                   │  │
+│     │ Appeal Information:                               │  │
+│     │ • Appeal Deadline: 2025-02-03 (28 days remaining)│  │
+│     │ • Appeal Status: Not Appealed                     │  │
+│     │                                                   │  │
+│     │ [Download PDF] [Print] [Appeal] [Close]          │  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Component Specifications
+
+### Tab Component (Optional)
+- **Active Tab:** Underline (3px, primary-500), bold text
+- **Inactive Tab:** Normal text, hover: bg-secondary
+- **Badge:** Count in parentheses, e.g., "Submissions (12)"
+- **Spacing:** 24px between tabs
+- **Height:** 48px
+- **Keyboard:** Arrow keys to navigate, Enter to select
+
+### Quick Actions Dropdown
+- **Trigger:** Button with chevron icon
+- **Width:** 200px
+- **Position:** Right-aligned below trigger
+- **Background:** White with shadow
+- **Items:** Icon + text, hover: bg-secondary
+- **Item Height:** 40px
+- **Spacing:** 4px between items
+
+### Modal Overlay
+- **Background:** rgba(0, 0, 0, 0.5)
+- **Blur:** backdrop-filter: blur(4px)
+- **Animation:** Fade in 200ms
+- **Click Outside:** Close modal
+- **Escape Key:** Close modal
+
+### Modal Container
+- **Width:** 600px (max-width: 90vw)
+- **Max Height:** 80vh
+- **Background:** White
+- **Border Radius:** 12px
+- **Shadow:** Large elevation shadow
+- **Animation:** Slide up + fade in 200ms
+- **Padding:** 24px
+
+### Card Component
+- **Background:** White
+- **Border:** 1px solid #e5e7eb
+- **Border Radius:** 8px
+- **Shadow:** Subtle elevation
+- **Padding:** 24px
+- **Hover:** Slight shadow increase
+
+---
+
+## Interactions
+
+### Tab Navigation (Optional)
+- **Click tab** → Switch to tab content, update URL (?tab=submissions)
+- **Arrow keys** → Navigate between tabs
+- **Enter key** → Activate selected tab
+- **Badge count** → Real-time update
+
+### Quick Actions Dropdown
+- **Click button** → Open dropdown
+- **Click item** → Execute action or open modal
+- **Click outside** → Close dropdown
+- **Escape key** → Close dropdown
+
+### Modal Actions
+- **Appeal Enforcement:**
+  - Select grounds → Show explanation field
+  - Upload documents → Show file list
+  - Submit Appeal → Close modal, show success toast, update action status
+  - Cancel → Close modal, no changes
+
+- **New Submission:**
+  - Select type → Navigate to submission form or open wizard
+  - View Templates → Open templates modal
+  - View Help → Open help documentation
+
+- **View Enforcement Details:**
+  - Download PDF → Download action details
+  - Print → Open print dialog
+  - Appeal → Open appeal modal
+  - Close → Close modal
+
+### Widget Actions
+- **View All** → Navigate to full list page
+- **View Details** → Navigate to detail page or open modal
+- **Quick Action Buttons** → Execute action or open modal
 
 ---
 
 ## Responsive Behavior
 
 ### Desktop (1024px+)
-- **Widget Grid:** 3 columns
-- **Metrics Grid:** 4 columns
-- **Full layout:** All widgets and metrics visible
+- **Tabs:** Horizontal, full width (if used)
+- **Widget Grid:** 3-column grid
+- **Modals:** 600px width, centered
 
 ### Tablet (768px - 1023px)
-- **Widget Grid:** 2 columns (or 1 column stacked)
-- **Metrics Grid:** 2 columns
-- **Spacing:** Reduced gaps (16px)
+- **Tabs:** Horizontal scroll if needed
+- **Widget Grid:** 2-column grid
+- **Modals:** 90vw width, centered
 
 ### Mobile (<768px)
-- **Widget Grid:** 1 column (stacked)
-- **Metrics Grid:** 1 column (stacked)
-- **Spacing:** 16px gaps
-- **Widget Height:** Auto, full width
+- **Tabs:** Horizontal scroll
+- **Widget Grid:** 1-column stack
+- **Modals:** Full screen
+- **Quick Actions:** Full-width dropdown
 
 ---
 
 ## Design System References
 
 ### Components Used
-- **Card Component:** Widget containers, metric cards (shadcn/ui card)
-- **List Component:** Recent submissions, pending approvals, activity timeline (shadcn/ui list)
-- **Badge Component:** Priority indicators, status badges (shadcn/ui badge)
-- **Metric Card Component:** Key metrics display (custom, shadcn/ui inspired)
-- **Button Component:** Quick actions (shadcn/ui button)
-- **Skeleton Component:** Loading states (shadcn/ui skeleton)
-- **Empty State Component:** No data states (shadcn/ui empty state pattern)
-- **Tooltip Component:** Hover tooltips (shadcn/ui tooltip)
+- **Tab Component:** shadcn/ui tabs (optional)
+- **Modal Component:** shadcn/ui dialog
+- **Dropdown Component:** shadcn/ui dropdown-menu
+- **Button Component:** shadcn/ui button
+- **Card Component:** shadcn/ui card
+- **Badge Component:** shadcn/ui badge
+- **Form Components:** shadcn/ui form, input, select, textarea
+- **File Upload:** shadcn/ui file-upload
 
-### Design Inspiration References
-- **Stripe Dashboard:** https://dashboard.stripe.com - Professional dashboard layout
-- **GitHub:** https://github.com - Clean dashboard, activity feeds
-- **Linear App:** https://linear.app - Modern dashboard, smooth interactions
-- **shadcn/ui Dashboard:** https://ui.shadcn.com/examples/dashboard - Component patterns
-- **Taxonomy (shadcn/ui):** https://tx.shadcn.com/ - Full implementation example
+### Design Inspiration
+- **Stripe Dashboard:** Clean layout, modal patterns
+- **GitHub:** Quick actions menu, activity feeds
+- **Linear:** Modern dashboard, smooth interactions
+- **shadcn/ui Dashboard:** Component patterns, accessibility
 
 ### Colors (From Design System)
-- **Widget Background:** #ffffff (white) - Clean, professional
-- **Widget Border:** #e5e7eb (border-default) - Subtle separation
-- **Widget Shadow:** rgba(0, 0, 0, 0.05) - Subtle elevation
-- **Compliance Score:** #22c55e (success-500) - Green for positive states
-- **Active Submissions:** #3b82f6 (primary-500) - Blue for primary actions
-- **Pending Actions:** #f59e0b (warning-500) - Orange for warnings
-- **Completed:** #6b7280 (text-secondary) - Gray for neutral states
-- **Text Primary:** #111827 (text-primary) - High contrast
-- **Text Secondary:** #6b7280 (text-secondary)
-- **Text Tertiary:** #9ca3af (text-tertiary)
-- **Hover Background:** #f9fafb (bg-secondary)
-- **Focus Ring:** #3b82f6 (primary-500), 2px outline
+- **Tab Active:** #3b82f6 (primary-500)
+- **Tab Inactive:** #6b7280 (text-secondary)
+- **Modal Overlay:** rgba(0, 0, 0, 0.5)
+- **Modal Background:** #ffffff (white)
+- **Card Background:** #ffffff (white)
+- **Shadow:** rgba(0, 0, 0, 0.1)
 
-### Typography (From Design System)
+### Typography
 - **Page Title:** 30px, font-weight: 700 (h1)
 - **Section Title:** 20px, font-weight: 600 (h2)
 - **Card Title:** 16px, font-weight: 600 (h3)
 - **Body Text:** 14px, font-weight: 400
 - **Small Text:** 12px, font-weight: 400
-- **Label Text:** 12px, font-weight: 500
 
-### Spacing (8px Grid System)
+### Spacing (8px Grid)
 - **Page Padding:** 24px (3 × 8px) desktop, 16px (2 × 8px) mobile
 - **Widget Gap:** 24px (3 × 8px) desktop, 16px (2 × 8px) mobile
-- **Metric Card Gap:** 16px (2 × 8px)
-- **Widget Padding:** 24px (3 × 8px) - Comfortable content spacing
-- **Card Border Radius:** 8px (1 × 8px) - Modern, subtle rounding
-- **Button Padding:** 12px horizontal (1.5 × 8px), 8px vertical (1 × 8px)
+- **Card Padding:** 24px (3 × 8px)
+- **Modal Padding:** 24px
 
 ### Transitions & Animations
-- **Card Hover:** 150ms ease-in-out (subtle elevation change)
-- **Button Hover:** 150ms ease-in-out
-- **Widget Loading:** 200ms fade-in
-- **State Changes:** 200ms ease-in-out
+- **Tab Switch:** 200ms ease-in-out
+- **Modal Open:** 200ms ease-out (fade + slide up)
+- **Modal Close:** 150ms ease-in (fade + slide down)
+- **Dropdown Open:** 150ms ease-out
+- **Card Hover:** 150ms ease-in-out
 
-### Accessibility (WCAG 2.1 AA Compliance)
-- **Color Contrast:** Minimum 4.5:1 for text, 3:1 for UI components
-- **Focus Indicators:** 2px solid outline, #3b82f6 (primary-500), 2px offset
-- **Keyboard Navigation:** Full keyboard support (Tab, Enter, Arrow keys)
-- **Screen Reader Support:** ARIA labels, roles, and descriptions
-- **Touch Targets:** Minimum 40px × 40px for all interactive elements
-- **ARIA Labels:** Descriptive labels for all widgets and actions
-- **Live Regions:** For real-time updates (compliance status, activity feed)
+### Accessibility (WCAG 2.1 AA)
+- **Tab Navigation:** Keyboard accessible (Arrow keys, Enter)
+- **Modal Focus:** Trap focus within modal, focus first input
+- **Modal Close:** Escape key, click outside
+- **Dropdown:** Keyboard accessible (Arrow keys, Enter, Escape)
+- **Screen Readers:** ARIA labels, roles, descriptions
+- **Color Contrast:** Minimum 4.5:1 for text
+- **Touch Targets:** Minimum 40px × 40px
+
+---
+
+## Performance Optimizations
+
+### Lazy Loading
+- **Tab Content:** Load on first visit (if tabs used)
+- **Modal Content:** Load on open
+- **Widget Data:** Parallel API calls
+
+### Data Fetching
+- **Dashboard Data:** Fetch on page load
+- **Real-time Updates:** WebSocket or polling (30s interval)
+
+### Caching
+- **Tab State:** localStorage (if tabs used)
+- **Dashboard Data:** Memory cache with TTL (5 minutes)
 
 ---
 
 ## Related Documents
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/dashboard`
-- [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Company role dashboard
-- [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, List, Metric components
+- [Role-Based UI Patterns](../../../../02-architecture/frontend/role-based-ui-patterns.md) - Company role
+- [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, Modal, Dropdown components
+- [Design System](../../../../02-architecture/frontend/design-system.md) - Colors, typography, spacing
+- [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Modal forms
 
 ---
 
-## Industry Best Practices Implementation
-
-### Performance Optimizations
-- **Lazy Loading:** Dashboard cards and widgets load on demand
-- **Virtual Scrolling:** For long activity lists (if needed)
-- **Debounced Resize:** Debounce window resize handlers (150ms)
-- **CSS Containment:** Use `contain: layout style paint` for dashboard sections
-- **Will-Change:** Hint browser about chart animations (`will-change: transform, opacity`)
-- **Data Fetching:** Parallel API calls for independent widgets, sequential for dependent data
-- **Caching:** Cache dashboard data with appropriate TTL (5-10 minutes)
-
-### Modern CSS Features
-- **CSS Grid/Flexbox:** Use CSS Grid for dashboard layout (responsive, flexible)
-- **CSS Custom Properties:** Use design system tokens for colors/spacing
-- **Backdrop Filter:** Subtle blur effects for modals/overlays (if supported, graceful degradation)
-- **CSS Transitions:** Smooth animations for all state changes
-- **Container Queries:** Consider for component-level responsive design (future enhancement)
-
-### State Management
-- **Dashboard State:** Track widget visibility, collapsed/expanded states
-- **Real-time Updates:** WebSocket or polling for live data (30s interval)
-- **Local Storage:** Cache user preferences (widget order, collapsed states)
-- **Optimistic Updates:** Update UI optimistically, sync with server
-- **Error Recovery:** Retry failed API calls with exponential backoff
-
-### Error Handling
-- **Loading States:** Skeleton loaders for all dashboard widgets
-- **Error Boundaries:** Graceful degradation if widget fails
-- **Retry Logic:** Automatic retry with exponential backoff for failed widgets
-- **Offline Support:** Cache dashboard data for offline access
-- **Fallback:** Default empty states if data unavailable
-
-### Browser Support
-- **Modern Browsers:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Progressive Enhancement:** Core functionality works without JS (basic dashboard display)
-- **Polyfills:** For older browsers if needed (Intersection Observer, ResizeObserver, etc.)
-
-### Testing Considerations
-- **Visual Regression:** Test dashboard at different screen sizes
-- **Responsive Testing:** Test at key breakpoints (768px, 1024px, 1920px)
-- **Accessibility Testing:** Screen reader, keyboard navigation, color contrast
-- **Performance Testing:** Lighthouse scores, Core Web Vitals, Time to Interactive
-- **Cross-browser Testing:** Test charts, widgets, responsive behavior
-- **Data Loading Testing:** Test with slow network, empty states, error states
-
-### Security Considerations
-- **XSS Prevention:** Sanitize all user-generated content
-- **CSRF Protection:** For all state-changing actions
-- **Data Isolation:** Ensure company data isolation (RLS)
-- **Permission Checks:** Verify user permissions before displaying actions
-
-### Real-time Features
-- **WebSocket Connection:** For instant updates (submissions, messages, enforcement)
-- **Polling Fallback:** If WebSocket unavailable (30s interval)
-- **Badge Count Updates:** Real-time badge counts in widgets
-- **Activity Feed:** Real-time activity feed updates
-
-### Dashboard-Specific Optimizations
-- **Widget Loading:** Load critical widgets first (compliance status, pending actions)
-- **Chart Rendering:** Use canvas or SVG for charts (performance)
-- **Image Optimization:** Lazy load images, use WebP format
-- **Code Splitting:** Split dashboard code by widget/module
-- **Prefetching:** Prefetch likely next pages (submissions, products)
-
----
-
-**Last Updated:** 2025-01-01  
-**Status:** 🟡 Ready for Review  
-**Design Approach:** Modern enterprise dashboard pattern (Stripe/GitHub/Linear/shadcn/ui inspired)
+**Last Updated:** 2025-01-06  
+**Status:** 🟢 Updated with Modal Designs & Optional Tabs  
+**Design Approach:** Modern enterprise dashboard with modals and optional tabs (Stripe/GitHub/Linear/shadcn/ui inspired)

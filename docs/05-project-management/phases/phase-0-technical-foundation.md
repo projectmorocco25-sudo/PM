@@ -214,8 +214,9 @@ Establish the technical architecture and development foundation for the PM platf
 - [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md)
 - [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
 - [Deployment Architecture](../../02-architecture/deployment-architecture.md)
-- [Database Schema](../../02-architecture/database/schema-design.md) (to be created)
-- [Technical Decision Log](../../06-development/technical-decisions/decision-log.md) (to be created)
+- [Database Schema](../../02-architecture/database/schema-design.md)
+- [Communication Channels Lifecycle](../../02-architecture/communication-channels-lifecycle.md) - Communications lifecycle states and transitions (added 2025-01-01)
+- [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 
 ---
 

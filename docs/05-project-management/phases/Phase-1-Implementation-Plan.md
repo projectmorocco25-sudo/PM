@@ -32,6 +32,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.1.1c:** Define API contract documentation format (OpenAPI/Swagger for RPC functions)
 - [ ] **Task 1.1.1.1d:** Set up Edge Functions project structure (Deno functions directory, deployment configuration)
 - [ ] **Task 1.1.1.2:** Create database migration for core tables (users, system_config, audit_logs, notifications, approvals)
+- [ ] **Task 1.1.1.2d:** Create database migration for communication tables (conversations, messages, message_attachments, message_read_receipts, conversation_participants)
 - [ ] **Task 1.1.1.2a:** Create all indexes per schema-design.md (performance indexes for foreign keys, query patterns)
 - [ ] **Task 1.1.1.2b:** Implement database constraints (check constraints, unique constraints, foreign key constraints)
 - [ ] **Task 1.1.1.2c:** Create timestamp update triggers (`updated_at` auto-update for all tables)
@@ -40,12 +41,20 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.1.3b:** Implement RLS policies for `system_config` table (Tier 1 only for module activation, read-only for others)
 - [ ] **Task 1.1.1.3c:** Implement RLS policies for `audit_logs` table (MOH only, companies see own company's audit logs only)
 - [ ] **Task 1.1.1.3d:** Implement RLS policies for `notifications` table (users see own notifications only)
+- [ ] **Task 1.1.1.3e:** Implement RLS policies for communication tables (conversations, messages, message_attachments, message_read_receipts, conversation_participants - company isolation, MOH system-wide access, internal MOH conversations)
 - [ ] **Task 1.1.1.4:** Create shared RPC functions (shared_get_user_permissions, shared_check_module_active, shared_create_audit_log, shared_create_notification)
 - [ ] **Task 1.1.1.4a:** Implement `shared_get_user_permissions` RPC function (role-based permissions, permission matrix)
 - [ ] **Task 1.1.1.4b:** Implement `shared_check_module_active` RPC function (module activation check, caching strategy)
 - [ ] **Task 1.1.1.4c:** Implement `shared_create_audit_log` RPC function (hash chaining, audit log creation)
 - [ ] **Task 1.1.1.4d:** Implement `shared_create_notification` RPC function (notification creation, batch notifications)
 - [ ] **Task 1.1.1.4e:** Create Edge Function for email notifications (read from notifications table, send emails, mark as sent)
+- [ ] **Task 1.1.1.4f:** Create communication RPC functions (communications_create_conversation, communications_send_message, communications_mark_read, communications_archive_conversation, communications_create_announcement) - **Reference:** [Communication Channels Lifecycle](../../02-architecture/communication-channels-lifecycle.md) for state transitions and validation rules
+- [ ] **Task 1.1.1.4g:** Implement communication RPC function - Create conversation (communications_create_conversation - validates permissions, company access, workflow entity access, CREATED → SENT state transition)
+- [ ] **Task 1.1.1.4h:** Implement communication RPC function - Send message (communications_send_message - validates user is participant, creates message, notification, audit log, SENT → DELIVERED state transition)
+- [ ] **Task 1.1.1.4i:** Implement communication RPC function - Mark read (communications_mark_read - creates read receipt, updates notification, audit log, DELIVERED → READ state transition)
+- [ ] **Task 1.1.1.4j:** Implement communication RPC function - Archive conversation (communications_archive_conversation - soft delete, validates permissions, audit log, ACTIVE → ARCHIVED state transition)
+- [ ] **Task 1.1.1.4k:** Implement communication RPC function - Create announcement (communications_create_announcement - MOH Tier 1 only, creates conversation, message, notifications for all recipients)
+- [ ] **Task 1.1.1.4l:** Create Edge Function for message email notifications (read from notifications table for new messages, send emails, mark as sent)
 - [ ] **Task 1.1.1.5:** Implement audit logging triggers (audit_logs table triggers)
 - [ ] **Task 1.1.1.5a:** Implement audit logging trigger function (hash chaining logic, previous_hash calculation, current_hash generation)
 - [ ] **Task 1.1.1.5b:** Apply audit triggers to all audited tables (companies, products, skus, submissions, etc.)
@@ -103,6 +112,15 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.1.16c:** Implement notification badge (unread count in header)
 - [ ] **Task 1.1.1.16d:** Create useNotifications hook (fetch, mark as read, real-time updates)
 - [ ] **Task 1.1.1.16e:** Implement toast notification system (success, error, warning, info - for action feedback)
+- [ ] **Task 1.1.1.16f:** Create communication components (inbox, conversation detail, compose message)
+- [ ] **Task 1.1.1.16g:** Implement CommunicationsInbox component (conversation list, unread indicators, filters, search, role-based access)
+- [ ] **Task 1.1.1.16h:** Implement ConversationDetail component (message thread, reply interface, attachments, read receipts, workflow context)
+- [ ] **Task 1.1.1.16i:** Implement ComposeMessage component (recipient selection, subject, content, attachments, workflow entity linking)
+- [ ] **Task 1.1.1.16j:** Implement SentMessages component (sent conversations list, status indicators)
+- [ ] **Task 1.1.1.16k:** Implement SystemAnnouncements component (MOH Tier 1 only - announcement list, creation interface, broadcast controls)
+- [ ] **Task 1.1.1.16l:** Implement CommunicationWorkflowIntegration component (message button, conversation list, context display on workflow pages)
+- [ ] **Task 1.1.1.16m:** Create useCommunications hook (fetch conversations, messages, mark as read, real-time updates)
+- [ ] **Task 1.1.1.16n:** Implement communication real-time updates (Supabase Realtime for new messages, read receipts, conversation updates)
 - [ ] **Task 1.1.1.17:** Set up Tailwind CSS and shadcn/ui component library
 - [ ] **Task 1.1.1.17a:** Implement design system tokens (colors, typography, spacing, shadows - per design-system.md)
 - [ ] **Task 1.1.1.17b:** Configure Tailwind with design system customizations (tailwind.config.js)
@@ -120,6 +138,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.1.17n:** Implement skip navigation link
 - [ ] **Task 1.1.1.17o:** Ensure color contrast meets WCAG AA standards (per design-system.md)
 - [ ] **Task 1.1.1.18:** Create routing structure (public routes, auth routes, dashboard routes)
+- [ ] **Task 1.1.1.18g:** Implement communication routes (/communications/inbox, /communications/inbox/[conversation_id], /communications/sent, /communications/compose, /communications/announcements, /communications/archived)
 - [ ] **Task 1.1.1.18a:** Set up React Hook Form + Zod validation (per form-design-patterns.md)
 - [ ] **Task 1.1.1.18b:** Create FormField wrapper component (label, error, helper text, required indicator)
 - [ ] **Task 1.1.1.18c:** Create FormGroup component (field grouping, sectioned forms)
@@ -130,6 +149,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.1.20:** Create dashboard home page (role-based dashboard view)
 - [ ] **Task 1.1.1.20a:** Implement role-based dashboard views (Company Dashboard, MOH Tier 1 Dashboard, Tier 2 Dashboard - per role-based-ui-patterns.md)
 - [ ] **Task 1.1.1.20b:** Implement role-based navigation menu (different sidebar items per role)
+- [ ] **Task 1.1.1.20c:** Add Communications link to Global section in sidebar navigation (with unread badge count)
 
 ### Integration Tasks
 - [ ] **Task 1.1.1.21:** Set up CI/CD pipeline (GitHub Actions or Vercel)
@@ -561,6 +581,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.3.1.11a:** Implement weighted average calculation logic (component weight normalization, weighted sum calculation, 0-100 scale mapping)
 - [ ] **Task 1.3.1.12:** Implement configurable component weights (Tier 1 configuration, module-specific components excluded when modules not active)
 - [ ] **Task 1.3.1.12a:** Implement component weight configuration UI (Tier 1 weight configuration interface, weight validation, weight persistence, default component weights if not configured)
+  - **Reference:** [CMC Component Weights](../../../02-architecture/modules/cmc-component-weights.md) - Default weights and rationale
 
 ---
 
@@ -833,10 +854,21 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 ## Audit Notes
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2025-01-01  
 **Audited By:** Fatima (MOH Governance & Regulation SME), Dr. Samir (Pharma Value Chain SME), Emma (UI/UX + Next.js Frontend Specialist), Oliver (Chief Architect), Nadia (Database Modeler), Rafi (RLS/RBAC Specialist), Maya (Workflow/RPC Engineer), Salim (Security & Audit Engineer), Leila (Edge Functions/Jobs Engineer), Hassan (QA/Assurance Engineer), Farah (Analytics/CMC Specialist)
 
 ### Key Additions from Audits
+
+**Communication Channels (Approved 2025-01-01):**
+- Communication tables added to database schema (conversations, messages, message_attachments, message_read_receipts, conversation_participants)
+- Communication RPC functions (create conversation, send message, mark read, archive, create announcement)
+- Communication routes added to routing structure (/communications/inbox, /communications/compose, etc.)
+- Communication components (inbox, conversation detail, compose, announcements)
+- Communication wireframes added to Phase 0.5 Priority 1 (6 wireframe tasks)
+- Communication navigation added to Global section in sidebar
+- **Communication lifecycle defined** with state transitions, governance requirements, and regulatory compliance (see [Communication Channels Lifecycle](../../02-architecture/communication-channels-lifecycle.md))
+- All communication requirements approved (governance, security, UI/UX, architecture)
+- See [Communication Channels Requirements](../../02-architecture/communication-channels-requirements.md) for complete specifications
 
 **Governance & Regulatory (Fatima):**
 - Mandatory justification for Tier 1 enforcement actions

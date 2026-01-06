@@ -49,11 +49,41 @@ Core foundation wireframes include public pages, authentication flows, dashboard
 ```
 00-core-foundation/
 ├── README.md (this file)
+├── PRIORITY-1-IMPLEMENTATION-GUIDE.md
 ├── public-pages/
 ├── authentication/
+│   ├── README.md
+│   └── task-0.5.1.11-login-page.md
 ├── layout-navigation/
-└── dashboard/
+│   ├── README.md
+│   ├── task-0.5.1.14-dashboard-layout-structure.md
+│   ├── task-0.5.1.15-header-component.md
+│   ├── task-0.5.1.16-sidebar-navigation.md
+│   └── task-0.5.1.17-notification-center-component.md
+├── dashboard/
+│   ├── README.md
+│   ├── task-0.5.1.18-company-dashboard.md
+│   ├── task-0.5.1.19-moh-tier1-dashboard.md
+│   └── task-0.5.1.20-moh-tier2-dashboard.md
+├── communications/
+│   ├── README.md
+│   ├── task-0.5.1.24-communications-inbox-list.md
+│   ├── task-0.5.1.25-conversation-detail.md
+│   ├── task-0.5.1.26-compose-message.md
+│   ├── task-0.5.1.27-sent-messages.md
+│   ├── task-0.5.1.28-system-announcements.md
+│   └── task-0.5.1.29-communication-integration-workflow.md
+└── global/
+    ├── README.md
+    ├── task-0.5.1.30-history-overview.md
+    ├── task-0.5.1.31-notifications-page.md
+    ├── task-0.5.1.32-audit-logs-list.md
+    ├── task-0.5.1.33-audit-log-detail.md
+    ├── task-0.5.1.34-audit-reports.md
+    └── task-0.5.1.35-system-configuration.md
 ```
+
+**Note:** Wireframe PNG files will be saved alongside the `.md` placeholder files when created in Miro.
 
 ## Related Routes
 

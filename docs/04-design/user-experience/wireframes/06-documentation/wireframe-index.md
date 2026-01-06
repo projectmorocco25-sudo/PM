@@ -2,7 +2,7 @@
 
 **Purpose:** Complete index of all wireframes organized by module and subphase.
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2025-01-01  
 **Status:** Wireframe structure ready - wireframes pending  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
 
@@ -37,31 +37,49 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 ### Authentication
 | Task ID | Wireframe | Status | Location | Route Reference |
 |---------|-----------|--------|----------|-----------------|
-| 0.5.1.11 | Login page | ⚪ | `00-core-foundation/authentication/` | `/login` |
-| 0.5.1.12 | Registration page | ⚪ | `00-core-foundation/authentication/` | `/register` |
-| 0.5.1.13 | Forgot/Reset password flow | ⚪ | `00-core-foundation/authentication/` | `/forgot-password`, `/reset-password` |
+| 0.5.1.11 | Login page | ⚪ | `00-core-foundation/authentication/task-0.5.1.11-login-page.png` | `/login` |
+| 0.5.1.12 | Registration page | ⚪ | `00-core-foundation/authentication/task-0.5.1.12-registration-page.png` | `/register` |
+| 0.5.1.13 | Forgot/Reset password flow | ⚪ | `00-core-foundation/authentication/task-0.5.1.13-forgot-reset-password.png` | `/forgot-password`, `/reset-password` |
 
 ### Layout & Navigation
 | Task ID | Wireframe | Status | Location | Route Reference |
 |---------|-----------|--------|----------|-----------------|
-| 0.5.1.14 | Dashboard layout structure | ⚪ | `00-core-foundation/layout-navigation/` | Layout component |
-| 0.5.1.15 | Header component | ⚪ | `00-core-foundation/layout-navigation/` | Header component |
-| 0.5.1.16 | Sidebar navigation | ⚪ | `00-core-foundation/layout-navigation/` | Sidebar component |
-| 0.5.1.17 | Notification center component | ⚪ | `00-core-foundation/layout-navigation/` | Notification component |
+| 0.5.1.14 | Dashboard layout structure | ⚪ | `00-core-foundation/layout-navigation/task-0.5.1.14-dashboard-layout-structure.png` | Layout component |
+| 0.5.1.15 | Header component | ⚪ | `00-core-foundation/layout-navigation/task-0.5.1.15-header-component.png` | Header component |
+| 0.5.1.16 | Sidebar navigation | ⚪ | `00-core-foundation/layout-navigation/task-0.5.1.16-sidebar-navigation.png` | Sidebar component |
+| 0.5.1.17 | Notification center component | ⚪ | `00-core-foundation/layout-navigation/task-0.5.1.17-notification-center-component.png` | Notification component |
 
 ### Dashboard (Role-Based)
 | Task ID | Wireframe | Status | Location | Route Reference |
 |---------|-----------|--------|----------|-----------------|
-| 0.5.1.18 | Company Dashboard | ⚪ | `00-core-foundation/dashboard/` | `/dashboard` (Company) |
-| 0.5.1.19 | MOH Tier 1 Dashboard | ⚪ | `00-core-foundation/dashboard/` | `/dashboard` (Tier 1) |
-| 0.5.1.20 | MOH Tier 2 Dashboard | ⚪ | `00-core-foundation/dashboard/` | `/dashboard` (Tier 2) |
+| 0.5.1.18 | Company Dashboard | ⚪ | `00-core-foundation/dashboard/task-0.5.1.18-company-dashboard.png` | `/dashboard` (Company) |
+| 0.5.1.19 | MOH Tier 1 Dashboard | ⚪ | `00-core-foundation/dashboard/task-0.5.1.19-moh-tier1-dashboard.png` | `/dashboard` (Tier 1) |
+| 0.5.1.20 | MOH Tier 2 Dashboard | ⚪ | `00-core-foundation/dashboard/task-0.5.1.20-moh-tier2-dashboard.png` | `/dashboard` (Tier 2) |
+
+### Communication Interfaces (Critical Foundation)
+| Task ID | Wireframe | Status | Location | Route Reference |
+|---------|-----------|--------|----------|-----------------|
+| 0.5.1.24 | Communications inbox list page | ⚪ | `00-core-foundation/communications/task-0.5.1.24-communications-inbox-list.png` | `/communications/inbox` |
+| 0.5.1.25 | Conversation detail page | ⚪ | `00-core-foundation/communications/task-0.5.1.25-conversation-detail.png` | `/communications/inbox/[conversation_id]` |
+| 0.5.1.26 | Compose message interface | ⚪ | `00-core-foundation/communications/task-0.5.1.26-compose-message.png` | `/communications/compose` |
+| 0.5.1.27 | Sent messages page | ⚪ | `00-core-foundation/communications/task-0.5.1.27-sent-messages.png` | `/communications/sent` |
+| 0.5.1.28 | System announcements interface | ⚪ | `00-core-foundation/communications/task-0.5.1.28-system-announcements.png` | `/communications/announcements` (MOH Tier 1 only) |
+| 0.5.1.29 | Communication integration in workflow pages | ⚪ | `00-core-foundation/communications/task-0.5.1.29-communication-integration-workflow.png` | Component integration |
+
+### Global Section Pages (Critical Foundation)
+| Task ID | Wireframe | Status | Location | Route Reference |
+|---------|-----------|--------|----------|-----------------|
+| 0.5.1.30 | History overview page | ⚪ | `00-core-foundation/global/task-0.5.1.30-history-overview.png` | `/history` |
+| 0.5.1.31 | Notifications page | ⚪ | `00-core-foundation/global/task-0.5.1.31-notifications-page.png` | `/notifications` |
+| 0.5.1.32 | Audit logs list page | ⚪ | `00-core-foundation/global/task-0.5.1.32-audit-logs-list.png` | `/audit/logs` (MOH/Auditors only) |
+| 0.5.1.33 | Audit log detail page | ⚪ | `00-core-foundation/global/task-0.5.1.33-audit-log-detail.png` | `/audit/logs/[id]` |
+| 0.5.1.34 | Audit reports page | ⚪ | `00-core-foundation/global/task-0.5.1.34-audit-reports.png` | `/audit/reports` (MOH/Auditors only) |
+| 0.5.1.35 | System Configuration page | ⚪ | `00-core-foundation/global/task-0.5.1.35-system-configuration.png` | `/system-config` (MOH Tier 1 only) |
 
 ### Dashboard Utility Pages
 | Task ID | Wireframe | Status | Location | Route Reference |
 |---------|-----------|--------|----------|-----------------|
-| 0.5.1.21 | History overview page | ⚪ | `00-core-foundation/dashboard/` | `/history` |
-| 0.5.1.22 | Profile page | ⚪ | `00-core-foundation/dashboard/` | `/profile` |
-| 0.5.1.23 | Notifications page | ⚪ | `00-core-foundation/dashboard/` | `/notifications` |
+| 0.5.1.22 | Profile page | ⚪ | `00-core-foundation/dashboard/task-0.5.1.22-profile-page.png` | `/profile` |
 
 ## RMM Module Wireframes (Subphase 0.5.2)
 
@@ -152,23 +170,21 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 
 ## Audit & Historical Data Wireframes (Subphase 0.5.6)
 
-| Task ID | Wireframe | Status | Location | Route Reference |
-|---------|-----------|--------|----------|-----------------|
-| 0.5.6.1 | Audit logs list page | ⚪ | `05-audit-historical/audit-logs/` | `/audit/logs` (MOH/Auditors) |
-| 0.5.6.2 | Audit log detail page | ⚪ | `05-audit-historical/audit-logs/` | `/audit/logs/[id]` |
-| 0.5.6.3 | Audit reports page | ⚪ | `05-audit-historical/audit-logs/` | `/audit/reports` (MOH/Auditors) |
+**Note:** Audit pages (0.5.6.1-0.5.6.3) have been moved to Priority 1 as Global Section Pages (Tasks 0.5.1.32-0.5.1.34). This section is kept for reference but tasks are now in Core Foundation.
 
 ## Summary Statistics
 
 | Category | Total | ⚪ Not Started | 🟡 In Progress | ✅ Complete | 📋 Pending Review |
 |----------|-------|---------------|----------------|-------------|-------------------|
-| Core Foundation | 23 | 23 | 0 | 0 | 0 |
+| Core Foundation | 35 | 35 | 0 | 0 | 0 |
 | RMM Module | 15 | 15 | 0 | 0 | 0 |
 | VCI Module | 26 | 26 | 0 | 0 | 0 |
 | ECS Module | 11 | 11 | 0 | 0 | 0 |
 | CMC Module | 15 | 15 | 0 | 0 | 0 |
-| Audit & Historical | 3 | 3 | 0 | 0 | 0 |
-| **TOTAL** | **93** | **93** | **0** | **0** | **0** |
+| Audit & Historical | 0 | 0 | 0 | 0 | 0 |
+| **TOTAL** | **102** | **102** | **0** | **0** | **0** |
+
+**Note:** Core Foundation count includes 20 Priority 1 wireframes (Authentication, Layout, Dashboards, Communications, Global Pages) plus 15 additional foundation wireframes (Public Pages, Dashboard Utilities, etc.). Audit pages moved to Core Foundation as Global Section Pages.
 
 ## Related Documents
 
@@ -179,6 +195,6 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 
 ---
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2025-01-01  
 **Next Update:** As wireframes are completed
 

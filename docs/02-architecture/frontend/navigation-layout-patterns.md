@@ -2,13 +2,39 @@
 
 **Purpose:** This document defines navigation patterns, layout structures, and responsive design patterns for the PM platform.
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2025-01-01  
 **Status:** ✅ Complete (Phase 0, Frontend UI/UX Gap Resolution)  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
 
 ## Overview
 
 The PM platform uses a consistent navigation and layout structure across all modules, with role-based adaptations. The layout is optimized for desktop and tablet devices, with responsive breakpoints for different screen sizes.
+
+## Navigation Structure Organization
+
+The sidebar navigation is organized into six main sections:
+
+1. **[Global]** - System-wide features available to all authenticated users
+   - Dashboard, Communications, History, Notifications
+   - Audit (MOH Tier 1/2, Auditors only)
+   - System Configuration (MOH Tier 1 only)
+
+2. **[RMM]** - Registry Management Module
+   - Overview, Companies, Products, SKUs
+
+3. **[VCI]** - Value Chain Intelligence Module
+   - Dashboard, Submissions (AAMS, MSQ, WSL), Submissions History, Trends, Thresholds, Breaches, Governance, Treemap
+
+4. **[ECS]** - Export Control System Module (conditional - if active OR historical data exists)
+   - Overview, Export Requests, Authorizations, Export History
+
+5. **[CMC]** - Compliance Monitoring Center Module (conditional - if active OR historical data exists)
+   - Overview, Compliance Scores, Score History, Disputes, Disputes History, Reports
+
+6. **[Help & Info]** - Support and information resources
+   - Support Center, FAQ, Documentation, Contact Support, System Status
+
+**Note:** Profile and account settings are accessed via the header user menu dropdown, not the sidebar.
 
 ## Layout Structure
 
@@ -81,7 +107,15 @@ The PM platform uses a consistent navigation and layout structure across all mod
 **Layout:**
 ```
 ┌──────────┐
+│ Global   │
+│ ├ Dashboard│
+│ ├ Communications│
+│ ├ History│
+│ ├ Notifications│
+│ └ Audit  │
+│           │
 │ RMM      │
+│ ├ Overview│
 │ ├ Companies│
 │ ├ Products │
 │ └ SKUs    │
@@ -89,21 +123,76 @@ The PM platform uses a consistent navigation and layout structure across all mod
 │ VCI       │
 │ ├ Dashboard│
 │ ├ Submissions│
-│ └ Thresholds│
+│ ├ Thresholds│
+│ ├ Breaches│
+│ └ Treemap│
 │           │
 │ ECS       │
-│ └ Export  │
+│ ├ Export Requests│
+│ └ Authorizations│
+│           │
+│ Enforcement│
+│ ├ Dashboard│
+│ ├ Actions  │
+│ ├ Pending  │
+│ └ Reports  │
 │           │
 │ CMC       │
-│ └ Scores  │
+│ ├ Scores  │
+│ ├ Disputes│
+│ └ Reports │
+│           │
+│ Help & Info│
+│ ├ Support │
+│ ├ FAQ     │
+│ └ Documentation│
 └──────────┘
 ```
 
 **Implementation:**
 ```tsx
 <Sidebar collapsed={isCollapsed} onToggle={handleToggle}>
+  {/* Global Section - System-wide features */}
+  <SidebarGroup label="Global" icon={Globe}>
+    <SidebarItem href="/" icon={LayoutDashboard} active>
+      Dashboard
+    </SidebarItem>
+    <SidebarItem href="/communications/inbox" icon={Mail} badge={unreadCount}>
+      Communications
+    </SidebarItem>
+    <SidebarItem href="/history" icon={History}>
+      History
+    </SidebarItem>
+    <SidebarItem href="/notifications" icon={Bell}>
+      Notifications
+    </SidebarItem>
+    {/* MOH Tier 1/2 and Auditors only */}
+    {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar' || userRole === 'auditor') && (
+      <>
+        <SidebarItem href="/audit/logs" icon={FileSearch}>
+          Audit Logs
+        </SidebarItem>
+        {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
+          <SidebarItem href="/audit/reports" icon={FileText}>
+            Audit Reports
+          </SidebarItem>
+        )}
+      </>
+    )}
+    {/* MOH Tier 1 only */}
+    {userRole === 'tier1' && (
+      <SidebarItem href="/system-config" icon={Settings}>
+        System Configuration
+      </SidebarItem>
+    )}
+  </SidebarGroup>
+  
+  {/* RMM Module */}
   <SidebarGroup label="RMM" icon={Building}>
-    <SidebarItem href="/rmm" icon={Building2} active>
+    <SidebarItem href="/rmm" icon={LayoutDashboard}>
+      Overview
+    </SidebarItem>
+    <SidebarItem href="/rmm/companies" icon={Building2}>
       Companies
     </SidebarItem>
     <SidebarItem href="/rmm/products" icon={Package}>
@@ -114,28 +203,57 @@ The PM platform uses a consistent navigation and layout structure across all mod
     </SidebarItem>
   </SidebarGroup>
   
+  {/* VCI Module */}
   <SidebarGroup label="VCI" icon={BarChart}>
-    <SidebarItem href="/vci" icon={LayoutDashboard} active>
+    <SidebarItem href="/vci" icon={LayoutDashboard}>
       Dashboard
     </SidebarItem>
-    <SidebarItem href="/vci/submissions" icon={FileText} badge={pendingCount}>
+    <SidebarItem href="/vci/submissions/aams" icon={FileText} badge={pendingCount}>
       Submissions
     </SidebarItem>
+    <SidebarItem href="/vci/submissions/history" icon={History}>
+      Submissions History
+    </SidebarItem>
+    {/* Trends - MOH Tier 1 only */}
+    {userRole === 'tier1' && (
+      <SidebarItem href="/vci/submissions/history/trends" icon={TrendingUp}>
+        Trends
+      </SidebarItem>
+    )}
+    <SidebarItem href="/vci/thresholds" icon={Target}>
+      Thresholds
+    </SidebarItem>
+    <SidebarItem href="/vci/breaches" icon={AlertTriangle}>
+      Breaches
+    </SidebarItem>
+    {/* Governance - MOH only */}
+    {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
+      <SidebarItem href="/vci/governance" icon={Shield}>
+        Governance
+      </SidebarItem>
+    )}
+    {/* Treemap - MOH Tier 1/2 only */}
+    {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
+      <SidebarItem href="/vci/treemap" icon={Map}>
+        Treemap
+      </SidebarItem>
+    )}
   </SidebarGroup>
   
-  {/* History link - always visible */}
-  <SidebarItem href="/history" icon={History}>
-    History
-  </SidebarItem>
-  
-  {/* Module activation check OR historical data exists */}
+  {/* ECS Module - if active OR historical data exists */}
   {(isECSActive || hasHistoricalECSData) && (
     <SidebarGroup label="ECS" icon={Plane}>
-      <SidebarItem href="/ecs" icon={PlaneTakeoff}>
+      <SidebarItem href="/ecs" icon={LayoutDashboard}>
+        Overview
+      </SidebarItem>
+      <SidebarItem href="/ecs/export-requests" icon={PlaneTakeoff}>
         Export Requests
         {!isECSActive && hasHistoricalECSData && (
           <Badge variant="outline" className="ml-2">Historical</Badge>
         )}
+      </SidebarItem>
+      <SidebarItem href="/ecs/authorizations" icon={CheckCircle}>
+        Authorizations
       </SidebarItem>
       {hasHistoricalECSData && (
         <SidebarItem href="/ecs/exports/history" icon={History}>
@@ -145,9 +263,31 @@ The PM platform uses a consistent navigation and layout structure across all mod
     </SidebarGroup>
   )}
   
+  {/* Enforcement Module - MOH Tier 1 and Tier 2 only */}
+  {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
+    <SidebarGroup label="Enforcement" icon={ShieldAlert}>
+      <SidebarItem href="/enforcement" icon={LayoutDashboard}>
+        Dashboard
+      </SidebarItem>
+      <SidebarItem href="/enforcement/actions" icon={FileText}>
+        Actions
+      </SidebarItem>
+      <SidebarItem href="/enforcement/pending-approvals" icon={Clock}>
+        Pending Approvals
+      </SidebarItem>
+      <SidebarItem href="/enforcement/reports" icon={BarChart}>
+        Reports
+      </SidebarItem>
+    </SidebarGroup>
+  )}
+  
+  {/* CMC Module - if active OR historical data exists */}
   {(isCMCActive || hasHistoricalCMCData) && (
     <SidebarGroup label="CMC" icon={BarChart}>
-      <SidebarItem href="/cmc" icon={BarChart2}>
+      <SidebarItem href="/cmc" icon={LayoutDashboard}>
+        Overview
+      </SidebarItem>
+      <SidebarItem href="/cmc/scores" icon={BarChart2}>
         Compliance Scores
         {!isCMCActive && hasHistoricalCMCData && (
           <Badge variant="outline" className="ml-2">Historical</Badge>
@@ -158,10 +298,42 @@ The PM platform uses a consistent navigation and layout structure across all mod
           Score History
         </SidebarItem>
       )}
+      <SidebarItem href="/cmc/disputes" icon={MessageSquare}>
+        Disputes
+      </SidebarItem>
+      {hasHistoricalCMCData && (
+        <SidebarItem href="/cmc/disputes/history" icon={History}>
+          Disputes History
+        </SidebarItem>
+      )}
+      <SidebarItem href="/cmc/reports" icon={FileText}>
+        Reports
+      </SidebarItem>
     </SidebarGroup>
   )}
+  
+  {/* Help & Info Section */}
+  <SidebarGroup label="Help & Info" icon={HelpCircle}>
+    <SidebarItem href="/support" icon={LifeBuoy}>
+      Support Center
+    </SidebarItem>
+    <SidebarItem href="/support/faq" icon={HelpCircle}>
+      FAQ
+    </SidebarItem>
+    <SidebarItem href="/support/documentation" icon={Book}>
+      Documentation
+    </SidebarItem>
+    <SidebarItem href="/support/contact" icon={Mail}>
+      Contact Support
+    </SidebarItem>
+    <SidebarItem href="/status" icon={Activity}>
+      System Status
+    </SidebarItem>
+  </SidebarGroup>
 </Sidebar>
 ```
+
+**Note:** Profile is accessed via the header user menu dropdown, not the sidebar.
 
 **Inactive Module Indicators:**
 - Show module in navigation if active OR historical data exists
@@ -317,21 +489,45 @@ The PM platform uses a consistent navigation and layout structure across all mod
 
 **Sidebar Structure:**
 ```
-├── Dashboard
-├── RMM
-│   ├── Products (links to /rmm/products - RLS filters to own company)
-│   └── SKUs (links to /rmm/skus - RLS filters to own company)
+[Global]
+├── Dashboard (/)
+├── Communications (/communications/inbox) [Badge: unread count]
+├── History (/history)
+└── Notifications (/notifications)
+
+[RMM]
+├── Overview (/rmm)
+├── Products (/rmm/products - RLS filters to own company)
+└── SKUs (/rmm/skus - RLS filters to own company)
+
+[VCI]
+├── Dashboard (/vci)
 ├── Submissions
-│   ├── AAMS
-│   ├── MSQ
-│   └── WSL
-├── History (links to /history)
-├── Export Requests (if ECS active OR historical data exists)
-│   └── Export History (if historical data exists)
-├── Compliance Scores (if CMC active OR historical data exists)
-│   └── Score History (if historical data exists)
-└── Profile
+│   ├── AAMS (/vci/submissions/aams)
+│   ├── MSQ (/vci/submissions/msq)
+│   └── WSL (/vci/submissions/wsl)
+├── Thresholds (/vci/thresholds - read-only)
+└── Breaches (/vci/breaches - own company only)
+
+[ECS] (if active OR historical data exists)
+├── Export Requests (/ecs/export-requests)
+└── Export History (/ecs/exports/history - if historical data exists)
+
+[CMC] (if active OR historical data exists)
+├── Compliance Scores (/cmc/scores)
+└── Score History (/cmc/scores/history - if historical data exists)
+
+[Help & Info]
+├── Support Center (/support)
+├── FAQ (/support/faq)
+├── Documentation (/support/documentation)
+└── Contact Support (/support/contact)
 ```
+
+**Header User Menu:**
+- Profile (/profile)
+- Account Settings
+- Logout
 
 **Historical Data Navigation:**
 - History link always visible (personal historical overview)
@@ -348,28 +544,60 @@ The PM platform uses a consistent navigation and layout structure across all mod
 
 **Sidebar Structure:**
 ```
-├── Dashboard (Governance)
-├── RMM
-│   ├── Companies
-│   ├── Products
-│   └── SKUs
-├── VCI
-│   ├── Submissions
-│   ├── Submissions History (links to /vci/submissions/history)
-│   ├── Trends (Tier 1 only - links to /vci/submissions/history/trends)
-│   ├── Treemap (Tier 1/2 - links to /vci/treemap)
-│   ├── Thresholds
-│   └── Breaches
-├── History (links to /history - system-wide historical overview)
-├── Audit (Tier 1/2 - links to /audit/logs)
-├── ECS (if active OR historical data exists)
-│   ├── Export Requests
-│   └── Export History (if historical data exists)
-├── CMC (if active OR historical data exists)
-│   ├── Compliance Scores
-│   └── Score History (if historical data exists)
-└── System Configuration (Tier 1 only)
+[Global]
+├── Dashboard (/) - Governance overview
+├── Communications (/communications/inbox) [Badge: unread count]
+├── History (/history - system-wide historical overview)
+├── Notifications (/notifications)
+├── Audit Logs (/audit/logs)
+├── Audit Reports (/audit/reports)
+└── System Configuration (/system-config - Tier 1 only)
+
+[RMM]
+├── Overview (/rmm)
+├── Companies (/rmm/companies)
+├── Products (/rmm/products)
+└── SKUs (/rmm/skus)
+
+[VCI]
+├── Dashboard (/vci)
+├── Submissions
+│   ├── AAMS (/vci/submissions/aams)
+│   ├── MSQ (/vci/submissions/msq)
+│   └── WSL (/vci/submissions/wsl)
+├── Submissions History (/vci/submissions/history)
+├── Trends (/vci/submissions/history/trends - Tier 1 only)
+├── Thresholds (/vci/thresholds)
+├── Breaches (/vci/breaches)
+├── Governance (/vci/governance)
+└── Treemap (/vci/treemap - Tier 1/2 only)
+
+[ECS] (if active OR historical data exists)
+├── Overview (/ecs)
+├── Export Requests (/ecs/export-requests)
+├── Authorizations (/ecs/authorizations)
+└── Export History (/ecs/exports/history - if historical data exists)
+
+[CMC] (if active OR historical data exists)
+├── Overview (/cmc)
+├── Compliance Scores (/cmc/scores)
+├── Score History (/cmc/scores/history - if historical data exists)
+├── Disputes (/cmc/disputes)
+├── Disputes History (/cmc/disputes/history - if historical data exists)
+└── Reports (/cmc/reports)
+
+[Help & Info]
+├── Support Center (/support)
+├── FAQ (/support/faq)
+├── Documentation (/support/documentation)
+├── Contact Support (/support/contact)
+└── System Status (/status)
 ```
+
+**Header User Menu:**
+- Profile (/profile)
+- Account Settings
+- Logout
 
 **Historical Data Navigation:**
 - History link always visible (system-wide historical overview)
@@ -387,15 +615,40 @@ The PM platform uses a consistent navigation and layout structure across all mod
 
 **Sidebar Structure:**
 ```
-├── Audit Logs (primary - links to /audit/logs)
-├── Audit Reports (links to /audit/reports)
-├── Activity Summary (links to /audit/activity)
-├── RMM (read-only for audit purposes)
-│   ├── Companies (links to /rmm/companies - read-only, RLS filters)
-│   ├── Products (links to /rmm/products - read-only, RLS filters)
-│   └── SKUs (links to /rmm/skus - read-only, RLS filters)
-└── Profile
+[Global]
+├── Dashboard (/)
+├── History (/history)
+├── Notifications (/notifications)
+├── Audit Logs (/audit/logs - primary)
+└── Audit Reports (/audit/reports)
+
+[RMM] (read-only for audit purposes)
+├── Overview (/rmm)
+├── Companies (/rmm/companies - read-only, RLS filters)
+├── Products (/rmm/products - read-only, RLS filters)
+└── SKUs (/rmm/skus - read-only, RLS filters)
+
+[VCI] (read-only for audit purposes)
+├── Dashboard (/vci)
+├── Submissions
+│   ├── AAMS (/vci/submissions/aams)
+│   ├── MSQ (/vci/submissions/msq)
+│   └── WSL (/vci/submissions/wsl)
+├── Submissions History (/vci/submissions/history)
+├── Thresholds (/vci/thresholds)
+└── Breaches (/vci/breaches)
+
+[Help & Info]
+├── Support Center (/support)
+├── FAQ (/support/faq)
+├── Documentation (/support/documentation)
+└── Contact Support (/support/contact)
 ```
+
+**Header User Menu:**
+- Profile (/profile)
+- Account Settings
+- Logout
 
 **Historical Data Navigation:**
 - Audit Logs is primary navigation item

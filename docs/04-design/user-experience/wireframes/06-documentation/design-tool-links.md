@@ -3,7 +3,7 @@
 **Purpose:** This document stores links to wireframes in external design tools (Figma, Miro, etc.) if used during Phase 0.5.
 
 **Last Updated:** 2025-12-31  
-**Status:** Ready for design tool links  
+**Status:** 🟡 Active - Miro board created  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
 
 ## Overview
@@ -12,12 +12,14 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 
 ## Design Tool Access
 
-**Primary Tool:** [To be determined by Emma]
+**Primary Tool:** Miro (Free Tier)
+
+**Master Board Link:** [Phase 0.5 Wireframes - Master Board](https://miro.com/app/board/uXjVGUps93A=/)
 
 **Access Requirements:**
-- Team members with design tool access: [To be listed]
-- Viewer access: [To be listed]
-- Public links (if applicable): [To be added]
+- Team members with design tool access: Emma (Owner), Yasmine (PM), Oliver (Tech Lead), Maya (Backend)
+- Viewer access: Fatima (MOH), Dr. Samir (Business Process), All team members
+- Public links: View-only access (no account required for viewing)
 
 ## Wireframe Links by Module
 
@@ -86,10 +88,13 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 
 ## Master Link
 
-If using a design tool with a master file/project:
-- **Master File/Project:** [Link will be added]
-- **Organization:** [Link will be added]
-- **Last Updated:** [Date will be updated when links are added]
+**Master Miro Board:**
+- **Board Link:** [Phase 0.5 Wireframes - Master Board](https://miro.com/app/board/uXjVGUps93A=/)
+- **Organization:** Organized by priority and module (as per Phase 0.5 plan)
+- **Last Updated:** 2025-12-31
+- **Status:** 🟡 In Progress - Board created, wireframes being added
+
+**Note:** Per the Pre-Priority 1 decisions, we planned for 3 Miro boards (Priorities 1-3, 4-6, 7-8). This master board may be organized into sections or additional boards may be created as needed.
 
 ## Version Control
 

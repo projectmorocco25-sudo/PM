@@ -68,6 +68,8 @@ Compliance Monitoring Center (CMC) module wireframes cover compliance scores, di
 - Critical Medicine Coverage
 - Export Compliance (if ECS active)
 
+**Component Weights:** See [CMC Component Weights](../../../../02-architecture/modules/cmc-component-weights.md) for default weights and rationale.
+
 ### Dispute Window
 - 30-day window from score publication date
 - Scores marked "Under Dispute" but remain visible during review

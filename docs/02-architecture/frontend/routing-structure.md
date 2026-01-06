@@ -2,7 +2,7 @@
 
 **Purpose:** This document defines the Next.js App Router structure, route organization, navigation patterns, and protected route implementation.
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2025-01-01  
 **Status:** ✅ Complete (Phase 0, Gap Resolution)  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
 
@@ -72,6 +72,19 @@ app/
 │   │   └── page.tsx
 │   ├── profile/
 │   │   └── page.tsx
+│   ├── communications/
+│   │   ├── inbox/
+│   │   │   ├── page.tsx (Inbox - all conversations)
+│   │   │   └── [conversation_id]/
+│   │   │       └── page.tsx (Conversation detail)
+│   │   ├── sent/
+│   │   │   └── page.tsx (Sent messages)
+│   │   ├── compose/
+│   │   │   └── page.tsx (Compose new message)
+│   │   ├── announcements/
+│   │   │   └── page.tsx (System announcements - MOH Tier 1 only)
+│   │   └── archived/
+│   │       └── page.tsx (Archived conversations)
 │   ├── rmm/
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
@@ -166,6 +179,19 @@ app/
 │           ├── page.tsx
 │           └── [id]/
 │               └── page.tsx
+│   └── enforcement/
+│       ├── layout.tsx (MOH Tier 1 and Tier 2 only)
+│       ├── page.tsx (Enforcement Dashboard - summary, recent actions, pending approvals)
+│       ├── actions/
+│       │   ├── page.tsx (List of all enforcement actions - filterable, searchable)
+│       │   ├── [id]/
+│       │   │   └── page.tsx (Enforcement action detail - workflow, history, appeals)
+│       │   └── new/
+│       │       └── page.tsx (Create new enforcement action - wizard)
+│       ├── pending-approvals/
+│       │   └── page.tsx (Actions pending Tier 1 approval)
+│       └── reports/
+│           └── page.tsx (Enforcement analytics and reporting)
 └── layout.tsx (Root layout)
 ```
 
@@ -209,8 +235,22 @@ Historical data routes provide access to past submissions, compliance scores, au
 - `/ecs/exports/history` - Historical export authorizations
 - `/cmc/scores/history` - Historical compliance scores
 - `/cmc/disputes/history` - Historical disputes
+- `/enforcement` - Enforcement dashboard (MOH Tier 1 and Tier 2 only)
+- `/enforcement/actions` - Enforcement actions list
+- `/enforcement/actions/[id]` - Enforcement action detail
+- `/enforcement/actions/new` - Create new enforcement action
+- `/enforcement/pending-approvals` - Actions pending Tier 1 approval
+- `/enforcement/reports` - Enforcement analytics and reporting
 
-**4. Analytics Routes:**
+**4. Communication Routes:**
+- `/communications/inbox` - Inbox (all conversations, filterable by type, workflow entity, company)
+- `/communications/inbox/[conversation_id]` - Conversation detail (message thread, reply interface)
+- `/communications/sent` - Sent messages
+- `/communications/compose` - Compose new message
+- `/communications/announcements` - System announcements (MOH Tier 1 only)
+- `/communications/archived` - Archived conversations
+
+**5. Analytics Routes:**
 - `/vci/treemap` - Treemap visualization (Tier 1 & Tier 2 - ATC level, supports ?atc=J01 query param for products level)
 
 ### Module Activation Considerations
@@ -626,6 +666,7 @@ export default function GovernancePage() {
 
 **Company Users:**
 - Dashboard
+- Communications (Inbox, Sent, Compose)
 - RMM (Companies, Products, SKUs)
 - VCI (Submissions, Thresholds, Breaches)
 - History (links to `/history` - personal historical overview)
@@ -638,10 +679,12 @@ export default function GovernancePage() {
 
 **MOH Users (Tier 1):**
 - Dashboard
+- Communications (Inbox, Sent, Compose, Announcements)
 - RMM (All Companies, Governance)
 - VCI (All Submissions, Governance Dashboard, Trends, Treemap)
 - History (links to `/history` - system-wide historical overview)
 - Audit (links to `/audit/logs` - full audit log viewer)
+- System Configuration
 - ECS (if active OR historical data exists) - All Export Requests, Authorizations, History
 - CMC (if active OR historical data exists) - All Scores, Reports, History
 - Notifications
@@ -651,6 +694,7 @@ export default function GovernancePage() {
 
 **MOH Users (Tier 2):**
 - Dashboard
+- Communications (Inbox, Sent, Compose)
 - RMM (All Companies, Governance)
 - VCI (All Submissions, Governance Dashboard, Treemap)
 - History (links to `/history` - oversight historical overview)

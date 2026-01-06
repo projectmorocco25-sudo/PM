@@ -123,6 +123,144 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 
 ---
 
+## Communication Tables (Shared)
+
+### conversations
+**Purpose:** Thread management for conversations
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Conversation ID |
+| type | text | NOT NULL | Conversation type (direct_message, workflow_related, announcement, internal_moh) |
+| subject | text | NOT NULL | Conversation subject |
+| company_id | uuid | REFERENCES companies(id), NULLABLE | Company ID (NULL for internal MOH conversations) |
+| workflow_entity_type | text | NULLABLE | Workflow entity type (registry_submission, aams_submission, export_request, breach, etc.) |
+| workflow_entity_id | uuid | NULLABLE | Workflow entity ID (links to specific submission/approval/breach) |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created conversation |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+| archived_at | timestamptz | NULLABLE | Archive timestamp (soft delete) |
+| is_announcement | boolean | DEFAULT false | True for system announcements |
+| announcement_expires_at | timestamptz | NULLABLE | Expiration date for announcements |
+
+**Indexes:**
+- `idx_conversations_company_id` on `company_id`
+- `idx_conversations_workflow_entity` on `(workflow_entity_type, workflow_entity_id)`
+- `idx_conversations_created_by` on `created_by`
+- `idx_conversations_created_at` on `created_at`
+- `idx_conversations_type` on `type`
+
+**RLS Policies:**
+- Company users: Can see conversations where `company_id = auth.company_id()`
+- MOH users: Can see all conversations (system-wide access)
+- Internal MOH conversations: Only visible to MOH users
+
+---
+
+### messages
+**Purpose:** Individual messages within conversations
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Message ID |
+| conversation_id | uuid | REFERENCES conversations(id), NOT NULL | Conversation ID |
+| sender_id | uuid | REFERENCES users(id), NOT NULL | Sender user ID |
+| recipient_id | uuid | REFERENCES users(id), NULLABLE | Recipient user ID (NULL for announcements) |
+| content | text | NOT NULL | Message content |
+| is_system_message | boolean | DEFAULT false | True for automated system messages |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+| edited_at | timestamptz | NULLABLE | Edit timestamp (if message was edited) |
+| deleted_at | timestamptz | NULLABLE | Soft delete timestamp (immutable - no hard deletes) |
+
+**Indexes:**
+- `idx_messages_conversation_id` on `conversation_id`
+- `idx_messages_sender_id` on `sender_id`
+- `idx_messages_recipient_id` on `recipient_id`
+- `idx_messages_created_at` on `created_at`
+
+**RLS Policies:**
+- Users can see messages in conversations they have access to (via conversation RLS)
+- Senders can see their sent messages
+- Recipients can see their received messages
+
+**Notes:**
+- Messages are immutable (no hard deletes)
+- Edits are tracked via `edited_at` timestamp
+- System messages are automated (workflow triggers, notifications)
+
+---
+
+### message_attachments
+**Purpose:** File attachments for messages
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Attachment ID |
+| message_id | uuid | REFERENCES messages(id), NOT NULL | Message ID |
+| file_name | text | NOT NULL | Original file name |
+| file_path | text | NOT NULL | Storage path (Supabase Storage) |
+| file_size | bigint | NOT NULL | File size in bytes |
+| mime_type | text | NOT NULL | MIME type |
+| uploaded_by | uuid | REFERENCES users(id), NOT NULL | User who uploaded |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+
+**Indexes:**
+- `idx_message_attachments_message_id` on `message_id`
+- `idx_message_attachments_uploaded_by` on `uploaded_by`
+
+**RLS Policies:**
+- Users can see attachments for messages they have access to (via message RLS)
+
+**Storage:**
+- Files stored in Supabase Storage: `communications/attachments/{message_id}/{file_name}`
+- File upload security per `file-upload-storage-security.md`
+
+---
+
+### message_read_receipts
+**Purpose:** Track message read status
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Read receipt ID |
+| message_id | uuid | REFERENCES messages(id), NOT NULL | Message ID |
+| user_id | uuid | REFERENCES users(id), NOT NULL | User who read message |
+| read_at | timestamptz | DEFAULT now() | Read timestamp |
+
+**Indexes:**
+- `idx_message_read_receipts_message_id` on `message_id`
+- `idx_message_read_receipts_user_id` on `user_id`
+- `idx_message_read_receipts_read_at` on `read_at`
+- UNIQUE constraint on `(message_id, user_id)`
+
+**RLS Policies:**
+- Users can see their own read receipts only
+
+---
+
+### conversation_participants
+**Purpose:** Track conversation participants (for multi-party conversations)
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Participant ID |
+| conversation_id | uuid | REFERENCES conversations(id), NOT NULL | Conversation ID |
+| user_id | uuid | REFERENCES users(id), NOT NULL | Participant user ID |
+| role | text | NOT NULL | Participant role (sender, recipient, cc, bcc) |
+| joined_at | timestamptz | DEFAULT now() | Join timestamp |
+| left_at | timestamptz | NULLABLE | Leave timestamp (if participant left) |
+
+**Indexes:**
+- `idx_conversation_participants_conversation_id` on `conversation_id`
+- `idx_conversation_participants_user_id` on `user_id`
+- UNIQUE constraint on `(conversation_id, user_id)`
+
+**RLS Policies:**
+- Users can see participants for conversations they have access to (via conversation RLS)
+
+---
+
 ## RMM Module Tables
 
 ### companies
@@ -751,6 +889,94 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 
 ---
 
+## Enforcement Module Tables
+
+### enforcement_actions
+**Purpose:** MOH enforcement actions (warnings, fines, suspensions) against companies
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Enforcement action ID |
+| company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
+| action_type | text | NOT NULL | Action type (warning, fine, suspension) |
+| violation_type | text | NOT NULL | Violation type (submission_non_compliance, threshold_breach, critical_medicine_non_compliance, export_violation, data_quality_issue, repeated_offender) |
+| violation_reference_id | uuid | NULLABLE | Reference to specific violation (breach_id, compliance_score_id, submission_id, etc.) |
+| violation_reference_table | text | NULLABLE | Table name of violation reference (breaches, compliance_scores, etc.) |
+| amount | numeric(15,2) | NULLABLE | Fine amount (NULL for warnings/suspensions) |
+| currency | text | DEFAULT 'MAD' | Currency code (default: MAD) |
+| status | text | NOT NULL, DEFAULT 'draft' | Status (draft, pending_review, pending_approval, approved, executed, appealed, resolved, cancelled) |
+| legal_basis | text | NOT NULL | Legal basis for enforcement action |
+| justification | text | NOT NULL | Detailed justification for action |
+| notes | text | NULLABLE | Internal notes (MOH only) |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created (Tier 1 or Tier 2) |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| reviewed_by | uuid | REFERENCES users(id), NULLABLE | Tier 2 Officer who reviewed |
+| reviewed_at | timestamptz | NULLABLE | Review timestamp |
+| review_notes | text | NULLABLE | Review notes |
+| approved_by | uuid | REFERENCES users(id), NULLABLE | Tier 1 who approved (required for fines and suspensions) |
+| approved_at | timestamptz | NULLABLE | Approval timestamp |
+| approval_notes | text | NULLABLE | Approval notes |
+| executed_by | uuid | REFERENCES users(id), NULLABLE | User who executed action |
+| executed_at | timestamptz | NULLABLE | Execution timestamp |
+| execution_notes | text | NULLABLE | Execution notes |
+| appeal_id | uuid | NULLABLE | Appeal ID if action was appealed (references appeals table if created) |
+| resolution | text | NULLABLE | Resolution (if appealed or cancelled) |
+| resolved_by | uuid | REFERENCES users(id), NULLABLE | User who resolved |
+| resolved_at | timestamptz | NULLABLE | Resolution timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_enforcement_actions_company_id` on `company_id`
+- `idx_enforcement_actions_action_type` on `action_type`
+- `idx_enforcement_actions_status` on `status`
+- `idx_enforcement_actions_violation_type` on `violation_type`
+- `idx_enforcement_actions_created_at` on `created_at`
+- `idx_enforcement_actions_violation_reference` on `violation_reference_table, violation_reference_id`
+
+**Notes:**
+- Fines and suspensions require Tier 1 approval
+- Warnings can be approved by Tier 2 (with Tier 1 oversight)
+- All actions create audit log entries
+- Actions can be appealed by companies (30-day window)
+- Cancelled actions remain in database for audit trail
+
+---
+
+### enforcement_action_appeals
+**Purpose:** Company appeals against enforcement actions
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Appeal ID |
+| enforcement_action_id | uuid | REFERENCES enforcement_actions(id), NOT NULL | Enforcement action ID |
+| appeal_reason | text | NOT NULL | Appeal reason |
+| evidence | jsonb | NULLABLE | Evidence files (file references) |
+| status | text | NOT NULL, DEFAULT 'submitted' | Status (submitted, tier2_reviewed, tier1_reviewed, upheld, rejected, withdrawn) |
+| submitted_by | uuid | REFERENCES users(id), NOT NULL | Company user who submitted |
+| submitted_at | timestamptz | DEFAULT now() | Submission timestamp |
+| reviewed_by | uuid | REFERENCES users(id), NULLABLE | Tier 2 Officer who reviewed |
+| reviewed_at | timestamptz | NULLABLE | Review timestamp |
+| reviewed_by_tier1 | uuid | REFERENCES users(id), NULLABLE | Tier 1 who reviewed |
+| reviewed_at_tier1 | timestamptz | NULLABLE | Tier 1 review timestamp |
+| resolution | text | NULLABLE | Resolution decision |
+| resolved_by | uuid | REFERENCES users(id), NULLABLE | User who resolved |
+| resolved_at | timestamptz | NULLABLE | Resolution timestamp |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_enforcement_action_appeals_enforcement_action_id` on `enforcement_action_id`
+- `idx_enforcement_action_appeals_status` on `status`
+- `idx_enforcement_action_appeals_submitted_at` on `submitted_at`
+
+**Notes:**
+- 30-day appeal window from action execution date
+- Appeals require evidence submission
+- Tier 2 reviews first, then Tier 1 makes final decision
+- If appeal upheld, enforcement action is reversed (status: resolved, resolution: appeal_upheld)
+
+---
+
 ## Database Constraints & Rules
 
 ### Foreign Key Constraints
@@ -767,6 +993,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - `atc_codes.code` is unique
 - `export_authorizations.authorization_number` is unique
 - `compliance_scores` has unique constraint on `company_id, score_period`
+- `enforcement_action_appeals` has unique constraint on `enforcement_action_id` (one appeal per action)
 
 ### Default Values
 - `is_active` defaults to `true`

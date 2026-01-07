@@ -88,7 +88,26 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ └──────────────┘ └──────────────┘ └──────────────┘        ││
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
-│ │ Enforcement  │ │ Follow-up    │ │ Audit Trail  │        ││
+│ │ Pending       │ │ Enforcement  │ │ Follow-up    │        ││
+│ │ Threshold     │ │ Actions      │ │ Tracking     │        ││
+│ │ Reversions    │ │              │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ 8 Pending     │ │ This Month:  │ │ Active: 65   │        ││
+│ │              │ │ • 3 Warnings │ │              │        ││
+│ │ • 5 Auto      │ │ • 1 Fine     │ │ • Company ABC│        ││
+│ │   Revert      │ │ • 0 Suspensions│ │   Officer A  │        ││
+│ │   (7 days)    │ │              │ │   Due: Today │        ││
+│ │              │ │ Recent:      │ │   [View]     │        ││
+│ │ • 3 Manual    │ │ • Warning    │ │              │        ││
+│ │   Review      │ │   Company XYZ│ │ [View All →]│        ││
+│ │   (2 days)    │ │   Executed   │ │              │        ││
+│ │              │ │   [View]     │ │              │        ││
+│ │ [Review All →]│ │              │ │              │        ││
+│ │              │ │ [View All →]│ │              │        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Audit Trail  │ │              │ │              │        ││
 │ │ Actions      │ │ Tracking     │ │ Verification │        ││
 │ │              │ │              │ │              │        ││
 │ │ This Month:  │ │ Active: 65   │ │ ✅ All Actions│        ││
@@ -688,6 +707,30 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 - **Animation:** Smooth expand/collapse 200ms
 - **Icon:** Chevron (rotate 180° when expanded)
 - **Header:** Sticky when scrolling
+
+### Pending Threshold Reversions Widget
+- **Layout:** Card widget (same size as other dashboard widgets)
+- **Title:** "Pending Threshold Reversions"
+- **Content:**
+  - **Count:** Total number of thresholds pending reversion (e.g., "8 Pending")
+  - **Breakdown:**
+    - Auto-Revert count with days until reversion (e.g., "5 Auto Revert (7 days)")
+    - Manual Review count with days until reversion (e.g., "3 Manual Review (2 days)")
+  - **List Items:** Top 3-5 pending reversions with:
+    - SKU code or product name
+    - Revert date (DD/MM/YY format)
+    - Days until reversion
+    - Duration type (Auto-Revert or Manual Review)
+    - Quick action link (Review, Confirm)
+- **Action Button:** "Review All →" (links to pending reversions list page)
+- **Color Coding:**
+  - Green: >30 days until reversion
+  - Yellow: 7-30 days until reversion
+  - Red: <7 days until reversion
+- **Priority Indicators:**
+  - Manual Review items shown first (higher priority)
+  - Items sorted by revert_date (earliest first)
+- **Purpose:** Provide quick overview of thresholds requiring attention
 
 ---
 

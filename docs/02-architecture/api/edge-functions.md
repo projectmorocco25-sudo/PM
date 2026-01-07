@@ -280,7 +280,7 @@ Deno.serve(async (req: Request) => {
 
 ### vci-check-threshold-reverts
 
-**Purpose:** Check and revert ECS thresholds after 3 months
+**Purpose:** Check and revert thresholds (ECS thresholds after 3 months, VCI temporary thresholds on revert_date)
 
 **Trigger:** Scheduled (daily)
 
@@ -292,22 +292,68 @@ Deno.serve(async (req: Request) => {
 ```
 
 **Process:**
-1. Find export authorizations where `threshold_revert_date <= check_date`
-2. For each, revert threshold from ECS to VCI
-3. Update threshold records
-4. Create notifications
+
+**1. ECS Threshold Reversions (Existing):**
+- Find export authorizations where `threshold_revert_date <= check_date`
+- For each, revert threshold from ECS to VCI
+- Update threshold records
+- Create notifications
+
+**2. VCI Temporary Threshold Reversions (New):**
+- Find VCI thresholds where:
+  - `duration_type IN ('temporary_auto_revert', 'temporary_manual_review')`
+  - `revert_date <= check_date`
+  - `is_current = true`
+- For each threshold:
+  - **Auto-Revert Type (`temporary_auto_revert`):**
+    - Call RPC function `revert_temporary_threshold(threshold_id)` to automatically revert
+    - Creates new threshold version with `revert_to_*` values
+    - Marks old threshold as `is_current = false`
+    - Creates audit log entry
+    - Sends reversion completion notification
+  - **Manual Review Type (`temporary_manual_review`):**
+    - Creates notification for Tier 1 to review and confirm reversion
+    - Does NOT auto-revert (requires Tier 1 confirmation via `vci_confirm_threshold_reversion()`)
+
+**3. Notification Scheduling:**
+- Check thresholds with `revert_date` in next 7 days:
+  - If `revert_notification_sent_7d = false` and `revert_date <= check_date + 7 days`:
+    - Send 7-day warning notification
+    - Update `revert_notification_sent_7d = true`
+- Check thresholds with `revert_date` in next 1 day:
+  - If `revert_notification_sent_1d = false` and `revert_date <= check_date + 1 day`:
+    - Send 1-day warning notification
+    - Update `revert_notification_sent_1d = true`
+    - For manual review type, send additional "Review Required" notification to Tier 1
 
 **Response:**
 ```json
 {
   "success": true,
   "data": {
-    "thresholds_reverted": 5
+    "ecs_thresholds_reverted": 2,
+    "vci_auto_reverted": 3,
+    "vci_manual_review_required": 1,
+    "notifications_7d_sent": 5,
+    "notifications_1d_sent": 2,
+    "notifications_review_required": 1
   }
 }
 ```
 
 **Schedule:** Daily, 00:00 UTC
+
+**Error Handling:**
+- Continues processing even if individual threshold reversion fails
+- Logs errors for manual review
+- Sends alert notification if multiple failures occur
+
+**Business Rules:**
+- Processes thresholds in order of `revert_date` (earliest first)
+- For auto-revert: Executes immediately on `revert_date`
+- For manual review: Creates review task, does not auto-revert
+- Notifications sent at 7 days, 1 day, and on reversion (tracked by flags)
+- Idempotent: Safe to run multiple times (checks notification flags)
 
 ---
 

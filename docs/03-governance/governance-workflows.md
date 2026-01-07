@@ -82,6 +82,42 @@ The following actions require Tier 1 approval plus Tier 2 Officer confirmation:
 - Grace period: February 1-15 (marked as late, no penalty)
 - Non-compliance: After February 15th (triggers alerts and compliance impact)
 
+### Threshold Modification Workflow (Enhanced)
+
+**Workflow:** Tier 1 modifies → System schedules (if temporary) → Reversion (if temporary) → Notification
+
+1. **Modification:** Tier 1 modifies threshold multiplier (permanent or temporary)
+   - **Permanent:** Threshold remains until manually modified
+   - **Temporary:** Threshold will revert after specified period
+2. **Scope Selection:** Tier 1 selects local (this SKU) or global (all SKUs for product)
+3. **Duration Selection (if temporary):**
+   - **Auto-Revert:** Automatically reverts on end date
+   - **Manual Review:** Requires Tier 1 confirmation before reversion
+4. **Justification:** Tier 1 provides regulatory justification (minimum 50 characters)
+5. **Notification Scheduling (if temporary):**
+   - System schedules 7-day warning notification
+   - System schedules 1-day warning notification
+   - System schedules reversion notification
+6. **Reversion (if temporary):**
+   - **Auto-Revert Type:** System automatically reverts on `revert_date`
+   - **Manual Review Type:** System creates review task for Tier 1 on `revert_date`
+     - Tier 1 reviews and confirms or cancels reversion
+     - If confirmed, system reverts threshold
+7. **Completion:** New threshold version created, old version marked as inactive
+
+**Timeframes:**
+- Modification: Immediate (Tier 1 action)
+- Notification warnings: 7 days and 1 day before reversion
+- Auto-reversion: On `revert_date` (scheduled daily job)
+- Manual review: Tier 1 must confirm within 5 working days of `revert_date`
+
+**Authority:**
+- **Modify Threshold:** Tier 1 only
+- **Confirm Reversion:** Tier 1 only (for manual review type)
+- **View Pending Reversions:** Tier 1 and Tier 2 (read-only for Tier 2)
+
+**Regulatory Basis:** DMP administrative decisions on threshold calculation methodologies (see [Regulatory Policies](regulatory-policies.md))
+
 ### MSQ Submission Workflow
 
 **Workflow:** Company submits → Automated validation → Auto-accept or Tier 2 review

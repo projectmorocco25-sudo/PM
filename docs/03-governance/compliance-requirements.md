@@ -131,6 +131,64 @@ Supabase must meet the following requirements:
   - Critical medicines: Default multiplier 3.5
 - **Threshold Violations:** Must be reported with breach reason and replenishment date
 
+### Threshold Modification and Reversion Compliance Requirements
+
+**Regulatory Basis:** DMP administrative decisions on threshold calculation methodologies (see [Regulatory Policies](regulatory-policies.md))
+
+- **Modification Requirements:**
+  - **Authority:** Only Tier 1 can modify thresholds
+  - **Justification:** Mandatory regulatory justification (minimum 50 characters) for all modifications
+  - **Audit Trail:** All modifications logged with full justification and user identity
+  - **Non-Retroactive:** Modifications apply only to future calculations
+
+- **Temporary Threshold Requirements:**
+  - **Justification:** Enhanced justification required for temporary modifications (regulatory basis must be documented)
+  - **End Date Validation:** End date must be in the future and after effective_from date
+  - **Revert Values:** Must specify multiplier and threshold value to revert to
+  - **Conflict Prevention:** System prevents conflicting temporary modifications
+
+- **Reversion Requirements:**
+  - **Auto-Revert Type:**
+    - System must automatically revert on `revert_date` via scheduled daily job
+    - Reversion must create new threshold version with revert values
+    - Old threshold must be marked as inactive (`is_current = false`)
+    - Completion notification must be sent to threshold creator
+  - **Manual Review Type:**
+    - System must create review task for Tier 1 on `revert_date`
+    - Tier 1 must confirm or cancel reversion within 5 working days
+    - If confirmed, system reverts threshold with confirmation justification
+    - If cancelled, threshold remains temporary (new end date may be set)
+  - **Early Reversion:**
+    - Tier 1 can manually revert temporary threshold before `revert_date`
+    - Early reversion requires justification (minimum 50 characters)
+
+- **Notification Requirements:**
+  - **7-Day Warning:** System must send notification 7 days before reversion
+  - **1-Day Warning:** System must send notification 1 day before reversion
+  - **Reversion Notification:** System must send notification on reversion (auto-revert) or when confirmed (manual review)
+  - **Review Required Notification:** System must send notification to Tier 1 on `revert_date` for manual review type
+  - **Notification Tracking:** All notifications tracked with delivery status and timestamps
+
+- **Audit Requirements:**
+  - **Modification Logging:** All threshold modifications logged with:
+    - User identity (Tier 1)
+    - Modification type (permanent, temporary_auto_revert, temporary_manual_review)
+    - Justification text
+    - Old and new threshold values
+    - Scope (local/global)
+    - Revert date and revert values (if temporary)
+  - **Reversion Logging:** All threshold reversions logged with:
+    - Reversion type (auto, manual confirmation, early manual)
+    - User identity (system for auto, Tier 1 for manual)
+    - Confirmation justification (if manual)
+    - Old and new threshold values
+  - **Notification Logging:** All notification deliveries logged with:
+    - Notification type (7-day warning, 1-day warning, reversion, review required)
+    - Recipient user ID
+    - Delivery timestamp
+    - Read status
+  - **Retention:** All threshold modification and reversion logs retained for minimum 7 years (regulatory requirement)
+
 ### Export Authorization Compliance
 
 - **Authorization Validity:** 90 calendar days from approval date

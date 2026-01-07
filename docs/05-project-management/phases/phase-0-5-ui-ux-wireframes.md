@@ -59,16 +59,16 @@ Wireframes are organized by priority to focus on critical path items first, enab
 
 | Priority | Focus | Days | Wireframes | Status |
 |----------|-------|------|------------|--------|
-| **Priority 1** 🔴 | Critical Foundation | 1-2 | 20 wireframes | 🟡 Ready for Creation |
-| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 18 wireframes | 🟡 In Progress |
-| **Priority 3** 🔴 | Critical VCI Workflows | 5-6 | 12 wireframes | ⚪ Not Started |
+| **Priority 1** 🔴 | Critical Foundation | 1-2 | 20 wireframes | ✅ Complete |
+| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 11 wireframes | 🟡 10/11 Complete (91%) |
+| **Priority 3** 🔴 | Critical VCI Workflows | 5-6 | 14 wireframes | ✅ Complete |
 | **Priority 4** 🟡 | Supporting VCI & RMM | 7-8 | 8 wireframes | ⚪ Not Started |
 | **Priority 5** 🟡 | ECS Module | 9-10 | 9 wireframes | ⚪ Not Started |
 | **Priority 6** 🟡 | CMC Module | 11-12 | 13 wireframes | ⚪ Not Started |
 | **Priority 7** 🟢 | Global & Help Pages | 13-14 | 14 wireframes | ⚪ Not Started |
 | **Priority 8** 🟢 | Analytics, Historical & Modals | 14-15 | 21 wireframes | ⚪ Not Started |
 | **Review** | Final Review & Iteration | 14-15 | Documentation | ⚪ Not Started |
-| **TOTAL** | | **2-3 weeks** | **115 wireframes** | **0% Complete** |
+| **TOTAL** | | **2-3 weeks** | **115 wireframes** | **44 wireframes complete (38%)** |
 
 **Note:** Modal wireframes (Priority 8) include reusable UI patterns. Some module-specific modals are already included in their respective module sections.
 
@@ -89,24 +89,24 @@ Wireframes are organized by priority to focus on critical path items first, enab
 
 ### Authentication & Layout (Critical Path)
 
-- [ ] **Task 0.5.1.11:** Wireframe - Login page (email/password, forgot password link, registration link)
-- [ ] **Task 0.5.1.14:** Wireframe - Dashboard layout structure (header, sidebar, main content area, responsive breakpoints)
-- [ ] **Task 0.5.1.15:** Wireframe - Header component (logo, user menu, notifications badge, search)
-- [ ] **Task 0.5.1.16:** Wireframe - Sidebar navigation (module grouping, active states, role-based items)
-- [ ] **Task 0.5.1.17:** Wireframe - Notification center component (dropdown/popover, notification list, read/unread states)
+- [x] **Task 0.5.1.11:** Wireframe - Login page (email/password, forgot password link, registration link) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/authentication/task-0.5.1.11-login-page.md)
+- [x] **Task 0.5.1.14:** Wireframe - Dashboard layout structure (header, sidebar, main content area, responsive breakpoints) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/layout-navigation/task-0.5.1.14-dashboard-layout-structure.md)
+- [x] **Task 0.5.1.15:** Wireframe - Header component (logo, user menu, notifications badge, search) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/layout-navigation/task-0.5.1.15-header-component.md)
+- [x] **Task 0.5.1.16:** Wireframe - Sidebar navigation (module grouping, active states, role-based items) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/layout-navigation/task-0.5.1.16-sidebar-navigation.md)
+- [x] **Task 0.5.1.17:** Wireframe - Notification center component (dropdown/popover, notification list, read/unread states, threshold reversion notifications) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/layout-navigation/task-0.5.1.17-notification-center-component.md)
 
 ### Core Dashboards (Role-Based)
-- [ ] **Task 0.5.1.18:** Wireframe - Company Dashboard (my submissions, pending approvals, recent activity, key metrics)
-- [ ] **Task 0.5.1.19:** Wireframe - MOH Tier 1 Dashboard (governance overview, pending approvals, system-wide metrics, action items)
-- [ ] **Task 0.5.1.20:** Wireframe - MOH Tier 2 Dashboard (pending verifications, oversight metrics, review queue)
+- [x] **Task 0.5.1.18:** Wireframe - Company Dashboard (my submissions, pending approvals, recent activity, key metrics) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/dashboard/task-0.5.1.18-company-dashboard.md)
+- [x] **Task 0.5.1.19:** Wireframe - MOH Tier 1 Dashboard (governance overview, pending approvals, system-wide metrics, action items, pending threshold reversions widget) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/dashboard/task-0.5.1.19-moh-tier1-dashboard.md)
+- [x] **Task 0.5.1.20:** Wireframe - MOH Tier 2 Dashboard (pending verifications, oversight metrics, review queue, pending threshold reversions view) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/dashboard/task-0.5.1.20-moh-tier2-dashboard.md)
 
 ### Communication Interfaces (Critical Foundation)
-- [ ] **Task 0.5.1.24:** Wireframe - Communications inbox list page (conversation list, unread indicators, filters, search, role-based access)
-- [ ] **Task 0.5.1.25:** Wireframe - Conversation detail page (message thread, reply interface, attachments, read receipts, workflow context)
-- [ ] **Task 0.5.1.26:** Wireframe - Compose message interface (recipient selection, subject, content, attachments, workflow entity linking)
-- [ ] **Task 0.5.1.27:** Wireframe - Sent messages page (sent conversations list, status indicators)
-- [ ] **Task 0.5.1.28:** Wireframe - System announcements interface (MOH Tier 1 only - announcement list, creation interface, broadcast controls)
-- [ ] **Task 0.5.1.29:** Wireframe - Communication integration in workflow pages (message button, conversation list, context display)
+- [x] **Task 0.5.1.24:** Wireframe - Communications inbox list page (conversation list, unread indicators, filters, search, role-based access) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.24-communications-inbox-list.md)
+- [x] **Task 0.5.1.25:** Wireframe - Conversation detail page (message thread, reply interface, attachments, read receipts, workflow context) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.25-conversation-detail.md)
+- [x] **Task 0.5.1.26:** Wireframe - Compose message interface (recipient selection, subject, content, attachments, workflow entity linking) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.26-compose-message.md)
+- [x] **Task 0.5.1.27:** Wireframe - Sent messages page (sent conversations list, status indicators) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.27-sent-messages.md)
+- [x] **Task 0.5.1.28:** Wireframe - System announcements interface (MOH Tier 1 only - announcement list, creation interface, broadcast controls) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.28-system-announcements.md)
+- [x] **Task 0.5.1.29:** Wireframe - Communication integration in workflow pages (message button, conversation list, context display) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.29-communication-integration-workflow.md)
 
 **Note:** Communication wireframes are critical foundation items as they must be integrated into navigation and workflow pages from the start. See [Communication Channels Requirements](../../02-architecture/communication-channels-requirements.md) for detailed requirements.
 
@@ -123,12 +123,12 @@ Wireframes are organized by priority to focus on critical path items first, enab
 See Priority 2 for dedicated enforcement module wireframes (dashboard, actions list, detail, creation wizard, pending approvals, reports).
 
 ### Global Section Pages (Critical Foundation)
-- [ ] **Task 0.5.1.30:** Wireframe - History overview page (role-based historical overview, quick filters, recent history summary, date range picker)
-- [ ] **Task 0.5.1.31:** Wireframe - Notifications page (full notification list, filters, mark as read, notification settings, notification types)
-- [ ] **Task 0.5.1.32:** Wireframe - Audit logs list page (MOH/Auditors only - audit log entries, filters: date range/table/user/action, search, pagination, virtual scrolling)
-- [ ] **Task 0.5.1.33:** Wireframe - Audit log detail page (log entry details, related changes, user information, timestamp, hash chain verification)
-- [ ] **Task 0.5.1.34:** Wireframe - Audit reports page (MOH/Auditors only - audit report list, report types, date range filters, download actions)
-- [ ] **Task 0.5.1.35:** Wireframe - System Configuration page (MOH Tier 1 only - module activation, system settings, configuration interface)
+- [x] **Task 0.5.1.30:** Wireframe - History overview page (role-based historical overview, quick filters, recent history summary, date range picker) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md)
+- [x] **Task 0.5.1.31:** Wireframe - Notifications page (full notification list, filters, mark as read, notification settings, notification types, threshold reversion notifications) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.31-notifications-page.md)
+- [x] **Task 0.5.1.32:** Wireframe - Audit logs list page (MOH/Auditors only - audit log entries, filters: date range/table/user/action, search, pagination, virtual scrolling) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md)
+- [x] **Task 0.5.1.33:** Wireframe - Audit log detail page (log entry details, related changes, user information, timestamp, hash chain verification) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.33-audit-log-detail.md)
+- [x] **Task 0.5.1.34:** Wireframe - Audit reports page (MOH/Auditors only - audit report list, report types, date range filters, download actions) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.34-audit-reports.md)
+- [x] **Task 0.5.1.35:** Wireframe - System Configuration page (MOH Tier 1 only - module activation, system settings, configuration interface, cloud services compliance) - [Wireframe](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.35-system-configuration.md)
 
 ---
 
@@ -169,26 +169,28 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 
 ## Priority 3: Critical VCI Workflows (Days 5-6) 🔴 HIGH PRIORITY
 
-**Rationale:** Regulatory compliance workflows — MOH priority. AAMS is annual regulatory requirement. WSL enables breach detection and governance response.
+**Rationale:** Regulatory compliance workflows — MOH priority. AAMS is annual regulatory requirement. WSL enables compliance violation detection and governance response.
 
 ### VCI AAMS (Annual Submission — Highest Regulatory Priority)
-- [ ] **Task 0.5.3.1:** Wireframe - AAMS submissions list page (my submissions, all submissions for MOH, year filter, status filter)
-- [ ] **Task 0.5.3.2:** Wireframe - AAMS submission form (year selection, **SKU selector + quantity input only** - simplified submission structure)
-- [ ] **Task 0.5.3.3:** Wireframe - AAMS submission detail page (submission data, calculated threshold display, workflow status, threshold visibility timing)
-- [ ] **Task 0.5.3.4:** Wireframe - Threshold management page (MOH Tier 1 - threshold list, filters, bulk actions, modification interface)
-- [ ] **Task 0.5.3.6:** Wireframe - Threshold modification modal (local vs global selector, B multiplier input, advisory suggestions)
+- [x] **Task 0.5.3.1:** Wireframe - AAMS submissions list page (my submissions, all submissions for MOH, year filter, status filter) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.1-aams-submissions-list.md)
+- [x] **Task 0.5.3.2:** Wireframe - AAMS submission form (year selection, monthly sales table with Jan-Dec columns, calculated AAMS, import/export CSV, validation) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.2-aams-submission-form.md)
+- [x] **Task 0.5.3.3:** Wireframe - AAMS submission detail page (submission data, calculated threshold display, workflow status, threshold visibility timing, duration type, revert date) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md)
+- [x] **Task 0.5.3.4:** Wireframe - Threshold management page (MOH Tier 1 - threshold list, filters, bulk actions, modification interface, duration type, revert date, pending reversion indicators) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.4-threshold-management.md)
+- [x] **Task 0.5.3.6:** Wireframe - Threshold modification modal (local vs global selector, B multiplier input, advisory suggestions, duration type selection: permanent/temporary, time-bound options) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.6-threshold-modification-modal.md)
+- [x] **Task 0.5.3.7:** Wireframe - Threshold reversion review page (Tier 1 - review and confirm manual review reversions, decision options: confirm/cancel/extend, justification input) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.7-threshold-reversion-review.md)
+- [x] **Task 0.5.3.8:** Wireframe - Pending reversions list page (all thresholds with pending reversions, filters: type/days until/company, color-coded by urgency, bulk actions) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.8-pending-reversions-list.md)
 
-### VCI WSL (Weekly Compliance — Critical for Breach Detection)
-- [ ] **Task 0.5.3.11:** Wireframe - WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators)
-- [ ] **Task 0.5.3.12:** Wireframe - WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure)
-- [ ] **Task 0.5.3.13:** Wireframe - WSL submission detail page (submission data, breach indicators, stock level visualization)
-- [ ] **Task 0.5.3.14:** Wireframe - Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range)
-- [ ] **Task 0.5.3.15:** Wireframe - Breach detail page (breach information, stock level vs threshold comparison, reason, replenishment date, priority indicator)
-- [ ] **Task 0.5.3.16:** Wireframe - Breach analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option)
-- [ ] **Task 0.5.3.17:** Wireframe - Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input)
+### VCI WSL (Weekly Compliance — Critical for Compliance Violation Detection)
+- [x] **Task 0.5.3.13:** Wireframe - WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md)
+- [x] **Task 0.5.3.14:** Wireframe - WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold (read-only), threshold compliance % (calculated), replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md)
+- [x] **Task 0.5.3.15:** Wireframe - WSL submission detail page (submission data, compliance violation indicators, stock level visualization, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md)
+- [x] **Task 0.5.3.16:** Wireframe - Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md)
+- [x] **Task 0.5.3.17:** Wireframe - Compliance Violation detail page (compliance violation information, stock level vs threshold comparison, reason, replenishment date, priority indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md)
+- [x] **Task 0.5.3.18:** Wireframe - Compliance Violation analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md)
+- [x] **Task 0.5.3.19:** Wireframe - Compliance Violation action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.17-compliance-violation-action-approval-interface.md)
 
 ### VCI Governance Dashboard (MOH Oversight Priority)
-- [ ] **Task 0.5.3.18:** Wireframe - Governance Dashboard (MOH - real-time stock sufficiency charts, breach status overview, action recommendations, widget layout)
+- [x] **Task 0.5.3.20:** Wireframe - Governance Dashboard (MOH - real-time stock sufficiency charts, compliance violation status overview, action recommendations, widget layout, pending threshold reversions metric) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.18-governance-dashboard.md)
 
 **📋 Module Review Checkpoint:** After Priority 3, schedule stakeholder review for RMM + VCI modules to ensure regulatory compliance validation.
 
@@ -199,10 +201,10 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 **Rationale:** Complete core modules. MSQ is monthly reporting. MOH-only pages support governance functions.
 
 ### VCI MSQ (Monthly Reporting)
-- [ ] **Task 0.5.3.7:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter)
-- [ ] **Task 0.5.3.8:** Wireframe - MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure)
-- [ ] **Task 0.5.3.9:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator)
-- [ ] **Task 0.5.3.10:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form)
+- [ ] **Task 0.5.3.9:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter)
+- [ ] **Task 0.5.3.10:** Wireframe - MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure)
+- [ ] **Task 0.5.3.11:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator)
+- [ ] **Task 0.5.3.12:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form)
 
 ### RMM MOH-Only Pages
 - [ ] **Task 0.5.2.14:** Wireframe - ATC Codes list page (MOH only, read-only for companies, search, filters)
@@ -210,7 +212,7 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 
 ### Module Overview Pages
 - [ ] **Task 0.5.2.1:** Wireframe - RMM overview page (module summary, quick links, recent activity, statistics)
-- [ ] **Task 0.5.3.0:** Wireframe - VCI overview page (module summary, submission overview, breach alerts, quick links)
+- [ ] **Task 0.5.3.0:** Wireframe - VCI overview page (module summary, submission overview, compliance violation alerts, quick links)
 - [ ] **Task 0.5.3.5:** Wireframe - Threshold detail page (threshold information, modification history, related thresholds, thresholds/[id] route)
 
 ---
@@ -294,15 +296,14 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 **Rationale:** Nice-to-have for MVP — can defer if timeline is tight. Analytics and historical data are valuable but not critical for MVP.
 
 ### Analytics (VCI Treemap)
-- [ ] **Task 0.5.3.21:** Wireframe - ATC Treemap page (Level 1 - % total stock level breaches by therapeutic area/ATC code, clickable tiles, filters: critical medicines/date range)
-- [ ] **Task 0.5.3.22:** Wireframe - Products Treemap page (Level 2 - % total stock level breaches by product within selected ATC, drill-down from ATC, back navigation, breadcrumbs)
-- [ ] **Task 0.5.3.23:** Wireframe - Dosage/Forms Modal (Level 3 - table showing dosage/form with % compliance, expandable rows, modal overlay, no route change)
-- [ ] **Task 0.5.3.24:** Wireframe - SKU List expanded view (Level 4 - SKUs with breach status, external link icon indicating opens in new tab, info message, modal stays open)
-- [ ] **Task 0.5.3.25:** Wireframe - SKU Action Page integration (Level 5 - uses existing SKU detail route, opens in new tab, role-based actions for Tier 1/Tier 2, query params for back navigation)
-- [ ] **Task 0.5.3.20:** Wireframe - Submission trends analysis page (MOH only - trend analysis charts, multi-year comparisons, submission trends route)
+- [ ] **Task 0.5.3.22:** Wireframe - ATC Treemap page (Level 1 - % total stock level compliance violations by therapeutic area/ATC code, clickable tiles, filters: critical medicines/date range)
+- [ ] **Task 0.5.3.23:** Wireframe - Products Treemap page (Level 2 - % total stock level compliance violations by product within selected ATC, drill-down from ATC, back navigation, breadcrumbs)
+- [ ] **Task 0.5.3.24:** Wireframe - Dosage/Forms Modal (Level 3 - table showing dosage/form with % compliance, expandable rows, modal overlay, no route change)
+- [ ] **Task 0.5.3.25:** Wireframe - SKU List expanded view (Level 4 - SKUs with compliance violation status, external link icon indicating opens in new tab, info message, modal stays open)
+- [ ] **Task 0.5.3.27:** Wireframe - SKU Action Page integration (Level 5 - uses existing SKU detail route, opens in new tab, role-based actions for Tier 1/Tier 2, query params for back navigation)
 
 ### Historical Data Pages
-- [ ] **Task 0.5.3.19:** Wireframe - Submission history page (all past submissions, filterable by type/year/company, submission history route)
+- [ ] **Task 0.5.3.28:** Wireframe - Submission history page (all past submissions, filterable by type/year/company, submission history route)
 - [ ] **Task 0.5.4.9:** Wireframe - Export history page (historical export authorizations, filterable by date/company/status, export history route)
 - [ ] **Task 0.5.4.10:** Wireframe - Historical authorization detail page (historical authorization details, authorization history route)
 - [ ] **Task 0.5.5.13:** Wireframe - Compliance scores history page (historical compliance scores, filterable by date/company, scores history route)
@@ -428,9 +429,10 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 ---
 
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)  
-**Last Updated:** 2025-01-01
+**Last Updated:** 2025-01-15
 
 **Recent Updates:**
 - 2025-01-01: All Priority 1 wireframes updated to integrate enforcement lifecycle (enforcement actions, appeals, notifications, communications, history, audit, navigation)
 - 2025-01-01: Enforcement module wireframes added to Priority 2 (6 wireframes: dashboard, actions list, detail, creation wizard, pending approvals, reports)
+- 2025-01-15: Priority 1, 2, and 3 wireframes marked as complete. All existing wireframes updated with links and status. Priority 1: 20/20 complete ✅, Priority 2: 10/11 complete (91%), Priority 3: 14/14 complete ✅. Time-bound threshold modification features integrated across all relevant wireframes.
 

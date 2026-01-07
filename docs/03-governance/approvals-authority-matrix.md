@@ -98,6 +98,12 @@ The PM platform implements role-based approval authority to ensure proper govern
 | Action | Company Admin | Company Manager | Company User | Tier 2 Officer | Tier 2 Registrar | Tier 1 | System Admin |
 |--------|--------------|-----------------|--------------|---------------|------------------|--------|--------------|
 | Configure Thresholds | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access |
+| Modify Threshold (Permanent) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
+| Modify Threshold (Temporary) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
+| Confirm Threshold Reversion | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
+| Manually Revert Threshold | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
+| View Pending Reversions | No Access | No Access | No Access | Read Only | No Access | Full Authority | No Access |
+| Schedule Reversion Notifications | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
 | Configure Multipliers | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access |
 | Configure Component Weights | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
 | Activate Modules | No Access | No Access | No Access | No Access | No Access | Full Authority | Technical Support |

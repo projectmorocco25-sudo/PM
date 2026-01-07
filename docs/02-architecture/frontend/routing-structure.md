@@ -113,6 +113,14 @@ app/
 │   ├── vci/
 │   │   ├── layout.tsx
 │   │   ├── page.tsx (Dashboard)
+│   │   ├── thresholds/
+│   │   │   ├── page.tsx (Threshold Management - MOH Tier 1 only)
+│   │   │   ├── pending-reversions/
+│   │   │   │   └── page.tsx (Pending Reversions List - MOH Tier 1 & Tier 2)
+│   │   │   └── [id]/
+│   │   │       ├── page.tsx (Threshold Detail)
+│   │   │       └── revert-review/
+│   │   │           └── page.tsx (Reversion Review - MOH Tier 1 only)
 │   │   ├── submissions/
 │   │   │   ├── aams/
 │   │   │   │   ├── page.tsx (List - supports ?year=2023 query param)

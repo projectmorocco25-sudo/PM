@@ -159,11 +159,29 @@ This data dictionary defines all fields across all database tables, including da
 | effective_from | date | No | Effective from date | When threshold becomes effective |
 | effective_to | date | Yes | Effective to date | NULL for current threshold |
 | is_current | boolean | No | Current threshold flag | Default: true. Only one current threshold per SKU/type |
+| duration_type | text | No | Duration type | Enum: permanent, temporary_auto_revert, temporary_manual_review. Default: permanent. Determines if threshold is permanent or time-bound |
+| revert_date | date | Yes | Revert date | Date when temporary threshold reverts. NULL for permanent thresholds. Must be in the future when creating temporary threshold. Required if duration_type is temporary |
+| revert_to_multiplier | numeric(5,2) | Yes | Revert to multiplier | Multiplier value to revert to after temporary period. NULL for permanent thresholds. Required if duration_type is temporary. Must match a valid multiplier (0.1 to 5.0) |
+| revert_to_threshold_value | numeric(15,2) | Yes | Revert to threshold value | Threshold value to revert to after temporary period. NULL for permanent thresholds. Required if duration_type is temporary. Calculated from revert_to_multiplier × AAMS |
+| revert_notification_sent_7d | boolean | No | 7-day warning sent | Default: false. Tracks if 7-day warning notification was sent before reversion |
+| revert_notification_sent_1d | boolean | No | 1-day warning sent | Default: false. Tracks if 1-day warning notification was sent before reversion |
+| revert_notification_sent_on_revert | boolean | No | Reversion notification sent | Default: false. Tracks if reversion completion notification was sent |
+| requires_manual_review | boolean | No | Requires manual review | Default: false. If true (temporary_manual_review), requires Tier 1 confirmation before auto-revert. If false (temporary_auto_revert), automatically reverts on revert_date |
 | created_by | uuid | No | User who created | Foreign key to users.id |
 | created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
 | updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
 
 **Versioning:** Thresholds support version history. Non-retroactive changes create new versions.
+
+**Time-Bound Modifications:**
+- **Permanent (default):** Threshold remains until manually modified. All revert fields are NULL.
+- **Temporary Auto-Revert:** Automatically reverts on `revert_date`. `requires_manual_review = false`. Notifications sent at 7 days, 1 day, and on reversion.
+- **Temporary Manual Review:** Requires Tier 1 confirmation before reversion on `revert_date`. `requires_manual_review = true`. Notifications sent at 7 days and 1 day before reversion, plus review required notification.
+- **Validation Rules:**
+  - `revert_date` must be > `effective_from` (future date)
+  - `revert_to_multiplier` and `revert_to_threshold_value` must be set for temporary thresholds
+  - Cannot modify threshold if another modification is scheduled before `revert_date` (conflict detection)
+  - Reversion creates new threshold version with `revert_to_*` values and marks old version as `is_current = false`
 
 ---
 

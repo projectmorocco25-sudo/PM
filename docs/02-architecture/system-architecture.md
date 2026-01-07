@@ -112,7 +112,7 @@ Each module maintains clear data ownership:
 - `aams_submissions` - Annual Average Monthly Sales submissions
 - `msq_submissions` - Monthly Sales Quantities submissions
 - `wsl_submissions` - Weekly Stock Levels submissions
-- `thresholds` - VCI thresholds (B × AAMS)
+- `thresholds` - VCI thresholds (B × AAMS), supports time-bound modifications with automatic and manual reversion
 - `breaches` - Threshold breach records
 - `breach_analyses` - Tier 2 analysis of breaches
 

@@ -171,6 +171,8 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │   Action ID: ENF-2024-045                               ││
 │ │   Status: Executed  Date: 1 week ago                   ││
 │ │   Violation: Critical medicine stock below threshold    ││
+│ │   (From WSL Submission - Replen. 25/01/25)             ││
+│ │   [View Violation Reason]                               ││
 │ │   Legal Basis: Article 15, Section 2                    ││
 │ │   Appeal Deadline: Expired                              ││
 │ │   [View Full Details]                                   ││

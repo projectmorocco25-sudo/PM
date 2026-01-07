@@ -7,12 +7,12 @@
 
 ## Overview
 
-Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submissions, breach detection and analysis, governance dashboard, and analytics/treemaps.
+Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submissions, compliance violation detection and analysis, governance dashboard, and analytics/treemaps.
 
 ## Wireframe List
 
 ### VCI Overview
-- [ ] **Task 0.5.3.0:** VCI overview page (module summary, submission overview, breach alerts, quick links)
+- [ ] **Task 0.5.3.0:** VCI overview page (module summary, submission overview, compliance violation alerts, quick links)
 
 ### AAMS Wireframes
 - [ ] **Task 0.5.3.1:** AAMS submissions list page (my submissions, all submissions for MOH, year filter, status filter)
@@ -30,23 +30,23 @@ Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submis
 
 ### WSL Wireframes
 - [ ] **Task 0.5.3.11:** WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators)
-- [ ] **Task 0.5.3.12:** WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure)
-- [ ] **Task 0.5.3.13:** WSL submission detail page (submission data, breach indicators, stock level visualization)
+- [ ] **Task 0.5.3.12:** WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold, threshold compliance %, replenishment date, compliance violation reason)
+- [ ] **Task 0.5.3.13:** WSL submission detail page (submission data, compliance violation indicators, stock level visualization)
 
-### Breach Wireframes
+### Compliance Violation Wireframes
 - [ ] **Task 0.5.3.14:** Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range)
-- [ ] **Task 0.5.3.15:** Breach detail page (breach information, stock level vs threshold comparison, reason, replenishment date, priority indicator)
-- [ ] **Task 0.5.3.16:** Breach analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option)
-- [ ] **Task 0.5.3.17:** Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input)
+- [ ] **Task 0.5.3.15:** Compliance Violation detail page (compliance violation information, stock level vs threshold comparison, reason, replenishment date, priority indicator)
+- [ ] **Task 0.5.3.16:** Compliance Violation analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option)
+- [ ] **Task 0.5.3.17:** Compliance Violation action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input)
 
 ### Governance Dashboard
-- [ ] **Task 0.5.3.18:** Governance Dashboard (MOH - real-time stock sufficiency charts, breach status overview, action recommendations, widget layout)
+- [ ] **Task 0.5.3.18:** Governance Dashboard (MOH - real-time stock sufficiency charts, compliance violation status overview, action recommendations, widget layout)
 
 ### VCI Treemap Analytics (Tier 1 & Tier 2)
-- [ ] **Task 0.5.3.21:** ATC Treemap page (Level 1 - % total stock level breaches by therapeutic area/ATC code, clickable tiles, filters: critical medicines/date range)
-- [ ] **Task 0.5.3.22:** Products Treemap page (Level 2 - % total stock level breaches by product within selected ATC, drill-down from ATC, back navigation, breadcrumbs)
+- [ ] **Task 0.5.3.21:** ATC Treemap page (Level 1 - % total stock level compliance violations by therapeutic area/ATC code, clickable tiles, filters: critical medicines/date range)
+- [ ] **Task 0.5.3.22:** Products Treemap page (Level 2 - % total stock level compliance violations by product within selected ATC, drill-down from ATC, back navigation, breadcrumbs)
 - [ ] **Task 0.5.3.23:** Dosage/Forms Modal (Level 3 - table showing dosage/form with % compliance, expandable rows, modal overlay, no route change)
-- [ ] **Task 0.5.3.24:** SKU List expanded view (Level 4 - SKUs with breach status, external link icon indicating opens in new tab, info message, modal stays open)
+- [ ] **Task 0.5.3.24:** SKU List expanded view (Level 4 - SKUs with compliance violation status, external link icon indicating opens in new tab, info message, modal stays open)
 - [ ] **Task 0.5.3.25:** SKU Action Page integration (Level 5 - uses existing SKU detail route, opens in new tab, role-based actions for Tier 1/Tier 2, query params for back navigation)
 
 ### Historical Data Pages
@@ -69,8 +69,19 @@ Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submis
 
 ## Key Design Considerations
 
-### Simplified Submission Structure
-- **AAMS/MSQ/WSL:** All use `{sku_id, quantity}` array structure (NOT monthly breakdown)
+### Submission Structure
+
+#### AAMS Submission Structure
+- **Monthly Sales Breakdown:** Table with columns: SKU, Product Description (Name/Dosage/Form), Jan, Feb, ..., Dec, AAMS (calculated)
+- **Monthly Fields:** Quantity of sales for each month (number input, default blank, required)
+- **AAMS Field:** Read-only, automatically calculated from sum of 12 months
+- **Validation:** All fields must be filled before submission
+- **Draft Support:** Can save drafts with partial data
+- **Import/Export:** CSV import/export functionality
+- **SKU Selector:** Searchable dropdown, auto-fills product description
+
+#### MSQ/WSL Submission Structure
+- **Simplified Structure:** `{sku_id, quantity}` array structure (NOT monthly breakdown)
 - SKU selector shows full description: name, dosage, form, pack size
 - Quantity input shows unit_of_measure from selected SKU
 
@@ -83,9 +94,9 @@ Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submis
 - WSL: Friday 5 PM deadline, submission window Monday-Friday 17:00
 - MSQ: 7-day grace period for corrections
 
-### Breach Detection
-- Automatic breach creation on WSL submission
-- Priority indicators (critical medicines, multiple SKUs, extended breaches)
+### Compliance Violation Detection
+- Automatic compliance violation creation on WSL submission
+- Priority indicators (critical medicines, multiple SKUs, extended compliance violations)
 - Batch analysis capability for Tier 2
 
 ## Related Routes
@@ -95,7 +106,7 @@ See [Routing Structure](../../../../02-architecture/frontend/routing-structure.m
 - `/vci/aams` - AAMS submissions
 - `/vci/msq` - MSQ submissions
 - `/vci/wsl` - WSL submissions
-- `/vci/breaches` - Compliance Violations list
+- `/vci/compliance-violations` - Compliance Violations list
 - `/vci/governance` - Governance dashboard (MOH)
 - `/vci/submissions/history` - Submission history
 - `/vci/submissions/history/trends` - Trends analysis (MOH Tier 1)
@@ -108,5 +119,5 @@ See [Routing Structure](../../../../02-architecture/frontend/routing-structure.m
 
 ---
 
-**Next:** Complete overview → AAMS → MSQ → WSL → breaches → governance dashboard → analytics
+**Next:** Complete overview → AAMS → MSQ → WSL → compliance violations → governance dashboard → analytics
 

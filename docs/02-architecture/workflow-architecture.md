@@ -461,6 +461,67 @@ The PM platform uses database-driven state machines for workflow management. Eac
 
 ---
 
+### 7. Threshold Modification Workflow (Enhanced with Time-Bound Support)
+
+**Entity:** `thresholds`
+
+**Purpose:** Tier 1 modifies threshold multipliers (permanent or time-bound)
+
+**States:**
+- `current` - Current active threshold
+- `temporary_active` - Temporary threshold active (will revert)
+- `reverted` - Threshold reverted (new permanent version created)
+- `pending_reversion` - Temporary threshold pending reversion (manual review type)
+
+**State Transitions:**
+
+| From | To | Trigger | Validator | RPC Function |
+|------|-----|---------|-----------|--------------|
+| `current` | `temporary_active` | Tier 1 creates temporary threshold | User is Tier 1, duration_type = temporary | `vci_modify_threshold()` |
+| `current` | `current` | Tier 1 creates permanent threshold | User is Tier 1, duration_type = permanent | `vci_modify_threshold()` |
+| `temporary_active` | `reverted` | Auto-revert on revert_date | Scheduled job, duration_type = temporary_auto_revert | `revert_temporary_threshold()` (via Edge Function) |
+| `temporary_active` | `pending_reversion` | Revert date reached (manual review) | Scheduled job, duration_type = temporary_manual_review | Edge Function creates review task |
+| `pending_reversion` | `reverted` | Tier 1 confirms reversion | User is Tier 1, confirmation provided | `vci_confirm_threshold_reversion()` |
+| `temporary_active` | `reverted` | Tier 1 manually reverts early | User is Tier 1, early reversion | `vci_revert_threshold()` |
+
+**Business Rules:**
+- **Permanent Modifications:**
+  - Threshold remains until manually modified
+  - Non-retroactive: Only affects future calculations
+  - Creates new threshold version, marks old as `is_current = false`
+- **Temporary Modifications:**
+  - `revert_date` must be in the future (minimum: tomorrow)
+  - `revert_date` must be > `effective_from` date
+  - `revert_to_multiplier` and `revert_to_threshold_value` must be set
+  - Cannot create temporary threshold if another modification scheduled before `revert_date` (conflict detection)
+- **Auto-Revert Type:**
+  - Automatically reverts on `revert_date` via scheduled job
+  - Creates new threshold version with `revert_to_*` values
+  - Marks old threshold as `is_current = false`
+  - Sends completion notification
+- **Manual Review Type:**
+  - On `revert_date`, creates review task for Tier 1
+  - Does NOT auto-revert (requires Tier 1 confirmation)
+  - Tier 1 can confirm or cancel reversion
+  - If confirmed, creates new threshold version with `revert_to_*` values
+- **Notification Schedule:**
+  - 7-day warning: Sent 7 days before `revert_date`
+  - 1-day warning: Sent 1 day before `revert_date`
+  - Reversion notification: Sent on reversion (auto-revert) or when confirmed (manual review)
+  - Review required notification: Sent on `revert_date` for manual review type
+
+**Side Effects:**
+- On `temporary_active`: Schedules notifications (7-day, 1-day, reversion)
+- On `reverted`: Creates new threshold version, updates all affected SKUs
+- On `pending_reversion`: Creates notification for Tier 1 review
+- All transitions logged in audit trail with justification
+
+**Cross-Module Impacts:**
+- **VCI → VCI:** Threshold changes affect breach detection calculations
+- **VCI → CMC:** Threshold changes may affect compliance scoring (if threshold violations change)
+
+---
+
 ### VCI → CMC Impact (Data for Scoring)
 
 **When:** CMC score calculation (scheduled or event-triggered)

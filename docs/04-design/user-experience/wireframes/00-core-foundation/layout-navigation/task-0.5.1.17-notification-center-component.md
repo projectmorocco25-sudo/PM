@@ -33,6 +33,16 @@
 │   Your approval is needed for...    │
 │   2 days ago                         │
 ├─────────────────────────────────────┤
+│ ● Threshold Reversion - 7 Day Warning│
+│   Threshold for SKU002 will revert  │
+│   on 25/06/2025 (7 days)            │
+│   1 day ago                          │
+├─────────────────────────────────────┤
+│ ● Threshold Reversion Review Required│
+│   Threshold for SKU003 requires    │
+│   review before reversion           │
+│   1 hour ago                         │
+├─────────────────────────────────────┤
 │ ● Enforcement Action                │
 │   Warning issued: Submission         │
 │   Non-Compliance                     │

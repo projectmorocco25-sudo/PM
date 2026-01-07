@@ -385,6 +385,10 @@ export function MOHDashboard() {
 **Tier 1 Actions:**
 - Approve/reject submissions
 - Configure thresholds
+- Modify thresholds (permanent and temporary)
+- Review threshold reversions (manual review type)
+- Confirm threshold reversions
+- Manually revert thresholds (early reversion)
 - Suspend companies
 - System configuration
 - All Tier 2 actions
@@ -395,6 +399,8 @@ export function MOHDashboard() {
 - Suggest actions
 - Flag for Tier 1 review
 - View all data
+- View pending threshold reversions (read-only)
+- View threshold reversion history (read-only)
 
 **Tier 2 Registrar Actions:**
 - Implement approved changes

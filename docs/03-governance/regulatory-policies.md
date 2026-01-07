@@ -104,6 +104,46 @@ Each policy section in this document is based on regulatory requirements:
 - **Modification:** Tier 1 can modify locally (per-SKU) or globally (system-wide)
 - **Non-Retroactive:** Threshold modifications apply only to future calculations
 
+### Temporary Threshold Modification Policy
+
+**Regulatory Basis:** DMP administrative decisions on threshold flexibility for supply chain disruptions and emergency situations (to be validated with MOH)
+
+- **Duration Types:**
+  - **Permanent (Default):** Threshold remains until manually modified
+  - **Temporary Auto-Revert:** Automatically reverts on specified end date
+  - **Temporary Manual Review:** Requires Tier 1 confirmation before reversion on specified end date
+
+- **Temporary Modification Requirements:**
+  - **Justification:** Mandatory regulatory justification (minimum 50 characters) required for all temporary modifications
+  - **End Date:** Must be in the future (minimum: tomorrow) and after effective_from date
+  - **Revert Values:** Must specify multiplier and threshold value to revert to
+  - **Conflict Prevention:** Cannot create temporary threshold if another modification is scheduled before end date
+
+- **Reversion Process:**
+  - **Auto-Revert Type:** System automatically reverts on `revert_date` via scheduled daily job
+  - **Manual Review Type:** System creates review task for Tier 1 on `revert_date`
+    - Tier 1 must confirm or cancel reversion within 5 working days
+    - If confirmed, system reverts threshold
+    - If cancelled, threshold remains temporary (new end date may be set)
+
+- **Notification Requirements:**
+  - **7-Day Warning:** System sends notification 7 days before reversion
+  - **1-Day Warning:** System sends notification 1 day before reversion
+  - **Reversion Notification:** System sends notification on reversion (auto-revert) or when confirmed (manual review)
+  - **Review Required Notification:** System sends notification to Tier 1 on `revert_date` for manual review type
+
+- **Use Cases:**
+  - Supply chain disruptions requiring temporary threshold adjustments
+  - Seasonal variations in demand
+  - Emergency situations (public health emergencies, natural disasters)
+  - Regulatory flexibility for temporary market conditions
+
+- **Audit Requirements:**
+  - All temporary modifications logged with full justification
+  - Reversion events logged with confirmation details (for manual review)
+  - Notification delivery tracked and logged
+  - 7-year retention for all threshold modification history
+
 ### ECS Threshold Policy
 
 - **Calculation:** Multiplier × XAMS (X Months Average Monthly Sales)

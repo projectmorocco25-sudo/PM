@@ -41,6 +41,22 @@
 │ │ ● Appeal Status Update                                  ││
 │ │   Your appeal for enforcement action #12345 was reviewed││
 │ │   4 days ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Threshold Reversion - 7 Day Warning                  ││
+│ │   Threshold for SKU002 will revert on 25/06/2025        ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ○ Threshold Reversion - 1 Day Warning                  ││
+│ │   Threshold for SKU003 will revert tomorrow (30/06/2025)││
+│ │   6 hours ago                              [Mark read]   ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Threshold Reversion Completed                        ││
+│ │   Threshold for SKU002 has been reverted to 1.0x        ││
+│ │   2 hours ago                              [Mark read]   ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Threshold Reversion Review Required                  ││
+│ │   Threshold for SKU003 requires review before reversion││
+│ │   1 hour ago                               [Mark read]   ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [Load More]                                                │
@@ -61,10 +77,15 @@
 - **Read Indicator:** Gray circle (○) or none
 
 ### Filters
-- **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, System
+- **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, Threshold Reversion, System
 - **Status:** All, Unread, Read
 - **Date Range:** Last 7 days, Last 30 days, Custom
 - **Enforcement Filter (if Type = Enforcement):** Warning, Fine, Suspension, Appeal
+- **Threshold Reversion Filter (if Type = Threshold Reversion):**
+  - 7-Day Warning
+  - 1-Day Warning
+  - Reversion Completed
+  - Review Required
 
 ### Settings Panel
 - **Notification Preferences:** Toggle switches for each type
@@ -252,8 +273,13 @@
 - **Quick Actions:** Hover actions (mark as read, delete, view)
 - **Infinite Scroll:** Load more notifications as user scrolls
 - **Pull to Refresh:** Refresh notifications list (mobile)
-- **Type Filtering:** Filter by notification type (submission, breach, enforcement, message, appeal)
+- **Type Filtering:** Filter by notification type (submission, breach, enforcement, message, appeal, threshold_reversion, system)
 - **Read Status:** Clear visual indicators for read/unread notifications
+- **Threshold Reversion Notifications:**
+  - **7-Day Warning:** Sent 7 days before revert_date
+  - **1-Day Warning:** Sent 1 day before revert_date
+  - **Reversion Completed:** Sent when threshold is reverted (auto or manual)
+  - **Review Required:** Sent to Tier 1 when manual review threshold reaches revert_date
 
 ---
 

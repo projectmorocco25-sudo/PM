@@ -35,6 +35,16 @@
 │ │ Violation Type: Submission Non-Compliance               ││
 │ │ Violation Reference: WSL Submission #12345              ││
 │ │                                                          ││
+│ │ [WSL Submission Context - If violation from WSL]      ││
+│ │ Replenishment Date: 25/01/2025                          ││
+│ │ (From WSL Submission - Company provided)                ││
+│ │                                                          ││
+│ │ Compliance Violation Reason:                            ││
+│ │ "Stock replenishment delayed due to supplier delay.     ││
+│ │ Expected delivery date: 25/01/2025. Alternative         ││
+│ │ supplier contacted for emergency supply."               ││
+│ │ (From WSL Submission)                                   ││
+│ │                                                          ││
 │ │ Legal Basis: Article 15, Section 3 of Regulation...   ││
 │ │ [View Regulatory Framework]                             ││
 │ │                                                          ││
@@ -134,6 +144,12 @@
   - **Company:** Company name (link to company detail)
   - **Violation Type:** Violation type description
   - **Violation Reference:** Link to related violation (breach, submission, etc.)
+  - **WSL Submission Context (Conditional):** Shown when Violation Reference is a WSL submission:
+    - **Replenishment Date:** Actual date from WSL submission (format: DD/MM/YYYY)
+    - **Label:** "(From WSL Submission - Company provided)"
+    - **Compliance Violation Reason:** Full text from WSL submission (up to 300 characters)
+    - **Label:** "(From WSL Submission)"
+    - **Purpose:** Provides company's stated resolution plan and context for enforcement decision
   - **Legal Basis:** Legal basis text (truncated, expandable) with link to regulatory framework
   - **Regulatory Reference:** "See [Regulatory Framework](../../../../03-governance/regulatory-framework.md) for complete regulatory basis"
   - **Justification:** Full justification text (truncated if long, expandable)

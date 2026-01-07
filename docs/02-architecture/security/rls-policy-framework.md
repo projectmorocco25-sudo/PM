@@ -413,6 +413,40 @@ ON thresholds FOR SELECT
 USING (
   (SELECT company_id FROM users WHERE id = auth.uid()) IS NULL
 );
+
+-- Tier 1 can modify thresholds (INSERT for new versions, UPDATE for status changes)
+CREATE POLICY "tier1_can_modify_thresholds"
+ON thresholds FOR INSERT
+WITH CHECK (
+  (SELECT company_id FROM users WHERE id = auth.uid()) IS NULL
+  AND (SELECT role FROM users WHERE id = auth.uid()) = 'tier1'
+);
+
+-- Tier 1 can update threshold status (e.g., mark as not current on reversion)
+CREATE POLICY "tier1_can_update_threshold_status"
+ON thresholds FOR UPDATE
+USING (
+  (SELECT company_id FROM users WHERE id = auth.uid()) IS NULL
+  AND (SELECT role FROM users WHERE id = auth.uid()) = 'tier1'
+)
+WITH CHECK (
+  (SELECT company_id FROM users WHERE id = auth.uid()) IS NULL
+  AND (SELECT role FROM users WHERE id = auth.uid()) = 'tier1'
+);
+
+-- System can update thresholds (for auto-reversion via scheduled job)
+CREATE POLICY "system_can_update_thresholds_for_reversion"
+ON thresholds FOR UPDATE
+USING (
+  auth.uid() = '00000000-0000-0000-0000-000000000000'::uuid  -- System user
+)
+WITH CHECK (
+  auth.uid() = '00000000-0000-0000-0000-000000000000'::uuid  -- System user
+);
+
+-- Tier 1 and Tier 2 can view pending reversions (for dashboard)
+-- Note: This is handled via RPC function vci_get_pending_reversions() which applies RLS
+-- Direct table access uses standard SELECT policies above
 ```
 
 #### breaches

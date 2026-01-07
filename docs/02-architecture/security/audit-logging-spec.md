@@ -135,6 +135,36 @@ Entry 3: previous_hash = hash2, current_hash = hash3 (hash of hash2 + entry3_dat
 
 ---
 
+### Threshold Operations
+
+**All Threshold Modification and Reversion Operations:**
+- `threshold_temporary_created` - Temporary threshold created
+- `threshold_permanent_created` - Permanent threshold modification created
+- `threshold_reversion_scheduled` - Reversion scheduled (temporary threshold created)
+- `threshold_reversion_auto_executed` - Automatic reversion executed on revert_date
+- `threshold_reversion_manual_confirmed` - Manual reversion confirmed by Tier 1
+- `threshold_reversion_cancelled` - Reversion cancelled (manual review type)
+- `threshold_reversion_early` - Early manual reversion (before revert_date)
+- `threshold_reversion_notification_sent` - Reversion notification sent (7-day, 1-day, or on reversion)
+
+**Details Logged:**
+- User ID (Tier 1 for modifications, system for auto-reversions)
+- Operation type (see above)
+- Threshold ID (old and new)
+- Modification type (permanent, temporary_auto_revert, temporary_manual_review)
+- Scope (local/global)
+- Old threshold values (multiplier, threshold_value)
+- New threshold values (multiplier, threshold_value)
+- Revert date (if temporary)
+- Revert to values (multiplier, threshold_value) (if temporary)
+- Justification text (mandatory for modifications)
+- Confirmation justification (for manual confirmations)
+- Notification type (7-day warning, 1-day warning, reversion, review required)
+- Notification recipient user ID
+- Timestamp
+
+---
+
 ### State Transitions
 
 **All Workflow State Changes:**

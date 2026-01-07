@@ -557,6 +557,14 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | effective_from | date | NOT NULL | Effective from date |
 | effective_to | date | NULLABLE | Effective to date (NULL for current) |
 | is_current | boolean | DEFAULT true | Current threshold flag |
+| duration_type | text | DEFAULT 'permanent' | Duration type (permanent, temporary_auto_revert, temporary_manual_review) |
+| revert_date | date | NULLABLE | Date when temporary threshold reverts (NULL for permanent) |
+| revert_to_multiplier | numeric(5,2) | NULLABLE | Multiplier to revert to (NULL for permanent) |
+| revert_to_threshold_value | numeric(15,2) | NULLABLE | Threshold value to revert to (NULL for permanent) |
+| revert_notification_sent_7d | boolean | DEFAULT false | 7-day warning notification sent |
+| revert_notification_sent_1d | boolean | DEFAULT false | 1-day warning notification sent |
+| revert_notification_sent_on_revert | boolean | DEFAULT false | Reversion completion notification sent |
+| requires_manual_review | boolean | DEFAULT false | If true, requires Tier 1 confirmation before auto-revert |
 | created_by | uuid | REFERENCES users(id), NOT NULL | User who created |
 | created_at | timestamptz | DEFAULT now() | Creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
@@ -566,11 +574,21 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - `idx_thresholds_threshold_type` on `threshold_type`
 - `idx_thresholds_effective_from` on `effective_from`
 - `idx_thresholds_is_current` on `is_current`
+- `idx_thresholds_duration_type` on `duration_type`
+- `idx_thresholds_revert_date` on `revert_date` (WHERE revert_date IS NOT NULL)
+- `idx_thresholds_requires_manual_review` on `requires_manual_review` (WHERE requires_manual_review = true)
 
 **Notes:**
 - Version history supported (non-retroactive changes)
 - Query current: `WHERE is_current = true AND sku_id = ? OR sku_id IS NULL`
 - ECS Threshold switches from VCI Threshold when export authorized
+- **Time-Bound Modifications:**
+  - `duration_type = 'permanent'`: Threshold remains until manually modified (default behavior)
+  - `duration_type = 'temporary_auto_revert'`: Automatically reverts on `revert_date`
+  - `duration_type = 'temporary_manual_review'`: Requires Tier 1 confirmation before reversion on `revert_date`
+  - `revert_date` must be in the future when creating temporary threshold
+  - `revert_to_multiplier` and `revert_to_threshold_value` must be set for temporary thresholds
+  - Notifications are sent at 7 days, 1 day, and on reversion (tracked by notification flags)
 
 ---
 

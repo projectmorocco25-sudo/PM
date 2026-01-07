@@ -284,6 +284,21 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 │ │                      │ │ [View All →]        │          ││
 │ └──────────────────────┘ └──────────────────────┘          ││
 │                                                             │
+│ ┌──────────────────────┐                                    ││
+│ │ Pending Threshold    │                                    ││
+│ │ Reversions (View)    │                                    ││
+│ │                      │                                    ││
+│ │ 8 Pending            │                                    ││
+│ │                      │                                    ││
+│ │ • 5 Auto-Revert      │                                    ││
+│ │   (7 days)           │                                    ││
+│ │ • 3 Manual Review    │                                    ││
+│ │   (2 days)           │                                    ││
+│ │                      │                                    ││
+│ │ [View Details]       │                                    ││
+│ │ (Read-only)          │                                    ││
+│ └──────────────────────┘                                    ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Analysis Reports                            [Collapse]  ││
 │ │                                                          ││

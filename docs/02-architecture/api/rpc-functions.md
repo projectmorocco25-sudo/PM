@@ -361,6 +361,190 @@ SELECT * FROM vci_get_historical_submissions(
 
 ---
 
+### vci_modify_threshold(
+  threshold_id uuid,
+  new_multiplier numeric,
+  scope text,
+  duration_type text DEFAULT 'permanent',
+  revert_date date DEFAULT NULL,
+  revert_to_multiplier numeric DEFAULT NULL,
+  requires_manual_review boolean DEFAULT false,
+  justification text
+)
+
+**Purpose:** Tier 1 modifies threshold multiplier (permanent or time-bound)
+
+**Parameters:**
+- `threshold_id` (uuid) - Current threshold ID to modify
+- `new_multiplier` (numeric) - New multiplier value (0.1 to 5.0)
+- `scope` (text) - Modification scope ('local' for this SKU, 'global' for all SKUs of same product)
+- `duration_type` (text) - Duration type: 'permanent', 'temporary_auto_revert', 'temporary_manual_review' (default: 'permanent')
+- `revert_date` (date) - Date when temporary threshold reverts (required if duration_type is temporary, must be future date)
+- `revert_to_multiplier` (numeric) - Multiplier to revert to (required if duration_type is temporary)
+- `requires_manual_review` (boolean) - If true, requires Tier 1 confirmation before auto-revert (only for temporary_manual_review)
+- `justification` (text) - Regulatory justification (minimum 50 characters, required)
+
+**Returns:** JSON with new threshold data
+
+**State Transition:** Creates new threshold version (non-retroactive)
+
+**Validation:**
+- User must be Tier 1
+- `new_multiplier` must be between 0.1 and 5.0
+- `justification` must be at least 50 characters
+- If `duration_type = 'temporary'`:
+  - `revert_date` must be provided and in the future
+  - `revert_to_multiplier` must be provided and between 0.1 and 5.0
+  - `revert_date` must be > `effective_from` date
+- Cannot modify if another temporary modification is scheduled before `revert_date` (conflict detection)
+
+**Side Effects:**
+- Marks current threshold as `is_current = false` and sets `effective_to = CURRENT_DATE`
+- Creates new threshold version with new multiplier
+- Calculates new threshold value: `new_multiplier × AAMS`
+- If `scope = 'global'`, applies to all SKUs under same product
+- If temporary, sets `revert_date`, `revert_to_multiplier`, `revert_to_threshold_value`
+- Creates audit log entry with justification
+- Schedules notifications (7 days, 1 day before reversion if temporary)
+
+**Business Rules:**
+- Non-retroactive: Only affects future calculations
+- Version history: Old threshold preserved with `is_current = false`
+- Temporary thresholds: Auto-revert or require manual review on `revert_date`
+- Conflict resolution: If new modification scheduled before existing `revert_date`, cancels existing temporary threshold
+
+**Example:**
+```sql
+SELECT vci_modify_threshold(
+  '123e4567-e89b-12d3-a456-426614174000'::uuid,  -- threshold_id
+  1.5,                                            -- new_multiplier
+  'local',                                        -- scope
+  'temporary_auto_revert',                        -- duration_type
+  '2025-06-30'::date,                            -- revert_date
+  1.0,                                            -- revert_to_multiplier
+  false,                                          -- requires_manual_review
+  'Temporary increase due to supply chain disruption. Expected to resolve by Q2 2025. Regulatory basis: DMP Circular 2024-15.'  -- justification
+);
+```
+
+---
+
+### vci_revert_threshold(threshold_id uuid, confirmation_justification text DEFAULT NULL)
+
+**Purpose:** Manually revert temporary threshold (for manual review type or early reversion)
+
+**Parameters:**
+- `threshold_id` (uuid) - Threshold ID to revert
+- `confirmation_justification` (text) - Optional justification for manual reversion (required if early reversion)
+
+**Returns:** JSON with reverted threshold data
+
+**State Transition:** Creates new threshold version with revert values
+
+**Validation:**
+- User must be Tier 1
+- Threshold must have `duration_type IN ('temporary_auto_revert', 'temporary_manual_review')`
+- If reverting before `revert_date`, `confirmation_justification` is required (minimum 50 characters)
+
+**Side Effects:**
+- Calls `revert_temporary_threshold()` function
+- Creates new threshold version with `revert_to_*` values
+- Marks old threshold as `is_current = false`
+- Creates audit log entry
+- Sends notification to threshold creator
+
+**Example:**
+```sql
+SELECT vci_revert_threshold(
+  '123e4567-e89b-12d3-a456-426614174000'::uuid,  -- threshold_id
+  'Early reversion due to supply chain recovery. Regulatory basis: DMP approval.'  -- confirmation_justification
+);
+```
+
+---
+
+### vci_get_pending_reversions(
+  p_limit integer DEFAULT 100,
+  p_offset integer DEFAULT 0,
+  p_duration_type text DEFAULT NULL,
+  p_date_from date DEFAULT NULL,
+  p_date_to date DEFAULT NULL
+)
+
+**Purpose:** Get thresholds pending reversion (for dashboard and review)
+
+**Parameters:**
+- `p_limit` (integer) - Number of records to return (default: 100)
+- `p_offset` (integer) - Offset for pagination (default: 0)
+- `p_duration_type` (text) - Filter by duration type: 'temporary_auto_revert', 'temporary_manual_review', or NULL for all
+- `p_date_from` (date) - Filter by revert_date >= date_from
+- `p_date_to` (date) - Filter by revert_date <= date_to
+
+**Returns:** TABLE with threshold data including:
+- Threshold ID, SKU, product, current multiplier, revert date, days until reversion
+- Revert to multiplier, revert to threshold value
+- Duration type, requires manual review flag
+- Notification status flags
+
+**Access Control:**
+- Tier 1: Full access
+- Tier 2: Read-only access
+- Company users: No access
+
+**Example:**
+```sql
+SELECT * FROM vci_get_pending_reversions(
+  50,                              -- limit
+  0,                               -- offset
+  'temporary_manual_review',       -- duration_type filter
+  CURRENT_DATE,                    -- date_from
+  CURRENT_DATE + INTERVAL '30 days' -- date_to
+);
+```
+
+**Business Rules:**
+- Returns thresholds with `duration_type IN ('temporary_auto_revert', 'temporary_manual_review')`
+- Only returns current thresholds (`is_current = true`)
+- Ordered by `revert_date` ASC (earliest first)
+- Includes calculated field: `days_until_reversion` (revert_date - CURRENT_DATE)
+
+---
+
+### vci_confirm_threshold_reversion(threshold_id uuid, confirmation_justification text)
+
+**Purpose:** Tier 1 confirms manual review threshold reversion
+
+**Parameters:**
+- `threshold_id` (uuid) - Threshold ID to confirm reversion
+- `confirmation_justification` (text) - Justification for confirming reversion (minimum 50 characters, required)
+
+**Returns:** JSON with reverted threshold data
+
+**State Transition:** Reverts threshold from temporary to permanent
+
+**Validation:**
+- User must be Tier 1
+- Threshold must have `duration_type = 'temporary_manual_review'`
+- Threshold must have `revert_date <= CURRENT_DATE` (ready for reversion)
+- `confirmation_justification` must be at least 50 characters
+
+**Side Effects:**
+- Calls `revert_temporary_threshold()` function
+- Creates new threshold version with `revert_to_*` values
+- Marks old threshold as `is_current = false`
+- Creates audit log entry with confirmation justification
+- Sends notification to threshold creator
+
+**Example:**
+```sql
+SELECT vci_confirm_threshold_reversion(
+  '123e4567-e89b-12d3-a456-426614174000'::uuid,  -- threshold_id
+  'Confirmed reversion after review. Supply chain has stabilized. Regulatory basis: DMP approval.'  -- confirmation_justification
+);
+```
+
+---
+
 ## ECS Module Functions
 
 ### ecs_submit_export_request(...)

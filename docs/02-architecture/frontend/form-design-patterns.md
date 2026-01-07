@@ -148,6 +148,66 @@ Forms are critical to the PM platform, handling submissions (AAMS, MSQ, WSL, exp
 </FormGroup>
 ```
 
+### Duration Type Selection Pattern
+
+**Use Case:** Threshold modifications with permanent vs temporary options
+
+**Layout:**
+- Radio button group for duration type selection
+- Conditional fields appear based on selection
+- Clear visual separation between options
+
+**Example:**
+```
+┌─────────────────────────────────────────┐
+│ Duration Type *                          │
+│                                          │
+│ ○ Permanent (Default)                   │
+│   Threshold remains until manually modified.│
+│                                          │
+│ ○ Temporary (Time-Bound)                 │
+│   Threshold will revert after specified period.│
+│                                          │
+│ [If Temporary Selected]                  │
+│                                          │
+│ Reversion Type *                         │
+│ ○ Auto-Revert                            │
+│   System automatically reverts on End Date.│
+│ ○ Manual Review                          │
+│   Requires Tier 1 confirmation on End Date.│
+│                                          │
+│ End Date *                               │
+│ [Date Picker: DD/MM/YYYY]                │
+│ Minimum: Tomorrow                        │
+│                                          │
+│ Revert To *                              │
+│ ○ Previous Value (1.0x default)          │
+│ ○ Custom Value: [1.0] x                  │
+│                                          │
+│ ⚠️ Warning: Reversion will occur on [End Date].│
+│    Ensure companies are notified.        │
+│    [Schedule Notification]                │
+└─────────────────────────────────────────┘
+```
+
+**Implementation:**
+- Radio buttons with descriptions
+- Conditional field visibility (show/hide based on selection)
+- Date picker validation (future date only)
+- Real-time calculation of revert-to values
+- Warning messages for approaching reversion dates
+
+**Validation:**
+- Duration type selection required
+- If temporary: Reversion type, end date, and revert-to values required
+- End date must be in the future
+- Revert-to multiplier must be between 0.1x and 5.0x
+
+**Accessibility:**
+- Radio buttons keyboard navigable
+- ARIA labels for conditional fields
+- Screen reader announcements for field visibility changes
+
 ### Conditional Fields
 
 **Pattern:** Show/hide fields based on other field values

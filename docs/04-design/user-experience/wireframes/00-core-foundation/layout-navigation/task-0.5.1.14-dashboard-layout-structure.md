@@ -112,10 +112,10 @@
 **Module Sections:**
 - **Global Section:** Dashboard, Communications, History, Notifications, Audit (MOH only), System Config (Tier 1 only)
 - **RMM Section:** Overview, Companies, Products, SKUs
-- **VCI Section:** Dashboard, Submissions, Thresholds, Breaches, Governance (MOH), Treemap (MOH)
+- **VCI Section:** Dashboard, Submissions, Thresholds, Compliance Violations, Governance (MOH), Treemap (Supply Chain Visualization) (MOH)
 - **ECS Section:** (if active OR historical data exists) Overview, Export Requests, Authorizations, History
-- **CMC Section:** (if active OR historical data exists) Overview, Scores, Disputes, Reports, History
-- **Enforcement Section:** (MOH Tier 1 & Tier 2 only) Dashboard, Actions, Pending Approvals, Reports
+- **CMC Section:** (if active OR historical data exists) Overview, Regulatory Compliance Ratings, Compliance Disputes, Reports, History
+- **Enforcement Section:** (MOH Tier 1 & Tier 2 only) Dashboard, Actions, Pending Regulatory Approvals, Reports
 - **Help & Info Section:** Support, FAQ, Documentation, Contact, Status
 
 **Navigation Items:**

@@ -48,10 +48,10 @@ This directory contains wireframe specifications for all role-based dashboards i
 **Status:** 🟢 Complete
 
 **Tabs:**
-- **Overview:** %SC, System Health, Pending Approvals, Critical Breaches, Enforcement, Follow-up, Audit Trail
+- **Overview:** %SC, System Health, Pending Regulatory Approvals, Critical Compliance Violations, Enforcement, Follow-up, Audit Trail
 - **Compliance:** Critical Medicine Compliance, Unsubmitted Companies, CMC Low Scores
-- **Enforcement:** Enforcement Actions, Pending Approvals, Follow-up Tracking, Appeals
-- **Modules:** RMM Issues, VCI SKUs, ECS Export Requests, CMC Low Scores
+- **Enforcement:** Enforcement Actions, Pending Regulatory Approvals, Follow-up Tracking, Appeals
+- **Modules:** RMM Issues, VCI SKUs, ECS Export Authorization Requests, CMC Low Scores
 - **Reports:** Governance Dashboard, Quick Links, Recent Reports
 
 **Key Modals:**
@@ -102,7 +102,7 @@ This directory contains wireframe specifications for all role-based dashboards i
 **Status:** 🟢 Complete
 
 **Tabs (Optional):**
-- **Overview:** My Submissions, Pending Approvals, Recent Activity, Enforcement Actions, Key Metrics
+- **Overview:** My Submissions, Pending Regulatory Approvals, Recent Activity, Enforcement Actions, Key Metrics
 - **Submissions:** My Submissions List, This Week/Month Stats, Upcoming Deadlines
 - **Enforcement:** Enforcement Actions, Total Actions, Active Appeals, Compliance Status
 - **Activity:** Recent Activity, This Week/Month Activities, Notifications

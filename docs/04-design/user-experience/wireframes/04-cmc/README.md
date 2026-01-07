@@ -22,7 +22,7 @@ Compliance Monitoring Center (CMC) module wireframes cover compliance scores, di
 - [ ] **Task 0.5.5.5:** Score review - Tier 1 override modal (justification input, quick action, contextual to score detail)
 
 ### Dispute Wireframes
-- [ ] **Task 0.5.5.6:** Disputes list page (my disputes for companies, all disputes for MOH, status filters, date filters)
+- [ ] **Task 0.5.5.6:** Compliance Disputes list page (my compliance disputes for companies, all compliance disputes for MOH, status filters, date filters)
 - [ ] **Task 0.5.5.7:** Dispute detail page (dispute information, evidence display, review status, dispute details route)
 - [ ] **Task 0.5.5.8:** Dispute creation interface (companies - 30-day window indicator, dispute form, component selection, evidence upload)
 - [ ] **Task 0.5.5.9:** Dispute review interface (Tier 2 - review, Tier 1 - resolution with adjustment notes, dispute details)
@@ -34,7 +34,7 @@ Compliance Monitoring Center (CMC) module wireframes cover compliance scores, di
 
 ### Historical Data Pages
 - [ ] **Task 0.5.5.13:** Compliance scores history page (historical compliance scores, filterable by date/company, scores history route)
-- [ ] **Task 0.5.5.14:** Disputes history page (historical disputes, filterable by date/company/status, disputes history route)
+- [ ] **Task 0.5.5.14:** Compliance Disputes history page (historical compliance disputes, filterable by date/company/status, compliance disputes history route)
 
 ## Subfolder Structure
 
@@ -88,7 +88,7 @@ See [Routing Structure](../../../../02-architecture/frontend/routing-structure.m
 - `/cmc/scores` - Compliance scores list
 - `/cmc/scores/[id]` - Score detail
 - `/cmc/leaderboard` - Leaderboard
-- `/cmc/disputes` - Disputes list
+- `/cmc/disputes` - Compliance Disputes list
 - `/cmc/disputes/[id]` - Dispute detail
 - `/cmc/reports` - Reports list
 - `/cmc/reports/[id]` - Report detail

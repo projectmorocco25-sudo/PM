@@ -55,7 +55,7 @@ The PM platform implements role-based approval authority to ensure proper govern
 |--------|--------------|-----------------|--------------|---------------|------------------|--------|---------|
 | Submit AAMS | Submit | Submit | Submit | Verify | No Access | Approve Threshold | Read Only |
 | Submit MSQ | Submit | Submit | Submit | Review Anomalies | No Access | No Access | Read Only |
-| Submit WSL | Submit | Submit | Submit | Analyze Breaches | No Access | Review Actions | Read Only |
+| Submit WSL | Submit | Submit | Submit | Analyze Compliance Violations | No Access | Review Actions | Read Only |
 | Correct MSQ | Submit | Submit | Submit | No Access | No Access | No Access | Read Only |
 | View Thresholds | View | View | View | View | View | Configure | Read Only |
 

@@ -95,7 +95,7 @@ Wireframes can be stored in multiple formats:
 
 ### CMC Module (04-cmc/)
 - Compliance scores (list, detail, leaderboard)
-- Disputes (creation, review, resolution)
+- Compliance Disputes (creation, review, resolution)
 - Reports (list, detail, review/approval)
 - Score review & override interfaces
 

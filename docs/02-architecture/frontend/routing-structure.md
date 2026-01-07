@@ -216,24 +216,24 @@ Historical data routes provide access to past submissions, compliance scores, au
 - Products: `/rmm/products/[id]` → History tab
 - SKUs: `/rmm/skus/[id]` → History tab
 - Submissions: `/vci/submissions/{type}/[id]` → History tab
-- Breaches: `/vci/breaches/[id]` → History tab
-- Compliance Scores: `/cmc/scores/[id]` → History tab
+- Compliance Violations: `/vci/breaches/[id]` → History tab
+- Regulatory Compliance Ratings: `/cmc/scores/[id]` → History tab
 
 **2. Filtered List Views:**
 - AAMS: `/vci/submissions/aams?year=2023`
 - MSQ: `/vci/submissions/msq?year=2023&month=6`
 - WSL: `/vci/submissions/wsl?week=2023-W01`
-- Breaches: `/vci/breaches?status=resolved&year=2023`
-- Scores: `/cmc/scores?year=2023`
+- Compliance Violations: `/vci/breaches?status=resolved&year=2023`
+- Regulatory Compliance Ratings: `/cmc/scores?year=2023`
 
 **3. Dedicated History Routes:**
 - `/history` - Role-based historical overview
 - `/audit/logs` - Audit log viewer (MOH/Auditors only)
 - `/audit/reports` - Audit reports (MOH/Auditors only)
-- `/vci/submissions/history` - All past submissions (filterable)
-- `/vci/submissions/history/trends` - Trend analysis charts (MOH only)
-- `/ecs/exports/history` - Historical export authorizations
-- `/cmc/scores/history` - Historical compliance scores
+- `/vci/submissions/history` - All past submissions (filterable - Regulatory Submission History)
+- `/vci/submissions/history/trends` - Compliance trend analysis charts (MOH only)
+- `/ecs/exports/history` - Export Authorization History (historical export authorizations)
+- `/cmc/scores/history` - Historical regulatory compliance ratings
 - `/cmc/disputes/history` - Historical disputes
 - `/enforcement` - Enforcement dashboard (MOH Tier 1 and Tier 2 only)
 - `/enforcement/actions` - Enforcement actions list
@@ -668,7 +668,7 @@ export default function GovernancePage() {
 - Dashboard
 - Communications (Inbox, Sent, Compose)
 - RMM (Companies, Products, SKUs)
-- VCI (Submissions, Thresholds, Breaches)
+- VCI (Submissions, Thresholds, Compliance Violations)
 - History (links to `/history` - personal historical overview)
 - ECS (if active OR historical data exists) - Export Requests, History
 - CMC (if active OR historical data exists) - Scores, Disputes, History
@@ -764,7 +764,7 @@ export default function GovernancePage() {
 **Implementation:** See [Historical Data Routing Proposal](./historical-data-routing-proposal.md) for complete specifications
 
 **Key Additions:**
-- History tabs on detail pages (companies, products, submissions, breaches, scores)
+- History tabs on detail pages (companies, products, submissions, compliance violations, scores)
 - Filtered list views with query parameters (year, month, status)
 - Dedicated history routes (`/history`, `/audit/logs`, `/vci/submissions/history`, etc.)
 - Module activation considerations (data existence checks, not module status)

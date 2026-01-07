@@ -267,7 +267,7 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 │ │ VCI - SKUs           │ │ Breach Analysis      │          ││
 │ │                      │ │ Queue                │          ││
 │ │ Action Required: 8   │ │                      │          ││
-│ │ Under Monitor: 15    │ │ 5 Breaches           │          ││
+│ │ Under Monitor: 15    │ │ 5 Compliance Violations           │          ││
 │ │                      │ │                      │          ││
 │ │ • SKU ABC-123        │ │ • Breach #001        │          ││
 │ │   Company XYZ        │ │   Company ABC        │          ││

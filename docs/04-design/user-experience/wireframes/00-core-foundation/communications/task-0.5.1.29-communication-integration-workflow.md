@@ -43,7 +43,7 @@
 - **Message Button:** Floating action button or inline button
 - **Conversation Panel:** Sidebar or inline panel showing related conversations
 - **Unread Badge:** Count indicator on message button
-- **Workflow Entity Types:** Submissions, Products, SKUs, Breaches, Export Requests, **Enforcement Actions**, Compliance Scores, Disputes
+- **Workflow Entity Types:** Submissions, Products, SKUs, Compliance Violations, Export Authorization Requests, **Enforcement Actions**, Regulatory Compliance Ratings, Compliance Disputes
 
 ### Conversation Panel
 - **Header:** "Related Conversations" with unread count badge

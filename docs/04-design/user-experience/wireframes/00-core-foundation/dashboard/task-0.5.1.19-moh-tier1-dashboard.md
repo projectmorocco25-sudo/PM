@@ -73,7 +73,7 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ System Health│ │ Pending      │ │ Critical     │        ││
-│ │              │ │ Approvals    │ │ Breaches     │        ││
+│ │              │ │ Approvals    │ │ Compliance Violations     │        ││
 │ │ 🟢 Excellent │ │ 15           │ │ 5            │        ││
 │ │              │ │              │ │              │        ││
 │ │ Companies:   │ │ • AAMS #12345│ │ • ABC Pharma │        ││
@@ -133,7 +133,7 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ System Health│ │ Pending      │ │ Critical     │        ││
-│ │              │ │ Approvals    │ │ Breaches     │        ││
+│ │              │ │ Approvals    │ │ Compliance Violations     │        ││
 │ │ 🟢 Excellent │ │ 15           │ │ 5            │        ││
 │ │              │ │              │ │              │        ││
 │ │ [Full layout same as Scenario 1]                        ││
@@ -398,14 +398,14 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ │                                                          ││
 │ │ Breach Status Overview                                   ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ Active Breaches: 23                                  │ ││
+│ │ │ Active Compliance Violations: 23                                  │ ││
 │ │ │ Critical: 5 (🔴)  High: 8 (🟠)  Medium: 10 (🟡)    │ ││
 │ │ │ [Breach Trend Chart]                                │ ││
 │ │ └─────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
 │ │ Action Recommendations                                   ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ • Review critical breaches (5 items)                │ ││
+│ │ │ • Review critical compliance violations (5 items)                │ ││
 │ │ │ • Update threshold for Product D                     │ ││
 │ │ │ • Contact Company XYZ regarding submission           │ ││
 │ │ └─────────────────────────────────────────────────────┘ ││

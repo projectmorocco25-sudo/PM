@@ -17,6 +17,8 @@
 │                                                                 │
 │ ┌──────┐ ┌──────────┐                    ┌──┐ ┌──┐(3) ┌──────┐ │
 │ │ Logo │ │ [RMM]   │                    │🔍│ │🔔│    │User ▼│ │
+│ │      │ │ (tooltip│                    │  │ │  │    │      │ │
+│ │      │ │ :RMM)   │                    │  │ │  │    │      │ │
 │ └──────┘ └──────────┘                    └──┘ └──┘    └──────┘ │
 │                                                                 │
 │ Left Section                    Right Section                  │
@@ -27,7 +29,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ [MOH Logo] [RMM Badge]              [🔍] [🔔(3)] [👤 User ▼] │
+│ [MOH Logo] [RMM] (tooltip: "Registry Management (RMM)") [🔍] [🔔(3)] [👤 User ▼] │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -71,21 +73,28 @@
 
 **Module Indicator (Conditional):**
 - **Visibility:** Only when inside a module (RMM, VCI, ECS, CMC, Enforcement)
-- **Format:** Badge/pill with module name
+- **Format:** Badge/pill with abbreviation (space-constrained header)
+- **Display:** Abbreviation only (e.g., "RMM", "VCI") to save space
+- **Tooltip:** Full name + abbreviation on hover (e.g., "Registry Management (RMM)")
 - **Size:** Height 24px, padding 8px horizontal, 4px vertical
 - **Colors:**
-  - RMM: #3b82f6 (primary-500) background, white text
-  - VCI: #22c55e (success-500) background, white text
-  - ECS: #f59e0b (warning-500) background, white text
-  - CMC: #8b5cf6 (purple-500) background, white text
-  - Enforcement: #ef4444 (error-500) background, white text
+  - RMM: #3b82f6 (primary-500) background, white text, tooltip: "Registry Management (RMM)"
+  - VCI: #22c55e (success-500) background, white text, tooltip: "Value Chain Intelligence (VCI)"
+  - ECS: #f59e0b (warning-500) background, white text, tooltip: "Export Control System (ECS)"
+  - CMC: #8b5cf6 (purple-500) background, white text, tooltip: "Compliance Monitoring Center (CMC)"
+  - Enforcement: #ef4444 (error-500) background, white text, tooltip: "Enforcement" (no abbreviation) (no abbreviation needed)
 - **Border Radius:** 6px (pill shape)
 - **Typography:** 12px, font-weight: 600, uppercase, letter-spacing: 0.5px
 - **Position:** 16px right of logo
 - **Transition:** Smooth appearance (fade-in, 200ms)
-- **Hover State:** Slight scale (1.05) or opacity change
+- **Hover State:** 
+  - Slight scale (1.05) or opacity change
+  - Tooltip shows full name + abbreviation (500ms delay)
 - **Clickable:** Yes → Navigate to module overview
-- **Accessibility:** ARIA label includes module name
+- **Accessibility:** 
+  - ARIA label: "Registry Management module (RMM)" (full name always in ARIA)
+  - Tooltip: Keyboard accessible, announces full name on focus
+- **Rationale:** Header space is limited; abbreviations save space while tooltips provide full context
 
 ### Right Section
 - **Display:** Flex, align-items: center
@@ -355,11 +364,11 @@
 - **Hover Background:** #f9fafb (bg-secondary)
 - **Active Background:** #f3f4f6 (bg-tertiary)
 - **Module Badge Colors:**
-  - RMM: #3b82f6 (primary-500) background, white text
-  - VCI: #22c55e (success-500) background, white text
-  - ECS: #f59e0b (warning-500) background, white text
-  - CMC: #8b5cf6 (purple-500) background, white text
-  - Enforcement: #ef4444 (error-500) background, white text
+  - RMM: #3b82f6 (primary-500) background, white text, tooltip: "Registry Management (RMM)"
+  - VCI: #22c55e (success-500) background, white text, tooltip: "Value Chain Intelligence (VCI)"
+  - ECS: #f59e0b (warning-500) background, white text, tooltip: "Export Control System (ECS)"
+  - CMC: #8b5cf6 (purple-500) background, white text, tooltip: "Compliance Monitoring Center (CMC)"
+  - Enforcement: #ef4444 (error-500) background, white text, tooltip: "Enforcement" (no abbreviation)
 - **Notification Badge:** 
   - Dot: #ef4444 (error-500)
   - Count: #dc2626 (error-600) background, white text

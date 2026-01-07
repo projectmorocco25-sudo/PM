@@ -119,7 +119,7 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 | 0.5.3.11 | WSL submissions list page | ⚪ | `02-vci/wsl/` | `/vci/wsl` |
 | 0.5.3.12 | WSL submission form | ⚪ | `02-vci/wsl/` | `/vci/wsl/new` |
 | 0.5.3.13 | WSL submission detail page | ⚪ | `02-vci/wsl/` | `/vci/wsl/[id]` |
-| 0.5.3.14 | Breaches list page | ⚪ | `02-vci/breaches/` | `/vci/breaches` |
+| 0.5.3.14 | Compliance Violations list page | ⚪ | `02-vci/breaches/` | `/vci/breaches` |
 | 0.5.3.15 | Breach detail page | ⚪ | `02-vci/breaches/` | `/vci/breaches/[id]` |
 | 0.5.3.16 | Breach analysis interface | ⚪ | `02-vci/breaches/` | `/vci/breaches/[id]/analyze` (Tier 2) |
 | 0.5.3.17 | Breach action approval interface | ⚪ | `02-vci/breaches/` | `/vci/breaches/[id]/approve` (Tier 1) |
@@ -158,7 +158,7 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 | 0.5.5.3 | Leaderboard page | ⚪ | `04-cmc/scores/` | `/cmc/leaderboard` |
 | 0.5.5.4 | Score review - Tier 2 flag anomalies modal | ⚪ | `04-cmc/scores/` | Modal component |
 | 0.5.5.5 | Score review - Tier 1 override modal | ⚪ | `04-cmc/scores/` | Modal component |
-| 0.5.5.6 | Disputes list page | ⚪ | `04-cmc/disputes/` | `/cmc/disputes` |
+| 0.5.5.6 | Compliance Disputes list page | ⚪ | `04-cmc/disputes/` | `/cmc/disputes` |
 | 0.5.5.7 | Dispute detail page | ⚪ | `04-cmc/disputes/` | `/cmc/disputes/[id]` |
 | 0.5.5.8 | Dispute creation interface | ⚪ | `04-cmc/disputes/` | `/cmc/disputes/new` |
 | 0.5.5.9 | Dispute review interface | ⚪ | `04-cmc/disputes/` | `/cmc/disputes/[id]/review` |
@@ -166,7 +166,7 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 | 0.5.5.11 | Report detail page | ⚪ | `04-cmc/reports/` | `/cmc/reports/[id]` |
 | 0.5.5.12 | Report review/approval interface | ⚪ | `04-cmc/reports/` | `/cmc/reports/[id]/review` |
 | 0.5.5.13 | Compliance scores history page | ⚪ | `04-cmc/scores/` | `/cmc/scores/history` |
-| 0.5.5.14 | Disputes history page | ⚪ | `04-cmc/disputes/` | `/cmc/disputes/history` |
+| 0.5.5.14 | Compliance Disputes history page | ⚪ | `04-cmc/disputes/` | `/cmc/disputes/history` |
 
 ## Audit & Historical Data Wireframes (Subphase 0.5.6)
 

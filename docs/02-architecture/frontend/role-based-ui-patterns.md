@@ -234,7 +234,7 @@ function CompanyList() {
 - `/vci/submissions/msq?year=2023&month=6` - Own MSQ submissions for specific month
 - `/vci/submissions/wsl?week=2023-W01` - Own WSL submissions for specific week
 - `/cmc/scores/[company_id]` - Own compliance score history (tabs: Current | History | Trends)
-- `/vci/breaches?status=resolved&year=2023` - Own resolved breaches for specific year
+- `/vci/breaches?status=resolved&year=2023` - Own resolved compliance violations for specific year
 - `/rmm/companies/[id]` - Own company detail with History tab
 
 **History Tabs on Detail Pages:**
@@ -286,7 +286,7 @@ function CompanyHistoryPage() {
 
 **Components:**
 - System-wide metrics
-- Pending approvals
+- Pending regulatory approvals
 - Breach alerts
 - Compliance overview
 - Action items
@@ -296,14 +296,14 @@ function CompanyHistoryPage() {
 ┌─────────────────────────────────────────┐
 │ Governance Dashboard                    │
 ├─────────────────────────────────────────┤
-│ [Total Companies] [Pending] [Breaches]  │
+│ [Total Companies] [Pending] [Compliance Violations]  │
 ├─────────────────────────────────────────┤
-│ Pending Approvals (12)                  │
+│ Pending Regulatory Approvals (12)                  │
 │ • Company Registration (5)              │
 │ • AAMS Thresholds (3)                   │
 │ • Export Requests (4)                   │
 ├─────────────────────────────────────────┤
-│ Critical Breaches                       │
+│ Critical Compliance Violations                       │
 │ • ABC Pharma - Critical Medicine (2)    │
 │ • XYZ Corp - Multiple SKUs (5)          │
 └─────────────────────────────────────────┘
@@ -335,7 +335,7 @@ export function MOHDashboard() {
 **Sidebar Items:**
 - Governance Dashboard
 - RMM (Companies, Products, SKUs)
-- VCI (Submissions, Thresholds, Breaches)
+- VCI (Submissions, Thresholds, Compliance Violations)
 - ECS (if active)
 - CMC (if active)
 - System Configuration (Tier 1 only)
@@ -368,7 +368,7 @@ export function MOHDashboard() {
       Thresholds
     </SidebarItem>
     <SidebarItem href="/vci/breaches" icon={AlertTriangle} badge={breachCount}>
-      Breaches
+      Compliance Violations
     </SidebarItem>
   </SidebarGroup>
   
@@ -492,7 +492,7 @@ function SubmissionList() {
 - `/vci/submissions/history` - All past submissions (filterable by type, year, company)
 - `/vci/submissions/history/trends` - Trend analysis charts (AAMS, MSQ, WSL trends)
 - `/cmc/scores?year=2023` - All compliance scores for specific year
-- `/vci/breaches?status=resolved&year=2023` - All resolved breaches for specific year
+- `/vci/breaches?status=resolved&year=2023` - All resolved compliance violations for specific year
 - `/ecs/exports/history` - Historical export authorizations (if ECS data exists)
 - `/cmc/scores/history` - Historical compliance scores (if CMC data exists)
 
@@ -501,7 +501,7 @@ function SubmissionList() {
 - `/audit/logs` - Audit log viewer (read-only)
 - `/vci/submissions/history` - All past submissions (filterable)
 - `/cmc/scores?year=2023` - All compliance scores for specific year
-- `/vci/breaches?status=resolved&year=2023` - All resolved breaches for specific year
+- `/vci/breaches?status=resolved&year=2023` - All resolved compliance violations for specific year
 - `/ecs/exports/history` - Historical export authorizations (read-only, if ECS data exists)
 - `/cmc/scores/history` - Historical compliance scores (read-only, if CMC data exists)
 

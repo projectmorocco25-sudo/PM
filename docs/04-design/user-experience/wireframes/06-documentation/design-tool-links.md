@@ -54,7 +54,7 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 - AAMS: [Link will be added]
 - MSQ: [Link will be added]
 - WSL: [Link will be added]
-- Breaches: [Link will be added]
+- Compliance Violations: [Link will be added]
 - Governance Dashboard: [Link will be added]
 - Analytics: [Link will be added]
 
@@ -64,7 +64,7 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 
 **Planned Links:**
 - Overview: [Link will be added]
-- Export Requests: [Link will be added]
+- Export Authorization Requests: [Link will be added]
 - Authorizations: [Link will be added]
 - Replenishment: [Link will be added]
 
@@ -75,7 +75,7 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 **Planned Links:**
 - Overview: [Link will be added]
 - Scores: [Link will be added]
-- Disputes: [Link will be added]
+- Compliance Disputes: [Link will be added]
 - Reports: [Link will be added]
 
 ### Audit & Historical (Subphase 0.5.6)

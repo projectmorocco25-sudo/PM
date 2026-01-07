@@ -19,17 +19,17 @@ The sidebar navigation is organized into six main sections:
    - Audit (MOH Tier 1/2, Auditors only)
    - System Configuration (MOH Tier 1 only)
 
-2. **[RMM]** - Registry Management Module
+2. **[Registry Management (RMM)]** - Registry Management Module
    - Overview, Companies, Products, SKUs
 
-3. **[VCI]** - Value Chain Intelligence Module
-   - Dashboard, Submissions (AAMS, MSQ, WSL), Submissions History, Trends, Thresholds, Breaches, Governance, Treemap
+3. **[Value Chain Intelligence (VCI)]** - Value Chain Intelligence Module
+   - Dashboard, Submissions (AAMS, MSQ, WSL), Regulatory Submission History, Compliance Trend Analysis, Thresholds, Compliance Violations, Governance, Treemap
 
-4. **[ECS]** - Export Control System Module (conditional - if active OR historical data exists)
-   - Overview, Export Requests, Authorizations, Export History
+4. **[Export Control System (ECS)]** - Export Control System Module (conditional - if active OR historical data exists)
+   - Overview, Export Authorization Requests, Export Authorizations, Export Authorization History
 
-5. **[CMC]** - Compliance Monitoring Center Module (conditional - if active OR historical data exists)
-   - Overview, Compliance Scores, Score History, Disputes, Disputes History, Reports
+5. **[Compliance Monitoring Center (CMC)]** - Compliance Monitoring Center Module (conditional - if active OR historical data exists)
+   - Overview, Regulatory Compliance Ratings, Compliance Rating History, Compliance Disputes, Compliance Disputes History, Reports
 
 6. **[Help & Info]** - Support and information resources
    - Support Center, FAQ, Documentation, Contact Support, System Status
@@ -106,47 +106,53 @@ The sidebar navigation is organized into six main sections:
 
 **Layout:**
 ```
-┌──────────┐
-│ Global   │
-│ ├ Dashboard│
-│ ├ Communications│
-│ ├ History│
-│ ├ Notifications│
-│ └ Audit  │
-│           │
-│ RMM      │
-│ ├ Overview│
-│ ├ Companies│
-│ ├ Products │
-│ └ SKUs    │
-│           │
-│ VCI       │
-│ ├ Dashboard│
-│ ├ Submissions│
-│ ├ Thresholds│
-│ ├ Breaches│
-│ └ Treemap│
-│           │
-│ ECS       │
-│ ├ Export Requests│
-│ └ Authorizations│
-│           │
-│ Enforcement│
-│ ├ Dashboard│
-│ ├ Actions  │
-│ ├ Pending  │
-│ └ Reports  │
-│           │
-│ CMC       │
-│ ├ Scores  │
-│ ├ Disputes│
-│ └ Reports │
-│           │
-│ Help & Info│
-│ ├ Support │
-│ ├ FAQ     │
-│ └ Documentation│
-└──────────┘
+┌──────────────────────┐
+│ Global               │
+│ ├ Dashboard          │
+│ ├ Communications     │
+│ ├ History            │
+│ ├ Notifications      │
+│ └ Audit              │
+│                      │
+│ Registry Management  │
+│ (RMM)                │
+│ ├ Overview           │
+│ ├ Companies          │
+│ ├ Products           │
+│ └ SKUs               │
+│                      │
+│ Value Chain          │
+│ Intelligence         │
+│ (VCI)                │
+│ ├ Dashboard          │
+│ ├ Submissions        │
+│ ├ Thresholds         │
+│ ├ Compliance Violations           │
+│ └ Treemap (Supply Chain Visualization)            │
+│                      │
+│ Export Control       │
+│ System (ECS)         │
+│ ├ Export Authorization Requests    │
+│ └ Export Authorizations     │
+│                      │
+│ Enforcement          │
+│ ├ Dashboard          │
+│ ├ Actions            │
+│ ├ Pending Regulatory Approvals  │
+│ └ Reports            │
+│                      │
+│ Compliance           │
+│ Monitoring Center    │
+│ (CMC)                │
+│ ├ Regulatory Compliance Ratings             │
+│ ├ Compliance Disputes           │
+│ └ Reports            │
+│                      │
+│ Help & Info          │
+│ ├ Support Center     │
+│ ├ FAQ                │
+│ └ Documentation      │
+└──────────────────────┘
 ```
 
 **Implementation:**
@@ -188,7 +194,7 @@ The sidebar navigation is organized into six main sections:
   </SidebarGroup>
   
   {/* RMM Module */}
-  <SidebarGroup label="RMM" icon={Building}>
+  <SidebarGroup label="Registry Management" labelAbbr="(RMM)" icon={Building}>
     <SidebarItem href="/rmm" icon={LayoutDashboard}>
       Overview
     </SidebarItem>
@@ -204,7 +210,7 @@ The sidebar navigation is organized into six main sections:
   </SidebarGroup>
   
   {/* VCI Module */}
-  <SidebarGroup label="VCI" icon={BarChart}>
+  <SidebarGroup label="Value Chain Intelligence" labelAbbr="(VCI)" icon={BarChart}>
     <SidebarItem href="/vci" icon={LayoutDashboard}>
       Dashboard
     </SidebarItem>
@@ -212,19 +218,19 @@ The sidebar navigation is organized into six main sections:
       Submissions
     </SidebarItem>
     <SidebarItem href="/vci/submissions/history" icon={History}>
-      Submissions History
+      Regulatory Submission History
     </SidebarItem>
     {/* Trends - MOH Tier 1 only */}
     {userRole === 'tier1' && (
       <SidebarItem href="/vci/submissions/history/trends" icon={TrendingUp}>
-        Trends
+        Compliance Trend Analysis
       </SidebarItem>
     )}
     <SidebarItem href="/vci/thresholds" icon={Target}>
       Thresholds
     </SidebarItem>
     <SidebarItem href="/vci/breaches" icon={AlertTriangle}>
-      Breaches
+      Compliance Violations
     </SidebarItem>
     {/* Governance - MOH only */}
     {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
@@ -235,29 +241,29 @@ The sidebar navigation is organized into six main sections:
     {/* Treemap - MOH Tier 1/2 only */}
     {(userRole === 'tier1' || userRole === 'tier2_officer' || userRole === 'tier2_registrar') && (
       <SidebarItem href="/vci/treemap" icon={Map}>
-        Treemap
+        Treemap (Supply Chain Visualization)
       </SidebarItem>
     )}
   </SidebarGroup>
   
   {/* ECS Module - if active OR historical data exists */}
   {(isECSActive || hasHistoricalECSData) && (
-    <SidebarGroup label="ECS" icon={Plane}>
+    <SidebarGroup label="Export Control System" labelAbbr="(ECS)" icon={Plane}>
       <SidebarItem href="/ecs" icon={LayoutDashboard}>
         Overview
       </SidebarItem>
       <SidebarItem href="/ecs/export-requests" icon={PlaneTakeoff}>
-        Export Requests
+        Export Authorization Requests
         {!isECSActive && hasHistoricalECSData && (
           <Badge variant="outline" className="ml-2">Historical</Badge>
         )}
       </SidebarItem>
       <SidebarItem href="/ecs/authorizations" icon={CheckCircle}>
-        Authorizations
+        Export Authorizations
       </SidebarItem>
       {hasHistoricalECSData && (
         <SidebarItem href="/ecs/exports/history" icon={History}>
-          Export History
+          Export Authorization History
         </SidebarItem>
       )}
     </SidebarGroup>
@@ -273,41 +279,41 @@ The sidebar navigation is organized into six main sections:
         Actions
       </SidebarItem>
       <SidebarItem href="/enforcement/pending-approvals" icon={Clock}>
-        Pending Approvals
+        Pending Regulatory Approvals
       </SidebarItem>
       <SidebarItem href="/enforcement/reports" icon={BarChart}>
-        Reports
+        Enforcement Activity Reports
       </SidebarItem>
     </SidebarGroup>
   )}
   
   {/* CMC Module - if active OR historical data exists */}
   {(isCMCActive || hasHistoricalCMCData) && (
-    <SidebarGroup label="CMC" icon={BarChart}>
+    <SidebarGroup label="Compliance Monitoring Center" labelAbbr="(CMC)" icon={BarChart}>
       <SidebarItem href="/cmc" icon={LayoutDashboard}>
         Overview
       </SidebarItem>
       <SidebarItem href="/cmc/scores" icon={BarChart2}>
-        Compliance Scores
+        Regulatory Compliance Ratings
         {!isCMCActive && hasHistoricalCMCData && (
           <Badge variant="outline" className="ml-2">Historical</Badge>
         )}
       </SidebarItem>
       {hasHistoricalCMCData && (
         <SidebarItem href="/cmc/scores/history" icon={History}>
-          Score History
+          Compliance Rating History
         </SidebarItem>
       )}
       <SidebarItem href="/cmc/disputes" icon={MessageSquare}>
-        Disputes
+        Compliance Disputes
       </SidebarItem>
       {hasHistoricalCMCData && (
         <SidebarItem href="/cmc/disputes/history" icon={History}>
-          Disputes History
+          Compliance Disputes History
         </SidebarItem>
       )}
       <SidebarItem href="/cmc/reports" icon={FileText}>
-        Reports
+        Compliance Monitoring Reports
       </SidebarItem>
     </SidebarGroup>
   )}
@@ -414,8 +420,8 @@ The sidebar navigation is organized into six main sections:
 - `/history` → Home > History
 - `/audit/logs` → Home > Audit > Logs
 - `/audit/reports` → Home > Audit > Reports
-- `/vci/submissions/history` → Home > VCI > Submissions > History
-- `/vci/submissions/history/trends` → Home > VCI > Submissions > History > Trends
+- `/vci/submissions/history` → Home > VCI > Submissions > Regulatory Submission History
+- `/vci/submissions/history/trends` → Home > VCI > Submissions > Regulatory Submission History > Compliance Trend Analysis
 - `/vci/treemap` → Home > VCI > Treemap
 - `/vci/treemap?atc=J01` → Home > VCI > Treemap > J01 - Antibacterials
 - `/ecs/exports/history` → Home > ECS > Exports > History
@@ -495,27 +501,29 @@ The sidebar navigation is organized into six main sections:
 ├── History (/history)
 └── Notifications (/notifications)
 
-[RMM]
+[Registry Management (RMM)]
 ├── Overview (/rmm)
 ├── Products (/rmm/products - RLS filters to own company)
 └── SKUs (/rmm/skus - RLS filters to own company)
 
-[VCI]
+[Value Chain Intelligence (VCI)]
 ├── Dashboard (/vci)
 ├── Submissions
 │   ├── AAMS (/vci/submissions/aams)
 │   ├── MSQ (/vci/submissions/msq)
 │   └── WSL (/vci/submissions/wsl)
 ├── Thresholds (/vci/thresholds - read-only)
-└── Breaches (/vci/breaches - own company only)
+└── Compliance Violations (/vci/breaches - own company only)
 
-[ECS] (if active OR historical data exists)
-├── Export Requests (/ecs/export-requests)
-└── Export History (/ecs/exports/history - if historical data exists)
+[Export Control System (ECS)] (if active OR historical data exists)
+├── Export Authorization Requests (/ecs/export-requests)
+├── Export Authorizations (/ecs/authorizations)
+└── Export Authorization History (/ecs/exports/history - if historical data exists)
+└── Export Authorization History (/ecs/exports/history - if historical data exists)
 
-[CMC] (if active OR historical data exists)
-├── Compliance Scores (/cmc/scores)
-└── Score History (/cmc/scores/history - if historical data exists)
+[Compliance Monitoring Center (CMC)] (if active OR historical data exists)
+├── Regulatory Compliance Ratings (/cmc/scores)
+└── Compliance Rating History (/cmc/scores/history - if historical data exists)
 
 [Help & Info]
 ├── Support Center (/support)
@@ -553,38 +561,44 @@ The sidebar navigation is organized into six main sections:
 ├── Audit Reports (/audit/reports)
 └── System Configuration (/system-config - Tier 1 only)
 
-[RMM]
+[Registry Management (RMM)]
 ├── Overview (/rmm)
 ├── Companies (/rmm/companies)
 ├── Products (/rmm/products)
 └── SKUs (/rmm/skus)
 
-[VCI]
+[Value Chain Intelligence (VCI)]
 ├── Dashboard (/vci)
 ├── Submissions
 │   ├── AAMS (/vci/submissions/aams)
 │   ├── MSQ (/vci/submissions/msq)
 │   └── WSL (/vci/submissions/wsl)
-├── Submissions History (/vci/submissions/history)
-├── Trends (/vci/submissions/history/trends - Tier 1 only)
+├── Regulatory Submission History (/vci/submissions/history)
+├── Compliance Trend Analysis (/vci/submissions/history/trends - Tier 1 only)
 ├── Thresholds (/vci/thresholds)
-├── Breaches (/vci/breaches)
+├── Compliance Violations (/vci/breaches)
 ├── Governance (/vci/governance)
-└── Treemap (/vci/treemap - Tier 1/2 only)
+└── Treemap (Supply Chain Visualization) (/vci/treemap - Tier 1/2 only)
 
-[ECS] (if active OR historical data exists)
+[Export Control System (ECS)] (if active OR historical data exists)
 ├── Overview (/ecs)
 ├── Export Requests (/ecs/export-requests)
 ├── Authorizations (/ecs/authorizations)
 └── Export History (/ecs/exports/history - if historical data exists)
 
-[CMC] (if active OR historical data exists)
+[Compliance Monitoring Center (CMC)] (if active OR historical data exists)
 ├── Overview (/cmc)
 ├── Compliance Scores (/cmc/scores)
 ├── Score History (/cmc/scores/history - if historical data exists)
-├── Disputes (/cmc/disputes)
-├── Disputes History (/cmc/disputes/history - if historical data exists)
-└── Reports (/cmc/reports)
+├── Compliance Disputes (/cmc/disputes)
+├── Compliance Disputes History (/cmc/disputes/history - if historical data exists)
+└── Compliance Monitoring Reports (/cmc/reports)
+
+[Enforcement]
+├── Dashboard (/enforcement)
+├── Actions (/enforcement/actions)
+├── Pending Regulatory Approvals (/enforcement/pending-approvals)
+└── Enforcement Activity Reports (/enforcement/reports)
 
 [Help & Info]
 ├── Support Center (/support)
@@ -622,13 +636,13 @@ The sidebar navigation is organized into six main sections:
 ├── Audit Logs (/audit/logs - primary)
 └── Audit Reports (/audit/reports)
 
-[RMM] (read-only for audit purposes)
+[Registry Management (RMM)] (read-only for audit purposes)
 ├── Overview (/rmm)
 ├── Companies (/rmm/companies - read-only, RLS filters)
 ├── Products (/rmm/products - read-only, RLS filters)
 └── SKUs (/rmm/skus - read-only, RLS filters)
 
-[VCI] (read-only for audit purposes)
+[Value Chain Intelligence (VCI)] (read-only for audit purposes)
 ├── Dashboard (/vci)
 ├── Submissions
 │   ├── AAMS (/vci/submissions/aams)

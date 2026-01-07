@@ -188,7 +188,7 @@ app/(dashboard)/
 Existing routes enhanced with query parameters:
 - `/vci/submissions/aams?year=2023` - Filter by year
 - `/vci/submissions/msq?year=2023&month=6` - Filter by year and month
-- `/vci/breaches?status=resolved&year=2023` - Filter by status and year
+- `/vci/breaches?status=resolved&year=2023` - Filter compliance violations by status and year
 - `/cmc/scores?year=2023` - Filter scores by year
 - `/rmm/companies?status=inactive` - Filter companies by status
 

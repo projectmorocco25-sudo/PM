@@ -12,79 +12,102 @@
 ## Wireframe Layout (Expanded State)
 
 ```
-┌──────────────────┐
-│                  │
-│ Global           │
-│ ├ 🏠 Dashboard   │
-│ ├ 💬 Communications│
-│ ├ 📜 History     │
-│ ├ 🔔 Notifications│
-│ └ 🔍 Audit       │
-│                  │
-│ RMM              │
-│ ├ 📊 Overview    │
-│ ├ 🏢 Companies   │
-│ ├ 📦 Products    │
-│ └ 🏷️ SKUs        │
-│                  │
-│ VCI              │
-│ ├ 📊 Dashboard   │
-│ ├ 📝 Submissions │
-│ ├ ⚙️ Thresholds  │
-│ ├ ⚠️ Breaches    │
-│ └ 📈 Governance  │
-│                  │
-│ ECS              │
-│ ├ 📊 Overview    │
-│ ├ 📤 Export Req. │
-│ └ ✅ Authorizations│
-│                  │
-│ CMC              │
-│ ├ 📊 Overview    │
-│ ├ 📊 Scores      │
-│ ├ ⚖️ Disputes    │
-│ └ 📄 Reports     │
-│                  │
-│ Enforcement      │
-│ ├ 📊 Dashboard   │
-│ ├ ⚖️ Actions     │
-│ ├ ✅ Pending     │
-│ └ 📄 Reports     │
-│                  │
-│ Help & Info      │
-│ ├ ❓ Support     │
-│ ├ 📚 FAQ         │
-│ ├ 📖 Docs        │
-│ └ 📞 Contact     │
-│                  │
-│ ┌──────────────┐ │
-│ │  ◀ Collapse  │ │
-│ └──────────────┘ │
-└──────────────────┘
+┌──────────────────────────────────┐
+│                                  │
+│ Global                           │
+│ ├ 🏠 Dashboard                   │
+│ ├ 💬 Communications              │
+│ ├ 📜 Regulatory Activity History                     │
+│ ├ 🔔 Notifications               │
+│ └ 🔍 Audit                       │
+│                                  │
+│ Registry Management              │
+│ (RMM)                            │
+│ ├ 📊 Overview                    │
+│ ├ 🏢 Companies                   │
+│ ├ 📦 Products                    │
+│ └ 🏷️ SKUs                        │
+│                                  │
+│ Value Chain Intelligence         │
+│ (VCI)                            │
+│ ├ 📊 Dashboard                   │
+│ ├ 📝 Submissions                 │
+│ ├ ⚙️ Thresholds                  │
+│ ├ ⚠️ Compliance Violations       │
+│ └ 📈 Governance                  │
+│                                  │
+│ Export Control System            │
+│ (ECS)                            │
+│ ├ 📊 Overview                    │
+│ ├ 📤 Export Authorization Requests             │
+│ └ ✅ Export Authorizations              │
+│                                  │
+│ Compliance Monitoring Center     │
+│ (CMC)                            │
+│ ├ 📊 Overview                    │
+│ ├ 📊 Regulatory Compliance Ratings                      │
+│ ├ ⚖️ Compliance Disputes          │
+│ └ 📄 Compliance Monitoring Reports                     │
+│                                  │
+│ Enforcement                      │
+│ ├ 📊 Dashboard                   │
+│ ├ ⚖️ Actions                     │
+│ ├ ✅ Pending Regulatory Approvals           │
+│ └ 📄 Enforcement Activity Reports                     │
+│                                  │
+│ Help & Info                      │
+│ ├ ❓ Support Center              │
+│ ├ 📚 FAQ                         │
+│ ├ 📖 Documentation               │
+│ └ 📞 Contact Support             │
+│                                  │
+│ ┌──────────────────────────────┐ │
+│ │  ◀ Collapse                  │ │
+│ └──────────────────────────────┘ │
+└──────────────────────────────────┘
 ```
 
-**Collapsed State:**
+**Collapsed State (with Tooltips):**
 
 ```
 ┌────┐
-│ 🏠 │
-│ 💬 │
-│ 📜 │
-│ 🔔 │
-│ 🔍 │
+│ 🏠 │ ← Tooltip: "Dashboard"
+│ 💬 │ ← Tooltip: "Communications"
+│ 📜 │ ← Tooltip: "Regulatory Activity History"
+│ 🔔 │ ← Tooltip: "Notifications"
+│ 🔍 │ ← Tooltip: "Audit"
 │    │
-│ 📊 │
+│ 📊 │ ← Tooltip: "Registry Management (RMM)"
 │ 🏢 │
 │ 📦 │
 │ 🏷️ │
 │    │
-│ 📊 │
+│ 📊 │ ← Tooltip: "Value Chain Intelligence (VCI)"
 │ 📝 │
 │ ⚙️ │
 │ ⚠️ │
 │ 📈 │
 │    │
-│ ◀  │
+│ 📊 │ ← Tooltip: "Export Control System (ECS)"
+│ 📤 │
+│ ✅ │
+│    │
+│ 📊 │ ← Tooltip: "Compliance Monitoring Center (CMC)"
+│ 📊 │
+│ ⚖️ │
+│ 📄 │
+│    │
+│ 📊 │ ← Tooltip: "Enforcement"
+│ ⚖️ │
+│ ✅ │
+│ 📄 │
+│    │
+│ ❓ │ ← Tooltip: "Help & Info"
+│ 📚 │
+│ 📖 │
+│ 📞 │
+│    │
+│ ◀  │ ← Tooltip: "Expand Sidebar"
 └────┘
 ```
 
@@ -93,7 +116,8 @@
 ## Component Specifications
 
 ### Sidebar Container
-- **Width:** 256px (expanded), 64px (collapsed) - Industry standard (Stripe, GitHub pattern)
+- **Width:** 280px (expanded), 64px (collapsed) - Increased to accommodate full names (Stripe, GitHub pattern)
+- **Note:** Width increased from 256px to 280px to comfortably fit full module names with abbreviations
 - **Background:** White (#ffffff) - Clean, professional appearance
 - **Border Right:** 1px solid #e5e7eb (subtle separation)
 - **Height:** Calc(100vh - 64px) (full height minus header)
@@ -110,14 +134,33 @@
 ### Navigation Sections
 
 **Section Header (Expanded Only):**
-- **Text:** Section name (e.g., "Global", "RMM", "VCI", "Enforcement")
-- **Typography:** 12px, font-weight: 600, uppercase, letter-spacing: 0.5px
-- **Color:** #6b7280 (text-secondary)
-- **Padding:** 12px horizontal (1.5 × 8px), 8px vertical (1 × 8px)
+- **Line 1 (Full Name):** Full module/section name (e.g., "Registry Management", "Value Chain Intelligence")
+  - **Typography:** 14px, font-weight: 600, normal case (not uppercase)
+  - **Color:** #111827 (text-primary)
+  - **Line Height:** 1.5
+- **Line 2 (Abbreviation):** Abbreviation in parentheses (e.g., "(RMM)", "(VCI)")
+  - **Typography:** 12px, font-weight: 400, normal case
+  - **Color:** #6b7280 (text-secondary)
+  - **Line Height:** 1.5
+  - **Note:** Only shown for modules with abbreviations (RMM, VCI, ECS, CMC)
+  - **Not shown for:** "Global", "Enforcement", "Help & Info" (no abbreviations)
+- **Container Padding:** 12px horizontal (1.5 × 8px), 8px vertical (1 × 8px)
 - **Margin:** 16px top (2 × 8px) - First section: 8px top (1 × 8px)
 - **Spacing:** 8px above section items (1 × 8px)
 - **Visibility:** Hidden when sidebar collapsed
 - **Transition:** Smooth fade-out when collapsing (200ms ease-in-out)
+
+**Section Header (Collapsed State - Tooltip):**
+- **Abbreviation Only:** Show abbreviation (e.g., "RMM", "VCI") or icon
+- **Tooltip on Hover:** Display full name + abbreviation
+  - **Format:** "Full Name (Abbreviation)" (e.g., "Value Chain Intelligence (VCI)")
+  - **Delay:** 500ms (to avoid accidental triggers)
+  - **Position:** Right side of sidebar
+  - **Background:** Dark (#1f2937) with white text (#ffffff)
+  - **Padding:** 8px 12px
+  - **Border Radius:** 6px
+  - **Shadow:** Subtle elevation
+  - **Typography:** 12px, font-weight: 400
 
 **Navigation Items:**
 - **Height:** 40px (5 × 8px) - Touch target minimum
@@ -154,7 +197,7 @@
 - **Border Radius:** 9px (pill shape for count), 50% (circle for dot)
 - **Max Count:** Display "99+" if count exceeds 99
 - **Animation:** Subtle pulse (2s infinite) for new items
-- **Example:** Pending approvals count, unread notifications
+- **Example:** Pending regulatory approvals count, unread notifications
 
 ### Active State
 - **Background:** #eff6ff (primary-50) - Subtle blue tint
@@ -185,50 +228,62 @@
 ### Global Section (All Roles)
 - **Dashboard** → `/dashboard`
 - **Communications** → `/communications/inbox`
-- **History** → `/history`
+- **Regulatory Activity History** → `/history`
 - **Notifications** → `/notifications`
 - **Audit** → `/audit/logs` (MOH Tier 1 & 2 only)
 
-### RMM Section (All Roles)
+### Registry Management (RMM) Section (All Roles)
+- **Section Header:** "Registry Management" (Line 1) + "(RMM)" (Line 2)
+- **Tooltip (Collapsed):** "Registry Management (RMM)"
 - **Overview** → `/rmm/overview`
 - **Companies** → `/rmm/companies`
 - **Products** → `/rmm/products`
 - **SKUs** → `/rmm/skus`
 
-### VCI Section (All Roles)
+### Value Chain Intelligence (VCI) Section (All Roles)
+- **Section Header:** "Value Chain Intelligence" (Line 1) + "(VCI)" (Line 2)
+- **Tooltip (Collapsed):** "Value Chain Intelligence (VCI)"
 - **Dashboard** → `/vci/dashboard`
 - **Submissions** → `/vci/submissions`
 - **Thresholds** → `/vci/thresholds`
-- **Breaches** → `/vci/breaches`
+- **Compliance Violations** → `/vci/breaches`
 - **Governance** → `/vci/governance` (MOH Tier 1 & 2 only)
 
-### ECS Section (Conditional)
+### Export Control System (ECS) Section (Conditional)
+- **Section Header:** "Export Control System" (Line 1) + "(ECS)" (Line 2)
+- **Tooltip (Collapsed):** "Export Control System (ECS)"
 - **Visibility:** Only if ECS module active OR historical data exists
 - **Overview** → `/ecs/overview`
-- **Export Requests** → `/ecs/export-requests`
-- **Authorizations** → `/ecs/authorizations`
+- **Export Authorization Requests** → `/ecs/export-requests`
+- **Export Authorizations** → `/ecs/authorizations`
 
-### CMC Section (Conditional)
+### Compliance Monitoring Center (CMC) Section (Conditional)
+- **Section Header:** "Compliance Monitoring Center" (Line 1) + "(CMC)" (Line 2)
+- **Tooltip (Collapsed):** "Compliance Monitoring Center (CMC)"
 - **Visibility:** Only if CMC module active OR historical data exists
 - **Overview** → `/cmc/overview`
-- **Scores** → `/cmc/scores`
-- **Disputes** → `/cmc/disputes`
-- **Reports** → `/cmc/reports`
+- **Regulatory Compliance Ratings** → `/cmc/scores`
+- **Compliance Disputes** → `/cmc/disputes`
+- **Compliance Monitoring Reports** → `/cmc/reports`
 
 ### Enforcement Section (MOH Tier 1 & Tier 2 Only)
+- **Section Header:** "Enforcement" (no abbreviation needed)
+- **Tooltip (Collapsed):** "Enforcement"
 - **Visibility:** Always visible for MOH Tier 1 and Tier 2 (not a conditional module)
 - **Dashboard** → `/enforcement` (enforcement dashboard with summary and metrics)
 - **Actions** → `/enforcement/actions` (all enforcement actions, filterable, searchable)
-- **Pending Approvals** → `/enforcement/pending-approvals` (actions requiring Tier 1 approval)
-- **Reports** → `/enforcement/reports` (enforcement analytics and reporting)
+- **Pending Regulatory Approvals** → `/enforcement/pending-approvals` (actions requiring Tier 1 approval)
+- **Enforcement Activity Reports** → `/enforcement/reports` (enforcement analytics and reporting)
 - **Note:** Companies can view their own enforcement actions but cannot access this navigation section
 
 ### Help & Info Section (All Roles)
-- **Support** → `/help/support`
+- **Section Header:** "Help & Info" (no abbreviation needed)
+- **Tooltip (Collapsed):** "Help & Info"
+- **Support Center** → `/help/support`
 - **FAQ** → `/help/faq`
 - **Documentation** → `/help/docs`
-- **Contact** → `/help/contact`
-- **Status** → `/help/status` (optional)
+- **Contact Support** → `/help/contact`
+- **System Status** → `/help/status` (optional)
 
 ---
 
@@ -238,23 +293,25 @@
 - **Click navigation item** → Navigate to route
 - **Click collapse toggle** → Toggle sidebar expanded/collapsed
 - **Hover navigation item** → Show hover state (light background)
+- **Hover section header (collapsed)** → Show tooltip with full name + abbreviation (500ms delay)
 - **Click badge** → Navigate to related page (if applicable)
 
 ### Green (States)
-- **Expanded state:** Full width (256px), icons + labels visible
-- **Collapsed state:** Narrow width (64px), icons only, labels hidden
+- **Expanded state:** Full width (280px), icons + labels visible, full names with abbreviations for module sections
+- **Collapsed state:** Narrow width (64px), icons only, labels hidden, tooltips show full names on hover
 - **Active item:** Highlighted background, colored left border, bold text
 - **Hover item:** Light background change
-- **Badge count:** Dynamic number (e.g., "3" pending approvals)
+- **Badge count:** Dynamic number (e.g., "3" pending regulatory approvals)
 
 ---
 
 ## Responsive Behavior
 
 ### Desktop (1024px+)
-- **Default:** Expanded (256px)
+- **Default:** Expanded (280px) - Accommodates full names with abbreviations
 - **User can collapse:** Via toggle button
 - **All sections visible:** Based on role and module activation
+- **Tooltips:** Show on hover when collapsed (500ms delay)
 
 ### Tablet (768px - 1023px)
 - **Default:** Collapsed (64px)
@@ -299,7 +356,7 @@
 - **Section Header:** #6b7280 (text-tertiary)
 
 ### Spacing
-- **Sidebar Width Expanded:** 256px
+- **Sidebar Width Expanded:** 280px (increased to accommodate full names)
 - **Sidebar Width Collapsed:** 64px
 - **Item Height:** 40px
 - **Item Padding:** 12px horizontal
@@ -340,7 +397,7 @@
 - **Sidebar State:** Persist expanded/collapsed state in localStorage
 - **Active Route:** Highlight based on current route (Next.js router)
 - **Module Indicator:** Show based on route path matching
-- **Badge Counts:** Real-time updates via WebSocket or polling (for pending approvals, etc.)
+- **Badge Counts:** Real-time updates via WebSocket or polling (for pending regulatory approvals, etc.)
 
 ### Error Handling
 - **Loading States:** Skeleton loaders for navigation items while loading
@@ -369,6 +426,47 @@
 
 ---
 
-**Last Updated:** 2025-01-01  
-**Status:** 🟡 Ready for Review  
-**Design Approach:** Modern enterprise sidebar navigation pattern (Stripe/GitHub/Linear/shadcn/ui inspired)
+## Accessibility Enhancements
+
+### Screen Reader Support
+- **Full Names Always Announced:** Screen readers announce full module names (e.g., "Value Chain Intelligence section" not just "VCI section")
+- **ARIA Labels:** Each section header has descriptive ARIA label: `aria-label="Registry Management section (RMM)"`
+- **Tooltip Accessibility:** Tooltips are keyboard accessible and announced by screen readers
+- **Abbreviation Expansion:** Full names in expanded state help users understand module purposes
+
+### Keyboard Navigation
+- **Section Headers:** Focusable (though not clickable) for screen reader users to understand structure
+- **Tooltip on Focus:** When collapsed, focus on section icon shows tooltip with full name
+
+---
+
+## Implementation Notes
+
+### Component Props
+```tsx
+<SidebarGroup 
+  label="Value Chain Intelligence"  // Full name (required)
+  labelAbbr="(VCI)"                  // Abbreviation in parentheses (optional)
+  icon={BarChart}
+  tooltip="Value Chain Intelligence (VCI)"  // Tooltip for collapsed state
+>
+  {/* Navigation items */}
+</SidebarGroup>
+```
+
+### Conditional Display
+- **Full Names:** Always shown in expanded state (two-line layout)
+- **Abbreviations:** Only shown for modules with abbreviations (RMM, VCI, ECS, CMC)
+- **No Abbreviation:** "Global", "Enforcement", "Help & Info" show single-line headers
+- **Tooltips:** Shown on hover (500ms delay) when collapsed
+
+### Responsive Considerations
+- **280px Width:** Accommodates longest full name ("Compliance Monitoring Center") comfortably
+- **Text Wrapping:** Full names may wrap to two lines if needed (maximum 2 lines)
+- **Collapsed State:** Abbreviations visible as icon labels or tooltip-only
+
+---
+
+**Last Updated:** 2025-01-06  
+**Status:** 🟢 Updated with Full Names + Abbreviations  
+**Design Approach:** Modern enterprise sidebar navigation pattern with full names for accessibility and clarity (Stripe/GitHub/Linear/shadcn/ui inspired)

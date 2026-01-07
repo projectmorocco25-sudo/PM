@@ -34,7 +34,7 @@ Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submis
 - [ ] **Task 0.5.3.13:** WSL submission detail page (submission data, breach indicators, stock level visualization)
 
 ### Breach Wireframes
-- [ ] **Task 0.5.3.14:** Breaches list page (active breaches, resolved breaches, priority/company/SKU filters, date range)
+- [ ] **Task 0.5.3.14:** Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range)
 - [ ] **Task 0.5.3.15:** Breach detail page (breach information, stock level vs threshold comparison, reason, replenishment date, priority indicator)
 - [ ] **Task 0.5.3.16:** Breach analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option)
 - [ ] **Task 0.5.3.17:** Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input)
@@ -95,7 +95,7 @@ See [Routing Structure](../../../../02-architecture/frontend/routing-structure.m
 - `/vci/aams` - AAMS submissions
 - `/vci/msq` - MSQ submissions
 - `/vci/wsl` - WSL submissions
-- `/vci/breaches` - Breaches list
+- `/vci/breaches` - Compliance Violations list
 - `/vci/governance` - Governance dashboard (MOH)
 - `/vci/submissions/history` - Submission history
 - `/vci/submissions/history/trends` - Trends analysis (MOH Tier 1)

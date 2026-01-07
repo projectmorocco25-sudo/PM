@@ -109,14 +109,14 @@
 2. **RMM:** Overview, Companies, Products, SKUs
 3. **VCI:** Dashboard, Submissions, Thresholds, Breaches, Governance (MOH), Treemap (MOH)
 4. **ECS:** (if active OR historical data exists) Overview, Export Requests, Authorizations, History
-5. **CMC:** (if active OR historical data exists) Overview, Scores, Disputes, Reports, History
+5. **CMC:** (if active OR historical data exists) Overview, Scores, Compliance Disputes, Reports, History
 6. **Help & Info:** Support, FAQ, Documentation, Contact, Status
 
 **Components:**
 - Module groups with labels
 - Navigation items: Icon + Label
 - Active state: Highlighted background, colored left border
-- Badge support: Count indicators (e.g., pending approvals)
+- Badge support: Count indicators (e.g., pending regulatory approvals)
 - Collapse toggle at bottom
 
 **Role-Based Variations (Annotate):**

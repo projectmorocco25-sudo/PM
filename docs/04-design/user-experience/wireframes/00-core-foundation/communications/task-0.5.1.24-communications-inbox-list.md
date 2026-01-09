@@ -83,6 +83,14 @@
 - **Type Filter:**
   - Checkboxes: All, Message, System Announcement, Workflow
   - Default: All selected
+- **Status Filter (Lifecycle States):**
+  - Checkboxes: All, Unread, Read, Threaded, Workflow-Linked
+  - Default: All selected
+  - Shows conversations by lifecycle state
+  - **Unread:** Conversations with unread messages
+  - **Read:** Conversations where all messages are read
+  - **Threaded:** Conversations with multiple messages (THREADED state)
+  - **Workflow-Linked:** Conversations linked to workflow entities (WORKFLOW_LINKED state)
 - **Entity Filter:**
   - Checkboxes: All, Submission, Breach, Export Request, Enforcement Action, Compliance Score, Dispute, etc.
   - Only visible if conversations linked to entities
@@ -104,13 +112,20 @@
 
 **Conversation Item:**
 - **Unread Indicator:** Blue dot (●) on left (8px × 8px)
-- **Read Indicator:** Gray circle (○) or no indicator
+- **Read Indicator:** Gray circle (○) or "✓✓ Read" text indicator
 - **Subject:** Bold (unread) or normal (read), 16px, color: #111827
 - **From/To:** 14px, color: #6b7280
   - Format: "From: [Name/Role]" or "To: [Name/Role]"
 - **Preview:** 14px, color: #6b7280, 2 lines max (truncate with ellipsis)
 - **Timestamp:** 12px, color: #9ca3af, right-aligned
   - Format: Relative time (e.g., "2 hours ago") or absolute date
+- **Conversation Item Status Indicators:**
+  - **Unread Indicator:** Blue dot (●) on left (8px × 8px)
+  - **Read Indicator:** Gray circle (○) or "✓✓ Read" text indicator
+  - **Delivered Indicator:** "✓✓ Delivered" (blue #3b82f6) - when message delivered but not read
+  - **Threaded Indicator:** Badge showing message count (e.g., "Thread (3)") if multiple messages - indicates THREADED state
+  - **Workflow-Linked Indicator:** Badge/icon (🔗) for workflow-linked conversations - indicates WORKFLOW_LINKED state
+  - **Archived Indicator:** (Not applicable in inbox - only shown in archived view)
 - **Hover:** Light background (#f9fafb)
 - **Click:** Navigate to conversation detail
 
@@ -141,8 +156,15 @@
 - **Search empty:** Show all conversations
 
 ### Green (States)
+- **CREATED state:** Conversation created (implicit, shown via timestamp)
+- **SENT state:** Message sent (shown via status indicator)
+- **DELIVERED state:** "✓✓ Delivered" indicator (blue) - message delivered to inbox
+- **READ state:** "✓✓ Read" indicator (green) or gray circle - message read
+- **REPLIED state:** New message in thread, conversation updated
+- **THREADED state:** "Thread (X)" badge visible when multiple messages
+- **WORKFLOW_LINKED state:** Workflow-linked badge (🔗) visible for linked conversations
 - **Unread conversation:** Blue dot indicator, bold subject, darker text
-- **Read conversation:** No indicator or gray circle, normal weight text
+- **Read conversation:** No indicator or gray circle, normal weight text, "✓✓ Read" indicator
 - **Hover state:** Light background on conversation item
 - **Loading state:** Skeleton loaders when fetching conversations
 - **Empty state:** Icon + message when no conversations
@@ -249,6 +271,7 @@
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/inbox`
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - List, Filter, Search components
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements

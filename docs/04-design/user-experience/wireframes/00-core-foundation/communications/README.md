@@ -177,6 +177,8 @@
 
 **Related Documents:**
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication system specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
+- [Communication Lifecycle Change List](./COMMUNICATION-LIFECYCLE-CHANGE-LIST.md) - Detailed change list for lifecycle implementation
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md)
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md)
 

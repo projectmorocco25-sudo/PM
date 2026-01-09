@@ -177,11 +177,16 @@
 ### Enforcement Notifications
 - **Icon:** Warning icon (red/orange) for warnings, Dollar icon for fines, Block icon for suspensions
 - **Examples:**
-  - "Enforcement Action - Warning Issued"
-  - "Enforcement Action - Fine Executed"
-  - "Enforcement Action - Suspension Executed"
-  - "Appeal Status Update"
-  - "Enforcement Action Requires Approval" (MOH Tier 1)
+  - **Creation Stage:** "Enforcement Action Created - Requires Review" (Tier 2)
+  - **Review Stage:** "Enforcement Action Reviewed - Pending Approval" (Tier 1)
+  - **Approval Required:** "Enforcement Action Requires Approval" (MOH Tier 1)
+  - **Execution Stage:** "Enforcement Action - Warning Issued" (Company)
+  - **Execution Stage:** "Enforcement Action - Fine Executed" (Company)
+  - **Execution Stage:** "Enforcement Action - Suspension Executed" (Company)
+  - **Appeal Window:** "Appeal Window Open - 30 Days Remaining" (Company)
+  - **Appeal Submitted:** "Appeal Submitted - Under Review" (Company), "Appeal Requires Review" (Tier 1)
+  - **Appeal Status Update:** "Appeal Status Update - [Uphold/Overturn]" (Company)
+  - **Appeal Deadline Reminder:** "Appeal Deadline Approaching - 7 Days Remaining" (Company)
 
 ### System Notifications
 - **Icon:** Info icon (gray)
@@ -202,6 +207,7 @@
   - Workflow notification → Navigate to workflow entity
   - Enforcement notification → Navigate to `/enforcement/actions/[id]`
   - Appeal notification → Navigate to `/enforcement/actions/[id]` (appeal section)
+  - Appeal review notification → Navigate to `/enforcement/actions/[id]/appeal/review` (Tier 1 only)
   - **Keyboard:** Tab to navigate, Enter to activate
   - **Mobile:** Tap to navigate, closes dropdown
   - **Action:** Marks notification as read (if unread)

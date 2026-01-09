@@ -15,10 +15,10 @@
 ┌─────────────────────────────────────────────────────────────┐
 │ Home > Communications > Inbox > Conversation                 │
 │                                                             │
-│ Subject: Product Submission #12345                         │
+│ Subject: Product Submission #12345    [Archive] [More ▼]  │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Workflow Context                                         ││
+│ │ Workflow Context                  [🔗 Workflow-Linked]  ││
 │ │                                                          ││
 │ │ Linked to: Submission #12345                             ││
 │ │ Product: ABC  Company: XYZ                              ││
@@ -36,10 +36,10 @@
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Message Thread                                           ││
+│ │ Thread (3 messages)                                     ││
 │ │                                                          ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ MOH Tier 1                   2 hours ago  ✓ Read   │ ││
+│ │ │ MOH Tier 1                   2 hours ago  ✓✓ Read   │ ││
 │ │ │                                                      │ ││
 │ │ │ Your submission has been reviewed and approved.    │ ││
 │ │ │ Please proceed with the next steps.                 │ ││
@@ -48,13 +48,13 @@
 │ │ └─────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ Company XYZ                 1 hour ago  ✓ Read       │ ││
+│ │ │ Company XYZ                 1 hour ago  ✓✓ Read     │ ││
 │ │ │                                                      │ ││
 │ │ │ Thank you for the approval. We will proceed...     │ ││
 │ │ └─────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
-│ │ │ MOH Tier 1                   30 min ago  ✓ Read    │ ││
+│ │ │ MOH Tier 1                   30 min ago  ✓✓ Read   │ ││
 │ │ │                                                      │ ││
 │ │ │ Please note the following requirements...           │ ││
 │ │ └─────────────────────────────────────────────────────┘ ││
@@ -82,10 +82,13 @@
 - **Breadcrumbs:** "Home > Communications > Inbox > Conversation"
 - **Subject:** Conversation subject/title
   - **Typography:** 20px, font-weight: 600, color: #111827
-- **Actions (Optional):**
-  - **Archive Button:** Archive conversation
-  - **Delete Button:** Delete conversation
-  - **More Actions:** Dropdown menu
+- **Actions (Right-aligned):**
+  - **Archive Button:** Secondary button, click → Archive conversation (moves to ARCHIVED state)
+    - Shows confirmation modal: "Archive this conversation? It will be moved to Archived folder but remain accessible for 7 years (regulatory requirement)."
+    - After archive: Conversation moves to ARCHIVED state, removed from active inbox
+    - Archive timestamp logged in audit trail (immutable)
+  - **More Actions:** Dropdown menu (additional actions if needed)
+  - **Spacing:** 16px between actions
 
 ### Workflow Context Panel (If Linked)
 - **Visibility:** Only if conversation linked to workflow entity
@@ -93,6 +96,9 @@
 - **Border:** 1px solid #e5e7eb
 - **Border Radius:** 8px
 - **Padding:** 16px
+- **State Badge:** "🔗 Workflow-Linked" badge at top of panel (indicates WORKFLOW_LINKED lifecycle state)
+- **Immutable Indicator:** Lock icon (🔒) or "Linked" indicator showing link cannot be changed
+- **State Description:** "This conversation is linked to a workflow entity and cannot be unlinked (immutable per lifecycle requirements)"
 - **Content:**
   - **Linked Entity Type:** "Linked to: Submission #12345" or "Linked to: Enforcement Action #33333"
   - **Entity Details:** 
@@ -107,6 +113,13 @@
     - Shows workflow status (Executed, Pending Approval, etc.)
     - Link navigates to `/enforcement/actions/[id]` (read-only for companies)
 
+### Thread Indicator (If Multiple Messages)
+- **Visibility:** Only shown when message count > 1 (indicates THREADED state)
+- **Badge:** "Thread (X messages)" shown above message thread
+- **Styling:** Badge with count, 14px, color: #6b7280, background: #f9fafb
+- **Position:** Below conversation subject, above first message
+- **Purpose:** Indicates conversation has entered THREADED lifecycle state
+
 ### Message Thread
 - **Layout:** Chronological order (oldest to newest)
 - **Scrollable:** Yes (if many messages)
@@ -116,7 +129,11 @@
 - **Header:**
   - **Sender Name:** Bold, 14px, color: #111827
   - **Timestamp:** 12px, color: #9ca3af, right-aligned
-  - **Read Receipt:** "✓ Read" or "✓ Delivered" indicator
+  - **Read Receipt:** 
+    - "✓✓ Read" (green #22c55e) - Message read (READ state) - Always visible to sender (mandatory per governance requirements)
+    - "✓✓ Delivered" (blue #3b82f6) - Message delivered (DELIVERED state)
+    - "✓ Sent" (gray #6b7280) - Message sent (SENT state)
+  - **Read Receipt Timestamp:** Show "Read at [timestamp]" on hover/tooltip
 - **Content:**
   - **Text:** 14px, color: #111827, line-height: 1.5
   - **Formatting:** Support basic formatting (bold, italic, links)
@@ -159,17 +176,36 @@
 - **Display:** File names with remove button
 - **Position:** Above text area or below attach button
 
+### Lifecycle State Information Panel (Optional Enhancement)
+- **Visibility:** Collapsible panel, collapsed by default
+- **Position:** Below workflow context panel or above message thread
+- **Background:** Light blue (#eff6ff)
+- **Border:** 1px solid #3b82f6
+- **Border Radius:** 8px
+- **Padding:** 16px
+- **Content:**
+  - **Current State:** Display current lifecycle state (e.g., "Active Thread", "Workflow-Linked", "Archived")
+  - **State History:** Show state transitions with timestamps:
+    - Created → Sent → Delivered → Read → Replied → Threaded
+    - Workflow-Linked (if applicable)
+    - Archived (if applicable)
+  - **Timestamps:** Show when each state transition occurred
+  - **Collapsible:** Can be collapsed/expanded to save space
+  - **Icon:** Chevron icon to toggle expand/collapse
+
 ---
 
 ## Annotations
 
 ### Blue (Interactions)
 - **Click "View Submission" / "View Product"** → Navigate to entity detail page
+- **Click "Archive"** → Show confirmation modal, then archive conversation
 - **Click attachment** → Download/view attachment
-- **Click "Send"** → Send message, add to thread, clear text area
+- **Click "Send"** → Send message, add to thread, clear text area, conversation enters REPLY/THREADED state
 - **Click "Save Draft"** → Save message as draft
 - **Click "Attach"** → Open file picker, select files
 - **Type in text area** → Auto-save draft (optional)
+- **Click lifecycle state panel** → Expand/collapse state history
 
 ### Orange (Validation)
 - **Empty message:** Disable Send button if text area empty
@@ -177,7 +213,14 @@
 - **File type validation:** Show error if file type not allowed
 
 ### Green (States)
-- **Read receipt:** "✓ Read" (green) or "✓ Delivered" (gray)
+- **CREATED state:** Conversation created (timestamp shown in lifecycle panel)
+- **SENT state:** "✓ Sent" indicator (gray #6b7280) - Message sent
+- **DELIVERED state:** "✓✓ Delivered" indicator (blue #3b82f6) - Message delivered to inbox
+- **READ state:** "✓✓ Read" indicator (green #22c55e) with timestamp - Message read, read receipt created
+- **REPLIED state:** New message in thread, conversation updated, enters REPLY state
+- **THREADED state:** "Thread (X messages)" badge visible when message count > 1
+- **WORKFLOW_LINKED state:** Workflow context panel visible with linked entity, "Workflow-Linked" badge shown
+- **ARCHIVED state:** Archive timestamp shown (if archived), conversation removed from active inbox
 - **Message sent:** Show success indicator, message appears in thread
 - **Sending state:** Disable Send button, show spinner
 - **Draft saved:** Show "Draft saved" notification
@@ -237,8 +280,9 @@
 - **Text Secondary:** #6b7280 (text-secondary)
 - **Text Tertiary:** #9ca3af (text-tertiary)
 - **Hover Background:** #f9fafb (bg-secondary)
-- **Read Receipt:** #22c55e (success-500) - Green for read
-- **Delivered Receipt:** #6b7280 (text-secondary) - Gray for delivered
+- **Read Receipt:** #22c55e (success-500) - Green for "✓✓ Read" (READ state)
+- **Delivered Receipt:** #3b82f6 (primary-500) - Blue for "✓✓ Delivered" (DELIVERED state)
+- **Sent Receipt:** #6b7280 (text-secondary) - Gray for "✓ Sent" (SENT state)
 - **Focus Ring:** #3b82f6 (primary-500), 2px outline
 - **Entity Badge Colors:**
   - Submission: #3b82f6 (primary-500)
@@ -289,6 +333,7 @@
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/inbox/[conversation_id]`
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Message, Form components
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements

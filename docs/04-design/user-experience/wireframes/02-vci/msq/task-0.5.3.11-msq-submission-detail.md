@@ -61,6 +61,19 @@
 │ │ │ ✓ Submission accepted                                 ││
 │ │ └────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
+│ │ ┌────────────────────────────────────────────────────┐ ││
+│ │ │ Enforcement Actions (if any)                         ││
+│ │ │                                                      ││
+│ │ │ Enforcement actions related to data quality issues: ││
+│ │ │                                                      ││
+│ │ │ ⚠️ Warning - ENF-2024-050                           ││
+│ │ │   Related to: Data Quality Issue                     ││
+│ │ │   Status: Executed  Date: 2 weeks ago                ││
+│ │ │   [View Enforcement Action Detail →]                 ││
+│ │ │                                                      ││
+│ │ │ [View All Enforcement Actions →]                    ││
+│ │ └────────────────────────────────────────────────────┘ ││
+│ │                                                          ││
 │ │ [Export Data] [Print] [Correct] (if within grace period)││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘

@@ -36,7 +36,7 @@
 │ │ Last Updated: 2024-12-20                                ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
-│ Tabs: [Overview] [Products] [History]                      │
+│ Tabs: [Overview] [Products] [Enforcement] [History]        │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Overview Tab (Default)                                   ││
@@ -55,6 +55,10 @@
 │ │ • Product "Paracetamol" created - 2 days ago            ││
 │ │ • SKU "Paracetamol 500mg 30-pack" updated - 1 week ago ││
 │ │ • Company information updated - 2 weeks ago            ││
+│ │                                                          ││
+│ │ Enforcement History:                                    ││
+│ │ • 3 enforcement actions for this company                ││
+│ │   [View Enforcement History →]                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -69,6 +73,44 @@
 │ │ Amoxicillin      J01CA04     8       Active    [View]  ││
 │ │                                                          ││
 │ │ [View All Products]                                      ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Enforcement Tab                                          ││
+│ │                                                          ││
+│ │ [Filter: All | Warnings | Fines | Suspensions]         ││
+│ │ [Status: All | Executed | Appealed | Resolved]          ││
+│ │                                                          ││
+│ │ ⚠️ Warning - Submission Non-Compliance                  ││
+│ │   Action ID: ENF-2025-001                               ││
+│ │   Status: Executed  Date: 2 days ago                    ││
+│ │   Violation: WSL submission overdue (2 weeks)           ││
+│ │   Legal Basis: Article 12, Section 3                    ││
+│ │   Appeal Deadline: 28 days remaining                    ││
+│ │   (30-day window per DMP regulations)                  ││
+│ │   [View Full Details] [Appeal] (Company users only)     ││
+│ │                                                          ││
+│ │ 💰 Fine - $5,000 - Threshold Breach                    ││
+│ │   Action ID: ENF-2024-045                               ││
+│ │   Status: Executed  Date: 1 week ago                    ││
+│ │   Violation: Critical medicine stock below threshold   ││
+│ │   Legal Basis: Article 15, Section 2                    ││
+│ │   Appeal Deadline: Expired                              ││
+│ │   [View Full Details]                                   ││
+│ │                                                          ││
+│ │ [View All Enforcement Actions →]                        ││
+│ │                                                          ││
+│ │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐      ││
+│ │ │ Total Actions│ │ Active Appeals│ │ Compliance   │      ││
+│ │ │              │ │              │ │ Status       │      ││
+│ │ │ Warnings: 2  │ │ Pending: 0   │ │              │      ││
+│ │ │ Fines: 1     │ │ Resolved: 0  │ │ Current: Good│      ││
+│ │ │ Suspensions:0│ │              │ │              │      ││
+│ │ │              │ │              │ │ Last Action: │      ││
+│ │ │ Total: 3     │ │              │ │ 2 days ago   │      ││
+│ │ │              │ │              │ │              │      ││
+│ │ │              │ │              │ │ [View Report]│      ││
+│ │ └──────────────┘ └──────────────┘ └──────────────┘      ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -116,10 +158,11 @@
   - **Values:** 16px, color: #111827
 
 ### Tabs
-- **Tabs:** Overview (default), Products, History
+- **Tabs:** Overview (default), Products, Enforcement, History
 - **Tab Content:**
   - **Overview:** Summary metrics and recent activity
   - **Products:** List of company products
+  - **Enforcement:** Enforcement actions for this company
   - **History:** Timeline of all changes
 
 ### Overview Tab
@@ -132,6 +175,11 @@
   - **Format:** Timeline list of recent changes
   - **Max Items:** 5-10 recent items
   - **Format:** Action description, timestamp
+- **Enforcement History:**
+  - **Display:** Count of enforcement actions for this company
+  - **Link:** "View Enforcement History" button
+  - **Action:** Navigate to `/enforcement/actions?company=[id]` (filtered by company)
+  - **Styling:** Link with icon, highlighted if actions exist
 
 ### Products Tab
 - **Header:** "New Product" button
@@ -140,6 +188,36 @@
   - **Row Click:** Navigate to product detail
   - **Actions:** View button
 - **Action Link:** "View All Products" (navigate to products list filtered by company)
+
+### Enforcement Tab
+- **Header:** Filters and status indicators
+- **Filters:**
+  - **Action Type:** All, Warnings, Fines, Suspensions
+  - **Status:** All, Executed, Appealed, Resolved
+- **Enforcement Actions List:**
+  - **Format:** Card-based list with action details
+  - **Fields Displayed:**
+    - Action Type: Icon + text (⚠️ Warning, 💰 Fine, 🚫 Suspension)
+    - Action ID: Enforcement action identifier
+    - Status: Badge with color coding
+    - Date: Execution date
+    - Violation: Violation type description
+    - Legal Basis: Legal basis reference
+    - Appeal Deadline: Days remaining or "Expired"
+    - Appeal Window: Note about 30-day window per DMP regulations
+  - **Actions:**
+    - View Full Details: Navigate to enforcement action detail
+    - Appeal: Open appeal modal (Company users only, if within 30-day window)
+- **Enforcement Metrics Cards:**
+  - **Total Actions:** Breakdown by type (Warnings, Fines, Suspensions)
+  - **Active Appeals:** Count of pending and resolved appeals
+  - **Compliance Status:** Current compliance status indicator
+  - **Last Action:** Date of most recent enforcement action
+- **Action Link:** "View All Enforcement Actions" (navigate to enforcement actions list filtered by company)
+- **Styling:**
+  - **Action Cards:** White background, border, hover elevation
+  - **Status Badges:** Color-coded (Executed: green, Appealed: orange, Resolved: blue)
+  - **Appeal Deadline:** Highlighted if within 7 days remaining
 
 ### History Tab
 - **Layout:** Vertical timeline
@@ -210,6 +288,9 @@
 - **Edit Button:** Navigate to `/rmm/companies/[id]/edit`
 - **Product Row/Name:** Navigate to product detail
 - **View All Products:** Navigate to products list filtered by company
+- **View Full Details (Enforcement):** Navigate to `/enforcement/actions/[id]`
+- **Appeal Button (Enforcement):** Open appeal modal (Company users only)
+- **View All Enforcement Actions:** Navigate to `/enforcement/actions?company=[id]`
 - **History Items:** Expand to show details (if implemented)
 
 ### Hover States
@@ -232,6 +313,8 @@
 - [Companies List](task-0.5.2.2-companies-list.md)
 - [Company Create/Edit Form](task-0.5.2.8-company-create-edit-form.md)
 - [Registry Submission List](task-0.5.2.11-registry-submission-list.md)
+- [Enforcement Action Detail](../enforcement/task-0.5.2.1a-enforcement-action-detail.md)
+- [Enforcement Actions List](../enforcement/task-0.5.2.1-enforcement-actions-list.md)
 
 ---
 

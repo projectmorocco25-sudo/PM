@@ -70,6 +70,19 @@
 │ │ • Created (Draft) - 7 days ago                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Enforcement Actions (if any)                             ││
+│ │                                                          ││
+│ │ Enforcement actions related to threshold violations:    ││
+│ │                                                          ││
+│ │ ⚠️ Warning - ENF-2024-045                               ││
+│ │   Related to: Threshold Breach                          ││
+│ │   Status: Executed  Date: 1 week ago                    ││
+│ │   [View Enforcement Action Detail →]                    ││
+│ │                                                          ││
+│ │ [View All Enforcement Actions →]                        ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ Tabs: [Details] [History] [Threshold]                      │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

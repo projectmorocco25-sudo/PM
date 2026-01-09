@@ -30,7 +30,15 @@
 │ │   You have a new message from MOH                        ││
 │ │   1 day ago                               [Mark read]     ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Enforcement Action                                    ││
+│ │ ● Enforcement Action Created                            ││
+│ │   Enforcement action ENF-2025-001 created - Requires Review││
+│ │   1 hour ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Enforcement Action Requires Approval                   ││
+│ │   Enforcement action ENF-2025-001 requires your approval ││
+│ │   2 hours ago                              [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Enforcement Action Executed                           ││
 │ │   Warning issued: Submission Non-Compliance              ││
 │ │   2 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
@@ -38,9 +46,25 @@
 │ │   Fine executed: 50,000 MAD                              ││
 │ │   3 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Appeal Window Open                                    ││
+│ │   You have 30 days to appeal enforcement action ENF-001 ││
+│ │   2 days ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Appeal Submitted                                      ││
+│ │   Your appeal for ENF-2025-001 is under review          ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Appeal Requires Review                                ││
+│ │   Appeal for enforcement action ENF-2025-001 requires review││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Appeal Status Update                                  ││
 │ │   Your appeal for enforcement action #12345 was reviewed││
 │ │   4 days ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ○ Appeal Deadline Reminder                              ││
+│ │   Appeal deadline approaching - 7 days remaining       ││
+│ │   23 days ago                              [Mark read]   ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Threshold Reversion - 7 Day Warning                  ││
 │ │   Threshold for SKU002 will revert on 25/06/2025        ││
@@ -80,7 +104,17 @@
 - **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, Threshold Reversion, System
 - **Status:** All, Unread, Read
 - **Date Range:** Last 7 days, Last 30 days, Custom
-- **Enforcement Filter (if Type = Enforcement):** Warning, Fine, Suspension, Appeal
+- **Enforcement Filter (if Type = Enforcement):**
+  - All Enforcement
+  - Created
+  - Requires Approval
+  - Executed
+  - Appeal Window
+  - Appeal Submitted
+  - Appeal Review Required
+  - Appeal Status Update
+  - Appeal Deadline Reminder
+- **Enforcement Action Type Filter (if Type = Enforcement):** Warning, Fine, Suspension
 - **Threshold Reversion Filter (if Type = Threshold Reversion):**
   - 7-Day Warning
   - 1-Day Warning
@@ -97,7 +131,14 @@
 
 ### Blue (Interactions)
 - **Click notification** → Navigate to related page
-  - **Enforcement Action notification** → Navigate to `/enforcement/actions/[id]`
+  - **Enforcement Action Created notification** → Navigate to `/enforcement/actions/[id]` (Tier 2)
+  - **Enforcement Action Requires Approval notification** → Navigate to `/enforcement/pending-approvals` or `/enforcement/actions/[id]` (Tier 1)
+  - **Enforcement Action Executed notification** → Navigate to `/enforcement/actions/[id]` (Company)
+  - **Appeal Window Open notification** → Navigate to `/enforcement/actions/[id]` (Company)
+  - **Appeal Submitted notification** → Navigate to `/enforcement/actions/[id]` (Company)
+  - **Appeal Requires Review notification** → Navigate to `/enforcement/actions/[id]/appeal/review` (Tier 1)
+  - **Appeal Status Update notification** → Navigate to `/enforcement/actions/[id]` (Company)
+  - **Appeal Deadline Reminder notification** → Navigate to `/enforcement/actions/[id]` (Company)
   - **Appeal Status notification** → Navigate to `/enforcement/actions/[id]` (appeal section)
 - **Click "Mark read"** → Mark notification as read
 - **Click "Mark all read"** → Mark all as read

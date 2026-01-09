@@ -164,7 +164,14 @@
 - **Links:** All links navigate to related detail pages
 
 ### Analysis & Action Status Section
-- **Layout:** Card showing analysis and approval workflow
+- **Layout:** Card showing analysis and enforcement workflow with progress indicators
+- **Workflow Progress Indicator:**
+  - **Stages:** Detection → Analysis → Approval → Enforcement → Appeal
+  - **Visual Indicators:**
+    - **Completed stages:** Green checkmark (✓)
+    - **Current stage:** Highlighted with progress indicator (⏳)
+    - **Pending stages:** Gray, disabled (-)
+  - **Current Stage Display:** Badge showing current stage name
 - **Analysis Status:**
   - **Status:** Pending, In Progress, Completed
   - **Analyzed By:** Tier 2 officer name (if analyzed)
@@ -174,9 +181,33 @@
   - **Status:** Pending, Approved, Rejected
   - **Approved By:** Tier 1 officer name (if approved)
   - **Approval Notes:** Link to view approval details
+- **Enforcement Action Status:**
+  - **Status:** Not Created, Created, Executed, Appealed
+  - **Action ID:** Enforcement action identifier (if created)
+  - **Link:** Navigate to enforcement action detail (if created)
 - **Actions:**
   - **Analyze Button:** Navigate to analysis interface (Tier 2)
   - **Approve Action Button:** Navigate to approval interface (Tier 1)
+
+### Enforcement Action Section (if created)
+- **Layout:** Card displaying related enforcement action
+- **Display Condition:** Only shown if enforcement action was created from this violation
+- **Fields:**
+  - **Action Type:** Icon + text (⚠️ Warning, 💰 Fine, 🚫 Suspension)
+  - **Action ID:** Enforcement action identifier (e.g., "ENF-2025-001")
+  - **Status:** Status badge (Executed, Pending Approval, etc.)
+  - **Date:** Execution or creation date
+  - **Context:** "Created from this compliance violation"
+- **Appeal Information:**
+  - **Appeal Status:** "No Appeal" or current appeal status
+  - **Appeal Deadline:** Days remaining or "Expired"
+  - **Appeal Window Note:** "30-day window per DMP regulations"
+- **Actions:**
+  - **View Enforcement Action Detail:** Navigate to `/enforcement/actions/[id]`
+- **Styling:**
+  - **Card Background:** Light background to distinguish from other sections
+  - **Status Badge:** Color-coded based on action status
+  - **Appeal Deadline:** Highlighted if within 7 days remaining
 
 ### Tabs
 - **Tabs:** Details (default), History, Analysis
@@ -276,7 +307,7 @@
 - **Related Violations:** Navigate to violations list (filtered)
 - **Analyze Button:** Navigate to analysis interface
 - **Approve Action Button:** Navigate to approval interface
-- **View Enforcement Action:** Navigate to enforcement action (if created)
+- **View Enforcement Action Detail:** Navigate to `/enforcement/actions/[id]` (if enforcement action created)
 
 ### Hover States
 - **Links:** Underline on hover

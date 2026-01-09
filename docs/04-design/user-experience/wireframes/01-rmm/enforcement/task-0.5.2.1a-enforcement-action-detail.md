@@ -18,13 +18,21 @@
 │ ⚠️ Warning - Submission Non-Compliance    [Edit] [Actions ▼]│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Workflow Status                                          ││
+│ │ Enforcement Cycle Status                                 ││
 │ │                                                          ││
-│ │ Draft → Pending Review → Pending Approval → Executed    ││
-│ │   ✓        ✓              ✓              ✓             ││
+│ │ Creation → Review → Approval → Execution → Appeal → Resolution││
+│ │   ✓         ✓        ✓          ✓         ⏳      -     ││
 │ │                                                          ││
-│ │ Current Status: Executed                                 ││
+│ │ Current Stage: Appeal Window (28 days remaining)       ││
 │ │ Executed: 2 days ago                                     ││
+│ │                                                          ││
+│ │ Stage Details:                                          ││
+│ │ • Creation: Completed by Tier 2 - 3 days ago           ││
+│ │ • Review: Completed by Tier 2 - 2 days ago             ││
+│ │ • Approval: Completed by Tier 1 - 2 days ago            ││
+│ │ • Execution: Completed - 2 days ago                     ││
+│ │ • Appeal Window: Active (28 days remaining)            ││
+│ │ • Resolution: Pending (if appeal submitted)            ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -122,20 +130,30 @@
   - **Actions Dropdown:** More actions menu
     - Options: Cancel (if pending), View Audit Log, Export PDF
 
-### Workflow Status Section
-- **Layout:** Horizontal timeline or step indicator
-- **Status Steps:**
-  1. Draft
-  2. Pending Review (Tier 2)
-  3. Pending Approval (Tier 1)
-  4. Executed
+### Enforcement Cycle Status Section
+- **Layout:** Horizontal timeline showing full enforcement cycle
+- **Cycle Stages:**
+  1. **Creation:** Tier 2 creates enforcement action
+  2. **Review:** Tier 2 reviews and submits for approval
+  3. **Approval:** Tier 1 approves/rejects
+  4. **Execution:** Action executed upon approval
+  5. **Appeal:** Company has 30 days to appeal (if applicable)
+  6. **Resolution:** Appeal reviewed by Tier 1 (if appeal submitted)
 - **Visual Indicators:**
-  - Completed steps: Green checkmark
-  - Current step: Highlighted with status badge
-  - Pending steps: Gray, disabled
+  - **Completed stages:** Green checkmark (✓)
+  - **Current stage:** Highlighted with status badge and progress indicator (⏳)
+  - **Pending stages:** Gray, disabled (-)
+  - **Timeline:** Connecting lines between stages
 - **Current Status Display:**
-  - **Status Badge:** Color-coded badge
-  - **Timestamp:** "Executed: 2 days ago"
+  - **Current Stage:** Badge showing current stage name
+  - **Stage Details:** Expandable list showing:
+    - Stage name
+    - Completion status (Completed/Pending/Active)
+    - User who completed (if applicable)
+    - Timestamp
+    - Days remaining (for appeal window)
+- **Status Badge:** Color-coded badge for current stage
+- **Timestamp:** Most recent action timestamp
 
 ### Action Information Section
 - **Layout:** Card with key-value pairs
@@ -176,7 +194,9 @@
   - **Regulatory Reference:** Note that appeal period is per DMP regulations
 - **Actions (Company users only):**
   - **Submit Appeal Button:** Primary button (if within 30-day window)
+    - **Action:** Navigate to `/enforcement/actions/[id]/appeal` (appeal submission form)
   - **View Appeal Link:** If appeal exists
+    - **Action:** Navigate to appeal section or appeal detail
 
 ### Related Information Section
 - **Layout:** List of related links
@@ -261,7 +281,7 @@
 - **Related Actions:** Navigate to related action list
 - **Audit Log:** Navigate to audit log entry
 - **Edit Button:** Navigate to edit page (if allowed)
-- **Submit Appeal:** Open appeal form modal
+- **Submit Appeal:** Navigate to `/enforcement/actions/[id]/appeal` (appeal submission form)
 
 ### Hover States
 - **Links:** Underline on hover
@@ -285,6 +305,8 @@
 - [Enforcement Actions List](task-0.5.2.1-enforcement-actions-list.md)
 - [Create Enforcement Action](task-0.5.2.1b-create-enforcement-action-wizard.md)
 - [Pending Approvals](task-0.5.2.1c-pending-approvals.md)
+- [Appeal Submission Form](task-0.5.2.1f-appeal-submission-form.md) - Company appeal submission form
+- [Appeal Review Interface](task-0.5.2.1e-appeal-review-interface.md) - MOH Tier 1 appeal review interface
 
 ---
 

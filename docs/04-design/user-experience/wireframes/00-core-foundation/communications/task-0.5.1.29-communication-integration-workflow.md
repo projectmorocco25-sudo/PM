@@ -47,8 +47,15 @@
 
 ### Conversation Panel
 - **Header:** "Related Conversations" with unread count badge
-- **New Button:** "New" button to compose message
+- **Workflow-Linked Badge:** "🔗 Workflow-Linked" badge to indicate all conversations in this panel are linked to the workflow entity (WORKFLOW_LINKED state)
+- **Immutable Indicator:** Lock icon (🔒) showing links cannot be changed (immutable per lifecycle requirements)
+- **Count Badge:** Show number of linked conversations
+- **New Button:** "New" button to compose message (message will be automatically linked to workflow entity)
 - **Conversation List:** Related conversations for workflow entity
+- **Conversation Item in Panel:**
+  - **Status Indicators:** Same as inbox list (✓✓ Read, ✓✓ Delivered, etc.)
+  - **Thread Indicator:** Show if conversation has multiple messages (THREADED state)
+  - **Workflow-Linked Badge:** Always shown (all conversations in this panel are workflow-linked - WORKFLOW_LINKED state)
 - **Unread Indicator:** Blue dot for unread messages
 
 ### Floating Action Button
@@ -67,6 +74,11 @@
 - **Click "New"** → Compose message linked to entity
 
 ### Green (States)
+- **WORKFLOW_LINKED state:** All conversations in panel are workflow-linked (indicated by badge)
+- **THREADED state:** Conversations with multiple messages show thread indicator
+- **READ state:** "✓✓ Read" indicator shown for read messages
+- **DELIVERED state:** "✓✓ Delivered" indicator shown for delivered messages
+- **SENT state:** "✓ Sent" indicator shown for sent messages
 - **Unread badge:** Dynamic count
 - **Active conversation:** Highlighted
 
@@ -75,6 +87,7 @@
 ## Related Documents
 
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Panel, Message, Input components
 - [Conversation Detail Wireframe](./task-0.5.1.25-conversation-detail.md) - Full conversation interface reference
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference

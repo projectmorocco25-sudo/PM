@@ -136,6 +136,24 @@
     - **Search:** Search by enforcement action ID, company name, or action type
     - **Results:** Show action type (Warning/Fine/Suspension), company, violation type
     - **Selected:** Display "Enforcement Action #12345 - Warning - Company XYZ"
+- **Immutability Warning:**
+  - **Warning Text:** "⚠️ Once linked, this conversation will be permanently associated with this workflow entity. The link cannot be changed after creation (immutable per lifecycle requirements)."
+  - **Warning Styling:** Warning box with yellow background (#fef3c7), border (#f59e0b), padding: 12px
+  - **Icon:** Warning icon (⚠️)
+  - **Position:** Below entity selection dropdowns, above action buttons
+  - **Visibility:** Only shown when entity type and entity are selected
+
+### Lifecycle State Information (Information Box)
+- **Visibility:** Always visible, positioned below workflow entity linking or above action buttons
+- **Background:** #eff6ff (blue-50)
+- **Border:** 1px solid #3b82f6 (blue-500)
+- **Border Radius:** 6px
+- **Padding:** 12px
+- **Typography:** 14px, color: #1e40af
+- **Content:**
+  - **Text:** "After sending, this conversation will enter the lifecycle: Created → Sent → Delivered → Read"
+  - **Workflow-Linked Note:** "If linked to a workflow entity, the link will be permanent (immutable). The conversation will enter WORKFLOW_LINKED state."
+  - **Retention Note:** "All conversations are retained for 7 years for regulatory compliance (no hard deletes allowed)."
 
 ### Action Buttons
 - **Cancel Button:** Secondary button, click → Navigate back or clear form
@@ -156,7 +174,7 @@
 - **Click "Attach Files"** → Open file picker
 - **Drag and drop files** → Add files to attachment list
 - **Click X on file** → Remove file
-- **Click "Send"** → Validate form, send message, show success, navigate to sent messages
+- **Click "Send"** → Validate form, send message, conversation enters CREATED → SENT state, show success, navigate to sent messages
 - **Click "Save Draft"** → Save message as draft
 - **Click "Cancel"** → Navigate back or clear form
 
@@ -169,8 +187,11 @@
 - **Subject length:** Show error if subject exceeds max length
 
 ### Green (States)
+- **CREATED state:** Conversation created when message is sent
+- **SENT state:** Message sent, conversation enters SENT lifecycle state
+- **WORKFLOW_LINKED state:** If entity linked, conversation enters WORKFLOW_LINKED state (immutable)
 - **Sending state:** Disable Send button, show spinner, disable form
-- **Success state:** Show success notification, navigate to sent messages
+- **Success state:** Show success notification, navigate to sent messages, conversation lifecycle initiated
 - **Draft saved:** Show "Draft saved" notification
 - **File uploading:** Show progress indicator for each file
 - **File uploaded:** Show checkmark or success indicator
@@ -286,6 +307,7 @@
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/compose`
 - [Form Design Patterns](../../../../02-architecture/frontend/form-design-patterns.md) - Form validation patterns
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Form, Input, File Upload components
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements

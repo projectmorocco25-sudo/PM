@@ -24,22 +24,22 @@
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Violations Table                         ││
 │ │          │ │                                             ││
-│ │ Status   │ │ Priority SKU      Product      Status    ││
-│ │ ☐ All    │ │          Code     Description             ││
-│ │ ☑ Active │ │ ──────── ──────   ──────────── ──────── ││
-│ │ ☐ Resolv.│ │ 🔴 High  SKU002   Product B /  Active    ││
-│ │          │ │          (Critical 250mg /      [Analyze] ││
+│ │ Status   │ │ Priority SKU      Product      Status    Enforcement││
+│ │ ☐ All    │ │          Code     Description             Action    ││
+│ │ ☑ Active │ │ ──────── ──────   ──────────── ──────── ────────── ││
+│ │ ☐ Resolv.│ │ 🔴 High  SKU002   Product B /  Active    ⚠️ ENF-001││
+│ │          │ │          (Critical 250mg /      [Analyze] [View →] ││
 │ │ Priority │ │          Medicine) Capsule                ││
 │ │ ☐ All    │ │                                             ││
-│ │ ☑ High   │ │ 🟡 Med   SKU003   Product C /  Active    ││
+│ │ ☑ High   │ │ 🟡 Med   SKU003   Product C /  Active    -         ││
 │ │ ☐ Medium │ │          100mg /   [Analyze]              ││
 │ │ ☐ Low    │ │          Syrup                            ││
 │ │          │ │                                             ││
-│ │ Company  │ │ 🟢 Low   SKU005   Product E /  Resolved  ││
-│ │ ☐ All    │ │          200mg /   [View]                 ││
+│ │ Company  │ │ 🟢 Low   SKU005   Product E /  Resolved  ⚠️ ENF-045││
+│ │ ☐ All    │ │          200mg /   [View]      [View →]   ││
 │ │ ☐ ABC    │ │          Tablet                          ││
 │ │ ☐ XYZ    │ │                                             ││
-│ │          │ │ 🔴 High  SKU001   Product A /  Active    ││
+│ │          │ │ 🔴 High  SKU001   Product A /  Active    -         ││
 │ │ Date     │ │          (Multiple 500mg /      [Analyze] ││
 │ │ Last 7d  │ │          SKUs)    Tablet                 ││
 │ │ Last 30d │ │                                             ││
@@ -107,12 +107,17 @@
   2. **SKU Code:** SKU identifier (link to SKU detail)
   3. **Product Description:** Product Name / Dosage / Form (truncated if long)
   4. **Replenishment Date:** Replenishment date from WSL submission:
-     - Format: DD/MM/YY (e.g., "25/01/25")
-     - Shows "-" or "(N/A)" if no replenishment date provided
-     - Sortable: Sort by date to prioritize by expected resolution
-     - Tooltip: Shows full date on hover (e.g., "25/01/2025")
+    - Format: DD/MM/YY (e.g., "25/01/25")
+    - Shows "-" or "(N/A)" if no replenishment date provided
+    - Sortable: Sort by date to prioritize by expected resolution
+    - Tooltip: Shows full date on hover (e.g., "25/01/2025")
   5. **Status:** Status badge with color coding
-  6. **Actions:** Analyze (Tier 2), View (all), View Reason (tooltip/modal), Resolve (if applicable)
+  6. **Enforcement Action:** Enforcement action indicator (if created):
+    - **Display:** Action type icon + Action ID (e.g., "⚠️ ENF-001")
+    - **Link:** "View →" button to navigate to enforcement action detail
+    - **Empty State:** Shows "-" if no enforcement action created
+    - **Tooltip:** Hover shows action type, status, and date
+  7. **Actions:** Analyze (Tier 2), View (all), View Reason (tooltip/modal), Resolve (if applicable)
 - **Compliance Violation Reason Display:**
   - **View Reason Button:** Opens tooltip or modal showing full Compliance Violation Reason text (up to 300 characters)
   - **Hover Indicator:** "[Hover]" text indicates hover for quick preview

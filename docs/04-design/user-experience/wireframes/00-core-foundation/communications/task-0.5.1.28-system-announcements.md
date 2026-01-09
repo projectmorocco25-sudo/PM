@@ -63,6 +63,14 @@
 
 ### Announcement List
 - **Items:** Title, Broadcast date, Recipient scope, Preview
+- **Announcement Item Status Indicators:**
+  - **Broadcast Status:** 
+    - "✓ Sent" (gray #6b7280) - Announcement sent (SENT state)
+    - "✓✓ Delivered" (blue #3b82f6) - Delivered to all recipients (DELIVERED state)
+    - "✓✓ Read" (green #22c55e) - All recipients have read (or show read percentage)
+  - **Expiration Status:** Show if announcement has expiration date
+  - **Read Tracking:** Show read count per company (for MOH users)
+  - **Status Badge:** "Active", "Expired", "Scheduled"
 - **Actions:** View, Edit, Delete (MOH Tier 1 only)
 
 ### Create Announcement Form
@@ -71,6 +79,12 @@
 - **Recipients:** Checkboxes (All Users, All Companies, Specific Roles)
 - **Broadcast Date/Time:** Date and time pickers
 - **Schedule Option:** Checkbox to schedule for later
+- **Lifecycle State Information:**
+  - **Note:** "Announcements follow the communication lifecycle: Created → Sent → Delivered → Read"
+  - **Read Tracking:** "Read status will be tracked per company/user"
+  - **Retention:** "All announcements are retained for 7 years for regulatory compliance (no hard deletes allowed)"
+  - **Expiration Note:** "Expired announcements remain accessible but marked as expired"
+  - **Styling:** Info box with blue background (#eff6ff), border (#3b82f6), padding: 12px
 - **Actions:** Cancel, Broadcast
 
 ---
@@ -88,8 +102,13 @@
 - **Date validation:** Future date for scheduled
 
 ### Green (States)
-- **Broadcast success:** Show notification
-- **Scheduled:** Show scheduled indicator
+- **CREATED state:** Announcement created
+- **SENT state:** Announcement sent (broadcast), "✓ Sent" indicator shown
+- **DELIVERED state:** Announcement delivered to all recipients, "✓✓ Delivered" indicator shown
+- **READ state:** Read status tracked, "✓✓ Read" indicator shown when all recipients read
+- **Broadcast success:** Show notification, announcement enters SENT state
+- **Scheduled:** Show scheduled indicator, announcement will enter SENT state at scheduled time
+- **Expired:** Announcement marked as expired but remains accessible
 
 ---
 
@@ -97,6 +116,7 @@
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/announcements`
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - Card, List, Modal components
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements

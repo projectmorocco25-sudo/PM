@@ -95,6 +95,19 @@
 │ │ [View All Compliance Violations]                        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Enforcement Actions (if any)                             ││
+│ │                                                          ││
+│ │ Enforcement actions created from compliance violations: ││
+│ │                                                          ││
+│ │ ⚠️ Warning - ENF-2025-001                               ││
+│ │   Created from: SKU002 Compliance Violation             ││
+│ │   Status: Executed  Date: 1 day ago                     ││
+│ │   [View Enforcement Action Detail →]                    ││
+│ │                                                          ││
+│ │ [View All Enforcement Actions →]                        ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ [Approve] [Reject] [Request Info] (MOH actions)            │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -198,6 +211,22 @@
 - **Actions:**
   - **View Compliance Violation Detail:** Navigate to individual compliance violation detail
   - **View All Compliance Violations:** Navigate to compliance violations list
+
+### Enforcement Actions Section (if any)
+- **Layout:** Card displaying enforcement actions created from compliance violations
+- **Display Condition:** Only shown if enforcement actions were created from violations in this submission
+- **Fields:**
+  - **Action Type:** Icon + text (⚠️ Warning, 💰 Fine, 🚫 Suspension)
+  - **Action ID:** Enforcement action identifier (e.g., "ENF-2025-001")
+  - **Created From:** Link to related compliance violation
+  - **Status:** Status badge (Executed, Pending Approval, etc.)
+  - **Date:** Execution or creation date
+- **Actions:**
+  - **View Enforcement Action Detail:** Navigate to `/enforcement/actions/[id]`
+  - **View All Enforcement Actions:** Navigate to `/enforcement/actions?submission=[id]`
+- **Styling:**
+  - **Card Background:** Light background to distinguish from other sections
+  - **Status Badge:** Color-coded based on action status
 
 ### Action Buttons (MOH Only)
 - **Approve:** Primary button (Tier 1 only, if pending approval)

@@ -15,6 +15,7 @@ The PM platform operates under strict governance and compliance requirements to 
 - **compliance-requirements.md** - Compliance requirements and regulatory obligations
 - **regulatory-policies.md** - Regulatory policies and guidelines
 - **approvals-authority-matrix.md** - Approval authority matrix by role and action type
+- **enforcement-cycle-specification.md** - Comprehensive enforcement cycle specification (creation, approval, execution, appeals)
 
 ## Key Governance Areas
 
@@ -35,6 +36,7 @@ The PM platform operates under strict governance and compliance requirements to 
 - Appeal processes and dispute resolution
 - Compliance score calculation and review
 - Regulatory reporting and audit requirements
+- **See:** [Enforcement Cycle Specification](enforcement-cycle-specification.md) - Complete enforcement lifecycle specification
 
 ### Export Control Governance
 - Export authorization approval workflows

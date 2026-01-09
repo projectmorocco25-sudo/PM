@@ -159,6 +159,7 @@
 
 - [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/communications/sent`
 - [Communication Channels Requirements](../../../../02-architecture/communication-channels-requirements.md) - Complete communication specs
+- [Communication Channels Lifecycle](../../../../02-architecture/communication-channels-lifecycle.md) - Complete lifecycle definition with state transitions, governance requirements, and UI status indicators
 - [UI Component Specifications](../../../../02-architecture/frontend/ui-component-specifications.md) - List, Filter, Search components
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements

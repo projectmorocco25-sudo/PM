@@ -145,6 +145,8 @@ The following actions require Tier 1 approval plus Tier 2 Officer confirmation:
 
 ## Enforcement Workflows
 
+**📋 Comprehensive Specification:** See [Enforcement Cycle Specification](enforcement-cycle-specification.md) for complete details on state machine, transitions, appeals, notifications, and integration requirements.
+
 ### Enforcement Action Creation Workflow
 
 **Workflow:** Tier 2 creates → Tier 1 approves → Execution → Appeal period
@@ -159,6 +161,16 @@ The following actions require Tier 1 approval plus Tier 2 Officer confirmation:
 - Warnings: Tier 2 can approve independently
 - Fines: Require Tier 1 approval
 - Suspensions: Require Tier 1 approval
+
+**For detailed specifications including:**
+- Complete state machine and transitions
+- Appeal process workflow
+- Notification requirements
+- Validation rules
+- Integration points
+- Error handling
+
+**See:** [Enforcement Cycle Specification](enforcement-cycle-specification.md)
 
 ### Breach Analysis Workflow
 

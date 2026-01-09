@@ -2,8 +2,9 @@
 
 **Subphase:** 0.5.4 - ECS Module Wireframes  
 **Duration:** Days 9-10  
-**Status:** ⚪ Not Started  
-**Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+**Status:** ✅ Complete  
+**Owner:** Emma (UI/UX + Next.js Frontend Specialist)  
+**Guided by:** Fatima (MOH Regulatory Requirements) & Dr. Samir (Business Process Validation)
 
 ## Overview
 
@@ -12,19 +13,19 @@ Export Control System (ECS) module wireframes cover export requests, authorizati
 ## Wireframe List
 
 ### ECS Overview
-- [ ] **Task 0.5.4.0:** ECS overview page (module summary, export requests overview, authorization status, quick links)
+- [x] **Task 0.5.4.0:** ECS overview page (module summary, export requests overview, authorization status, quick links) - [Wireframe](overview/task-0.5.4.0-ecs-overview.md)
 
 ### Export Request Wireframes
-- [ ] **Task 0.5.4.1:** Export requests list page (my requests, pending approvals for MOH, status filters)
-- [ ] **Task 0.5.4.2:** Export request form (SKU selection, destination, timeline, documentation upload, file upload component)
-- [ ] **Task 0.5.4.3:** Export request detail page (request data, evaluation status, threshold comparison card: current stock vs VCI threshold vs ECS threshold)
-- [ ] **Task 0.5.4.4:** Export workflow actions (submit, verify, approve, reject, intervene buttons - role-based, intervention window indicator)
+- [x] **Task 0.5.4.1:** Export requests list page (my requests, pending approvals for MOH, status filters) - [Wireframe](export-requests/task-0.5.4.1-export-requests-list.md)
+- [x] **Task 0.5.4.2:** Export request form (SKU selection, destination, timeline, documentation upload, file upload component) - [Wireframe](export-requests/task-0.5.4.2-export-request-form.md)
+- [x] **Task 0.5.4.3:** Export request detail page (request data, evaluation status, threshold comparison card: current stock vs VCI threshold vs ECS threshold) - [Wireframe](export-requests/task-0.5.4.3-export-request-detail.md)
+- [x] **Task 0.5.4.4:** Export workflow actions (submit, verify, approve, reject, intervene buttons - role-based, intervention window indicator) - [Wireframe](export-requests/task-0.5.4.4-export-workflow-actions.md)
 
 ### Authorization Wireframes
-- [ ] **Task 0.5.4.5:** Export authorizations list page (active authorizations, expired authorizations, validity filters)
-- [ ] **Task 0.5.4.6:** Export authorization detail page (authorization details, validity period indicator, 90-day countdown, expiration warnings, threshold status)
-- [ ] **Task 0.5.4.7:** Export completion reporting interface (completion form, actual export details, shipping info)
-- [ ] **Task 0.5.4.8:** Replenishment schedule tracking interface (schedule timeline visualization, delay indicators, escalation stages)
+- [x] **Task 0.5.4.5:** Export authorizations list page (active authorizations, expired authorizations, validity filters) - [Wireframe](authorizations/task-0.5.4.5-export-authorizations-list.md)
+- [x] **Task 0.5.4.6:** Export authorization detail page (authorization details, validity period indicator, 90-day countdown, expiration warnings, threshold status) - [Wireframe](authorizations/task-0.5.4.6-export-authorization-detail.md)
+- [x] **Task 0.5.4.7:** Export completion reporting interface (completion form, actual export details, shipping info) - [Wireframe](authorizations/task-0.5.4.7-export-completion-reporting.md)
+- [x] **Task 0.5.4.8:** Replenishment schedule tracking interface (schedule timeline visualization, delay indicators, escalation stages) - [Wireframe](replenishment/task-0.5.4.8-replenishment-schedule-tracking.md)
 
 ### Historical Data Pages
 - [ ] **Task 0.5.4.9:** Export history page (historical export authorizations, filterable by date/company/status, export history route)

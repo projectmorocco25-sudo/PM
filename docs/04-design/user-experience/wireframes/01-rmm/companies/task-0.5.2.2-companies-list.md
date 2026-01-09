@@ -24,21 +24,21 @@
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Companies Table                           ││
 │ │          │ │                                             ││
-│ │ Type     │ │ Name          Type      Status    Actions ││
-│ │ ☐ All    │ │ ──────        ────      ──────    ────── ││
-│ │ ☑ IPC    │ │ ABC Pharma    IPC       Active    [View]  ││
-│ │ ☐ Whole. │ │               Inc.                [Edit]  ││
+│ │ Type     │ │ Name          Reg. Number      Type      Status    Actions ││
+│ │ ☐ All    │ │ ──────        ────────────      ────      ──────    ────── ││
+│ │ ☑ IPC    │ │ ABC Pharma    REG-2024-001      IPC       Active    [View]  ││
+│ │ ☐ Whole. │ │               Inc.                                        [Edit]  ││
 │ │          │ │                                             ││
-│ │ Status   │ │ XYZ Medical   Wholesaler Active    [View]  ││
+│ │ Status   │ │ XYZ Medical   REG-2024-002      Wholesaler Active    [View]  ││
 │ │ ☐ All    │ │   Supplies                              ││
 │ │ ☑ Active │ │                                             ││
-│ │ ☐ Inact. │ │ DEF Pharma   IPC       Active    [View]  ││
-│ │          │ │               Ltd.                [Edit]  ││
+│ │ ☐ Inact. │ │ DEF Pharma   REG-2024-003      IPC       Active    [View]  ││
+│ │          │ │               Ltd.                                        [Edit]  ││
 │ │ Company  │ │                                             ││
-│ │ ☐ All    │ │ GHI Pharma   IPC       Inactive  [View]  ││
-│ │ ☐ ABC    │ │               Corp.                [Edit] ││
+│ │ ☐ All    │ │ GHI Pharma   REG-2024-004      IPC       Inactive  [View]  ││
+│ │ ☐ ABC    │ │               Corp.                                        [Edit] ││
 │ │ ☐ XYZ    │ │                                             ││
-│ │          │ │ JKL Medical   Wholesaler Active    [View]  ││
+│ │          │ │ JKL Medical   REG-2024-005      Wholesaler Active    [View]  ││
 │ │ Date     │ │   Distrib.                              ││
 │ │ Last 7d  │ │                                             ││
 │ │ Last 30d │ │ [Load More]                              ││
@@ -96,14 +96,22 @@
 - **Layout:** Full-width table with horizontal scroll on mobile
 - **Columns:**
   1. **Name:** Company name (link to company detail)
-  2. **Type:** IPC or Wholesaler (badge)
-  3. **Status:** Active/Inactive (badge with color coding)
-  4. **Actions:** Action buttons (View, Edit)
+  2. **Registration Number:** Registration identifier (e.g., REG-2024-001)
+     - **Format:** REG-YYYY-NNNNN
+     - **Display:** Monospace font for better readability
+     - **Width:** Fixed width or minimum width to prevent wrapping
+  3. **Type:** IPC or Wholesaler (badge)
+  4. **Status:** Active/Inactive (badge with color coding)
+  5. **Actions:** Action buttons (View, Edit)
 
 **Table Features:**
-- **Sortable Columns:** Name, Type, Status (click header to sort)
+- **Sortable Columns:** Name, Registration Number, Type, Status (click header to sort)
 - **Row Hover:** Background color change (#f9fafb)
 - **Row Click:** Navigate to company detail page
+- **Registration Number:**
+  - **Format:** REG-YYYY-NNNNN (e.g., REG-2024-001)
+  - **Styling:** Monospace font for better readability
+  - **Click Action:** Can click to filter by registration number (optional)
 - **Status Badges:**
   - Active: Green (#10b981)
   - Inactive: Gray (#6b7280)
@@ -173,7 +181,8 @@
 - **Layout:** Stack layout
 - **Filters:** Hidden (accessible via filter button)
 - **Table:** Card-based layout instead of table
-- **Cards:** Show key information, tap to expand
+- **Cards:** Show key information (Name, Registration Number, Type, Status), tap to expand for full details
+- **Registration Number:** Visible on mobile cards (important for verification)
 
 ---
 

@@ -31,7 +31,7 @@ Registry Management Module (RMM) wireframes cover company, product, and SKU mana
 - [ ] **Task 0.5.2.7:** SKU detail page (SKU information, tabs: Overview | History, pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure)
 
 ### Forms
-- [ ] **Task 0.5.2.8:** Company create/edit form (form sections, validation, draft auto-save indicator)
+- [x] **Task 0.5.2.8:** Company create/edit form (form sections, validation, draft auto-save indicator) - [Wireframe](companies/task-0.5.2.8-company-create-edit-form.md)
 - [ ] **Task 0.5.2.9:** Product create/edit form (form sections, ATC code selection, validation)
 - [ ] **Task 0.5.2.10:** SKU create/edit form (pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure, validation, form sections)
 

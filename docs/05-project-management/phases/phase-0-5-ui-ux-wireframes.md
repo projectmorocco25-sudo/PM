@@ -60,15 +60,15 @@ Wireframes are organized by priority to focus on critical path items first, enab
 | Priority | Focus | Days | Wireframes | Status |
 |----------|-------|------|------------|--------|
 | **Priority 1** 🔴 | Critical Foundation | 1-2 | 20 wireframes | ✅ Complete |
-| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 11 wireframes | 🟡 10/11 Complete (91%) |
+| **Priority 2** 🔴 | Enforcement + Core RMM Workflows | 3-4 | 11 wireframes | ✅ Complete |
 | **Priority 3** 🔴 | Critical VCI Workflows | 5-6 | 14 wireframes | ✅ Complete |
-| **Priority 4** 🟡 | Supporting VCI & RMM | 7-8 | 8 wireframes | ⚪ Not Started |
+| **Priority 4** 🟡 | Supporting VCI & RMM | 7-8 | 9 wireframes | ✅ Complete |
 | **Priority 5** 🟡 | ECS Module | 9-10 | 9 wireframes | ⚪ Not Started |
 | **Priority 6** 🟡 | CMC Module | 11-12 | 13 wireframes | ⚪ Not Started |
 | **Priority 7** 🟢 | Global & Help Pages | 13-14 | 14 wireframes | ⚪ Not Started |
 | **Priority 8** 🟢 | Analytics, Historical & Modals | 14-15 | 21 wireframes | ⚪ Not Started |
 | **Review** | Final Review & Iteration | 14-15 | Documentation | ⚪ Not Started |
-| **TOTAL** | | **2-3 weeks** | **115 wireframes** | **44 wireframes complete (38%)** |
+| **TOTAL** | | **2-3 weeks** | **115 wireframes** | **53 wireframes complete (46%)** |
 
 **Note:** Modal wireframes (Priority 8) include reusable UI patterns. Some module-specific modals are already included in their respective module sections.
 
@@ -152,7 +152,7 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 ### RMM Core Workflows (Critical)
 - [x] **Task 0.5.2.2:** Wireframe - Companies list page (table view, filters, search, pagination, role-based actions) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.2-companies-list.md)
 - [x] **Task 0.5.2.3:** Wireframe - Company detail page (information sections, tabs: Overview | Products | History, action buttons, related products) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.3-company-detail.md)
-- [ ] **Task 0.5.2.8:** Wireframe - Company create/edit form (form sections, validation, draft auto-save indicator)
+- [x] **Task 0.5.2.8:** Wireframe - Company create/edit form (form sections, validation, draft auto-save indicator) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.8-company-create-edit-form.md)
 - [x] **Task 0.5.2.11:** Wireframe - Registry submission list page (my submissions, pending approvals, status filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.11-registry-submission-list.md)
 - [x] **Task 0.5.2.12:** Wireframe - Registry submission detail page (submission data, workflow status indicator, approval history timeline, action buttons) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.12-registry-submission-detail.md)
 - [x] **Task 0.5.2.13:** Wireframe - Registry submission workflow states (draft, submitted, tier2_verified, tier1_approved, tier2_implemented, completed, rejected) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/workflow/task-0.5.2.13-registry-submission-workflow-states.md)
@@ -201,19 +201,19 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 **Rationale:** Complete core modules. MSQ is monthly reporting. MOH-only pages support governance functions.
 
 ### VCI MSQ (Monthly Reporting)
-- [ ] **Task 0.5.3.9:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter)
-- [ ] **Task 0.5.3.10:** Wireframe - MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure)
-- [ ] **Task 0.5.3.11:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator)
-- [ ] **Task 0.5.3.12:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form)
+- [x] **Task 0.5.3.9:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.9-msq-submissions-list.md)
+- [x] **Task 0.5.3.10:** Wireframe - MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.10-msq-submission-form.md)
+- [x] **Task 0.5.3.11:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md)
+- [x] **Task 0.5.3.12:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
 
 ### RMM MOH-Only Pages
-- [ ] **Task 0.5.2.14:** Wireframe - ATC Codes list page (MOH only, read-only for companies, search, filters)
-- [ ] **Task 0.5.2.15:** Wireframe - Critical Medicines list page (MOH Tier 1 only, designation interface, filters)
+- [x] **Task 0.5.2.14:** Wireframe - ATC Codes list page (MOH only, read-only for companies, search, filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/task-0.5.2.14-atc-codes-list.md)
+- [x] **Task 0.5.2.15:** Wireframe - Critical Medicines list page (MOH Tier 1 only, designation interface, filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/task-0.5.2.15-critical-medicines-list.md)
 
 ### Module Overview Pages
-- [ ] **Task 0.5.2.1:** Wireframe - RMM overview page (module summary, quick links, recent activity, statistics)
-- [ ] **Task 0.5.3.0:** Wireframe - VCI overview page (module summary, submission overview, compliance violation alerts, quick links)
-- [ ] **Task 0.5.3.5:** Wireframe - Threshold detail page (threshold information, modification history, related thresholds, thresholds/[id] route)
+- [x] **Task 0.5.2.1:** Wireframe - RMM overview page (module summary, quick links, recent activity, statistics) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/overview/task-0.5.2.1-rmm-overview.md)
+- [x] **Task 0.5.3.0:** Wireframe - VCI overview page (module summary, submission overview, compliance violation alerts, quick links) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.0-vci-overview.md)
+- [x] **Task 0.5.3.5:** Wireframe - Threshold detail page (threshold information, modification history, related thresholds, thresholds/[id] route) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.5-threshold-detail.md)
 
 ---
 
@@ -435,4 +435,5 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 - 2025-01-01: All Priority 1 wireframes updated to integrate enforcement lifecycle (enforcement actions, appeals, notifications, communications, history, audit, navigation)
 - 2025-01-01: Enforcement module wireframes added to Priority 2 (6 wireframes: dashboard, actions list, detail, creation wizard, pending approvals, reports)
 - 2025-01-15: Priority 1, 2, and 3 wireframes marked as complete. All existing wireframes updated with links and status. Priority 1: 20/20 complete ✅, Priority 2: 10/11 complete (91%), Priority 3: 14/14 complete ✅. Time-bound threshold modification features integrated across all relevant wireframes.
+- 2025-01-15: Priority 4 wireframes created and marked as complete. All 9 wireframes created: MSQ submissions (list, form, detail, correction), ATC codes list, Critical medicines list, RMM overview, VCI overview, and Threshold detail pages. Priority 4: 9/9 complete ✅.
 

@@ -2,8 +2,8 @@
 
 **Purpose:** This document provides a comprehensive data dictionary with definitions for all database fields.
 
-**Last Updated:** 2025-12-31  
-**Status:** ✅ Complete (Phase 0, Week 2)  
+**Last Updated:** 2025-01-21  
+**Status:** ✅ Complete (Phase 0.6, Schema Audit Complete)  
 **Owner:** Nadia
 
 ## Overview
@@ -30,6 +30,10 @@ This data dictionary defines all fields across all database tables, including da
 | full_name | text | Yes | User's full name | Display name for UI |
 | company_id | uuid | Yes | Company ID (NULL for MOH users) | Foreign key to companies.id. NULL = MOH user, NOT NULL = Company user |
 | role | text | No | User role | Enum: tier1, tier2_officer, tier2_registrar, company_admin, company_manager, company_user, auditor, system_admin, vendor |
+| avatar_url | text | Yes | Avatar image URL | URL path to Supabase Storage bucket: `avatars/{user_id}/{filename}`. NULL for users without avatars |
+| timezone | text | No | User timezone preference | Default: 'UTC+01:00' (Morocco standard time). Valid timezone identifier (e.g., 'UTC+01:00', 'UTC+00:00', 'Africa/Casablanca') |
+| language | text | No | User language preference | Default: 'en' (English). ISO 639-1 language code (e.g., 'en', 'ar', 'fr') |
+| notification_preferences | jsonb | Yes | Notification preferences | JSON object: {email_enabled: boolean, submission_updates: boolean, compliance_alerts: boolean, enforcement_actions: boolean, system_announcements: boolean}. NULL means all notifications enabled by default |
 | is_active | boolean | No | User active status | Default: true. Inactive users cannot log in |
 | created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
 | updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
@@ -362,6 +366,8 @@ This data dictionary defines all fields across all database tables, including da
 | company_id | uuid | No | Company ID | Foreign key to companies.id |
 | score_period | text | No | Score period | Format: YYYY-MM (e.g., "2024-01") |
 | total_score | numeric(5,2) | No | Total score | Range: 0-100 (CHECK constraint) |
+| previous_period_score | numeric(5,2) | Yes | Previous period score | Previous period score for trend calculation |
+| score_change | numeric(5,2) | Yes | Score change | Score change from previous period (calculated or stored) |
 | calculated_at | timestamptz | No | Calculation timestamp | When score was calculated |
 | frozen_at | timestamptz | No | Frozen timestamp | When score was frozen (immutable) |
 | calculation_method | text | No | Calculation method | Enum: scheduled, event_triggered |
@@ -392,6 +398,151 @@ This data dictionary defines all fields across all database tables, including da
 | component_weight | numeric(5,2) | No | Component weight | Weight in total score calculation |
 | calculation_details | jsonb | Yes | Calculation details | JSON with calculation parameters |
 | created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+
+---
+
+### compliance_score_adjustments
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Adjustment ID | Primary key |
+| compliance_score_id | uuid | No | Compliance score ID | Foreign key to compliance_scores.id |
+| adjustment_type | text | No | Adjustment type | Enum: correction, override |
+| adjusted_component | text | Yes | Adjusted component | NULL for total score adjustments |
+| original_value | numeric(5,2) | Yes | Original value | Original score value |
+| adjusted_value | numeric(5,2) | Yes | Adjusted value | Adjusted score value |
+| adjustment_reason | text | No | Adjustment reason | Mandatory reason for adjustment |
+| adjusted_by | uuid | No | User who adjusted | Foreign key to users.id (Tier 1 only) |
+| adjusted_at | timestamptz | No | Adjustment timestamp | When adjustment was made |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+
+**Business Rules:**
+- Only Tier 1 can create adjustments
+- Original score remains unchanged (frozen snapshot)
+
+---
+
+### disputes
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Dispute ID | Primary key |
+| compliance_score_id | uuid | No | Compliance score ID | Foreign key to compliance_scores.id |
+| dispute_type | text | No | Dispute type | Enum: total_score, component |
+| disputed_component | text | Yes | Disputed component | NULL for total score disputes |
+| dispute_reason | text | No | Dispute reason | Mandatory reason for dispute |
+| evidence | jsonb | Yes | Evidence files | JSON array of file references. Files stored in Supabase Storage: `disputes/evidence/{dispute_id}/{file_name}` |
+| status | text | No | Status | Enum: submitted, tier2_reviewed, tier1_reviewed, upheld, rejected. Default: submitted |
+| submitted_by | uuid | No | User who submitted | Foreign key to users.id (company user) |
+| submitted_at | timestamptz | No | Submission timestamp | When dispute was submitted |
+| reviewed_by | uuid | Yes | User who reviewed | Foreign key to users.id (Tier 2 Officer) |
+| reviewed_at | timestamptz | Yes | Review timestamp | When dispute was reviewed |
+| resolution | text | Yes | Resolution | Resolution decision (if resolved) |
+| resolved_by | uuid | Yes | User who resolved | Foreign key to users.id (Tier 1) |
+| resolved_at | timestamptz | Yes | Resolution timestamp | When dispute was resolved |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+| updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
+
+**Business Rules:**
+- Must be submitted within 30 days of score publication
+- Score remains visible but marked as "Under Dispute"
+- Evidence stored as JSONB array of file references (similar to enforcement_action_appeals.evidence)
+
+---
+
+### regulatory_reports
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Report ID | Primary key |
+| report_type | text | No | Report type | Enum: monthly, quarterly, annual |
+| report_period | text | No | Report period | Report period identifier |
+| report_data | jsonb | No | Report data | JSON with report content |
+| status | text | No | Status | Enum: draft, tier2_reviewed, tier1_approved, released. Default: draft |
+| generated_by | uuid | Yes | User/system who generated | Foreign key to users.id |
+| generated_at | timestamptz | No | Generation timestamp | When report was generated |
+| reviewed_by | uuid | Yes | Tier 2 Officer who reviewed | Foreign key to users.id |
+| reviewed_at | timestamptz | Yes | Review timestamp | When report was reviewed |
+| approved_by | uuid | Yes | Tier 1 who approved | Foreign key to users.id |
+| approved_at | timestamptz | Yes | Approval timestamp | When report was approved |
+| released_at | timestamptz | Yes | Release timestamp | When report was released |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+| updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
+
+---
+
+## Governance Tables (Shared)
+
+### follow_ups
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Follow-up ID | Primary key |
+| company_id | uuid | No | Company ID | Foreign key to companies.id |
+| assigned_to | uuid | No | Officer assigned to follow-up | Foreign key to users.id (MOH user) |
+| priority | text | No | Priority | Enum: normal, high, extreme. Default: normal |
+| due_date | date | No | Due date | Due date for follow-up completion |
+| issue_type | text | No | Issue type | Enum: submission_overdue, compliance_violation, threshold_breach, enforcement_action, etc. |
+| issue_reference_id | uuid | Yes | Reference to specific issue | UUID of related entity (polymorphic relationship) |
+| issue_reference_table | text | Yes | Table name of issue reference | Table name for polymorphic relationship (e.g., 'aams_submissions', 'breaches', 'enforcement_actions') |
+| notes | text | Yes | Follow-up notes | Notes about the follow-up |
+| status | text | No | Status | Enum: pending, in_progress, completed, cancelled. Default: pending |
+| completed_at | timestamptz | Yes | Completion timestamp | When follow-up was completed |
+| completed_by | uuid | Yes | User who marked complete | Foreign key to users.id |
+| created_by | uuid | No | User who created follow-up | Foreign key to users.id (MOH user) |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+| updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
+
+**Business Rules:**
+- Used for governance action tracking and dashboard displays
+- Polymorphic relationship via `issue_reference_table` and `issue_reference_id`
+- Completed follow-ups must have both `completed_at` and `completed_by` set (or both NULL)
+
+---
+
+### meetings
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Meeting ID | Primary key |
+| title | text | No | Meeting title | Meeting title |
+| meeting_type | text | No | Meeting type | Enum: emergency, scheduled, follow_up |
+| scheduled_at | timestamptz | No | Meeting date and time | Scheduled meeting date and time |
+| location | text | Yes | Meeting location | Physical or virtual meeting location |
+| agenda | text | Yes | Meeting agenda | Meeting agenda items |
+| reason | text | Yes | Reason for meeting | Reason for scheduling (e.g., "Submission Compliance Below Threshold") |
+| related_reference_id | uuid | Yes | Related entity ID | UUID of related entity (polymorphic relationship) |
+| related_reference_table | text | Yes | Related entity table | Table name for polymorphic relationship |
+| status | text | No | Status | Enum: scheduled, cancelled, completed. Default: scheduled |
+| cancelled_at | timestamptz | Yes | Cancellation timestamp | When meeting was cancelled |
+| cancelled_by | uuid | Yes | User who cancelled | Foreign key to users.id |
+| created_by | uuid | No | User who created meeting | Foreign key to users.id (MOH user) |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+| updated_at | timestamptz | No | Last update timestamp | Auto-updated on update |
+
+**Business Rules:**
+- Used for governance meeting scheduling and tracking
+- Polymorphic relationship via `related_reference_table` and `related_reference_id`
+- Cancelled meetings must have both `cancelled_at` and `cancelled_by` set (or both NULL)
+
+---
+
+### meeting_attendees
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Attendee ID | Primary key |
+| meeting_id | uuid | No | Meeting ID | Foreign key to meetings.id |
+| user_id | uuid | No | Attendee user ID | Foreign key to users.id |
+| attendance_status | text | No | Attendance status | Enum: invited, accepted, declined, attended. Default: invited |
+| calendar_invite_sent | boolean | No | Calendar invite sent flag | Default: false. True when calendar invite (iCal) has been sent |
+| responded_at | timestamptz | Yes | Response timestamp | When attendee responded to invitation |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+
+**Business Rules:**
+- Used for meeting attendee tracking and calendar integration
+- Unique constraint on (meeting_id, user_id) - one attendee record per meeting-user combination
+- Cascade delete when meeting is deleted
 
 ---
 

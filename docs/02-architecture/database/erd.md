@@ -2,8 +2,8 @@
 
 **Purpose:** This document provides a text-based Entity Relationship Diagram (ERD) showing all entities and their relationships.
 
-**Last Updated:** 2025-12-31  
-**Status:** ✅ Complete (Phase 0, Week 2)  
+**Last Updated:** 2025-01-21  
+**Status:** ✅ Complete (Phase 0.6, Schema Audit Complete)  
 **Owner:** Nadia
 
 ## ERD Overview
@@ -266,6 +266,59 @@ regulatory_reports
 └── status
 ```
 
+## Governance Entities (Shared)
+
+```
+companies (1) ──< (M) follow_ups
+├── PK: id
+└── ...
+
+users (1) ──< (M) follow_ups (assigned_to)
+├── PK: id
+└── ...
+
+users (1) ──< (M) follow_ups (created_by)
+├── PK: id
+└── ...
+
+follow_ups
+├── PK: id
+├── FK: company_id → companies.id
+├── FK: assigned_to → users.id
+├── FK: created_by → users.id
+├── FK: completed_by → users.id (nullable)
+├── issue_reference_id (uuid, nullable, polymorphic)
+├── issue_reference_table (text, nullable)
+└── status
+
+users (1) ──< (M) meetings (created_by)
+├── PK: id
+└── ...
+
+meetings
+├── PK: id
+├── FK: created_by → users.id
+├── FK: cancelled_by → users.id (nullable)
+├── related_reference_id (uuid, nullable, polymorphic)
+├── related_reference_table (text, nullable)
+└── status
+
+meetings (1) ──< (M) meeting_attendees
+├── PK: id
+└── ...
+
+users (1) ──< (M) meeting_attendees
+├── PK: id
+└── ...
+
+meeting_attendees
+├── PK: id
+├── FK: meeting_id → meetings.id
+├── FK: user_id → users.id
+├── UNIQUE (meeting_id, user_id)
+└── attendance_status
+```
+
 ## Key Relationships Summary
 
 ### User-Company Relationship
@@ -310,6 +363,16 @@ companies (1) ──< (M) compliance_scores
 compliance_scores (1) ──< (M) compliance_score_components
 compliance_scores (1) ──< (M) compliance_score_adjustments
 compliance_scores (1) ──< (M) disputes
+```
+
+### Governance Relationships
+```
+companies (1) ──< (M) follow_ups
+users (1) ──< (M) follow_ups (assigned_to)
+users (1) ──< (M) follow_ups (created_by)
+users (1) ──< (M) meetings (created_by)
+meetings (1) ──< (M) meeting_attendees
+users (1) ──< (M) meeting_attendees
 ```
 
 ## Cross-Module Data Flows
@@ -363,6 +426,11 @@ export_authorizations (ECS) ──> Threshold switch trigger ──> thresholds 
 | compliance_scores → compliance_score_components | 1:M | One score has many components |
 | compliance_scores → compliance_score_adjustments | 1:M | One score can have multiple adjustments |
 | compliance_scores → disputes | 1:M | One score can have multiple disputes |
+| companies → follow_ups | 1:M | One company can have many follow-ups |
+| users → follow_ups (assigned_to) | 1:M | One user can be assigned many follow-ups |
+| users → meetings (created_by) | 1:M | One user can create many meetings |
+| meetings → meeting_attendees | 1:M | One meeting can have many attendees |
+| users → meeting_attendees | 1:M | One user can attend many meetings |
 | users → companies | M:1 (nullable) | Many users belong to one company (or NULL for MOH) |
 
 ## Related Documents

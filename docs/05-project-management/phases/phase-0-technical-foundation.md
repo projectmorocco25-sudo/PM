@@ -127,13 +127,24 @@ Establish the technical architecture and development foundation for the PM platf
 - **Rationale:** Full control, immutability, regulatory compliance
 
 ### Decision 4: Background Job Architecture ✅ Locked
-- **Decision:** Supabase Edge Functions + Scheduled Triggers (pg_cron)
-- **Rationale:** Native Supabase capabilities, sufficient for MVP
+- **Decision:** Supabase Edge Functions + Scheduled Triggers (pg_cron) + Background Job Queue (pg_boss or similar)
+- **Rationale:** Native Supabase capabilities for scheduled jobs, pg_boss for complex job queues with retry logic
+- **Job Types:** email_notification, report_generation, data_export, scheduled_calculation
 
 ### Decision 5: Notification Architecture ✅ Locked
 - **Decision:** In-app system as system of record (notifications stored in DB)
 - **Rationale:** Governance requirement, audit trail, user control
 - **Implementation:** Email notifications via Edge Functions (read from in-app notifications)
+
+### Decision 6: Module Integration Pattern ✅ Locked
+- **Decision:** Define explicit integration contracts between modules (RMM→VCI, VCI→ECS, ECS→CMC)
+- **Rationale:** Clear data flow specifications prevent integration issues, ensure threshold switching works correctly
+- **Reference:** See [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md)
+
+### Decision 7: Testing Infrastructure Strategy ✅ Locked
+- **Decision:** Separate test database with transaction rollback, CI/CD integration, comprehensive test fixtures
+- **Rationale:** Ensures reliable testing, prevents test data pollution, enables parallel test execution
+- **Reference:** See [Testing Framework](../../08-deployment/testing-framework.md)
 
 ## Deliverables
 
@@ -157,6 +168,12 @@ Establish the technical architecture and development foundation for the PM platf
 15. **Database Concurrency Control Strategy** (`02-architecture/database/database-concurrency-control-strategy.md`)
 16. **File Upload and Storage Security** (`02-architecture/security/file-upload-storage-security.md`)
 17. **Frontend Routing Structure** (`02-architecture/frontend/routing-structure.md`)
+
+### Phase 1 Audit Resolution Deliverables
+18. **Module Integration Contracts** (`02-architecture/integration/integration-architecture.md`) - Data flow specifications between modules
+19. **Background Job Queue Specifications** (documented in [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md)) - pg_boss configuration, job types, retry logic
+20. **Testing Infrastructure Specifications** (`08-deployment/testing-framework.md`) - Test database setup, CI/CD integration
+21. **Implementation Standards** (`05-project-management/phases/phase-1-implementation-standards.md`) - Task format, Definition of Done, testing standards
 
 ## Success Criteria
 
@@ -209,17 +226,43 @@ Establish the technical architecture and development foundation for the PM platf
 
 ## Related Documents
 
+### Architecture Documents
 - [Project Plan](../project-plan.md)
 - [System Architecture](../../02-architecture/system-architecture.md)
 - [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md)
 - [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
 - [Deployment Architecture](../../02-architecture/deployment-architecture.md)
 - [Database Schema](../../02-architecture/database/schema-design.md)
-- [Communication Channels Lifecycle](../../02-architecture/communication-channels-lifecycle.md) - Communications lifecycle states and transitions (added 2025-01-01)
+- [Communication Channels Lifecycle](../../02-architecture/communication-channels-lifecycle.md) - Communications lifecycle states and transitions
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
+
+### Subsequent Phase Documents
+- [Phase 0.5: UI/UX Wireframes](phase-0-5-ui-ux-wireframes.md) ✅ COMPLETE - 120 wireframes
+- [Phase 0.6: Database Schema Audit](phase-0-6-databases.md) ✅ COMPLETE - 14 schema changes
+- [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) ✅ APPROVED FOR IMPLEMENTATION
+- [Implementation Standards](phase-1-implementation-standards.md) - Task format, Definition of Done
 
 ---
 
-**Next Phase:** [Phase 0.5: UI/UX Wireframes & Design Validation](phase-0-5-ui-ux-wireframes.md) (recommended) → [Phase 1 Overview](phase-1-overview.md#phase-11-rmm-vci-development)  
+**Next Phase:** ✅ [Phase 0.5: UI/UX Wireframes](phase-0-5-ui-ux-wireframes.md) COMPLETE → ✅ [Phase 0.6: Database Schema Audit](phase-0-6-databases.md) COMPLETE → ✅ [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) APPROVED  
 **Owner:** Oliver (Chief Architect)
 
+---
+
+## Phase Completion Sequence
+
+```
+Phase 0: Technical Foundation ✅ COMPLETE
+    ↓
+Phase 0.5: UI/UX Wireframes ✅ COMPLETE (120 wireframes)
+    ↓
+Phase 0.6: Database Schema Audit ✅ COMPLETE (14 schema changes)
+    ↓
+Phase 1 Pre-Implementation Audit ✅ COMPLETE (60 issues addressed)
+    ↓
+Phase 1: Implementation ✅ APPROVED FOR IMPLEMENTATION
+```
+
+---
+
+**Last Updated:** 2026-01-12

@@ -120,9 +120,27 @@
   - All SKU rows must have all 12 months filled
   - At least one SKU row required
   - Submit button disabled until all validations pass
+- **SKU Validation:**
+  - SKU must exist in company's product catalog
+  - SKU must be active (not inactive/archived)
+  - No duplicate SKUs in submission
+  - **Error States:**
+    - "SKU not found" - Invalid SKU code entered
+    - "SKU not in your catalog" - SKU belongs to different company
+    - "Duplicate SKU" - SKU already added to submission
+    - "SKU is inactive" - SKU status is inactive
+- **Quantity Validation:**
+  - All 12 months required (cannot be empty)
+  - Must be integer ≥ 0 (no negative values)
+  - Must be numeric (no text)
+  - **Error States:**
+    - "Quantity required" - Empty field
+    - "Invalid quantity" - Non-numeric value
+    - "Quantity must be 0 or greater" - Negative value
 - **Error Messages:**
   - Inline error messages below invalid fields
   - Summary error message at top if validation fails
+  - Row-level error indicators for incomplete/invalid rows
 
 ### Import/Export Functionality
 

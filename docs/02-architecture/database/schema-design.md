@@ -2,8 +2,8 @@
 
 **Purpose:** This document defines the complete database schema for the PM platform, including all tables, columns, data types, constraints, and relationships.
 
-**Last Updated:** 2025-12-31  
-**Status:** ✅ Complete (Phase 0, Week 2)  
+**Last Updated:** 2025-01-21  
+**Status:** ✅ Complete (Phase 0.6, Schema Audit Complete)  
 **Owner:** Nadia
 
 ## Overview
@@ -31,6 +31,10 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | full_name | text | | User full name |
 | company_id | uuid | REFERENCES companies(id), NULLABLE | Company ID (NULL for MOH users) |
 | role | text | NOT NULL | User role (tier1, tier2_officer, tier2_registrar, company_admin, company_manager, company_user, auditor, system_admin, vendor) |
+| avatar_url | text | NULLABLE | Avatar image URL (Supabase Storage path) |
+| timezone | text | NOT NULL, DEFAULT 'UTC+01:00' | User timezone preference |
+| language | text | NOT NULL, DEFAULT 'en' | User language preference |
+| notification_preferences | jsonb | NULLABLE | Notification preferences: {email_enabled: boolean, submission_updates: boolean, compliance_alerts: boolean, enforcement_actions: boolean, system_announcements: boolean} |
 | is_active | boolean | DEFAULT true | User active status |
 | created_at | timestamptz | DEFAULT now() | Creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
@@ -38,6 +42,8 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 **Indexes:**
 - `idx_users_company_id` on `company_id`
 - `idx_users_role` on `role`
+- `idx_users_notification_preferences` on `notification_preferences` (GIN index)
+- `idx_users_timezone` on `timezone` (optional, if timezone-based queries needed)
 
 **Notes:**
 - Company users: `company_id` is set (belong to one company)
@@ -136,6 +142,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | company_id | uuid | REFERENCES companies(id), NULLABLE | Company ID (NULL for internal MOH conversations) |
 | workflow_entity_type | text | NULLABLE | Workflow entity type (registry_submission, aams_submission, export_request, breach, etc.) |
 | workflow_entity_id | uuid | NULLABLE | Workflow entity ID (links to specific submission/approval/breach) |
+| lifecycle_state | text | NOT NULL, DEFAULT 'CREATED' | Lifecycle state (CREATED, SENT, DELIVERED, READ, THREADED, WORKFLOW_LINKED, ARCHIVED) |
 | created_by | uuid | REFERENCES users(id), NOT NULL | User who created conversation |
 | created_at | timestamptz | DEFAULT now() | Creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
@@ -149,6 +156,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - `idx_conversations_created_by` on `created_by`
 - `idx_conversations_created_at` on `created_at`
 - `idx_conversations_type` on `type`
+- `idx_conversations_lifecycle_state` on `lifecycle_state`
 
 **RLS Policies:**
 - Company users: Can see conversations where `company_id = auth.company_id()`
@@ -168,6 +176,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | recipient_id | uuid | REFERENCES users(id), NULLABLE | Recipient user ID (NULL for announcements) |
 | content | text | NOT NULL | Message content |
 | is_system_message | boolean | DEFAULT false | True for automated system messages |
+| delivered_at | timestamptz | NULLABLE | Delivery timestamp (when message delivered to recipient inbox) |
 | created_at | timestamptz | DEFAULT now() | Creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
 | edited_at | timestamptz | NULLABLE | Edit timestamp (if message was edited) |
@@ -178,6 +187,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - `idx_messages_sender_id` on `sender_id`
 - `idx_messages_recipient_id` on `recipient_id`
 - `idx_messages_created_at` on `created_at`
+- `idx_messages_delivered_at` on `delivered_at` (WHERE delivered_at IS NOT NULL)
 
 **RLS Policies:**
 - Users can see messages in conversations they have access to (via conversation RLS)
@@ -258,6 +268,123 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 
 **RLS Policies:**
 - Users can see participants for conversations they have access to (via conversation RLS)
+
+---
+
+## Governance & Communication Tables
+
+### follow_ups
+**Purpose:** Track follow-up assignments for governance actions
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Follow-up ID |
+| company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
+| assigned_to | uuid | REFERENCES users(id), NOT NULL | Officer assigned to follow-up |
+| priority | text | NOT NULL, DEFAULT 'normal' | Priority (normal, high, extreme) |
+| due_date | date | NOT NULL | Due date for follow-up |
+| issue_type | text | NOT NULL | Issue type (submission_overdue, compliance_violation, threshold_breach, enforcement_action, etc.) |
+| issue_reference_id | uuid | NULLABLE | Reference to specific issue (submission_id, breach_id, etc.) |
+| issue_reference_table | text | NULLABLE | Table name of issue reference |
+| notes | text | NULLABLE | Follow-up notes |
+| status | text | NOT NULL, DEFAULT 'pending' | Status (pending, in_progress, completed, cancelled) |
+| completed_at | timestamptz | NULLABLE | Completion timestamp |
+| completed_by | uuid | REFERENCES users(id), NULLABLE | User who marked complete |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created follow-up |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_follow_ups_company_id` on `company_id`
+- `idx_follow_ups_assigned_to` on `assigned_to`
+- `idx_follow_ups_due_date` on `due_date`
+- `idx_follow_ups_status` on `status`
+- `idx_follow_ups_priority` on `priority`
+- `idx_follow_ups_active_priority` on `(status, priority, due_date)` WHERE status IN ('pending', 'in_progress')
+- `idx_follow_ups_issue_reference` on `(issue_reference_table, issue_reference_id)` WHERE issue_reference_id IS NOT NULL
+
+**Constraints:**
+- `check_follow_ups_priority`: priority IN ('normal', 'high', 'extreme')
+- `check_follow_ups_status`: status IN ('pending', 'in_progress', 'completed', 'cancelled')
+- `check_follow_ups_reference_table`: issue_reference_table must be valid table name
+- `check_follow_ups_completed`: completed_at and completed_by must both be set or both be NULL
+
+**Notes:**
+- Used in MOH Tier 1 Dashboard for follow-up tracking widget
+- Supports polymorphic relationships via issue_reference_id + issue_reference_table
+- Cascade delete when company is deleted
+
+---
+
+### meetings
+**Purpose:** Schedule and track governance meetings
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Meeting ID |
+| title | text | NOT NULL | Meeting title |
+| meeting_type | text | NOT NULL | Meeting type (emergency, scheduled, follow_up) |
+| scheduled_at | timestamptz | NOT NULL | Meeting date and time |
+| location | text | NULLABLE | Meeting location (physical or virtual) |
+| agenda | text | NULLABLE | Meeting agenda |
+| reason | text | NULLABLE | Reason for meeting (e.g., "Submission Compliance Below Threshold") |
+| related_reference_id | uuid | NULLABLE | Related entity ID (company_id, submission_id, etc.) |
+| related_reference_table | text | NULLABLE | Related entity table |
+| status | text | NOT NULL, DEFAULT 'scheduled' | Status (scheduled, cancelled, completed) |
+| cancelled_at | timestamptz | NULLABLE | Cancellation timestamp |
+| cancelled_by | uuid | REFERENCES users(id), NULLABLE | User who cancelled |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created meeting |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_meetings_scheduled_at` on `scheduled_at`
+- `idx_meetings_status` on `status`
+- `idx_meetings_meeting_type` on `meeting_type`
+- `idx_meetings_upcoming` on `(scheduled_at, status)` WHERE status = 'scheduled' AND scheduled_at >= now()
+- `idx_meetings_related_reference` on `(related_reference_table, related_reference_id)` WHERE related_reference_id IS NOT NULL
+
+**Constraints:**
+- `check_meetings_type`: meeting_type IN ('emergency', 'scheduled', 'follow_up')
+- `check_meetings_status`: status IN ('scheduled', 'cancelled', 'completed')
+- `check_meetings_cancelled`: cancelled_at and cancelled_by must both be set or both be NULL
+- `check_meetings_reference_table`: related_reference_table must be valid table name
+
+**Notes:**
+- Used in MOH Tier 1 Dashboard for meeting scheduling functionality
+- Supports polymorphic relationships via related_reference_id + related_reference_table
+- Calendar integration supported via meeting_attendees table
+
+---
+
+### meeting_attendees
+**Purpose:** Track meeting attendees
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Attendee ID |
+| meeting_id | uuid | REFERENCES meetings(id), NOT NULL | Meeting ID |
+| user_id | uuid | REFERENCES users(id), NOT NULL | Attendee user ID |
+| attendance_status | text | NOT NULL, DEFAULT 'invited' | Status (invited, accepted, declined, attended) |
+| calendar_invite_sent | boolean | NOT NULL, DEFAULT false | Calendar invite sent flag |
+| responded_at | timestamptz | NULLABLE | Response timestamp |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+
+**Indexes:**
+- `idx_meeting_attendees_meeting_id` on `meeting_id`
+- `idx_meeting_attendees_user_id` on `user_id`
+- `idx_meeting_attendees_status` on `attendance_status`
+- `idx_meeting_attendees_pending` on `(meeting_id, attendance_status)` WHERE attendance_status = 'invited' AND responded_at IS NULL
+- UNIQUE constraint on `(meeting_id, user_id)`
+
+**Constraints:**
+- `check_meeting_attendees_status`: attendance_status IN ('invited', 'accepted', 'declined', 'attended')
+- UNIQUE `(meeting_id, user_id)`: One attendee record per meeting-user combination
+
+**Notes:**
+- Cascade delete when meeting is deleted
+- Cascade delete when user is deleted
+- Used for calendar invite tracking and attendance management
 
 ---
 
@@ -781,6 +908,8 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
 | score_period | text | NOT NULL | Score period (YYYY-MM format) |
 | total_score | numeric(5,2) | NOT NULL, CHECK (total_score >= 0 AND total_score <= 100) | Total score (0-100) |
+| previous_period_score | numeric(5,2) | NULLABLE | Previous period score (for change calculation) |
+| score_change | numeric(5,2) | NULLABLE | Score change from previous period (calculated) |
 | calculated_at | timestamptz | NOT NULL | Calculation timestamp |
 | frozen_at | timestamptz | NOT NULL | Frozen timestamp (immutable) |
 | calculation_method | text | NOT NULL | Calculation method (scheduled, event_triggered) |
@@ -860,6 +989,7 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 | dispute_type | text | NOT NULL | Dispute type (total_score, component) |
 | disputed_component | text | NULLABLE | Disputed component (NULL for total score) |
 | dispute_reason | text | NOT NULL | Dispute reason |
+| evidence | jsonb | NULLABLE | Evidence files (file references) |
 | status | text | NOT NULL, DEFAULT 'submitted' | Status (submitted, tier2_reviewed, tier1_reviewed, upheld, rejected) |
 | submitted_by | uuid | REFERENCES users(id), NOT NULL | User who submitted |
 | submitted_at | timestamptz | DEFAULT now() | Submission timestamp |
@@ -874,10 +1004,13 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 **Indexes:**
 - `idx_disputes_compliance_score_id` on `compliance_score_id`
 - `idx_disputes_status` on `status`
+- `idx_disputes_evidence` on `evidence` (GIN index, optional if querying by evidence)
 
 **Notes:**
 - Must be submitted within 30 days of score publication
 - Score remains visible but marked as "Under Dispute"
+- Evidence stored as JSONB array of file references (similar to enforcement_action_appeals.evidence)
+- Files stored in Supabase Storage: `disputes/evidence/{dispute_id}/{file_name}`
 
 ---
 
@@ -992,6 +1125,129 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 - Appeals require evidence submission
 - Tier 2 reviews first, then Tier 1 makes final decision
 - If appeal upheld, enforcement action is reversed (status: resolved, resolution: appeal_upheld)
+
+---
+
+## Governance Tables (Shared)
+
+### follow_ups
+**Purpose:** Track follow-up assignments for governance actions
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Follow-up ID |
+| company_id | uuid | REFERENCES companies(id), NOT NULL | Company ID |
+| assigned_to | uuid | REFERENCES users(id), NOT NULL | Officer assigned to follow-up |
+| priority | text | NOT NULL, DEFAULT 'normal' | Priority (normal, high, extreme) |
+| due_date | date | NOT NULL | Due date for follow-up |
+| issue_type | text | NOT NULL | Issue type (submission_overdue, compliance_violation, threshold_breach, enforcement_action, etc.) |
+| issue_reference_id | uuid | NULLABLE | Reference to specific issue (submission_id, breach_id, etc.) |
+| issue_reference_table | text | NULLABLE | Table name of issue reference |
+| notes | text | NULLABLE | Follow-up notes |
+| status | text | NOT NULL, DEFAULT 'pending' | Status (pending, in_progress, completed, cancelled) |
+| completed_at | timestamptz | NULLABLE | Completion timestamp |
+| completed_by | uuid | REFERENCES users(id), NULLABLE | User who marked complete |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created follow-up |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_follow_ups_company_id` on `company_id`
+- `idx_follow_ups_assigned_to` on `assigned_to`
+- `idx_follow_ups_due_date` on `due_date`
+- `idx_follow_ups_status` on `status`
+- `idx_follow_ups_priority` on `priority`
+- `idx_follow_ups_active_priority` on `(status, priority, due_date)` WHERE `status IN ('pending', 'in_progress')`
+- `idx_follow_ups_issue_reference` on `(issue_reference_table, issue_reference_id)` WHERE `issue_reference_id IS NOT NULL`
+
+**Constraints:**
+- `CHECK (priority IN ('normal', 'high', 'extreme'))`
+- `CHECK (status IN ('pending', 'in_progress', 'completed', 'cancelled'))`
+- `CHECK ((completed_at IS NULL AND completed_by IS NULL) OR (completed_at IS NOT NULL AND completed_by IS NOT NULL))`
+
+**RLS Policies:**
+- Company users: Can see follow-ups for their company only
+- MOH users: Can see all follow-ups
+
+**Notes:**
+- Used for governance action tracking and dashboard displays
+- Polymorphic relationship via `issue_reference_table` and `issue_reference_id`
+
+---
+
+### meetings
+**Purpose:** Schedule and track governance meetings
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Meeting ID |
+| title | text | NOT NULL | Meeting title |
+| meeting_type | text | NOT NULL | Meeting type (emergency, scheduled, follow_up) |
+| scheduled_at | timestamptz | NOT NULL | Meeting date and time |
+| location | text | NULLABLE | Meeting location |
+| agenda | text | NULLABLE | Meeting agenda |
+| reason | text | NULLABLE | Reason for meeting (e.g., "Submission Compliance Below Threshold") |
+| related_reference_id | uuid | NULLABLE | Related entity ID (company_id, submission_id, etc.) |
+| related_reference_table | text | NULLABLE | Related entity table |
+| status | text | NOT NULL, DEFAULT 'scheduled' | Status (scheduled, cancelled, completed) |
+| cancelled_at | timestamptz | NULLABLE | Cancellation timestamp |
+| cancelled_by | uuid | REFERENCES users(id), NULLABLE | User who cancelled |
+| created_by | uuid | REFERENCES users(id), NOT NULL | User who created meeting |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+| updated_at | timestamptz | DEFAULT now() | Last update timestamp |
+
+**Indexes:**
+- `idx_meetings_scheduled_at` on `scheduled_at`
+- `idx_meetings_status` on `status`
+- `idx_meetings_meeting_type` on `meeting_type`
+- `idx_meetings_upcoming` on `(scheduled_at, status)` WHERE `status = 'scheduled' AND scheduled_at >= now()`
+- `idx_meetings_related_reference` on `(related_reference_table, related_reference_id)` WHERE `related_reference_id IS NOT NULL`
+
+**Constraints:**
+- `CHECK (meeting_type IN ('emergency', 'scheduled', 'follow_up'))`
+- `CHECK (status IN ('scheduled', 'cancelled', 'completed'))`
+- `CHECK ((cancelled_at IS NULL AND cancelled_by IS NULL) OR (cancelled_at IS NOT NULL AND cancelled_by IS NOT NULL))`
+
+**RLS Policies:**
+- Company users: Can see meetings related to their company
+- MOH users: Can see all meetings
+
+**Notes:**
+- Used for governance meeting scheduling and tracking
+- Polymorphic relationship via `related_reference_table` and `related_reference_id`
+
+---
+
+### meeting_attendees
+**Purpose:** Track meeting attendees
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Attendee ID |
+| meeting_id | uuid | REFERENCES meetings(id), NOT NULL | Meeting ID |
+| user_id | uuid | REFERENCES users(id), NOT NULL | Attendee user ID |
+| attendance_status | text | NOT NULL, DEFAULT 'invited' | Status (invited, accepted, declined, attended) |
+| calendar_invite_sent | boolean | DEFAULT false | Calendar invite sent flag |
+| responded_at | timestamptz | NULLABLE | Response timestamp |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+
+**Indexes:**
+- `idx_meeting_attendees_meeting_id` on `meeting_id`
+- `idx_meeting_attendees_user_id` on `user_id`
+- `idx_meeting_attendees_status` on `attendance_status`
+- `idx_meeting_attendees_pending` on `(meeting_id, attendance_status)` WHERE `attendance_status = 'invited' AND responded_at IS NULL`
+- UNIQUE constraint on `(meeting_id, user_id)`
+
+**Constraints:**
+- `CHECK (attendance_status IN ('invited', 'accepted', 'declined', 'attended'))`
+- UNIQUE `(meeting_id, user_id)`
+
+**RLS Policies:**
+- Users: Can see attendees for meetings they have access to (via meeting RLS)
+
+**Notes:**
+- Used for meeting attendee tracking and calendar integration
+- Cascade delete when meeting is deleted
 
 ---
 

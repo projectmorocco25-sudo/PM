@@ -124,12 +124,24 @@
 
 ### Field-Level Validation
 - **SKU:** Required, must be valid SKU from company's product catalog
+  - **Error States:**
+    - "SKU not found" - Invalid SKU code entered
+    - "SKU not in your catalog" - SKU belongs to different company
+    - "Duplicate SKU" - SKU already added to submission
+    - "SKU is inactive" - SKU status is inactive
 - **Quantity:** Required, must be non-negative number
+  - **Error States:**
+    - "Quantity required" - Empty field
+    - "Invalid quantity" - Non-numeric value
+    - "Quantity must be 0 or greater" - Negative value
 
 ### Form-Level Validation
 - **All SKUs:** At least one SKU must be entered
+  - **Error State:** "At least one SKU is required"
 - **All Quantities:** All entered SKUs must have quantity values
+  - **Error State:** "All SKUs must have quantity values"
 - **No Duplicates:** Cannot have duplicate SKU entries
+  - **Error State:** "Duplicate SKUs found - please remove duplicates"
 
 ### Submission Validation
 - **Pre-submit Check:** All fields must be valid

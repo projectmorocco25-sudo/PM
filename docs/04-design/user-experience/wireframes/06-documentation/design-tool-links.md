@@ -90,9 +90,10 @@ If wireframes are created in external design tools (Figma, Miro, Adobe XD, etc.)
 
 **Master Miro Board:**
 - **Board Link:** [Phase 0.5 Wireframes - Master Board](https://miro.com/app/board/uXjVGUps93A=/)
+- **Navigation Flow Diagram:** [Wireframe Navigation & Connection Map](https://miro.com/app/board/uXjVGUps93A=/?focusWidget=3458764654831369942) - Complete navigation flow diagram showing all page connections
 - **Organization:** Organized by priority and module (as per Phase 0.5 plan)
-- **Last Updated:** 2025-12-31
-- **Status:** 🟡 In Progress - Board created, wireframes being added
+- **Last Updated:** 2025-01-22
+- **Status:** ✅ Active - Board created, navigation flow diagram added
 
 **Note:** Per the Pre-Priority 1 decisions, we planned for 3 Miro boards (Priorities 1-3, 4-6, 7-8). This master board may be organized into sections or additional boards may be created as needed.
 

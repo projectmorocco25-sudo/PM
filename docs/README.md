@@ -21,26 +21,51 @@ docs/
 │   └── README.md
 │
 ├── 01-requirements/                 # Requirements specifications
+│   ├── README.md
 │   ├── user-stories/
 │   └── acceptance-criteria/
 │
 ├── 02-architecture/                 # Technical architecture
-│   ├── modules/
-│   ├── database/
-│   ├── api/
-│   ├── security/
-│   └── integration/
+│   ├── README.md
+│   ├── system-architecture.md
+│   ├── workflow-architecture.md
+│   ├── deployment-architecture.md
+│   ├── api/                        # API specifications
+│   ├── database/                   # Schema, ERD, migrations
+│   ├── frontend/                   # Frontend architecture
+│   ├── security/                   # Security architecture
+│   ├── integration/                # External integrations
+│   ├── modules/                    # Module architecture
+│   ├── implementation/             # Implementation guides
+│   └── testing/                    # Testing specifications
 │
 ├── 03-governance/                   # Governance & compliance
+│   ├── README.md
+│   ├── governance-workflows.md
+│   ├── regulatory-framework.md
+│   ├── compliance-requirements.md
+│   ├── approvals-authority-matrix.md
+│   └── communication-design/       # Communication lifecycle design
 │
 ├── 04-design/                       # UI/UX and workflow design
+│   ├── README.md
 │   ├── user-experience/
-│   │   └── wireframes/
+│   │   └── wireframes/            # Organised by module (00-07)
 │   └── workflows/
 │
 ├── 05-project-management/           # Project planning & execution
+│   ├── README.md
 │   ├── project-plan.md
-│   ├── phases/
+│   ├── phases/                     # Phase definitions + supporting docs
+│   │   ├── phase-0-technical-foundation.md
+│   │   ├── Phase-1-Implementation-Plan.md
+│   │   ├── phase-2-moh-uat.md
+│   │   ├── phase-3-pilot.md
+│   │   ├── phase-4-production.md
+│   │   ├── phase-0-supporting/     # Phase 0 working documents
+│   │   ├── phase-1-supporting/     # Phase 1 working documents
+│   │   ├── guidelines/             # Cross-phase principles
+│   │   └── archive/                # Completed phase documents
 │   ├── milestones/
 │   ├── deliverables/
 │   ├── resources/
@@ -50,128 +75,61 @@ docs/
 │   ├── risks-issues/
 │   ├── change-management/
 │   ├── quality/
-│   │   └── quality-reports/
 │   └── status-reports/
 │
 ├── 06-development/                  # Development specifications
+│   ├── README.md
+│   ├── development-setup.md
 │   └── technical-decisions/
-│       └── decisions/
+│       └── decision-log.md
 │
 ├── 07-testing/                      # Testing strategy & planning
+│   ├── README.md
 │   ├── test-scenarios/
 │   └── mock-data/
 │
 ├── 08-deployment/                   # Deployment planning
+│   ├── README.md
+│   ├── ci-cd-pipeline.md
+│   ├── infrastructure.md
+│   ├── testing-framework.md
 │   ├── environments/
 │   └── operations/
 │
 ├── 09-training/                     # Training & user documentation
+│   ├── README.md
 │   ├── user-manuals/
 │   └── training-materials/
 │
 ├── 10-references/                   # References & templates
+│   ├── README.md
 │   ├── glossary.md
 │   ├── acronyms.md
 │   ├── filing-system.md
+│   ├── templates/
 │   ├── regulations/
-│   └── templates/
+│   └── external-resources/
 │
 └── archive/                         # Archived documents
+    └── README.md
 ```
 
-### Detailed Descriptions
+### Folder Descriptions
 
-### 00-overview/
-High-level project documents and navigation
-- Project Brief – PM.md (main project brief)
-- Executive summaries
-- Project charter
-
-### 01-requirements/
-Requirements specifications
-- Business and functional requirements
-- User stories (organized by module)
-- Acceptance criteria (organized by module)
-
-### 02-architecture/
-Technical architecture and design specifications
-- System architecture
-- Module architecture specs (RMM, VCI, ECS, CMC)
-- Database schema design
-- API specifications
-- Security architecture
-- Integration architecture
-
-### 03-governance/
-Governance and compliance specifications
-- Governance workflows
-- Compliance requirements
-- Regulatory policies
-- Approvals and authority matrix
-
-### 04-design/
-UI/UX and workflow design
-- User experience design
-- User journeys and personas
-- Wireframes
-- Workflow diagrams
-- UI component specifications
-
-### 05-project-management/
-Project planning and execution management
-- Overall project plan
-- Phase plans (Phase 0 through Phase 4)
-- Milestones tracking
-- Deliverables tracking
-- Resource planning
-- Stakeholder management
-- Communications and meeting notes
-- Risk and issue management
-- Change management
-- Quality management
-- Status reports
-
-### 06-development/
-Development specifications and standards
-- Development standards and conventions
-- Technical decision log
-- Development workflow (Git, branching)
-
-### 07-testing/
-Testing strategy and planning
-- Test strategy and plan
-- Test scenarios (organized by module)
-- Mock data strategy and specifications
-
-### 08-deployment/
-Deployment planning
-- Deployment plan
-- Environment specifications (dev, staging, prod)
-- Operations planning (monitoring, backup, disaster recovery)
-
-### 09-training/
-Training and user documentation
-- Training plan
-- User manuals (by role)
-- Training materials
-
-### 10-references/
-Reference materials
-- Glossary
-- Acronyms
-- Regulatory references
-- Document templates
-
-### archive/
-Archived documents (old versions, deprecated items)
-
-## Navigation
-
-Each major section contains a README.md file with:
-- Overview of the section
-- List of documents in that section
-- Links to related documents
-- Navigation guidance
+| Folder | Purpose |
+|--------|---------|
+| `00-overview/` | High-level project documents, project brief, executive summaries |
+| `01-requirements/` | Business requirements, user stories, acceptance criteria |
+| `02-architecture/` | System architecture, API, database, security, integrations |
+| `03-governance/` | Governance workflows, compliance, regulatory framework |
+| `04-design/` | UI/UX wireframes, workflow diagrams |
+| `05-project-management/` | Project plan, phases, milestones, risks, status reports |
+| `06-development/` | Development setup, technical decisions |
+| `07-testing/` | Test strategy, test scenarios, mock data |
+| `08-deployment/` | CI/CD, environments, infrastructure, operations |
+| `09-training/` | User manuals, training materials |
+| `10-references/` | Glossary, acronyms, templates, external references |
+| `archive/` | Deprecated and historical documents |
 
 ## Implementation Files
 
@@ -190,8 +148,17 @@ Implementation code and configuration files live outside `/docs`:
 - [Project Brief](00-overview/Project%20Brief%20–%20PM.md)
 - [Project Plan](05-project-management/project-plan.md)
 - [System Architecture](02-architecture/system-architecture.md)
+- [Phase 1 Implementation Plan](05-project-management/phases/Phase-1-Implementation-Plan.md)
 - [Glossary](10-references/glossary.md)
 - [Acronyms](10-references/acronyms.md)
+
+## Navigation
+
+Each major section contains a README.md file with:
+- Overview of the section
+- List of documents in that section
+- Links to related documents
+- Navigation guidance
 
 ## Document Maintenance
 
@@ -202,6 +169,5 @@ Implementation code and configuration files live outside `/docs`:
 
 ---
 
-**Last Updated:** 2025-12-31  
-**Maintained By:** Project Management Team
-
+**Last Updated:** 2026-01-12  
+**Maintained By:** Yasmine (Project Manager)

@@ -7,7 +7,7 @@ If the user asks to rename a member or adjust responsibilities, update this file
 
 ## Team roster
 - **Oliver (Chief Architect / Orchestrator)**: planning, coordination, consistency across Layers 1–6, decision log, final technical arbitration.
-- **Yasmine (Project Manager)**: project planning, stakeholder coordination, timeline management, risk assessment, resource allocation, milestone tracking, scope management, communication planning, quality assurance coordination, delivery management.
+- **Yasmine (Project Manager)**: project planning, stakeholder coordination, timeline management, risk assessment, resource allocation, milestone tracking, scope management, communication planning, quality assurance coordination, delivery management, world specialist in filing organisation and structure.
 - **Fatima (MOH Governance & Regulation SME)**: MOH tier authority, governance rules, approvals/enforcement policy, non-retroactivity, two-person rule, evidence/justification requirements.
 - **Dr. Samir (Pharma Value Chain SME)**: pharma domain correctness (WSL/MSQ/AAMS, critical medicines, export realities).
 - **Nadia (Supabase/Postgres Data Modeler)**: schema + migrations, effective-dating, enums, constraints, versioning.

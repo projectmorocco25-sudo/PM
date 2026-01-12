@@ -1,58 +1,69 @@
 # Phases Directory
 
-**Purpose:** Project phase documentation and planning documents
+**Purpose:** Project phase definitions and supporting documentation
 
 ---
 
 ## Directory Structure
 
-### Active Documents
+### Core Phase Files (Root Level)
 
-#### Phase 0.6 Database Schema Audit
-
-**Core Documents:**
-- `phase-0-6-databases.md` - Main audit plan (complete)
-- `phase-0-6-audit-report.md` - Comprehensive audit report (final deliverable)
-- `phase-0-6-team-handoff.md` - Phase 1 team handoff document
-- `phase-0-6-schema-change-log.md` - Version history and change log
-- `phase-0-6-implementation-priorities.md` - Prioritized implementation guide
-- `phase-0-6-migration-templates.md` - Migration script templates
-
-**Reference Documents:**
-- `phase-0-6-consolidated-gaps.md` - Consolidated gap analysis
-- `phase-0-6-gap-analysis.md` - Detailed gap analysis by phase
-
-**Archived Documents:**
-- Progress summaries and interim tracking documents are archived in `archive/phase-0-6-progress-summaries/`
-- See `ARCHIVE-SUMMARY.md` for archive details
+| File | Description |
+|------|-------------|
+| `phase-0-technical-foundation.md` | Phase 0: Technical foundation and architecture |
+| `phase-0-5-ui-ux-wireframes.md` | Phase 0.5: UI/UX wireframe design plan |
+| `phase-0-6-databases.md` | Phase 0.6: Database schema audit plan |
+| `Phase-1-Implementation-Plan.md` | Phase 1: Core implementation plan |
+| `phase-1-overview.md` | Phase 1: High-level overview |
+| `phase-2-moh-uat.md` | Phase 2: MOH user acceptance testing |
+| `phase-3-pilot.md` | Phase 3: Pilot deployment |
+| `phase-4-production.md` | Phase 4: Production rollout |
 
 ---
 
-### Other Phase Documents
+### Subfolders
 
-- **Phase 0.5:** UI/UX wireframes and review documents
-- **Phase 0:** Technical foundation and review documents
-- **Phase 1-4:** Implementation and deployment plans
-- **General:** `wireframe-first-implementation-principle.md`
+| Folder | Contents |
+|--------|----------|
+| `phase-0-supporting/` | Phase 0.5/0.6 working documents: reviews, checklists, gap analyses, handoffs |
+| `phase-1-supporting/` | Phase 1 audit findings, implementation readiness, standards, progress tracking |
+| `guidelines/` | Cross-phase principles and guidelines |
+| `archive/` | Completed/superseded documents, historical records |
 
 ---
 
-## Archive
+## Subfolder Details
 
-Interim/temporary tracking documents are archived in `archive/` subdirectory. See:
-- `ARCHIVE-SUMMARY.md` - Archive summary
-- `archive/ARCHIVE-INDEX.md` - Archive index
-- `archive/phase-0-6-progress-summaries/README.md` - Phase 0.6 progress summaries archive
+### phase-0-supporting/
+- Phase 0.5 checkpoint reviews and checklists
+- Phase 0.6 audit reports and gap analyses
+- Implementation priorities and migration templates
+- Schema change logs and team handoffs
+
+### phase-1-supporting/
+- Pre-implementation audit checklists and summaries
+- Audit consolidated findings and status tracking
+- Implementation standards and readiness assessments
+- Priority 1 implementation guides and trackers
+
+### guidelines/
+- `wireframe-first-implementation-principle.md` - Core development principle
+
+### archive/
+- Completed plans and retrospective documents
+- Individual audit execution reports
+- Historical progress summaries
+- See `archive/ARCHIVE-INDEX.md` for full index
 
 ---
 
 ## File Organization Policy
 
-- **Active documents:** Main directory (current/reference documents)
-- **Archived documents:** `archive/` subdirectory (historical/temporary documents)
-- **Progress summaries:** Archived after phase completion
-- **Final deliverables:** Retained in main directory
+- **Root level:** Core phase definition and plan documents
+- **Supporting folders:** Working documents, audits, reviews, checklists
+- **Guidelines:** Principles that apply across phases
+- **Archive:** Historical documents after phase/task completion
 
 ---
 
-**Last Updated:** 2025-01-21
+**Last Updated:** 2026-01-12

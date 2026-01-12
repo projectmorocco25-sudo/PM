@@ -1312,10 +1312,12 @@ This phase ensures the database schema (`schema-design.md`) is fully aligned wit
 - [ ] Order migrations by priority (Critical → High → Medium → Low)
 - [ ] Identify breaking changes (if any)
 - [ ] Plan migration scripts (one script per change or grouped by dependency)
-- [ ] Define rollback procedures (for each migration)
+- [ ] **MCP Requirement:** All migrations must use Supabase MCP (`mcp_supabase_apply_migration`) - not Supabase CLI
+- [ ] Define rollback procedures (for each migration - using `mcp_supabase_execute_sql` if needed)
 - [ ] Estimate migration time for each change
+- [ ] Plan verification steps using MCP tools (`mcp_supabase_list_migrations`, `mcp_supabase_list_tables`, `mcp_supabase_execute_sql`)
 
-**Deliverable:** Migration plan with scripts outline
+**Deliverable:** Migration plan with scripts outline (all using Supabase MCP)
 
 **Phase 7 Deliverable:** Complete gap analysis document with prioritized recommendations and migration plan
 
@@ -1325,6 +1327,15 @@ This phase ensures the database schema (`schema-design.md`) is fully aligned wit
 
 **Duration:** 1 day  
 **Priority:** Critical — Implementation
+
+**⚠️ MCP Requirement:** All database migrations and schema updates in Phase 8 and Phase 1 implementation MUST use Supabase MCP (Model Context Protocol) tools. Do not use Supabase CLI.
+
+**MCP Tools for Migrations:**
+- `mcp_supabase_apply_migration` - Apply all database migrations (DDL operations)
+- `mcp_supabase_list_migrations` - Verify migrations applied
+- `mcp_supabase_list_tables` - Verify tables created
+- `mcp_supabase_execute_sql` - Verify schema (columns, indexes, constraints)
+- `mcp_supabase_get_advisors` - Check security and performance recommendations
 
 ### Batch 8.1: Schema Design Document Updates
 
@@ -1692,7 +1703,8 @@ For each wireframe file, use this checklist:
 
 3. ✅ **Migration Planning** - Create detailed migration scripts - **COMPLETE**
    - Migration scripts created in `schema-updates-phase0-6-critical-gaps.md`
-   - Rollback procedures documented
+   - **All migrations must use Supabase MCP (`mcp_supabase_apply_migration`)** - not Supabase CLI
+   - Rollback procedures documented (using `mcp_supabase_execute_sql` if needed)
 
 4. ✅ **Phase 1 Task Updates** - Update Phase 1 plan with schema changes - **COMPLETE**
    - Phase 1 Implementation Plan updated with all Phase 0.6 changes
@@ -1736,3 +1748,26 @@ For each wireframe file, use this checklist:
 **Last Updated:** 2026-01-12  
 **Status:** ✅ COMPLETE - All 9 phases complete, schema updated, integrated into Phase 1
 
+---
+
+## Database Management with Supabase MCP
+
+**⚠️ CRITICAL:** All database operations during Phase 1 implementation MUST use Supabase MCP (Model Context Protocol) tools.
+
+**MCP Tools for Database Operations:**
+- `mcp_supabase_apply_migration` - Apply all database migrations (DDL operations)
+- `mcp_supabase_list_migrations` - List and verify applied migrations
+- `mcp_supabase_list_tables` - List all tables in schema
+- `mcp_supabase_execute_sql` - Execute SQL queries (verification, data operations)
+- `mcp_supabase_get_advisors` - Get security and performance recommendations
+- `mcp_supabase_list_extensions` - List installed database extensions
+- `mcp_supabase_generate_typescript_types` - Generate TypeScript types from schema
+
+**MCP Requirements for Phase 1:**
+1. All migrations must use `mcp_supabase_apply_migration` (not Supabase CLI)
+2. All schema verification must use `mcp_supabase_list_tables` and `mcp_supabase_execute_sql`
+3. All migration tracking must use `mcp_supabase_list_migrations`
+4. Security checks must use `mcp_supabase_get_advisors` after migrations
+5. Schema validation queries must use `mcp_supabase_execute_sql`
+
+**Reference:** See [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) for detailed MCP requirements on all database tasks.

@@ -1,0 +1,143 @@
+# Supabase Configuration for PM Platform
+# https://supabase.com/docs/guides/cli/config
+
+[project]
+id = "your-project-ref"
+name = "pm-platform"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[api.tls]
+enabled = false
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[db.pooler]
+enabled = false
+port = 54329
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[realtime]
+enabled = true
+ip_version = "IPv4"
+max_header_length = 4096
+
+[studio]
+enabled = true
+port = 54323
+api_url = "http://127.0.0.1"
+
+[inbucket]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[storage.image_transformation]
+enabled = true
+
+# ============================================================================
+# AUTHENTICATION CONFIGURATION
+# Task 1.1.1.6a: Password Policies
+# Task 1.1.1.6b: Session Management
+# ============================================================================
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://localhost:3000", "https://pm-platform.gov.dz"]
+
+# Session Management (Task 1.1.1.6b)
+# JWT token expires after 1 hour (3600 seconds) - user must refresh
+jwt_expiry = 3600
+
+# Refresh token rotation - new refresh token issued on each use
+enable_refresh_token_rotation = true
+
+# Grace period (seconds) for refresh token reuse during concurrent requests
+refresh_token_reuse_interval = 10
+
+# Signup controls
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+# Password Policy (Task 1.1.1.6a)
+# Note: Supabase enforces minimum 6 chars by default
+# Additional complexity requirements enforced via:
+# 1. Frontend validation (Zod schema)
+# 2. Database trigger on auth.users
+# 3. Production dashboard settings
+[auth.password]
+# Minimum password length (default: 6, recommended: 8+)
+min_length = 8
+
+# Require at least one uppercase, lowercase, number, and special character
+# Enforced via database trigger and frontend validation
+# required_characters = ["uppercase", "lowercase", "number", "special"]
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+secure_password_change = true
+
+# Rate limiting for auth endpoints
+# Prevents brute force attacks
+max_frequency = "1s"
+
+# Password reset link expiry (seconds) - 1 hour
+# otp_expiry = 3600
+
+[auth.sms]
+enable_signup = false
+enable_confirmations = false
+
+[auth.external.apple]
+enabled = false
+
+[auth.external.azure]
+enabled = false
+
+[auth.external.google]
+enabled = false
+
+# Analytics configuration
+[analytics]
+enabled = false
+port = 54327
+vector_port = 54328
+
+# Edge Functions configuration
+[functions]
+verify_jwt = true
+
+[functions.shared-send-email]
+verify_jwt = true
+
+[functions.vci-send-email-notifications]
+verify_jwt = true
+
+[functions.cmc-calculate-scores]
+verify_jwt = true
+
+[functions.vci-check-threshold-reverts]
+verify_jwt = true
+
+[functions.ecs-expire-authorizations]
+verify_jwt = true
+
+[functions.communications-send-message-emails]
+verify_jwt = true

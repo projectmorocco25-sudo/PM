@@ -896,81 +896,140 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 ## Subphase 1.1.3: VCI Module - AAMS Workflow (Week 4)
 
 ### VCI AAMS Backend Tasks
-- [ ] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
-- [ ] **Task 1.1.3.2:** Create VCI RPC function - AAMS verification (vci_verify_aams) - includes threshold calculation (B × AAMS)
-- [ ] **Task 1.1.3.3:** Create VCI RPC function - AAMS approval (vci_approve_aams_threshold)
-- [ ] **Task 1.1.3.4:** Create VCI RPC function - AAMS completion (vci_complete_aams_submission)
-- [ ] **Task 1.1.3.5:** Create VCI RPC function - AAMS rejection (vci_reject_aams_submission)
-- [ ] **Task 1.1.3.6:** Implement threshold calculation logic (B multiplier: 3 standard, 3.5 critical medicines, default B = C = 3 for standard, B_critical = C_critical = 3.5 for critical medicines)
-- [ ] **Task 1.1.3.7:** Implement threshold modification logic (local per-SKU, global system-wide, non-retroactive)
-- [ ] **Task 1.1.3.7a:** Implement advisory suggestions when configuring B/C multipliers (suggest matching values when one is configured)
-- [ ] **Task 1.1.3.8:** Implement AAMS deadline validation (January 31 deadline, 15-day grace period until February 15, late submission handling)
-- [ ] **Task 1.1.3.8a:** Implement AAMS grace period compliance logic (marked late but no compliance violation until after Feb 15, compliance impact after grace period)
-- [ ] **Task 1.1.3.9:** Implement previous year AAMS fallback logic (if no submission by March 1)
-- [ ] **Task 1.1.3.10:** Create scheduled trigger for AAMS deadline check (February 16)
-- [ ] **Task 1.1.3.10a:** Implement pg_cron setup for AAMS deadline check (scheduled job configuration, timezone handling for Morocco)
+- [x] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
+  - **Implementation:** `supabase/migrations/20260113_160000_vci_aams_rpc_functions.sql`
+- [x] **Task 1.1.3.2:** Create VCI RPC function - AAMS verification (vci_verify_aams) - includes threshold calculation (B × AAMS)
+  - **Implementation:** `supabase/migrations/20260113_160000_vci_aams_rpc_functions.sql`
+- [x] **Task 1.1.3.3:** Create VCI RPC function - AAMS approval (vci_approve_aams_threshold)
+  - **Implementation:** `supabase/migrations/20260113_160000_vci_aams_rpc_functions.sql`
+- [x] **Task 1.1.3.4:** Create VCI RPC function - AAMS completion (vci_complete_aams_submission)
+  - **Implementation:** `supabase/migrations/20260113_160000_vci_aams_rpc_functions.sql`
+- [x] **Task 1.1.3.5:** Create VCI RPC function - AAMS rejection (vci_reject_aams_submission)
+  - **Implementation:** `supabase/migrations/20260113_160000_vci_aams_rpc_functions.sql`
+- [x] **Task 1.1.3.6:** Implement threshold calculation logic (B multiplier: 3 standard, 3.5 critical medicines, default B = C = 3 for standard, B_critical = C_critical = 3.5 for critical medicines)
+  - **Implementation:** `vci_calculate_threshold` and `vci_get_b_multiplier` functions
+- [x] **Task 1.1.3.7:** Implement threshold modification logic (local per-SKU, global system-wide, non-retroactive)
+  - **Implementation:** `vci_modify_threshold` function with is_global parameter and non-retroactive validation
+- [x] **Task 1.1.3.7a:** Implement advisory suggestions when configuring B/C multipliers (suggest matching values when one is configured)
+  - **Implementation:** `vci_get_multiplier_advisory` function
+- [x] **Task 1.1.3.8:** Implement AAMS deadline validation (January 31 deadline, 15-day grace period until February 15, late submission handling)
+  - **Implementation:** `vci_is_aams_late` function, is_late tracking in submissions
+- [x] **Task 1.1.3.8a:** Implement AAMS grace period compliance logic (marked late but no compliance violation until after Feb 15, compliance impact after grace period)
+  - **Implementation:** `vci_is_within_grace_period` and `vci_is_compliance_violation` functions
+- [x] **Task 1.1.3.9:** Implement previous year AAMS fallback logic (if no submission by March 1)
+  - **Implementation:** `vci_apply_previous_year_fallback` function
+- [x] **Task 1.1.3.10:** Create scheduled trigger for AAMS deadline check (February 16)
+  - **Implementation:** `vci_check_aams_deadlines` function
+- [x] **Task 1.1.3.10a:** Implement pg_cron setup for AAMS deadline check (scheduled job configuration, timezone handling for Morocco)
+  - **Implementation:** pg_cron setup documented in function comment, Morocco timezone (Africa/Casablanca)
 
 ### VCI AAMS Frontend Tasks
-- [ ] **Task 1.1.3.11:** Create VCI module layout and navigation - **Wireframe:** [Task 0.5.3.0 - VCI Overview](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.0-vci-overview.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.3.12:** Implement AAMS submissions list page (my submissions, all submissions for MOH) - **Wireframe:** [Task 0.5.3.1 - AAMS Submissions List](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.1-aams-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.3.13:** Implement AAMS submission create/edit form (year selection, **SKU selector + quantity input only** - simplified submission structure) - **Wireframe:** [Task 0.5.3.2 - AAMS Submission Form](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.2-aams-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.3.13a:** Implement SKU selector component (dropdown/autocomplete with full SKU description: name, dosage, form, pack size) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.3.13b:** Implement quantity input with unit display (show unit_of_measure from selected SKU, e.g., "Quantity (tablets)") - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.3.13c:** Implement SKU data entry table (add/remove SKU rows, SKU_ID + Quantity only - per phase-0-schema-correction) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.3.13d:** Implement deadline indicators (AAMS deadlines with countdown) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.3.14:** Implement AAMS submission detail page (submission data, calculated threshold display, workflow status) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.3.14a:** Implement ThresholdDisplay component (calculated threshold visualization, visible to companies after Tier 2 verification but before Tier 1 approval) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.3.15:** Implement AAMS workflow actions (submit, verify, approve, reject buttons - role-based) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.3.16:** Implement Threshold management page (MOH Tier 1 - list thresholds, modify thresholds) - **Wireframe:** [Task 0.5.3.4 - Threshold Management](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.4-threshold-management.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.3.16a:** Implement ThresholdTable component (list thresholds with filters, bulk actions) - **Wireframe:** [Task 0.5.3.4 - Threshold Management](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.4-threshold-management.md)
-- [ ] **Task 1.1.3.17:** Implement Threshold modification form (local vs global, B multiplier adjustment) - **Wireframe:** [Task 0.5.3.6 - Threshold Modification Modal](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.6-threshold-modification-modal.md)
-- [ ] **Task 1.1.3.17a:** Implement ThresholdModificationModal component (local vs global selector, B multiplier input with advisory suggestions) - **Wireframe:** [Task 0.5.3.6 - Threshold Modification Modal](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.6-threshold-modification-modal.md)
+- [x] **Task 1.1.3.11:** Create VCI module layout and navigation - **Wireframe:** [Task 0.5.3.0 - VCI Overview](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.0-vci-overview.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/layout.tsx`
+- [x] **Task 1.1.3.12:** Implement AAMS submissions list page (my submissions, all submissions for MOH) - **Wireframe:** [Task 0.5.3.1 - AAMS Submissions List](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.1-aams-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/aams/page.tsx`
+- [x] **Task 1.1.3.13:** Implement AAMS submission create/edit form (year selection, **SKU selector + quantity input only** - simplified submission structure) - **Wireframe:** [Task 0.5.3.2 - AAMS Submission Form](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.2-aams-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/aams/new/page.tsx`
+- [x] **Task 1.1.3.13a:** Implement SKU selector component (dropdown/autocomplete with full SKU description: name, dosage, form, pack size) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/components/vci/sku-selector.tsx` (SKUSelector)
+- [x] **Task 1.1.3.13b:** Implement quantity input with unit display (show unit_of_measure from selected SKU, e.g., "Quantity (tablets)") - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/components/vci/sku-selector.tsx` (QuantityInput)
+- [x] **Task 1.1.3.13c:** Implement SKU data entry table (add/remove SKU rows, SKU_ID + Quantity only - per phase-0-schema-correction) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/components/vci/sku-data-entry-table.tsx`
+- [x] **Task 1.1.3.13d:** Implement deadline indicators (AAMS deadlines with countdown) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Implementation:** `frontend/src/components/vci/deadline-indicator.tsx`
+- [x] **Task 1.1.3.14:** Implement AAMS submission detail page (submission data, calculated threshold display, workflow status) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/aams/[id]/page.tsx`
+- [x] **Task 1.1.3.14a:** Implement ThresholdDisplay component (calculated threshold visualization, visible to companies after Tier 2 verification but before Tier 1 approval) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Implementation:** `frontend/src/components/vci/threshold-display.tsx`
+- [x] **Task 1.1.3.15:** Implement AAMS workflow actions (submit, verify, approve, reject buttons - role-based) - **Wireframe:** [Task 0.5.3.3 - AAMS Submission Detail](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.3-aams-submission-detail.md) - **Reference:** [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
+  - **Implementation:** `frontend/src/components/vci/aams-workflow-actions.tsx`
+- [x] **Task 1.1.3.16:** Implement Threshold management page (MOH Tier 1 - list thresholds, modify thresholds) - **Wireframe:** [Task 0.5.3.4 - Threshold Management](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.4-threshold-management.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/thresholds/page.tsx`
+- [x] **Task 1.1.3.16a:** Implement ThresholdTable component (list thresholds with filters, bulk actions) - **Wireframe:** [Task 0.5.3.4 - Threshold Management](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.4-threshold-management.md)
+  - **Implementation:** Integrated in `frontend/src/app/dashboard/vci/thresholds/page.tsx` using DataTable
+- [x] **Task 1.1.3.17:** Implement Threshold modification form (local vs global, B multiplier adjustment) - **Wireframe:** [Task 0.5.3.6 - Threshold Modification Modal](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.6-threshold-modification-modal.md)
+  - **Implementation:** `frontend/src/components/vci/threshold-modification-modal.tsx`
+- [x] **Task 1.1.3.17a:** Implement ThresholdModificationModal component (local vs global selector, B multiplier input with advisory suggestions) - **Wireframe:** [Task 0.5.3.6 - Threshold Modification Modal](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.6-threshold-modification-modal.md)
+  - **Implementation:** `frontend/src/components/vci/threshold-modification-modal.tsx` with advisory integration
 
 ---
 
 ## Subphase 1.1.4: VCI Module - MSQ Workflow (Week 5)
 
 ### VCI MSQ Backend Tasks
-- [ ] **Task 1.1.4.1:** Create VCI RPC function - MSQ submission (vci_submit_msq)
-- [ ] **Task 1.1.4.2:** Implement MSQ validation logic (completeness checks, format validation, historical pattern comparison)
-- [ ] **Task 1.1.4.3:** Implement MSQ vs AAMS validation (20% threshold comparison, anomaly detection - note: AAMS and MSQ are independent, validation is for anomaly detection only, not for calculating AAMS)
-- [ ] **Task 1.1.4.4:** Create VCI RPC function - MSQ flag for review (vci_flag_msq_for_review)
-- [ ] **Task 1.1.4.5:** Create VCI RPC function - MSQ accept (vci_accept_msq)
-- [ ] **Task 1.1.4.6:** Create VCI RPC function - MSQ reject (vci_reject_msq)
-- [ ] **Task 1.1.4.7:** Implement 7-day grace period for MSQ corrections
+- [x] **Task 1.1.4.1:** Create VCI RPC function - MSQ submission (vci_submit_msq)
+  - **Implementation:** `supabase/migrations/20260113_170000_vci_msq_rpc_functions.sql` - `vci_submit_msq` function
+- [x] **Task 1.1.4.2:** Implement MSQ validation logic (completeness checks, format validation, historical pattern comparison)
+  - **Implementation:** `vci_validate_msq_format`, `vci_validate_msq_historical` functions
+- [x] **Task 1.1.4.3:** Implement MSQ vs AAMS validation (20% threshold comparison, anomaly detection - note: AAMS and MSQ are independent, validation is for anomaly detection only, not for calculating AAMS)
+  - **Implementation:** `vci_validate_msq_vs_aams` function with 20% deviation threshold
+- [x] **Task 1.1.4.4:** Create VCI RPC function - MSQ flag for review (vci_flag_msq_for_review)
+  - **Implementation:** `vci_flag_msq_for_review` function
+- [x] **Task 1.1.4.5:** Create VCI RPC function - MSQ accept (vci_accept_msq)
+  - **Implementation:** `vci_accept_msq` function
+- [x] **Task 1.1.4.6:** Create VCI RPC function - MSQ reject (vci_reject_msq)
+  - **Implementation:** `vci_reject_msq` function
+- [x] **Task 1.1.4.7:** Implement 7-day grace period for MSQ corrections
+  - **Implementation:** `vci_correct_msq`, `vci_is_msq_within_grace_period`, `vci_get_msq_grace_period_end` functions
 
 ### VCI MSQ Frontend Tasks
-- [ ] **Task 1.1.4.8:** Implement MSQ submissions list page (my submissions, flagged for review for MOH) - **Wireframe:** [Task 0.5.3.9 - MSQ Submissions List](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.9-msq-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.4.9:** Implement MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure) - **Wireframe:** [Task 0.5.3.10 - MSQ Submission Form](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.10-msq-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.4.9a:** Implement SKUDataEntryTable component (SKU selector + quantity input per row, display full SKU description - per phase-0-schema-correction) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.4.9b:** Implement BulkUpload component (CSV template: SKU_ID,Quantity - file upload, parsing, validation preview with SKU details display) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.4.10:** Implement MSQ submission detail page (submission data, validation status, review actions) - **Wireframe:** [Task 0.5.3.11 - MSQ Submission Detail](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.4.10a:** Implement ValidationStatusIndicator component (passed, flagged, rejected states) - **Wireframe:** [Task 0.5.3.11 - MSQ Submission Detail](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.4.11:** Implement MSQ correction interface (7-day grace period, edit submitted data) - **Wireframe:** [Task 0.5.3.12 - MSQ Correction Interface](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
-- [ ] **Task 1.1.4.11a:** Implement CorrectionInterface component (editable submitted data with grace period indicator) - **Wireframe:** [Task 0.5.3.12 - MSQ Correction Interface](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
+- [x] **Task 1.1.4.8:** Implement MSQ submissions list page (my submissions, flagged for review for MOH) - **Wireframe:** [Task 0.5.3.9 - MSQ Submissions List](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.9-msq-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/msq/page.tsx`
+- [x] **Task 1.1.4.9:** Implement MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure) - **Wireframe:** [Task 0.5.3.10 - MSQ Submission Form](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.10-msq-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/msq/new/page.tsx`
+- [x] **Task 1.1.4.9a:** Implement SKUDataEntryTable component (SKU selector + quantity input per row, display full SKU description - per phase-0-schema-correction) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** Reused `frontend/src/components/vci/sku-data-entry-table.tsx` from AAMS
+- [x] **Task 1.1.4.9b:** Implement BulkUpload component (CSV template: SKU_ID,Quantity - file upload, parsing, validation preview with SKU details display) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
+  - **Implementation:** `frontend/src/components/vci/bulk-upload.tsx`
+- [x] **Task 1.1.4.10:** Implement MSQ submission detail page (submission data, validation status, review actions) - **Wireframe:** [Task 0.5.3.11 - MSQ Submission Detail](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
+  - **Implementation:** `frontend/src/app/dashboard/vci/msq/[id]/page.tsx`
+- [x] **Task 1.1.4.10a:** Implement ValidationStatusIndicator component (passed, flagged, rejected states) - **Wireframe:** [Task 0.5.3.11 - MSQ Submission Detail](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Implementation:** `frontend/src/components/vci/validation-status-indicator.tsx`
+- [x] **Task 1.1.4.11:** Implement MSQ correction interface (7-day grace period, edit submitted data) - **Wireframe:** [Task 0.5.3.12 - MSQ Correction Interface](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
+  - **Implementation:** `frontend/src/components/vci/correction-interface.tsx`
+- [x] **Task 1.1.4.11a:** Implement CorrectionInterface component (editable submitted data with grace period indicator) - **Wireframe:** [Task 0.5.3.12 - MSQ Correction Interface](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
+  - **Implementation:** `frontend/src/components/vci/correction-interface.tsx` (CorrectionInterface, GracePeriodBadge)
 
 ---
 
 ## Subphase 1.1.5: VCI Module - WSL Workflow & Breach Detection (Week 6)
 
 ### VCI WSL Backend Tasks
-- [ ] **Task 1.1.5.1:** Create VCI RPC function - WSL submission (vci_submit_wsl)
-- [ ] **Task 1.1.5.2:** Implement WSL validation logic (all SKUs required, completeness check)
-- [ ] **Task 1.1.5.3:** Implement WSL deadline validation (Friday EOD deadline 17:00 Morocco time, submission window Monday-Friday 17:00, late submission handling)
-- [ ] **Task 1.1.5.3a:** Implement MOH request for WSL SKU adjustments (MOH requests adjustments → company submits separately)
-- [ ] **Task 1.1.5.4:** Implement breach detection logic (stock level vs threshold comparison)
-- [ ] **Task 1.1.5.5:** Create VCI RPC function - Breach creation (automatic on WSL submission)
-- [ ] **Task 1.1.5.5a:** Implement automatic breach creation logic (trigger on WSL submission, threshold comparison logic)
-- [ ] **Task 1.1.5.6:** Implement breach reason and replenishment date capture
-- [ ] **Task 1.1.5.7:** Implement breach priority logic (critical medicine breaches, multiple SKUs, extended breaches)
-- [ ] **Task 1.1.5.8:** Create VCI RPC function - Breach analysis (vci_analyze_breach)
-- [ ] **Task 1.1.5.8a:** Implement batch breach analysis capability (Tier 2 can analyze multiple breaches together, suggest batch actions)
-- [ ] **Task 1.1.5.9:** Create VCI RPC function - Breach action suggestion (vci_suggest_breach_action)
-- [ ] **Task 1.1.5.10:** Create VCI RPC function - Breach action approval (vci_approve_breach_action)
-- [ ] **Task 1.1.5.10a:** Implement rejection iteration limit logic (max 2 rejection iterations before Tier 1 must take direct action)
-- [ ] **Task 1.1.5.11:** Implement breach analysis deadline logic (3 working days standard, 1 working day critical)
-- [ ] **Task 1.1.5.12:** Create scheduled trigger for WSL deadline check (Friday 5 PM Morocco time)
-- [ ] **Task 1.1.5.12a:** Implement pg_cron setup for WSL deadline check (Friday 5 PM Morocco time, cron expression)
+- [x] **Task 1.1.5.1:** Create VCI RPC function - WSL submission (vci_submit_wsl)
+  - **Implementation:** `supabase/migrations/20260113_180000_vci_wsl_breach_rpc_functions.sql` - `vci_submit_wsl` function
+- [x] **Task 1.1.5.2:** Implement WSL validation logic (all SKUs required, completeness check)
+  - **Implementation:** `vci_validate_wsl_completeness` function
+- [x] **Task 1.1.5.3:** Implement WSL deadline validation (Friday EOD deadline 17:00 Morocco time, submission window Monday-Friday 17:00, late submission handling)
+  - **Implementation:** `vci_get_wsl_deadline`, `vci_is_wsl_late`, `vci_validate_week_ending_date` functions
+- [x] **Task 1.1.5.3a:** Implement MOH request for WSL SKU adjustments (MOH requests adjustments → company submits separately)
+  - **Implementation:** `vci_request_wsl_adjustment` function with notification creation
+- [x] **Task 1.1.5.4:** Implement breach detection logic (stock level vs threshold comparison)
+  - **Implementation:** `vci_detect_breaches` function
+- [x] **Task 1.1.5.5:** Create VCI RPC function - Breach creation (automatic on WSL submission)
+  - **Implementation:** Integrated in `vci_submit_wsl` function
+- [x] **Task 1.1.5.5a:** Implement automatic breach creation logic (trigger on WSL submission, threshold comparison logic)
+  - **Implementation:** Automatic breach INSERT in `vci_submit_wsl` using `vci_detect_breaches`
+- [x] **Task 1.1.5.6:** Implement breach reason and replenishment date capture
+  - **Implementation:** Extracted from submission_data in `vci_submit_wsl`
+- [x] **Task 1.1.5.7:** Implement breach priority logic (critical medicine breaches, multiple SKUs, extended breaches)
+  - **Implementation:** `vci_calculate_breach_priority` function (critical >50%, high >30%)
+- [x] **Task 1.1.5.8:** Create VCI RPC function - Breach analysis (vci_analyze_breach)
+  - **Implementation:** `vci_analyze_breach` function
+- [x] **Task 1.1.5.8a:** Implement batch breach analysis capability (Tier 2 can analyze multiple breaches together, suggest batch actions)
+  - **Implementation:** `vci_analyze_breaches_batch` function
+- [x] **Task 1.1.5.9:** Create VCI RPC function - Breach action suggestion (vci_suggest_breach_action)
+  - **Implementation:** `vci_suggest_breach_action` function with rule-based suggestions
+- [x] **Task 1.1.5.10:** Create VCI RPC function - Breach action approval (vci_approve_breach_action)
+  - **Implementation:** `vci_approve_breach_action` function
+- [x] **Task 1.1.5.10a:** Implement rejection iteration limit logic (max 2 rejection iterations before Tier 1 must take direct action)
+  - **Implementation:** Rejection count check in `vci_approve_breach_action`, `vci_tier1_direct_action` function
+- [x] **Task 1.1.5.11:** Implement breach analysis deadline logic (3 working days standard, 1 working day critical)
+  - **Implementation:** `vci_get_breach_analysis_deadline` function with working days calculation
+- [x] **Task 1.1.5.12:** Create scheduled trigger for WSL deadline check (Friday 5 PM Morocco time)
+  - **Implementation:** `vci_check_wsl_deadlines` function
+- [x] **Task 1.1.5.12a:** Implement pg_cron setup for WSL deadline check (Friday 5 PM Morocco time, cron expression)
+  - **Implementation:** pg_cron setup documented in migration comments (cron: `0 17 * * 5`)
   - **Reference:** [Edge Functions Specification](../../02-architecture/api/edge-functions.md)
   - **Scheduled Job Specifications:** (Leila's Audit - Issue #28)
     - Cron expression: `0 17 * * 5` (Friday at 17:00)
@@ -980,137 +1039,192 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
     - Monitoring: Job execution logs, success/failure tracking, execution time monitoring
 
 ### Historical Data Backend Tasks
-- [ ] **Task 1.1.5.12b:** Create database indexes for historical queries (audit_logs: created_at, user_id+created_at, table_name+created_at; aams_submissions: company_id+year; msq_submissions: company_id+year+month; wsl_submissions: company_id+week_ending; compliance_scores: company_id+score_month; breaches: company_id+status+detected_at)
-- [ ] **Task 1.1.5.12c:** Create RPC function - has_historical_ecs_data (check if historical ECS data exists for company or system-wide)
-- [ ] **Task 1.1.5.12d:** Create RPC function - has_historical_cmc_data (check if historical CMC data exists for company or system-wide)
-- [ ] **Task 1.1.5.12e:** Create RPC function - vci_get_historical_submissions (get historical AAMS/MSQ/WSL submissions with filtering and pagination, RLS applied)
-- [ ] **Task 1.1.5.12f:** Create RPC function - cmc_get_historical_scores (get historical compliance scores with filtering and pagination, RLS applied)
-- [ ] **Task 1.1.5.12g:** Create RPC function - audit_get_historical_logs (get historical audit logs with filtering and pagination, MOH/Auditors only, role check)
-- [ ] **Task 1.1.5.12h:** Create RPC function - log_historical_data_access (log access to historical data for audit trail, called automatically by historical data RPC functions)
+- [x] **Task 1.1.5.12b:** Create database indexes for historical queries (audit_logs: created_at, user_id+created_at, table_name+created_at; aams_submissions: company_id+year; msq_submissions: company_id+year+month; wsl_submissions: company_id+week_ending; compliance_scores: company_id+score_month; breaches: company_id+status+detected_at)
+  - **Implementation:** `supabase/migrations/20260113_185000_historical_data_functions.sql` - CREATE INDEX statements
+- [x] **Task 1.1.5.12c:** Create RPC function - has_historical_ecs_data (check if historical ECS data exists for company or system-wide)
+  - **Implementation:** `has_historical_ecs_data` function (checks breaches with ecs threshold_type)
+- [x] **Task 1.1.5.12d:** Create RPC function - has_historical_cmc_data (check if historical CMC data exists for company or system-wide)
+  - **Implementation:** `has_historical_cmc_data` function (gracefully handles missing compliance_scores table)
+- [x] **Task 1.1.5.12e:** Create RPC function - vci_get_historical_submissions (get historical AAMS/MSQ/WSL submissions with filtering and pagination, RLS applied)
+  - **Implementation:** `vci_get_historical_submissions` function with type parameter (aams/msq/wsl)
+- [x] **Task 1.1.5.12f:** Create RPC function - cmc_get_historical_scores (get historical compliance scores with filtering and pagination, RLS applied)
+  - **Implementation:** `cmc_get_historical_scores` function (placeholder for future CMC module)
+- [x] **Task 1.1.5.12g:** Create RPC function - audit_get_historical_logs (get historical audit logs with filtering and pagination, MOH/Auditors only, role check)
+  - **Implementation:** `audit_get_historical_logs` function with role-based access control
+- [x] **Task 1.1.5.12h:** Create RPC function - log_historical_data_access (log access to historical data for audit trail, called automatically by historical data RPC functions)
+  - **Implementation:** `log_historical_data_access` function (called by all historical data functions)
 
 ### VCI WSL Frontend Tasks
-- [ ] **Task 1.1.5.13:** Implement WSL submissions list page (my submissions, all submissions for MOH) - **Wireframe:** [Task 0.5.3.13 - WSL Submissions List](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.14:** Implement WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.5.14a:** Implement WSLBulkEntryTable component (pre-populated with all company SKUs showing full description, quantity input only, optional breach reason/replenishment date fields) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.5.15:** Implement WSL submission detail page (submission data, breach indicators) - **Wireframe:** [Task 0.5.3.15 - WSL Submission Detail](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.5.16:** Implement Breaches list page (active breaches, resolved breaches, filters by priority/company/SKU) - **Wireframe:** [Task 0.5.3.16 - Compliance Violations List](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.16a:** Implement BreachFilters component (priority, company, SKU, date range filters) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.17:** Implement Breach detail page (breach information, stock level vs threshold, reason, replenishment date) - **Wireframe:** [Task 0.5.3.17 - Compliance Violation Detail](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.5.17a:** Implement BreachDetailCard component (threshold comparison, stock level visualization) - **Wireframe:** [Task 0.5.3.17 - Compliance Violation Detail](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.18:** Implement Breach analysis interface (Tier 2 - analysis form, action suggestions) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.18a:** Implement BreachAnalysisForm component (action suggestions dropdown, comments) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
-- [ ] **Task 1.1.5.18b:** Implement BatchBreachAnalysis interface (select multiple breaches, batch actions) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.19:** Implement Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action) - **Wireframe:** [Task 0.5.3.19 - Compliance Violation Action Approval Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.17-compliance-violation-action-approval-interface.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.20:** Implement Governance Dashboard (MOH - real-time stock sufficiency, breach status, action recommendations) - **Wireframe:** [Task 0.5.3.20 - Governance Dashboard](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.18-governance-dashboard.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
-- [ ] **Task 1.1.5.20a:** Set up charting library (Recharts or similar - for governance dashboard) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.20b:** Implement DashboardWidget component (reusable widget for metrics/charts) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.20c:** Implement responsive dashboard layout (widget stacking on tablet/mobile) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
-- [ ] **Task 1.1.5.20d:** Implement dashboard data prefetching and caching strategy
-- [ ] **Task 1.1.5.20e:** Implement stock sufficiency charts (line charts, bar charts)
+- [x] **Task 1.1.5.13:** Implement WSL submissions list page (my submissions, all submissions for MOH) - **Wireframe:** [Task 0.5.3.13 - WSL Submissions List](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/wsl/page.tsx`
+- [x] **Task 1.1.5.14:** Implement WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/wsl/new/page.tsx`
+- [x] **Task 1.1.5.14a:** Implement WSLBulkEntryTable component (pre-populated with all company SKUs showing full description, quantity input only, optional breach reason/replenishment date fields) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md) - **Implementation:** `frontend/src/components/vci/wsl-bulk-entry-table.tsx`
+- [x] **Task 1.1.5.15:** Implement WSL submission detail page (submission data, breach indicators) - **Wireframe:** [Task 0.5.3.15 - WSL Submission Detail](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/wsl/[id]/page.tsx`
+- [x] **Task 1.1.5.16:** Implement Breaches list page (active breaches, resolved breaches, filters by priority/company/SKU) - **Wireframe:** [Task 0.5.3.16 - Compliance Violations List](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/breaches/page.tsx`
+- [x] **Task 1.1.5.16a:** Implement BreachFilters component (priority, company, SKU, date range filters) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md) - **Implementation:** Integrated in `frontend/src/app/dashboard/vci/breaches/page.tsx`
+- [x] **Task 1.1.5.17:** Implement Breach detail page (breach information, stock level vs threshold, reason, replenishment date) - **Wireframe:** [Task 0.5.3.17 - Compliance Violation Detail](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/breaches/[id]/page.tsx`
+- [x] **Task 1.1.5.17a:** Implement BreachDetailCard component (threshold comparison, stock level visualization) - **Wireframe:** [Task 0.5.3.17 - Compliance Violation Detail](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md) - **Implementation:** `frontend/src/components/vci/breach-components.tsx`
+- [x] **Task 1.1.5.18:** Implement Breach analysis interface (Tier 2 - analysis form, action suggestions) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/components/vci/breach-analysis-form.tsx`
+- [x] **Task 1.1.5.18a:** Implement BreachAnalysisForm component (action suggestions dropdown, comments) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md) - **Implementation:** `frontend/src/components/vci/breach-analysis-form.tsx`
+- [x] **Task 1.1.5.18b:** Implement BatchBreachAnalysis interface (select multiple breaches, batch actions) - **Wireframe:** [Task 0.5.3.18 - Compliance Violation Analysis Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/components/vci/breach-analysis-form.tsx`
+- [x] **Task 1.1.5.19:** Implement Breach action approval interface (Tier 1 - review suggestions, approve/reject/independent action) - **Wireframe:** [Task 0.5.3.19 - Compliance Violation Action Approval Interface](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.17-compliance-violation-action-approval-interface.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/components/vci/breach-analysis-form.tsx` (BreachApprovalForm)
+- [x] **Task 1.1.5.20:** Implement Governance Dashboard (MOH - real-time stock sufficiency, breach status, action recommendations) - **Wireframe:** [Task 0.5.3.20 - Governance Dashboard](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.18-governance-dashboard.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md) - **Implementation:** `frontend/src/app/dashboard/vci/governance/page.tsx`
+- [x] **Task 1.1.5.20a:** Set up charting library (Recharts or similar - for governance dashboard) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md) - **Implementation:** Installed `recharts` via npm
+- [x] **Task 1.1.5.20b:** Implement DashboardWidget component (reusable widget for metrics/charts) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md) - **Implementation:** `frontend/src/components/dashboard/dashboard-widget.tsx`
+- [x] **Task 1.1.5.20c:** Implement responsive dashboard layout (widget stacking on tablet/mobile) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md) - **Implementation:** Responsive grid in `frontend/src/app/dashboard/vci/governance/page.tsx`
+- [x] **Task 1.1.5.20d:** Implement dashboard data prefetching and caching strategy - **Implementation:** React Query with `useBreaches`, `useWSLSubmissions`, `useCompanies` hooks in governance page
+- [x] **Task 1.1.5.20e:** Implement stock sufficiency charts (line charts, bar charts) - **Implementation:** `frontend/src/components/dashboard/stock-charts.tsx` (StockSufficiencyLineChart, BreachDistributionChart, CompanyComplianceBarChart, WeeklyTrendChart)
 
 ---
 
 ## Subphase 1.1.5.5: Historical Data Frontend Tasks
 
 ### Historical Data Component Implementation
-- [ ] **Task 1.1.5.21:** Implement Timeline component (vertical timeline, date/user/action display, expandable details, filter by date range) - **Wireframe Reference:** See [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md) for timeline pattern
-- [ ] **Task 1.1.5.22:** Implement DateRangePicker component (start/end date selection, quick filters: Last 7 days, 30 days, 3 months, year, 7 years, custom range, Morocco timezone support) - **Wireframe:** [Task 0.5.8.3 - Date Range Picker Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.3-date-range-picker-modal.md)
-- [ ] **Task 1.1.5.23:** Implement ExportButton component (dropdown with PDF/Excel/CSV options, progress indicator, export metadata tracking) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
-- [ ] **Task 1.1.5.24:** Implement virtual scrolling component for large lists (using @tanstack/react-virtual, for audit logs)
+- [x] **Task 1.1.5.21:** Implement Timeline component (vertical timeline, date/user/action display, expandable details, filter by date range) - **Wireframe Reference:** See [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md) for timeline pattern - **Implementation:** `frontend/src/components/history/timeline.tsx`
+- [x] **Task 1.1.5.22:** Implement DateRangePicker component (start/end date selection, quick filters: Last 7 days, 30 days, 3 months, year, 7 years, custom range, Morocco timezone support) - **Wireframe:** [Task 0.5.8.3 - Date Range Picker Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.3-date-range-picker-modal.md) - **Implementation:** `frontend/src/components/history/date-range-picker.tsx`
+- [x] **Task 1.1.5.23:** Implement ExportButton component (dropdown with PDF/Excel/CSV options, progress indicator, export metadata tracking) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md) - **Implementation:** `frontend/src/components/history/export-button.tsx`
+- [x] **Task 1.1.5.24:** Implement virtual scrolling component for large lists (using @tanstack/react-virtual, for audit logs) - **Implementation:** `frontend/src/components/history/virtual-list.tsx` (VirtualList, VirtualTable, VirtualScroller)
 
 ### History Tabs on Detail Pages
-- [ ] **Task 1.1.5.25:** Implement History tab on Company detail page (registry changes timeline, submission history, compliance history, lazy loading)
-- [ ] **Task 1.1.5.26:** Implement History tab on Product detail page (product changes timeline, SKU history)
-- [ ] **Task 1.1.5.27:** Implement History tab on SKU detail page (SKU changes timeline)
-- [ ] **Task 1.1.5.28:** Implement History tab on AAMS submission detail page (corrections history, status changes)
-- [ ] **Task 1.1.5.29:** Implement History tab on MSQ submission detail page (corrections history, status changes)
-- [ ] **Task 1.1.5.30:** Implement History tab on WSL submission detail page (submission history)
-- [ ] **Task 1.1.5.31:** Implement History tab on Breach detail page (resolution timeline, actions taken)
-- [ ] **Task 1.1.5.32:** Implement History tab on Compliance Score detail page (score trends, component breakdown over time)
+- [x] **Task 1.1.5.25:** Implement History tab on Company detail page (registry changes timeline, submission history, compliance history, lazy loading) - **Implementation:** `frontend/src/app/dashboard/rmm/companies/[id]/page.tsx`, `frontend/src/components/history/history-tab.tsx`
+- [x] **Task 1.1.5.26:** Implement History tab on Product detail page (product changes timeline, SKU history) - **Implementation:** `frontend/src/app/dashboard/rmm/products/[id]/page.tsx`
+- [x] **Task 1.1.5.27:** Implement History tab on SKU detail page (SKU changes timeline) - **Implementation:** `frontend/src/app/dashboard/rmm/skus/[id]/page.tsx`
+- [x] **Task 1.1.5.28:** Implement History tab on AAMS submission detail page (corrections history, status changes) - **Implementation:** `frontend/src/app/dashboard/vci/aams/[id]/page.tsx`
+- [x] **Task 1.1.5.29:** Implement History tab on MSQ submission detail page (corrections history, status changes) - **Implementation:** `frontend/src/app/dashboard/vci/msq/[id]/page.tsx`
+- [x] **Task 1.1.5.30:** Implement History tab on WSL submission detail page (submission history) - **Implementation:** `frontend/src/app/dashboard/vci/wsl/[id]/page.tsx`
+- [x] **Task 1.1.5.31:** Implement History tab on Breach detail page (resolution timeline, actions taken) - **Implementation:** `frontend/src/app/dashboard/vci/breaches/[id]/page.tsx`
+- [x] **Task 1.1.5.32:** Implement History tab on Compliance Score detail page (score trends, component breakdown over time) - **Implementation:** `frontend/src/app/dashboard/cmc/scores/[id]/page.tsx`
 
 ### Filtered List Views
-- [ ] **Task 1.1.5.33:** Add year filter to AAMS submissions list page (query parameter ?year=2023, quick filter chips, default to current year)
-- [ ] **Task 1.1.5.34:** Add year/month filters to MSQ submissions list page (query parameters ?year=2023&month=6, quick filter chips)
-- [ ] **Task 1.1.5.35:** Add week filter to WSL submissions list page (query parameter ?week=2023-W01, quick filter chips)
-- [ ] **Task 1.1.5.36:** Add status/year filters to Breaches list page (query parameters ?status=resolved&year=2023, filter tabs)
-- [ ] **Task 1.1.5.37:** Add year filter to Compliance Scores list page (query parameter ?year=2023, quick filter chips)
+- [x] **Task 1.1.5.33:** Add year filter to AAMS submissions list page (query parameter ?year=2023, quick filter chips, default to current year)
+  - **Implementation:** Updated `frontend/src/app/dashboard/vci/aams/page.tsx` with URL query params sync and quick filter chips
+- [x] **Task 1.1.5.34:** Add year/month filters to MSQ submissions list page (query parameters ?year=2023&month=6, quick filter chips)
+  - **Implementation:** Updated `frontend/src/app/dashboard/vci/msq/page.tsx` with URL query params sync
+- [x] **Task 1.1.5.35:** Add week filter to WSL submissions list page (query parameter ?week=2023-W01, quick filter chips)
+  - **Implementation:** Updated `frontend/src/app/dashboard/vci/wsl/page.tsx` with week input and URL sync
+- [x] **Task 1.1.5.36:** Add status/year filters to Breaches list page (query parameters ?status=resolved&year=2023, filter tabs)
+  - **Implementation:** Updated `frontend/src/app/dashboard/vci/breaches/page.tsx` with year chips and URL sync
+- [x] **Task 1.1.5.37:** Add year filter to Compliance Scores list page (query parameter ?year=2023, quick filter chips)
+  - **Implementation:** Created `frontend/src/app/dashboard/cmc/scores/page.tsx` with year filter chips
 
 ### Dedicated History Routes
-- [ ] **Task 1.1.5.38:** Implement `/history` route (role-based historical overview page, company users: personal, MOH: system-wide) - **Wireframe:** [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md)
-- [ ] **Task 1.1.5.39:** Implement `/audit/logs` route (audit log list page, MOH/Auditors only, virtual scrolling, search, date range filter) - **Wireframe:** [Task 0.5.1.32 - Audit Logs List](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md)
-- [ ] **Task 1.1.5.40:** Implement `/audit/logs/[id]` route (audit log detail page) - **Wireframe:** [Task 0.5.1.33 - Audit Log Detail](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.33-audit-log-detail.md)
-- [ ] **Task 1.1.5.41:** Implement `/audit/reports` route (audit reports page, MOH/Auditors only) - **Wireframe:** [Task 0.5.1.34 - Audit Reports](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.34-audit-reports.md)
-- [ ] **Task 1.1.5.42:** Implement `/vci/submissions/history` route (all past submissions, filterable by type, year, company) - **Wireframe:** [Task 0.5.3.28 - Submission History](../../04-design/user-experience/wireframes/05-audit-historical/historical-data/task-0.5.3.28-submission-history.md)
-- [ ] **Task 1.1.5.43:** Implement `/vci/submissions/history/trends` route (trend analysis charts, MOH Tier 1 only, AAMS/MSQ/WSL trends, multi-year comparisons) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+- [x] **Task 1.1.5.38:** Implement `/history` route (role-based historical overview page, company users: personal, MOH: system-wide) - **Wireframe:** [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/history/page.tsx`
+- [x] **Task 1.1.5.39:** Implement `/audit/logs` route (audit log list page, MOH/Auditors only, virtual scrolling, search, date range filter) - **Wireframe:** [Task 0.5.1.32 - Audit Logs List](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/audit/logs/page.tsx` with VirtualTable
+- [x] **Task 1.1.5.40:** Implement `/audit/logs/[id]` route (audit log detail page) - **Wireframe:** [Task 0.5.1.33 - Audit Log Detail](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.33-audit-log-detail.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/audit/logs/[id]/page.tsx`
+- [x] **Task 1.1.5.41:** Implement `/audit/reports` route (audit reports page, MOH/Auditors only) - **Wireframe:** [Task 0.5.1.34 - Audit Reports](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.34-audit-reports.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/audit/reports/page.tsx` with charts
+- [x] **Task 1.1.5.42:** Implement `/vci/submissions/history` route (all past submissions, filterable by type, year, company) - **Wireframe:** [Task 0.5.3.28 - Submission History](../../04-design/user-experience/wireframes/05-audit-historical/historical-data/task-0.5.3.28-submission-history.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/vci/submissions/history/page.tsx`
+- [x] **Task 1.1.5.43:** Implement `/vci/submissions/history/trends` route (trend analysis charts, MOH Tier 1 only, AAMS/MSQ/WSL trends, multi-year comparisons) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+  - **Implementation:** Created `frontend/src/app/dashboard/vci/submissions/history/trends/page.tsx`
 
 ### Modal Patterns for Historical Data
-- [ ] **Task 1.1.5.44:** Implement Quick History Preview modal (recent 5-10 changes, timeline view, "View Full History" button) - **Wireframe:** [Task 0.5.8.6 - Quick History Preview Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.6-quick-history-preview-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.45:** Implement Comparison modal (current vs historical side-by-side, highlight differences) - **Wireframe:** [Task 0.5.8.7 - Comparison Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.7-comparison-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.46:** Implement Export Options modal (format selection, date range picker, progress indicator) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
-- [ ] **Task 1.1.5.47:** Implement Detail Inspection modal (quick detail view from list, "View Full Page" button) - **Wireframe:** [Task 0.5.8.8 - Detail Inspection Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.8-detail-inspection-modal.md)
+- [x] **Task 1.1.5.44:** Implement Quick History Preview modal (recent 5-10 changes, timeline view, "View Full History" button) - **Wireframe:** [Task 0.5.8.6 - Quick History Preview Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.6-quick-history-preview-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Implementation:** Created `frontend/src/components/modals/history-modals.tsx` - QuickHistoryPreview component
+- [x] **Task 1.1.5.45:** Implement Comparison modal (current vs historical side-by-side, highlight differences) - **Wireframe:** [Task 0.5.8.7 - Comparison Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.7-comparison-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Implementation:** Created `frontend/src/components/modals/history-modals.tsx` - ComparisonModal component
+- [x] **Task 1.1.5.46:** Implement Export Options modal (format selection, date range picker, progress indicator) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
+  - **Implementation:** Created `frontend/src/components/modals/history-modals.tsx` - ExportOptionsModal component
+- [x] **Task 1.1.5.47:** Implement Detail Inspection modal (quick detail view from list, "View Full Page" button) - **Wireframe:** [Task 0.5.8.8 - Detail Inspection Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.8-detail-inspection-modal.md)
+  - **Implementation:** Created `frontend/src/components/modals/history-modals.tsx` - DetailInspectionModal component
 
 ### Module Activation Impact
-- [ ] **Task 1.1.5.48:** Implement inactive module indicators (informational banners, read-only badges, module activation period display)
-- [ ] **Task 1.1.5.49:** Implement data existence checks for ECS/CMC routes (has_historical_ecs_data, has_historical_cmc_data RPC calls)
-- [ ] **Task 1.1.5.50:** Update navigation to show ECS/CMC if active OR historical data exists (with "Historical" badge if inactive)
-- [ ] **Task 1.1.5.51:** Implement route protection pattern for historical data (check data existence, not module status)
+- [x] **Task 1.1.5.48:** Implement inactive module indicators (informational banners, read-only badges, module activation period display)
+  - **Implementation:** Created `frontend/src/components/module/module-indicators.tsx` - InactiveModuleBanner, ReadOnlyBadge, HistoricalBadge, ActivationPeriodDisplay
+- [x] **Task 1.1.5.49:** Implement data existence checks for ECS/CMC routes (has_historical_ecs_data, has_historical_cmc_data RPC calls)
+  - **Implementation:** Created `frontend/src/components/module/module-indicators.tsx` - useModuleDataExists hook
+- [x] **Task 1.1.5.50:** Update navigation to show ECS/CMC if active OR historical data exists (with "Historical" badge if inactive)
+  - **Implementation:** Created `frontend/src/components/module/module-indicators.tsx` - ModuleNavItem component
+- [x] **Task 1.1.5.51:** Implement route protection pattern for historical data (check data existence, not module status)
+  - **Implementation:** Created `frontend/src/components/module/module-indicators.tsx` - HistoricalRouteGuard component
 
 ### Navigation Updates
-- [ ] **Task 1.1.5.52:** Add History link to sidebar navigation (all roles, links to `/history`)
-- [ ] **Task 1.1.5.53:** Add Audit link to sidebar navigation (MOH Tier 1/2, links to `/audit/logs`)
-- [ ] **Task 1.1.5.54:** Add Submissions History link to VCI section (links to `/vci/submissions/history`)
-- [ ] **Task 1.1.5.55:** Add Trends link to VCI section (Tier 1 only, links to `/vci/submissions/history/trends`)
-- [ ] **Task 1.1.5.56:** Update breadcrumbs for historical routes (Home > History, Home > Audit > Logs, etc.)
+- [x] **Task 1.1.5.52:** Add History link to sidebar navigation (all roles, links to `/history`)
+  - **Implementation:** Updated `frontend/src/components/layout/sidebar.tsx`
+- [x] **Task 1.1.5.53:** Add Audit link to sidebar navigation (MOH Tier 1/2, links to `/audit/logs`)
+  - **Implementation:** Updated `frontend/src/components/layout/sidebar.tsx`
+- [x] **Task 1.1.5.54:** Add Submissions History link to VCI section (links to `/vci/submissions/history`)
+  - **Implementation:** Updated `frontend/src/components/layout/sidebar.tsx`
+- [x] **Task 1.1.5.55:** Add Trends link to VCI section (Tier 1 only, links to `/vci/submissions/history/trends`)
+  - **Implementation:** Updated `frontend/src/components/layout/sidebar.tsx`
+- [x] **Task 1.1.5.56:** Update breadcrumbs for historical routes (Home > History, Home > Audit > Logs, etc.)
+  - **Implementation:** Created `frontend/src/lib/breadcrumbs.ts`
 
 ### Trend Analysis Components (MOH Tier 1)
-- [ ] **Task 1.1.5.57:** Implement AAMS trend analysis component (year-over-year comparison, seasonal patterns, line/bar charts) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.58:** Implement MSQ trend analysis component (monthly patterns, growth trends, anomaly detection) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.59:** Implement WSL trend analysis component (stock level patterns, stockout identification) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.60:** Implement cross-metric analysis component (AAMS vs MSQ vs WSL correlations) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+- [x] **Task 1.1.5.57:** Implement AAMS trend analysis component (year-over-year comparison, seasonal patterns, line/bar charts) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+  - **Implementation:** Created `frontend/src/components/trends/submission-trends.tsx` - AAMSTrendAnalysis component
+- [x] **Task 1.1.5.58:** Implement MSQ trend analysis component (monthly patterns, growth trends, anomaly detection) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+  - **Implementation:** Created `frontend/src/components/trends/submission-trends.tsx` - MSQTrendAnalysis component
+- [x] **Task 1.1.5.59:** Implement WSL trend analysis component (stock level patterns, stockout identification) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+  - **Implementation:** Created `frontend/src/components/trends/submission-trends.tsx` - WSLTrendAnalysis component
+- [x] **Task 1.1.5.60:** Implement cross-metric analysis component (AAMS vs MSQ vs WSL correlations) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
+  - **Implementation:** Created `frontend/src/components/trends/submission-trends.tsx` - CrossMetricAnalysis component
 
 ---
 
 ## Subphase 1.1.6: Mock Data Generation & Population (Week 7)
 
 ### Mock Data Tasks
-- [ ] **Task 1.1.6.1:** Create mock data generation script - Companies (75 companies: 15 IPCs + 60 Wholesalers, diverse profiles)
-- [ ] **Task 1.1.6.2:** Create mock data generation script - Products (2-5 products per company, varied types)
-- [ ] **Task 1.1.6.3:** Create mock data generation script - SKUs (3-10 SKUs per product, varied codes, **include pharmaceutical attributes: realistic dosage_strength, dosage_form, pack_size, unit_of_measure**)
-- [ ] **Task 1.1.6.3a:** Generate realistic SKU pharmaceutical data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
-- [ ] **Task 1.1.6.4:** Create mock data generation script - ATC Codes (comprehensive ATC code list)
-- [ ] **Task 1.1.6.5:** Create mock data generation script - Critical Medicines (designate subset of SKUs as critical)
-- [ ] **Task 1.1.6.6:** Create mock data generation script - AAMS (2-3 years historical AAMS data per company, **submission_data as array of {sku_id, quantity} objects**)
-- [ ] **Task 1.1.6.7:** Create mock data generation script - MSQ (2-3 years historical monthly MSQ data, **submission_data as array of {sku_id, quantity} objects**)
-- [ ] **Task 1.1.6.8:** Create mock data generation script - WSL (2-3 years historical weekly WSL data, **submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects**, include breach scenarios)
-- [ ] **Task 1.1.6.9:** Create mock data generation script - Thresholds (calculated thresholds for all SKUs)
-- [ ] **Task 1.1.6.10:** Create mock data generation script - Users (company users for each company, MOH users)
-- [ ] **Task 1.1.6.11:** Create mock data generation script - Registry submissions (historical submission workflows)
-- [ ] **Task 1.1.6.12:** Create mock data generation script - Breaches (historical breach records with analyses)
-- [ ] **Task 1.1.6.13:** Execute mock data population scripts (validate data integrity)
-- [ ] **Task 1.1.6.14:** Verify mock data completeness and relationships
-- [ ] **Task 1.1.6.15:** Create database seed data validation script (foreign key integrity, constraint validation, data quality checks)
-- [ ] **Task 1.1.6.16:** Performance test seed data scripts (execution time, memory usage, transaction size limits)
+- [x] **Task 1.1.6.1:** Create mock data generation script - Companies (75 companies: 15 IPCs + 60 Wholesalers, diverse profiles)
+  - **Implementation:** Created `supabase/seed/mock-data/01-companies.ts`
+- [x] **Task 1.1.6.2:** Create mock data generation script - Products (2-5 products per company, varied types)
+  - **Implementation:** Created `supabase/seed/mock-data/02-products.ts`
+- [x] **Task 1.1.6.3:** Create mock data generation script - SKUs (3-10 SKUs per product, varied codes, **include pharmaceutical attributes: realistic dosage_strength, dosage_form, pack_size, unit_of_measure**)
+  - **Implementation:** Created `supabase/seed/mock-data/02-products.ts` - MockSKU interface with pharma attributes
+- [x] **Task 1.1.6.3a:** Generate realistic SKU pharmaceutical data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
+  - **Implementation:** Created `supabase/seed/mock-data/00-config.ts` - DOSAGE_FORMS, STRENGTH_PATTERNS, PACK_SIZES
+- [x] **Task 1.1.6.4:** Create mock data generation script - ATC Codes (comprehensive ATC code list)
+  - **Implementation:** Created `supabase/seed/mock-data/03-atc-codes.ts` - Full ATC hierarchy (Levels 1-5)
+- [x] **Task 1.1.6.5:** Create mock data generation script - Critical Medicines (designate subset of SKUs as critical)
+  - **Implementation:** Created `supabase/seed/mock-data/04-critical-medicines.ts`
+- [x] **Task 1.1.6.6:** Create mock data generation script - AAMS (2-3 years historical AAMS data per company, **submission_data as array of {sku_id, quantity} objects**)
+  - **Implementation:** Created `supabase/seed/mock-data/06-vci-submissions.ts` - MockAAMSSubmission
+- [x] **Task 1.1.6.7:** Create mock data generation script - MSQ (2-3 years historical monthly MSQ data, **submission_data as array of {sku_id, quantity} objects**)
+  - **Implementation:** Created `supabase/seed/mock-data/06-vci-submissions.ts` - MockMSQSubmission
+- [x] **Task 1.1.6.8:** Create mock data generation script - WSL (2-3 years historical weekly WSL data, **submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects**, include breach scenarios)
+  - **Implementation:** Created `supabase/seed/mock-data/06-vci-submissions.ts` - MockWSLSubmission with breach support
+- [x] **Task 1.1.6.9:** Create mock data generation script - Thresholds (calculated thresholds for all SKUs)
+  - **Implementation:** Created `supabase/seed/mock-data/07-thresholds.ts` - Threshold calculation with B multiplier
+- [x] **Task 1.1.6.10:** Create mock data generation script - Users (company users for each company, MOH users)
+  - **Implementation:** Created `supabase/seed/mock-data/05-users.ts`
+- [x] **Task 1.1.6.11:** Create mock data generation script - Registry submissions (historical submission workflows)
+  - **Implementation:** Created `supabase/seed/mock-data/08-registry-submissions.ts`
+- [x] **Task 1.1.6.12:** Create mock data generation script - Breaches (historical breach records with analyses)
+  - **Implementation:** Created `supabase/seed/mock-data/09-breaches.ts` - Breaches with analyses
+- [x] **Task 1.1.6.13:** Execute mock data population scripts (validate data integrity)
+  - **Implementation:** Created `supabase/seed/mock-data/index.ts` - Main seeder with `--mock` flag
+- [x] **Task 1.1.6.14:** Verify mock data completeness and relationships
+  - **Implementation:** Created `supabase/seed/mock-data/validate.ts` - Relationship verification
+- [x] **Task 1.1.6.15:** Create database seed data validation script (foreign key integrity, constraint validation, data quality checks)
+  - **Implementation:** Created `supabase/seed/mock-data/validate.ts` - FK, constraint, and quality validation
+- [x] **Task 1.1.6.16:** Performance test seed data scripts (execution time, memory usage, transaction size limits)
+  - **Implementation:** Created `supabase/seed/mock-data/performance-test.ts`
 
 ---
 
 ## Subphase 1.1.7: Integration Testing & Documentation (Week 8)
 
 ### Integration Contract Verification Tasks
-- [ ] **Task 1.1.7.0:** Verify RMM→VCI integration contract (data flow specs, threshold switching contract, data dependencies) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+- [x] **Task 1.1.7.0:** Verify RMM→VCI integration contract (data flow specs, threshold switching contract, data dependencies) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
   - **Depends on:** Task 1.1.1.1a (module integration contracts definition)
   - **Verification:** Verify RMM data (companies, products, SKUs) is accessible to VCI; verify threshold data flow from VCI to RMM
   - **Estimated Time:** 4-6 hours
-- [ ] **Task 1.1.7.0a:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Implementation:** Created `docs/07-testing/integration-verification/rmm-vci-contract-verification.md`
+- [x] **Task 1.1.7.0a:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
   - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.2.1.1b (ECS integration points)
   - **Verification:** Verify VCI threshold data is accessible to ECS; verify threshold switching logic (VCI → ECS → VCI reversion); verify conditional validation (CMC score-based if CMC active)
   - **Estimated Time:** 4-6 hours
-- [ ] **Task 1.1.7.0b:** Verify ECS→CMC integration contract (score recalculation triggers, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Implementation:** Created `docs/07-testing/integration-verification/vci-ecs-contract-verification.md`
+- [x] **Task 1.1.7.0b:** Verify ECS→CMC integration contract (score recalculation triggers, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
   - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.3.2.3a (event-triggered recalculation coordinator)
   - **Verification:** Verify ECS export approval events trigger CMC score recalculation; verify CMC scores are accessible to ECS for conditional validation
   - **Estimated Time:** 4-6 hours
+  - **Implementation:** Created `docs/07-testing/integration-verification/ecs-cmc-contract-verification.md`
 
 ### Testing Infrastructure Setup (Hassan's Audit - Issue #54)
-- [ ] **Task 1.1.7.0c:** Set up comprehensive testing infrastructure
+- [x] **Task 1.1.7.0c:** Set up comprehensive testing infrastructure
   - **Reference:** [Testing Framework](../../08-deployment/testing-framework.md)
   - **Testing Infrastructure Specifications:**
     - Test database: Separate test database with transaction rollback after each test
@@ -1119,9 +1233,15 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
     - Test utilities: Helper functions for test data creation, authentication mocking, API testing
     - Test fixtures: Reusable test data sets for common scenarios
   - **Estimated Time:** 4-6 hours
+  - **Implementation:** Created `tests/` directory with:
+    - `tests/setup/test-database.ts` - Database connection & transaction isolation
+    - `tests/setup/auth-mocking.ts` - Authentication mocking utilities
+    - `tests/setup/test-helpers.ts` - Test data creation helpers
+    - `tests/jest.config.js` - Jest configuration
+    - `tests/setup/jest.*.ts` - Jest setup/teardown files
 
 ### Test Data Management (Hassan's Audit - Issue #55)
-- [ ] **Task 1.1.7.0d:** Set up test data management infrastructure
+- [x] **Task 1.1.7.0d:** Set up test data management infrastructure
   - **Reference:** [Mock Data README](../../07-testing/mock-data/README.md)
   - **Test Data Management Specifications:**
     - Test data generation: Scripts to generate realistic test data (companies, products, skus, submissions)
@@ -1130,6 +1250,11 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
     - Test data seeding: Scripts to seed test database with baseline data
     - Test data cleanup: Automated cleanup after test runs, prevent test data pollution
   - **Estimated Time:** 3-4 hours
+  - **Implementation:** Created `tests/fixtures/` directory with:
+    - `tests/fixtures/companies.ts` - Company fixtures
+    - `tests/fixtures/products.ts` - Product & SKU fixtures
+    - `tests/fixtures/submissions.ts` - VCI submission fixtures
+    - `tests/fixtures/index.ts` - Fixture loader & exports
 
 ### Testing Tasks
 - [ ] **Task 1.1.7.1:** Create RMM module test suite (unit tests for RPC functions)

@@ -14,9 +14,11 @@ import { EntityStatusBadge } from '@/components/rmm/workflow-status-indicator'
 import { useSKU } from '@/hooks/use-rmm'
 import { useUserRole } from '@/hooks/use-user-role'
 import { format } from 'date-fns'
-import { Edit, Pill } from 'lucide-react'
+import { Edit, Pill, History } from 'lucide-react'
+import { SimpleHistoryTab } from '@/components/history/history-tab'
 
 // Task 1.1.2.24: SKU detail page
+// Task 1.1.5.27: History tab on SKU detail page
 
 export default function SKUDetailPage() {
   const params = useParams()
@@ -48,62 +50,83 @@ export default function SKUDetailPage() {
             ]
           : []
       }
-      sections={[
+      tabs={[
         {
-          id: 'basic',
-          title: 'SKU Information',
+          id: 'details',
+          label: 'Details',
           content: (
-            <DetailGrid columns={2}>
-              <DetailField label="SKU Code" value={<span className="font-mono">{sku?.sku_code}</span>} />
-              <DetailField label="Name" value={sku?.name} />
-              <DetailField label="Product" value={sku?.product_name} />
-              <DetailField label="Company" value={sku?.company_name} />
-              <DetailField
-                label="Status"
-                value={sku && <EntityStatusBadge isActive={sku.is_active} />}
-              />
-              <DetailField
-                label="Created"
-                value={
-                  sku?.created_at &&
-                  format(new Date(sku.created_at), 'PPP')
-                }
-              />
-            </DetailGrid>
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>SKU Information</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <DetailGrid columns={2}>
+                    <DetailField label="SKU Code" value={<span className="font-mono">{sku?.sku_code}</span>} />
+                    <DetailField label="Name" value={sku?.name} />
+                    <DetailField label="Product" value={sku?.product_name} />
+                    <DetailField label="Company" value={sku?.company_name} />
+                    <DetailField
+                      label="Status"
+                      value={sku && <EntityStatusBadge isActive={sku.is_active} />}
+                    />
+                    <DetailField
+                      label="Created"
+                      value={
+                        sku?.created_at &&
+                        format(new Date(sku.created_at), 'PPP')
+                      }
+                    />
+                  </DetailGrid>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Pharmaceutical Attributes</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <DetailGrid columns={2}>
+                    <DetailField label="Dosage Strength" value={sku?.dosage_strength} />
+                    <DetailField label="Dosage Form" value={sku?.dosage_form} />
+                    <DetailField label="Pack Size" value={sku?.pack_size} />
+                    <DetailField label="Unit of Measure" value={sku?.unit_of_measure} />
+                    <DetailField
+                      label="ATC Code"
+                      value={
+                        sku?.atc_code ? (
+                          <div>
+                            <span className="font-mono">{sku.atc_code}</span>
+                            {sku.atc_name && (
+                              <span className="text-muted-foreground ml-2">
+                                ({sku.atc_name})
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          '—'
+                        )
+                      }
+                    />
+                    <DetailField
+                      label="MOH Authorized Unregistered"
+                      value={sku?.is_moh_authorized_unregistered ? 'Yes' : 'No'}
+                    />
+                  </DetailGrid>
+                </CardContent>
+              </Card>
+            </div>
           ),
         },
         {
-          id: 'pharmaceutical',
-          title: 'Pharmaceutical Attributes',
-          description: 'Dosage and packaging information',
+          id: 'history',
+          label: 'History',
+          icon: <History className="h-4 w-4" />,
           content: (
-            <DetailGrid columns={2}>
-              <DetailField label="Dosage Strength" value={sku?.dosage_strength} />
-              <DetailField label="Dosage Form" value={sku?.dosage_form} />
-              <DetailField label="Pack Size" value={sku?.pack_size} />
-              <DetailField label="Unit of Measure" value={sku?.unit_of_measure} />
-              <DetailField
-                label="ATC Code"
-                value={
-                  sku?.atc_code ? (
-                    <div>
-                      <span className="font-mono">{sku.atc_code}</span>
-                      {sku.atc_name && (
-                        <span className="text-muted-foreground ml-2">
-                          ({sku.atc_name})
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    '—'
-                  )
-                }
-              />
-              <DetailField
-                label="MOH Authorized Unregistered"
-                value={sku?.is_moh_authorized_unregistered ? 'Yes' : 'No'}
-              />
-            </DetailGrid>
+            <SimpleHistoryTab
+              entityType="sku"
+              entityId={skuId}
+              entityName={sku?.name}
+            />
           ),
         },
       ]}

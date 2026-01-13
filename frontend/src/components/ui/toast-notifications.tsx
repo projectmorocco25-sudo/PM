@@ -269,7 +269,7 @@ export function showPermissionError(action?: string) {
     title: 'Permission Denied',
     description: action 
       ? `You don't have permission to ${action}`
-      : 'You don't have permission to perform this action',
+      : "You don't have permission to perform this action",
     duration: 5000,
   })
 }

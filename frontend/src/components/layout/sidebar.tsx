@@ -34,6 +34,8 @@ import {
   Send,
   Megaphone,
   Archive,
+  History,
+  ClipboardList,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -52,6 +54,23 @@ const navigation: NavItem[] = [
     title: 'Dashboard',
     href: '/dashboard',
     icon: Home,
+  },
+  // Task 1.1.5.52: History link - all roles
+  {
+    title: 'History',
+    href: '/dashboard/history',
+    icon: History,
+  },
+  // Task 1.1.5.53: Audit link - MOH/Auditors only
+  {
+    title: 'Audit',
+    href: '/dashboard/audit',
+    icon: ClipboardList,
+    roles: ['tier1', 'tier2_officer', 'tier2_registrar', 'auditor'],
+    children: [
+      { title: 'Audit Logs', href: '/dashboard/audit/logs', icon: FileText },
+      { title: 'Reports', href: '/dashboard/audit/reports', icon: BarChart3 },
+    ],
   },
   {
     title: 'RMM',
@@ -74,6 +93,10 @@ const navigation: NavItem[] = [
       { title: 'WSL', href: '/dashboard/vci/wsl', icon: FileText },
       { title: 'Thresholds', href: '/dashboard/vci/thresholds', icon: TrendingUp },
       { title: 'Breaches', href: '/dashboard/vci/breaches', icon: AlertTriangle, badge: 5 },
+      // Task 1.1.5.54: Submissions History link
+      { title: 'Submissions History', href: '/dashboard/vci/submissions/history', icon: History },
+      // Task 1.1.5.55: Trends link - Tier 1 only
+      { title: 'Trends', href: '/dashboard/vci/submissions/history/trends', icon: BarChart3, roles: ['tier1'] },
     ],
   },
   {

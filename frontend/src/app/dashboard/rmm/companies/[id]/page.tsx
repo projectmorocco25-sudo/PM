@@ -15,9 +15,11 @@ import { EntityStatusBadge } from '@/components/rmm/workflow-status-indicator'
 import { useCompany, useProducts, useCompanyMutations, Product } from '@/hooks/use-rmm'
 import { useUserRole } from '@/hooks/use-user-role'
 import { formatDistanceToNow, format } from 'date-fns'
-import { Edit, Package, Plus, Trash2 } from 'lucide-react'
+import { Edit, Package, Plus, Trash2, History } from 'lucide-react'
+import { CompanyHistoryTab } from '@/components/history/history-tab'
 
 // Task 1.1.2.18: Company detail page
+// Task 1.1.5.25: History tab on Company detail page
 
 export default function CompanyDetailPage() {
   const params = useParams()
@@ -182,6 +184,14 @@ export default function CompanyDetailPage() {
                 emptyMessage="No products found"
               />
             </div>
+          ),
+        },
+        {
+          id: 'history',
+          label: 'History',
+          icon: <History className="h-4 w-4" />,
+          content: (
+            <CompanyHistoryTab companyId={companyId} companyName={company?.name} />
           ),
         },
       ]}

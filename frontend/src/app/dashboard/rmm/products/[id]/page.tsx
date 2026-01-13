@@ -16,9 +16,11 @@ import { EntityStatusBadge } from '@/components/rmm/workflow-status-indicator'
 import { useProduct, useSKUs, SKU } from '@/hooks/use-rmm'
 import { useUserRole } from '@/hooks/use-user-role'
 import { format } from 'date-fns'
-import { Edit, Boxes, Plus, AlertTriangle } from 'lucide-react'
+import { Edit, Boxes, Plus, AlertTriangle, History } from 'lucide-react'
+import { ProductHistoryTab } from '@/components/history/history-tab'
 
 // Task 1.1.2.21: Product detail page
+// Task 1.1.5.26: History tab on Product detail page
 
 export default function ProductDetailPage() {
   const params = useParams()
@@ -165,6 +167,14 @@ export default function ProductDetailPage() {
                 emptyMessage="No SKUs found"
               />
             </div>
+          ),
+        },
+        {
+          id: 'history',
+          label: 'History',
+          icon: <History className="h-4 w-4" />,
+          content: (
+            <ProductHistoryTab productId={productId} productName={product?.name} />
           ),
         },
       ]}

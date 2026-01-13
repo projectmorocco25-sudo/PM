@@ -1,11 +1,22 @@
 /**
  * Task 1.1.1.23: Database Seeding Script
+ * Task 1.1.6.13: Mock Data Population Execution
  * 
  * Main entry point for database seeding.
  * Executes all seed files in order.
  * 
  * Usage:
+ *   # Basic seeds
  *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npx ts-node supabase/seed/index.ts
+ * 
+ *   # Full mock data (75 companies, 3 years history)
+ *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npx ts-node supabase/seed/index.ts --mock
+ * 
+ *   # Validate mock data
+ *   npx ts-node supabase/seed/mock-data/validate.ts
+ * 
+ *   # Performance test
+ *   npx ts-node supabase/seed/mock-data/performance-test.ts
  */
 
 import { log, logSection } from './utils'
@@ -17,6 +28,9 @@ import { seedProducts } from './03-products'
 import { seedAtcCodes } from './04-atc-codes'
 import { seedSubmissions } from './05-submissions'
 import { seedCommunications } from './06-communications'
+
+// Import mock data seeder
+import { runMockDataSeeding } from './mock-data'
 
 // ============================================================================
 // Seed Configuration
@@ -42,6 +56,21 @@ const seeds: SeedConfig[] = [
 // ============================================================================
 
 async function main() {
+  const useMockData = process.argv.includes('--mock')
+  
+  if (useMockData) {
+    // Task 1.1.6.13: Full mock data seeding
+    logSection('Mock Data Seeding Mode')
+    log('This will generate and populate comprehensive mock data (75 companies, 3 years history)')
+    
+    const result = await runMockDataSeeding()
+    if (!result.success) {
+      process.exit(1)
+    }
+    return
+  }
+  
+  // Standard seeding
   logSection('Database Seeding Started')
   log(`Environment: ${process.env.NODE_ENV || 'development'}`)
   

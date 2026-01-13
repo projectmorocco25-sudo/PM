@@ -1,0 +1,20 @@
+{
+  "name": "pm-seed",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "tsx index.ts",
+    "seed:mock": "tsx index.ts --mock",
+    "validate": "tsx mock-data/validate.ts",
+    "performance": "tsx mock-data/performance-test.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.0.0"
+  }
+}

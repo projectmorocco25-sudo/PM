@@ -129,7 +129,11 @@ interface SidebarProps {
 export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname()
   const { role } = useUserRole()
+  const { conversations } = useCommunications()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+
+  // Calculate unread count from conversations
+  const unreadCount = conversations.reduce((acc, conv) => acc + (conv.unread_count || 0), 0)
 
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) =>

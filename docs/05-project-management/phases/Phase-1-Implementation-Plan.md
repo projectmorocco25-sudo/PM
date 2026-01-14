@@ -1,6 +1,6 @@
 # Phase 1 Implementation Plan - Pharmaceutical Governance Value Chain Platform (PM)
 
-**Phase:** Phase 1 - Development with Mock Data (Months 2-6)  
+**Phase:** Phase 1 - Development with Seeded Supabase Data (Months 2-6)  
 **Status:** ✅ APPROVED FOR IMPLEMENTATION (January 12, 2026)  
 **Prerequisites:** 
 - Phase 0 (Technical Foundation) ✅ COMPLETE - See [Phase 0: Technical Foundation](phase-0-technical-foundation.md)
@@ -22,6 +22,77 @@
 **✅ READY FOR IMPLEMENTATION:** This plan has been fully audited by all 11 team members. All 60 issues (44 critical + 16 medium) have been addressed. Begin with **Subphase 1.1.1: Core Foundation**.
 
 ---
+
+## 🔒 HARD GATES: Wireframe + Database Compliance (Non-Negotiable)
+
+These gates apply to **every** Phase 1 frontend page/component. If a gate is not met, the task is **not complete** and the PR must not merge.
+
+### No Hardcoded UI Data
+
+- Production pages/components must **not** use inline arrays/objects as the source of truth for cards/tables/lists.
+- All “mock data” used during Phase 1 must be **seeded into the Supabase database** (dev/staging), then queried by the frontend.
+- Local mock providers (hooks/services/repositories returning synthetic records) are **not allowed** for application runtime.
+ - **Seed playbook (required):** See [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md).
+
+#### Phase 1 “Mock Data” Clarification (Required)
+
+- **Allowed:** Seeded Supabase database records (dev/staging) that are realistic and cover wireframe scenarios; test data inserted into the **test database** for automated tests.
+- **Not allowed:** Any locally-mocked application runtime data (including mocks behind data access layers) and any inline arrays/objects used as the source of truth in pages/components.
+- **Goal:** UI components always read from the database in Phase 1; “mock” means **seeded DB data**, not local placeholders.
+
+### Wireframe Binding
+
+- Every implemented route/page must declare the exact wireframe task file(s) it implements (e.g., `task-0.5.x.x-...`).
+- Wireframe binding must appear in **both**:
+  - the PR description checklist (see “Proof Required”), and
+  - the codebase (either a top-of-file comment in the route/page file, or a maintained mapping module such as “route → wireframe task id(s)”).
+- If there is no wireframe for a page/task: **STOP** and create/approve the wireframe **before** coding.
+
+### DB Binding
+
+- Every page must list the tables/fields it uses and must query real data (no placeholders) once the schema exists.
+- Phase 0.6 additions must be incorporated where applicable:
+  - `users.avatar_url`, `users.timezone`, `users.language`, `users.notification_preferences`
+  - `conversations.lifecycle_state`, `messages.delivered_at`
+  - `follow_ups`, `meetings`, `meeting_attendees`
+  - `skus.dosage_strength`, `skus.dosage_form`, `skus.pack_size`, `skus.unit_of_measure`
+
+### Role + States Coverage
+
+- Company + MOH Tier 1 + MOH Tier 2 must be implemented/verified where the wireframe specifies role variants.
+- “N/A” is allowed only when the wireframe explicitly indicates no role variants apply; cite the relevant wireframe section/annotation in the PR.
+- Required UI states: **loading**, **empty**, **error**, **success**.
+
+### Proof Required (PR Description Checklist)
+
+For every frontend task marked complete, the PR description must include:
+1. Wireframe link(s) (exact `task-0.5.x.x` file(s))
+2. Screenshots for each role variant (Company / MOH Tier 1 / MOH Tier 2) or explicit N/A
+3. Screenshots for loading/empty/error/success states
+4. Data proof: tables/fields used + where queries live (file paths/functions) and evidence they are actually queried (e.g., select clause/RPC name)
+5. Any deviations + explicit approval reference (decision/issue link)
+
+### Stop Conditions (Do Not Proceed)
+
+Stop implementation and resolve before proceeding if any of the following is true:
+- No wireframe link exists for the page/route being implemented.
+- Wireframe is ambiguous or missing a required state/role behavior.
+- Required DB table/field/RPC does not exist yet (implement the missing backend task first).
+- RLS/policies prevent required access for the wireframed role.
+- Plan and wireframe conflict (wireframe wins; document and propose plan update instead of guessing).
+
+### Repo Enforcement (Required for Phase 1.1 unless explicitly waived)
+
+- Add a PR template that embeds the “Proof Required” checklist above.
+- Require reviewers by change type:
+  - UI pages/layouts: UI/UX reviewer (Emma) or designated delegate
+  - DB queries/schema usage: DB reviewer (Nadia) or designated delegate
+  - RLS/RBAC/policies: RLS reviewer (Rafi) or designated delegate
+
+**Optional (strongly advised):**
+- Add a CI check (lint or grep-based) that flags likely hardcoded UI data in `frontend/src/app/**` pages/components (e.g., large inline arrays/objects used for rendering lists/cards/tables).
+
+**Repo hardwire:** Cursor enforcement rule is present at `.cursor/rules/wireframe_db_compliance.md`.
 
 ## ⚠️ CRITICAL: Wireframe-First Implementation Principle
 
@@ -61,6 +132,8 @@ For every frontend task, verify before marking complete:
 - [ ] Role-based variations implemented (Company, MOH Tier 1, MOH Tier 2)
 - [ ] Responsive breakpoints match wireframe (mobile, tablet, desktop)
 
+**Note:** The “HARD GATES” section above is authoritative; this checklist is a quick reminder and does not replace the PR proof requirements.
+
 **Note:** All major frontend tasks in this plan now include wireframe references (e.g., **Wireframe:** [Task 0.5.X.X - Page Name](../../path/to/wireframe.md)). If a task doesn't have a wireframe reference, it may be:
 1. A backend/infrastructure task (no UI)
 2. A utility component that supports wireframe implementations
@@ -73,21 +146,11 @@ For every frontend task, verify before marking complete:
 
 ## Pre-Implementation Audit Status
 
-**Current Status:** ✅ **APPROVED FOR IMPLEMENTATION** - Begin with Subphase 1.1.1
+**Current Status:** ✅ **COMPLETE & APPROVED FOR IMPLEMENTATION** - Begin with Subphase 1.1.1
 
-A comprehensive team audit of all `/docs` files is currently in progress to ensure:
-- All Phase 0.5 learnings are reflected in this plan
-- All wireframe specifications are properly referenced
-- No gaps exist between wireframes, architecture, and implementation tasks
-- Wireframe-first principle is emphasized throughout
+The Phase 1 pre-implementation audit is complete. References and standards are embedded in this plan, including the “HARD GATES” and the wireframe-first principle.
 
-**Audit Document:** [Phase 1 Pre-Implementation Audit Checklist](phase-1-pre-implementation-audit-checklist.md)
-
-**Once audit is complete:**
-- This plan will be updated with all findings
-- Wireframe references will be added to all frontend tasks
-- Wireframe compliance checklists will be added
-- Implementation can begin
+**Audit Document:** [Phase 1 Audit Status Tracker](phase-1-audit-status-tracker.md) and [Phase 1 Pre-Implementation Audit Checklist](phase-1-pre-implementation-audit-checklist.md)
 
 ---
 
@@ -165,6 +228,13 @@ All tasks must meet their respective Definition of Done criteria before being ma
 - [ ] Responsive design implemented
 - [ ] Component tested
 - [ ] Wireframe compliance verified
+- [ ] PR description includes required compliance proof:
+  - [ ] Wireframe link(s) (exact `task-0.5.x.x` file(s))
+  - [ ] Screenshots for each role variant (Company / MOH Tier 1 / MOH Tier 2) or explicit N/A
+  - [ ] Screenshots for loading/empty/error/success states
+  - [ ] Data proof: tables/fields used + where queries live (file paths/functions) and evidence they are actually queried (e.g., select clause/RPC name)
+  - [ ] Any deviations + explicit approval reference (decision/issue link)
+- [ ] Required reviewers obtained by change type (UI/UX, DB, RLS as applicable)
 - [ ] Code reviewed by frontend specialist
 
 **For complete criteria and standards, see:** [Phase 1 Implementation Standards](phase-1-implementation-standards.md)
@@ -210,7 +280,7 @@ All database setup, migrations, schema verification, and management operations t
 
 ## Phase 1 Overview
 
-Phase 1 delivers the complete MVP with mock data, organized into 4 sequential subphases:
+Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 sequential subphases:
 1. **Phase 1.1:** RMM + VCI Development (Months 2-3)
 2. **Phase 1.2:** ECS Development (Month 4)
 3. **Phase 1.3:** CMC Development (Month 5)
@@ -221,7 +291,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 # PHASE 1.1: RMM + VCI DEVELOPMENT (Months 2-3)
 
 **Duration:** 8 weeks  
-**Objective:** Build core modules (Registry Management and Value Chain Intelligence) with comprehensive mock data
+**Objective:** Build core modules (Registry Management and Value Chain Intelligence) with comprehensive seeded Supabase data
 
 ## Subphase 1.1.1: Foundation & Infrastructure Setup (Week 1)
 
@@ -230,6 +300,9 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - Phase 0.6 (Database Schema Audit & Alignment) completed
 - Implementation Standards document reviewed
 - Development environment configured
+
+**Seed Data Gate (Required):**
+- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
 
 **Execution Notes:**
 - Tasks should be executed in dependency order (check `Depends on:` fields)
@@ -661,7 +734,8 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
     - Create automated schema verification script using MCP tools (compare actual schema to schema-design.md)
   - **Estimated Time:** 3-4 hours
 - [ ] **Task 1.1.1.22:** Configure environment variables (dev, staging, prod)
-- [ ] **Task 1.1.1.23:** Set up database seeding script structure (mock data generation framework - TypeScript/JavaScript, seed files location, execution order)
+- [ ] **Task 1.1.1.23:** Set up database seeding script structure (seeded Supabase dev/staging data only - TypeScript/JavaScript, seed files location, execution order)
+  - **Rule:** No local runtime mock providers. Frontend must query Supabase for all displayed data during Phase 1.
 
 ### Background Job Infrastructure
 - [ ] **Task 1.1.1.4m:** Create background job queue infrastructure (Leila's Audit - Issue #31)
@@ -677,6 +751,9 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 ---
 
 ## Subphase 1.1.2: RMM Module - Core Registry Management (Week 2-3)
+
+**Seed Data Gate (Required):**
+- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
 
 ### RMM Backend Tasks
 - [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD (rmm_create_company, rmm_update_company, rmm_get_company, rmm_list_companies)
@@ -823,6 +900,9 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 ---
 
 ## Subphase 1.1.3: VCI Module - AAMS Workflow (Week 4)
+
+**Seed Data Gate (Required):**
+- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
 
 ### VCI AAMS Backend Tasks
 - [ ] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
@@ -999,9 +1079,9 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 ---
 
-## Subphase 1.1.6: Mock Data Generation & Population (Week 7)
+## Subphase 1.1.6: Seed Data Generation & Supabase Population (Week 7)
 
-### Mock Data Tasks
+### Seed Data Tasks (Supabase DB Only)
 - [ ] **Task 1.1.6.1:** Create mock data generation script - Companies (75 companies: 15 IPCs + 60 Wholesalers, diverse profiles)
 - [ ] **Task 1.1.6.2:** Create mock data generation script - Products (2-5 products per company, varied types)
 - [ ] **Task 1.1.6.3:** Create mock data generation script - SKUs (3-10 SKUs per product, varied codes, **include pharmaceutical attributes: realistic dosage_strength, dosage_form, pack_size, unit_of_measure**)
@@ -1015,10 +1095,18 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - [ ] **Task 1.1.6.10:** Create mock data generation script - Users (company users for each company, MOH users)
 - [ ] **Task 1.1.6.11:** Create mock data generation script - Registry submissions (historical submission workflows)
 - [ ] **Task 1.1.6.12:** Create mock data generation script - Breaches (historical breach records with analyses)
-- [ ] **Task 1.1.6.13:** Execute mock data population scripts (validate data integrity)
-- [ ] **Task 1.1.6.14:** Verify mock data completeness and relationships
+- [ ] **Task 1.1.6.13:** Execute seed data population scripts into Supabase (validate data integrity)
+- [ ] **Task 1.1.6.14:** Verify seed data completeness and relationships
 - [ ] **Task 1.1.6.15:** Create database seed data validation script (foreign key integrity, constraint validation, data quality checks)
 - [ ] **Task 1.1.6.16:** Performance test seed data scripts (execution time, memory usage, transaction size limits)
+
+#### Farah’s Seed Data Quality Gate (Required)
+
+Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declaring “seed complete”:
+- **Wireframe coverage:** every major wireframe filter/state has supporting records (empty states are intentional and reproducible).
+- **Distribution realism:** no uniform/random-only distributions for scores/breaches/thresholds; include plausible clustering and outliers.
+- **State coverage:** include examples across workflow statuses needed for dashboards and lists (pending, approved, rejected, implemented, archived, etc.).
+- **Analytics readiness:** seeded data supports trend components and governance dashboards without hardcoded fallbacks.
 
 ---
 
@@ -1196,7 +1284,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 ---
 
-## Subphase 1.2.4: ECS Integration Testing & Mock Data (Week 12)
+## Subphase 1.2.4: ECS Integration Testing & Seed Data (Week 12)
 
 ### ECS Testing & Data Tasks
 - [ ] **Task 1.2.4.1:** Create ECS module test suite (unit tests for RPC functions)
@@ -1337,7 +1425,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 
 ---
 
-## Subphase 1.3.4: CMC Testing & Mock Data (Week 16)
+## Subphase 1.3.4: CMC Testing & Seed Data (Week 16)
 
 ### CMC Testing & Data Tasks
 - [ ] **Task 1.3.4.1:** Create CMC module test suite (unit tests for scoring calculations)
@@ -1514,8 +1602,8 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - **Mitigation:** Clear module interfaces defined in Phase 0, integration tests at each phase
 - **Contingency:** Additional integration testing time in Phase 1.4
 
-**Risk 3: Mock Data Complexity**
-- **Mitigation:** Mock data generation scripts created early, validated incrementally
+**Risk 3: Seed Data Complexity**
+- **Mitigation:** Seed data generation scripts created early, validated incrementally (Farah quality gate + automated integrity checks)
 - **Contingency:** Simplified data sets if needed, can expand later
 
 **Risk 4: Performance Issues with 75 Companies**
@@ -1537,7 +1625,7 @@ Phase 1 delivers the complete MVP with mock data, organized into 4 sequential su
 - **Leila:** Scheduled triggers, background jobs
 - **Emma:** Frontend development, UI/UX (using wireframes as reference)
 - **Hassan:** Testing strategy, test implementation
-- **Farah:** Mock data generation, data validation
+- **Farah:** Seed data generation oversight, analytics realism, data validation (coverage + distributions + KPI sanity checks)
 
 **Phase 1.2-1.4:**
 - Similar team assignments with module-specific focus

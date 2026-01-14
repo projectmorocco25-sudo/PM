@@ -38,7 +38,7 @@ interface CommunicationsInboxProps {
 export function CommunicationsInbox({ onSelectConversation, selectedId }: CommunicationsInboxProps) {
   const { conversations, isLoading, archiveConversation } = useCommunications()
   const [searchQuery, setSearchQuery] = useState('')
-  const [filter, setFilter] = useState<'all' | 'unread' | 'archived'>('all')
+  const [filter, setFilter] = useState<'all' | 'unread' | 'starred' | 'archived'>('all')
 
   const filteredConversations = conversations.filter((conv) => {
     // Search filter
@@ -85,8 +85,8 @@ export function CommunicationsInbox({ onSelectConversation, selectedId }: Commun
         </div>
 
         {/* Filters */}
-        <div className="flex gap-1">
-          {(['all', 'unread', 'archived'] as const).map((f) => (
+        <div className="flex gap-1 flex-wrap">
+          {(['all', 'unread', 'starred', 'archived'] as const).map((f) => (
             <Button
               key={f}
               variant={filter === f ? 'secondary' : 'ghost'}
@@ -94,10 +94,16 @@ export function CommunicationsInbox({ onSelectConversation, selectedId }: Commun
               onClick={() => setFilter(f)}
               className="capitalize"
             >
+              {f === 'starred' && <Star className="h-3 w-3 mr-1" />}
               {f}
               {f === 'unread' && conversations.filter((c) => c.unread_count > 0).length > 0 && (
                 <Badge variant="destructive" className="ml-1">
                   {conversations.filter((c) => c.unread_count > 0).length}
+                </Badge>
+              )}
+              {f === 'starred' && conversations.filter((c) => c.is_starred).length > 0 && (
+                <Badge variant="secondary" className="ml-1">
+                  {conversations.filter((c) => c.is_starred).length}
                 </Badge>
               )}
             </Button>
@@ -124,6 +130,7 @@ export function CommunicationsInbox({ onSelectConversation, selectedId }: Commun
                 isSelected={selectedId === conversation.id}
                 onClick={() => onSelectConversation?.(conversation.id)}
                 onArchive={() => archiveConversation(conversation.id)}
+                onStar={() => starConversation(conversation.id, !conversation.is_starred)}
               />
             ))}
           </div>
@@ -138,26 +145,31 @@ interface ConversationListItemProps {
     id: string
     subject: string
     type: string
+    priority?: 'low' | 'normal' | 'high' | 'urgent'
     lifecycle_state: string
     unread_count: number
+    is_starred?: boolean
     last_message?: {
       content: string
       created_at: string
+      delivered_at?: string | null
       sender?: { full_name: string }
     }
-    participants: { user: { full_name: string } }[]
+    participants: { user: { full_name: string; avatar_url?: string } }[]
     created_at: string
   }
   isSelected?: boolean
   onClick?: () => void
   onArchive?: () => void
+  onStar?: () => void
 }
 
 function ConversationListItem({ 
   conversation, 
   isSelected, 
   onClick, 
-  onArchive 
+  onArchive,
+  onStar
 }: ConversationListItemProps) {
   const otherParticipants = conversation.participants
     .filter((p) => p.user.full_name)
@@ -172,10 +184,25 @@ function ConversationListItem({
     support: '🎧',
   }
 
+  const priorityColors: Record<string, string> = {
+    low: 'border-l-slate-300',
+    normal: 'border-l-transparent',
+    high: 'border-l-amber-500',
+    urgent: 'border-l-red-500',
+  }
+
+  const lifecycleIcons: Record<string, string> = {
+    DRAFT: '📝',
+    ACTIVE: '',
+    RESOLVED: '✅',
+    ARCHIVED: '📦',
+  }
+
   return (
     <div
       className={cn(
-        'flex items-start gap-3 p-4 hover:bg-muted/50 cursor-pointer transition-colors',
+        'flex items-start gap-3 p-4 hover:bg-muted/50 cursor-pointer transition-colors border-l-4',
+        priorityColors[conversation.priority || 'normal'],
         isSelected && 'bg-muted',
         conversation.unread_count > 0 && 'bg-primary/5'
       )}
@@ -189,7 +216,11 @@ function ConversationListItem({
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
+          {conversation.is_starred && (
+            <Star className="h-3 w-3 fill-amber-400 text-amber-400 shrink-0" />
+          )}
           <span className={cn('font-medium truncate', conversation.unread_count > 0 && 'font-semibold')}>
+            {lifecycleIcons[conversation.lifecycle_state]}
             {typeLabels[conversation.type]}
             {conversation.subject}
           </span>
@@ -198,14 +229,24 @@ function ConversationListItem({
               {conversation.unread_count}
             </Badge>
           )}
+          {conversation.priority === 'urgent' && (
+            <Badge variant="destructive" className="shrink-0 text-xs">
+              Urgent
+            </Badge>
+          )}
         </div>
         <p className="text-sm text-muted-foreground truncate">
           {otherParticipants || 'No participants'}
         </p>
         {conversation.last_message && (
-          <p className="text-xs text-muted-foreground truncate mt-1">
-            {conversation.last_message.sender?.full_name}: {conversation.last_message.content}
-          </p>
+          <div className="flex items-center gap-1 mt-1">
+            <p className="text-xs text-muted-foreground truncate flex-1">
+              {conversation.last_message.sender?.full_name}: {conversation.last_message.content}
+            </p>
+            {conversation.last_message.delivered_at && (
+              <span className="text-xs text-green-600" title="Delivered">✓</span>
+            )}
+          </div>
         )}
       </div>
 
@@ -223,6 +264,10 @@ function ConversationListItem({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onStar?.() }}>
+              <Star className="h-4 w-4 mr-2" />
+              {conversation.is_starred ? 'Unstar' : 'Star'}
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onArchive?.() }}>
               <Archive className="h-4 w-4 mr-2" />
               Archive

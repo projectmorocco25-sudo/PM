@@ -70,6 +70,7 @@ export function ComposeMessage({
   const [content, setContent] = useState('')
   const [selectedRecipients, setSelectedRecipients] = useState<string[]>(defaultRecipients)
   const [conversationType, setConversationType] = useState<string>('direct')
+  const [priority, setPriority] = useState<'low' | 'normal' | 'high' | 'urgent'>('normal')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -186,19 +187,55 @@ export function ComposeMessage({
           </div>
         </div>
 
-        {/* Conversation Type */}
-        <div className="space-y-2">
-          <Label htmlFor="type">Type</Label>
-          <Select value={conversationType} onValueChange={setConversationType}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="direct">Direct Message</SelectItem>
-              <SelectItem value="workflow">Workflow Related</SelectItem>
-              <SelectItem value="support">Support Request</SelectItem>
-            </SelectContent>
-          </Select>
+        {/* Conversation Type & Priority */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="type">Type</Label>
+            <Select value={conversationType} onValueChange={setConversationType}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="direct">Direct Message</SelectItem>
+                <SelectItem value="workflow">Workflow Related</SelectItem>
+                <SelectItem value="support">Support Request</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="priority">Priority</Label>
+            <Select value={priority} onValueChange={(v) => setPriority(v as typeof priority)}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">
+                  <span className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-slate-400" />
+                    Low
+                  </span>
+                </SelectItem>
+                <SelectItem value="normal">
+                  <span className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-blue-400" />
+                    Normal
+                  </span>
+                </SelectItem>
+                <SelectItem value="high">
+                  <span className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-amber-400" />
+                    High
+                  </span>
+                </SelectItem>
+                <SelectItem value="urgent">
+                  <span className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-red-500" />
+                    Urgent
+                  </span>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {/* Subject */}

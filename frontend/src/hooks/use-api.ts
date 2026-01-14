@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient, type UseQueryOptions, type UseMutationOptions } from '@tanstack/react-query'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { parseApiError, type ApiError } from '@/components/ui/error-states'
@@ -10,6 +11,34 @@ import { parseApiError, type ApiError } from '@/components/ui/error-states'
 
 const MAX_RETRIES = 3
 const RETRY_DELAY = 1000
+
+// ============================================================================
+// Utility Hooks
+// ============================================================================
+
+/**
+ * useDebounce - Debounces a value by the specified delay
+ * Useful for search inputs to avoid excessive API calls
+ * 
+ * @example
+ * const [searchTerm, setSearchTerm] = useState('')
+ * const debouncedSearch = useDebounce(searchTerm, 300)
+ */
+export function useDebounce<T>(value: T, delay: number = 300): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [value, delay])
+
+  return debouncedValue
+}
 
 // Generic fetch hook with retry logic
 export function useApiQuery<T>(

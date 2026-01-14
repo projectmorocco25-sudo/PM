@@ -12,6 +12,7 @@ interface Conversation {
   id: string
   subject: string
   type: string
+  priority: 'low' | 'normal' | 'high' | 'urgent'
   lifecycle_state: string
   related_entity_type: string | null
   related_entity_id: string | null
@@ -19,6 +20,7 @@ interface Conversation {
   created_by: string
   created_at: string
   is_deleted: boolean
+  is_starred?: boolean
 }
 
 interface Message {
@@ -42,6 +44,7 @@ interface ConversationWithDetails extends Conversation {
     user: {
       full_name: string
       email: string
+      avatar_url?: string
     }
   }[]
   unread_count: number
@@ -124,10 +127,11 @@ export function useCommunications() {
 
           return {
             ...conv,
+            is_starred: isStarred,
             participants: participants?.map((p) => ({
               user_id: p.user_id,
               role: p.role,
-              user: (Array.isArray(p.users) ? p.users[0] : p.users) as { full_name: string; email: string },
+              user: (Array.isArray(p.users) ? p.users[0] : p.users) as { full_name: string; email: string; avatar_url?: string },
             })) || [],
             unread_count: unreadCount,
             last_message: lastMessages?.[0] || undefined,
@@ -303,6 +307,10 @@ export function useCommunications() {
     sendMessage: sendMessageMutation.mutate,
     markAsRead: markAsReadMutation.mutate,
     archiveConversation: archiveConversationMutation.mutate,
+    starConversation: (conversationId: string, starred: boolean) => 
+      starConversationMutation.mutate({ conversationId, starred }),
+    updateLifecycleState: (conversationId: string, state: string) =>
+      updateLifecycleStateMutation.mutate({ conversationId, state }),
     isCreating: createConversationMutation.isPending,
     isSending: sendMessageMutation.isPending,
   }

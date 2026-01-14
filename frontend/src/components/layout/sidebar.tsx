@@ -1,9 +1,12 @@
 'use client'
 
 /**
- * Task 1.1.1.20c: Communications link with unread badge count
- * 
  * Sidebar navigation component with role-based menu items.
+ * 
+ * Features:
+ * - Module activation from system_config
+ * - Role-based menu filtering
+ * - Dynamic badge counts (breaches, pending submissions, unread messages)
  * 
  * @see docs/02-architecture/frontend/navigation-layout-patterns.md
  * @see docs/02-architecture/frontend/role-based-ui-patterns.md
@@ -15,6 +18,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useUserRole } from '@/hooks/use-user-role'
 import { useCommunications } from '@/hooks/use-communications'
+import { useSystemConfig, useModulePendingCounts } from '@/hooks/use-system-config'
 import {
   Home,
   Building2,
@@ -153,6 +157,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname()
   const { role } = useUserRole()
   const { conversations } = useCommunications()
+  const { data: systemConfig } = useSystemConfig()
+  const { data: pendingCounts } = useModulePendingCounts()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
 
   // Calculate unread count from conversations
@@ -179,13 +185,41 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     return item.roles.includes(role)
   }
 
-  // Apply dynamic badge for Communications
-  const filteredNavigation = navigation.filter(canAccess).map(item => {
-    if (item.title === 'Communications') {
-      return { ...item, badge: unreadCount > 0 ? unreadCount : undefined }
+  // Check if module is activated
+  const isModuleActive = (moduleName: string) => {
+    if (!systemConfig) return true // Default to active while loading
+    switch (moduleName) {
+      case 'RMM': return systemConfig.moduleActivation.rmm
+      case 'VCI': return systemConfig.moduleActivation.vci
+      case 'ECS': return systemConfig.moduleActivation.ecs
+      case 'CMC': return systemConfig.moduleActivation.cmc
+      default: return true
     }
-    return item
-  })
+  }
+
+  // Apply dynamic badges and module activation
+  const filteredNavigation = navigation
+    .filter(canAccess)
+    .filter(item => isModuleActive(item.title))
+    .map(item => {
+      // Dynamic badge for Communications
+      if (item.title === 'Communications') {
+        return { ...item, badge: unreadCount > 0 ? unreadCount : undefined }
+      }
+      // Dynamic badge for VCI breaches
+      if (item.title === 'VCI' && item.children) {
+        return {
+          ...item,
+          children: item.children.map(child => {
+            if (child.title === 'Breaches') {
+              return { ...child, badge: pendingCounts?.vci.breaches || undefined }
+            }
+            return child
+          })
+        }
+      }
+      return item
+    })
 
   return (
     <aside

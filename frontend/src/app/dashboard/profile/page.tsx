@@ -155,7 +155,64 @@ export default function ProfilePage() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <Button type="button" variant="outline" size="sm" disabled>
+                  <input
+                    type="file"
+                    id="avatar-upload"
+                    accept="image/jpeg,image/png,image/gif"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0]
+                      if (!file) return
+                      
+                      if (file.size > 2 * 1024 * 1024) {
+                        toast.error('File size must be less than 2MB')
+                        return
+                      }
+                      
+                      try {
+                        const supabase = getClient()
+                        const fileExt = file.name.split('.').pop()
+                        const fileName = `${user?.id}-${Date.now()}.${fileExt}`
+                        
+                        // Upload to storage
+                        const { error: uploadError } = await supabase.storage
+                          .from('avatars')
+                          .upload(fileName, file, { upsert: true })
+                        
+                        if (uploadError) {
+                          toast.error('Failed to upload avatar')
+                          return
+                        }
+                        
+                        // Get public URL
+                        const { data: { publicUrl } } = supabase.storage
+                          .from('avatars')
+                          .getPublicUrl(fileName)
+                        
+                        // Update user profile
+                        const { error: updateError } = await supabase
+                          .from('users')
+                          .update({ avatar_url: publicUrl })
+                          .eq('id', user?.id ?? '')
+                        
+                        if (updateError) {
+                          toast.error('Failed to update profile')
+                          return
+                        }
+                        
+                        toast.success('Avatar updated successfully')
+                        window.location.reload()
+                      } catch {
+                        toast.error('An error occurred')
+                      }
+                    }}
+                  />
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => document.getElementById('avatar-upload')?.click()}
+                  >
                     <Camera className="h-4 w-4 mr-2" />
                     Change Avatar
                   </Button>

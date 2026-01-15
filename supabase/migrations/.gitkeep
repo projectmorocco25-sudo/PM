@@ -1,0 +1,3 @@
+# Migrations directory
+# All database migrations will be stored here
+# Format: {YYYYMMDDHHMMSS}_{migration_name}.sql

@@ -12,9 +12,9 @@ BEGIN;
 CREATE OR REPLACE FUNCTION follow_ups_create(
   p_company_id uuid,
   p_assigned_to uuid,
-  p_priority text DEFAULT 'normal',
   p_due_date date,
   p_issue_type text,
+  p_priority text DEFAULT 'normal',
   p_issue_reference_id uuid DEFAULT NULL,
   p_issue_reference_table text DEFAULT NULL,
   p_notes text DEFAULT NULL

@@ -1,24 +1,7 @@
-# Supabase Project Configuration
-# Generated: 2025-01-12
-# Phase: 1.1.1 - Foundation Setup
+# Supabase Local Development Configuration
+# Compatible with CLI v2.47.2
 
-[project]
-name = "pharmaceutical-governance-platform"
-id = "pm-platform"
-
-[auth]
-enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = []
-jwt_expiry = 3600
-enable_signup = true
-minimum_password_length = 12
-password_requirements = "lower_upper_letters_digits_symbols"
-enable_refresh_token_rotation = true
-refresh_token_reuse_interval = 10
-
-[auth.email]
-enable_confirmations = true
+project_id = "lbtgmetmfkikrelbedou"
 
 [api]
 enabled = true
@@ -45,6 +28,16 @@ pop3_port = 54326
 enabled = true
 file_size_limit = "50MiB"
 
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = []
+jwt_expiry = 3600
+enable_signup = true
+minimum_password_length = 12
+
+[auth.email]
+enable_confirmations = true
+
 [edge_runtime]
 enabled = true
-port = 54327

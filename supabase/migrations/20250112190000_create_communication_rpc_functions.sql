@@ -121,8 +121,8 @@ COMMENT ON FUNCTION communications_create_conversation IS 'Create a new conversa
 
 CREATE OR REPLACE FUNCTION communications_send_message(
   p_conversation_id uuid,
-  p_recipient_id uuid DEFAULT NULL,
   p_content text,
+  p_recipient_id uuid DEFAULT NULL,
   p_is_system_message boolean DEFAULT false
 )
 RETURNS jsonb
@@ -536,7 +536,7 @@ COMMIT;
 -- DROP FUNCTION IF EXISTS communications_create_announcement(text, text, timestamptz, uuid[]);
 -- DROP FUNCTION IF EXISTS communications_archive_conversation(uuid);
 -- DROP FUNCTION IF EXISTS communications_mark_read(uuid);
--- DROP FUNCTION IF EXISTS communications_send_message(uuid, uuid, text, boolean);
+-- DROP FUNCTION IF EXISTS communications_send_message(uuid, text, uuid, boolean);
 -- DROP FUNCTION IF EXISTS communications_create_conversation(text, text, uuid, text, uuid, boolean, timestamptz);
 -- 
 -- COMMIT;

@@ -1,5 +1,4 @@
-export function requireEnv(name: string): string {
-  const value = process.env[name];
+function requireEnv(value: string | undefined, name: string): string {
   if (!value) {
     throw new Error(
       `Missing required environment variable: ${name}. ` +
@@ -9,6 +8,9 @@ export function requireEnv(name: string): string {
   return value;
 }
 
-export const SUPABASE_URL = () => requireEnv("NEXT_PUBLIC_SUPABASE_URL");
-export const SUPABASE_ANON_KEY = () => requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+// Next.js requires direct access to process.env.NEXT_PUBLIC_* for static replacement
+export const SUPABASE_URL = () =>
+  requireEnv(process.env.NEXT_PUBLIC_SUPABASE_URL, "NEXT_PUBLIC_SUPABASE_URL");
+export const SUPABASE_ANON_KEY = () =>
+  requireEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "NEXT_PUBLIC_SUPABASE_ANON_KEY");
 

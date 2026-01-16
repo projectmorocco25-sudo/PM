@@ -43,16 +43,18 @@ CREATE OR REPLACE FUNCTION calculate_audit_hash(
   p_entry_data jsonb
 )
 RETURNS text
-LANGUAGE sql
+LANGUAGE plpgsql
 IMMUTABLE
 AS $$
-  SELECT encode(
+BEGIN
+  RETURN encode(
     digest(
-      COALESCE(p_previous_hash, '') || p_entry_data::text,
+      (COALESCE(p_previous_hash, '') || p_entry_data::text)::bytea,
       'sha256'
     ),
     'hex'
   );
+END;
 $$;
 
 -- Core trigger function: insert audit log row with hash chaining.

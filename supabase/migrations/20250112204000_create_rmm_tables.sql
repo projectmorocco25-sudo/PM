@@ -124,17 +124,32 @@ FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Add missing foreign keys to companies now that companies exists
-ALTER TABLE users
-  ADD CONSTRAINT IF NOT EXISTS fk_users_company
-  FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
-
-ALTER TABLE conversations
-  ADD CONSTRAINT IF NOT EXISTS fk_conversations_company
-  FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
-
-ALTER TABLE follow_ups
-  ADD CONSTRAINT IF NOT EXISTS fk_follow_ups_company
-  FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE;
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'fk_users_company'
+  ) THEN
+    ALTER TABLE users
+      ADD CONSTRAINT fk_users_company
+      FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
+  END IF;
+  
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'fk_conversations_company'
+  ) THEN
+    ALTER TABLE conversations
+      ADD CONSTRAINT fk_conversations_company
+      FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
+  END IF;
+  
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'fk_follow_ups_company'
+  ) THEN
+    ALTER TABLE follow_ups
+      ADD CONSTRAINT fk_follow_ups_company
+      FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE;
+  END IF;
+END $$;
 
 COMMIT;
 

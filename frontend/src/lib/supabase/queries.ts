@@ -7,6 +7,7 @@ export type SupabaseResult<T> = {
 
 export async function listCompanies(): Promise<SupabaseResult<unknown[]>> {
   const { data, error } = await sb().from("companies").select("*").order("name", { ascending: true });
+  console.log("[listCompanies] data:", data, "error:", error);
   if (error) return { data: null, error };
   return { data: data ?? [], error: null };
 }
@@ -75,6 +76,7 @@ export async function rmmUpdateCompany(companyId: string, patch: Partial<Company
 export async function listProducts(companyId?: string): Promise<SupabaseResult<unknown[]>> {
   const q = sb().from("products").select("*").order("name", { ascending: true });
   const { data, error } = companyId ? await q.eq("company_id", companyId) : await q;
+  console.log("[listProducts] companyId:", companyId, "data:", data, "error:", error);
   if (error) return { data: null, error };
   return { data: data ?? [], error: null };
 }

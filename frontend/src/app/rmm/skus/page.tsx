@@ -2,13 +2,15 @@
 
 // Wireframe binding: /rmm/skus -> docs/04-design/user-experience/wireframes/01-rmm/skus/task-0.5.2.6-skus-list.md
 
+import { useSearchParams } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { MainContent } from "@/components/layout/MainContent";
 import { SkusList } from "@/components/rmm/SkusList";
 import { useProduct } from "@/hooks/useProduct";
 
-export default function SkusPage({ searchParams }: { searchParams?: { product?: string } }) {
-  const productId = searchParams?.product ?? null;
+export default function SkusPage() {
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("product") ?? null;
   const productQ = useProduct(productId);
   const productName = (productQ.data as { name?: string } | null)?.name ?? null;
 

@@ -27,7 +27,7 @@ BEGIN
     RETURN NULL;
   END IF;
 
-  v := replace(p_input, E'\x00', '');
+  v := replace(p_input, chr(0), '');
   v := trim(v);
 
   -- Strip the most dangerous HTML delimiters (UI still must escape output).
@@ -54,13 +54,14 @@ BEGIN
     RETURN NULL;
   END IF;
 
-  v := lower(trim(replace(p_input, E'\x00', '')));
+  v := lower(trim(replace(p_input, chr(0), '')));
 
   IF v !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' THEN
     RAISE EXCEPTION 'Invalid email format';
   END IF;
 
-  v := regexp_replace(v, '[<>"\x00]', '', 'g');
+  v := regexp_replace(v, '[<>"]', '', 'g');
+  v := replace(v, chr(0), '');
   RETURN v;
 END;
 $$;
@@ -78,7 +79,7 @@ BEGIN
     RETURN NULL;
   END IF;
 
-  v := regexp_replace(replace(p_input, E'\x00', ''), '[^0-9+]', '', 'g');
+  v := regexp_replace(replace(p_input, chr(0), ''), '[^0-9+]', '', 'g');
   IF v !~ '^\+?[1-9]\d{1,14}$' THEN
     RAISE EXCEPTION 'Invalid phone number format';
   END IF;

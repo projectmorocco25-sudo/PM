@@ -97,7 +97,7 @@ COMMENT ON COLUMN meetings.related_reference_table IS 'Table name of related ent
 CREATE INDEX IF NOT EXISTS idx_meetings_scheduled_at ON meetings(scheduled_at);
 CREATE INDEX IF NOT EXISTS idx_meetings_status ON meetings(status);
 CREATE INDEX IF NOT EXISTS idx_meetings_meeting_type ON meetings(meeting_type);
-CREATE INDEX IF NOT EXISTS idx_meetings_upcoming ON meetings(scheduled_at, status) WHERE status = 'scheduled' AND scheduled_at >= now();
+CREATE INDEX IF NOT EXISTS idx_meetings_upcoming ON meetings(scheduled_at, status) WHERE status = 'scheduled';
 CREATE INDEX IF NOT EXISTS idx_meetings_related_reference ON meetings(related_reference_table, related_reference_id) WHERE related_reference_id IS NOT NULL;
 
 -- Create meeting_attendees table

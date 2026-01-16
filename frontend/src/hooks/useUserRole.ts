@@ -16,8 +16,10 @@ async function fetchUserRoleInfo(): Promise<UserRoleInfo> {
   const supabase = createSupabaseBrowserClient();
   const { data: auth } = await supabase.auth.getUser();
   const userId = auth.user?.id;
+  console.log("[fetchUserRoleInfo] auth.user:", auth.user);
 
   if (!userId) {
+    console.log("[fetchUserRoleInfo] No userId, returning empty role info");
     return {
       role: null,
       companyId: null,
@@ -35,6 +37,7 @@ async function fetchUserRoleInfo(): Promise<UserRoleInfo> {
     .eq("id", userId)
     .maybeSingle();
 
+  console.log("[fetchUserRoleInfo] profile query result:", { profile, error, userId });
   if (error) throw error;
 
   // Permissions come from shared_get_user_permissions RPC when available.

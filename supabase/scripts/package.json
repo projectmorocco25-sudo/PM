@@ -1,0 +1,13 @@
+{
+  "name": "supabase-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "create-auth-users": "tsx create-auth-users.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.7.0"
+  }
+}

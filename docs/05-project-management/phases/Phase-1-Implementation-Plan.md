@@ -196,13 +196,14 @@ Before beginning implementation, review these key deliverables from foundational
 All tasks must meet their respective Definition of Done criteria before being marked complete. Key completion criteria by task type:
 
 **Database Migration Tasks:**
-- [ ] Migration applied using Supabase MCP (`mcp_supabase_apply_migration`)
+- [ ] Migration created as versioned SQL file in `supabase/migrations/` directory (format: `YYYYMMDDHHMMSS_description.sql`)
+- [ ] Migration applied using Supabase CLI (`supabase migration apply`) or auto-applied in local dev
 - [ ] All schema changes match schema-design.md
-- [ ] Indexes and constraints created and verified (using `mcp_supabase_execute_sql` for verification queries)
-- [ ] Schema verification completed (using `mcp_supabase_list_tables` and `mcp_supabase_execute_sql` to verify tables, columns, indexes)
-- [ ] Migration tracked in migration history (using `mcp_supabase_list_migrations` to verify)
-- [ ] Rollback script tested (if needed, using `mcp_supabase_execute_sql`)
-- [ ] Security advisors checked (using `mcp_supabase_get_advisors` for security/performance recommendations)
+- [ ] Indexes and constraints created and verified (using SQL queries via Supabase dashboard or `supabase db execute`)
+- [ ] Schema verification completed (using SQL queries to verify tables, columns, indexes via Supabase dashboard or CLI)
+- [ ] Migration tracked in migration history (verify via `supabase migration list` or Supabase dashboard)
+- [ ] Rollback script tested (if needed, create reverse migration or use SQL via Supabase dashboard)
+- [ ] Security best practices verified (RLS policies, indexes, constraints checked via SQL queries)
 - [ ] Code reviewed by database specialist
 
 **RPC Function Tasks:**
@@ -241,40 +242,38 @@ All tasks must meet their respective Definition of Done criteria before being ma
 
 ---
 
-## Database Management with Supabase MCP
+## Database Management with Supabase
 
-**⚠️ CRITICAL: All database operations MUST use Supabase MCP (Model Context Protocol)**
+**Standard Practice: Versioned Migrations and CLI Tools**
 
-All database setup, migrations, schema verification, and management operations throughout Phase 1 MUST be performed using Supabase MCP tools. The Supabase MCP server provides direct access to the database with full migration management capabilities.
+All database setup, migrations, schema verification, and management operations throughout Phase 1 should follow standard Supabase practices using versioned SQL migration files and Supabase CLI tools.
 
-### MCP Tools for Database Operations
+### Standard Supabase Migration Workflow
 
 **Migrations:**
-- `mcp_supabase_apply_migration` - Apply database migrations (DDL operations)
-- `mcp_supabase_list_migrations` - List all applied migrations
-- `mcp_supabase_execute_sql` - Execute SQL queries (for verification, data operations)
+- **Migration Files:** Store all migrations as SQL files in `supabase/migrations/` directory
+- **Naming Convention:** Use timestamped format `YYYYMMDDHHMMSS_description.sql`
+- **Application:** Apply migrations via `supabase migration apply` or automatically in local dev via `supabase start`
+- **Tracking:** Verify applied migrations via `supabase migration list` or Supabase dashboard migration history
 
 **Schema Verification:**
-- `mcp_supabase_list_tables` - List all tables in schema
-- `mcp_supabase_execute_sql` - Execute verification queries (table structure, columns, indexes, constraints)
-- `mcp_supabase_list_extensions` - List installed database extensions
-
-**Security & Performance:**
-- `mcp_supabase_get_advisors` - Get security and performance recommendations
-- `mcp_supabase_get_logs` - Get database logs for debugging
+- Use SQL queries via Supabase dashboard SQL editor or `supabase db execute`
+- Use PostgreSQL standard commands (`\d`, `\dt`, `\di`) in psql for schema inspection
+- Use `EXPLAIN ANALYZE` for query performance analysis
 
 **Type Generation:**
-- `mcp_supabase_generate_typescript_types` - Generate TypeScript types from schema
+- Generate TypeScript types using Supabase CLI: `supabase gen types typescript --local > types/database.types.ts`
+- Or use Supabase dashboard: Settings → API → Generate TypeScript types
 
-### MCP Usage Requirements
+### Migration Requirements
 
-1. **All migrations** must use `mcp_supabase_apply_migration` (not Supabase CLI)
-2. **All schema verification** must use `mcp_supabase_list_tables` and `mcp_supabase_execute_sql`
-3. **All migration tracking** must use `mcp_supabase_list_migrations` to verify applied migrations
-4. **Security checks** must use `mcp_supabase_get_advisors` after migrations
-5. **Schema validation** queries must use `mcp_supabase_execute_sql`
+1. **All migrations** must be versioned SQL files in `supabase/migrations/` directory
+2. **All migrations** must be idempotent (safe to re-run) when possible
+3. **Migration tracking** should verify via `supabase migration list` or dashboard
+4. **Schema validation** should use standard SQL queries via Supabase dashboard or CLI
+5. **Security checks** should follow standard PostgreSQL security best practices (RLS policies, indexes, constraints)
 
-**Reference:** Supabase MCP is configured and verified. All database tasks in Phase 1 must use MCP tools exclusively.
+**Reference:** Follow standard Supabase migration practices as documented in [Supabase Migration Guide](https://supabase.com/docs/guides/cli/local-development#database-migrations).
 
 ---
 
@@ -302,7 +301,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - Development environment configured
 
 **Seed Data Gate (Required):**
-- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
+- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
 
 **Execution Notes:**
 - Tasks should be executed in dependency order (check `Depends on:` fields)
@@ -313,7 +312,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 ### Backend Setup Tasks
 - [ ] **Task 1.1.1.1:** Initialize Supabase project structure (migrations, functions, storage buckets)
   - **Phase 0 Reference:** See [Phase 0: Technical Foundation](phase-0-technical-foundation.md) - Decision 1 (Module Communication), Decision 4 (Background Jobs), Decision 6 (Module Integration)
-  - **MCP Requirement:** Use Supabase MCP to verify project connection (`mcp_supabase_get_project_url`, `mcp_supabase_list_tables`)
+  - **Verification:** Verify Supabase project connection via Supabase dashboard or `supabase status`
   - **Estimated Time:** 0.5-1 hour
 - [ ] **Task 1.1.1.1a:** Define module integration contracts (data flow specs between RMM→VCI, VCI→ECS, ECS→CMC)
 - [ ] **Task 1.1.1.1b:** Set up shared database schema versioning strategy (migration numbering, rollback procedures)
@@ -325,12 +324,13 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Phase 0.6 Updates:** users table includes new fields (avatar_url, timezone, language, notification_preferences)
   - **Migration Scripts:** See [Schema Updates - Phase 0.6 Critical Gaps](../../02-architecture/database/schema-updates-phase0-6-critical-gaps.md) - Change 1
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities - Users Table](../../05-project-management/phases/phase-0-6-implementation-priorities.md#1-users-table---profile-preferences)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_core_tables`)
-    - Verify migration applied using `mcp_supabase_list_migrations`
-    - Verify tables created using `mcp_supabase_list_tables` (schema: 'public')
-    - Verify schema using `mcp_supabase_execute_sql` (check columns, data types, constraints)
-    - Check security advisors using `mcp_supabase_get_advisors` (type: 'security')
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_core_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration applied via `supabase migration list` or Supabase dashboard
+    - Verify tables created using SQL queries via Supabase dashboard (e.g., `SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`)
+    - Verify schema using SQL queries (check columns, data types, constraints)
+    - Verify security best practices (RLS policies, indexes, constraints) via SQL queries
   - **Foreign Key Constraints:** Explicitly define all foreign key relationships per schema-design.md (e.g., notifications.user_id → users.id, approvals.user_id → users.id)
   - **Data Type Validation:** Verify all data types match schema-design.md and data-dictionary.md specifications (e.g., timestamps with timezone, JSONB structures, text length limits)
   - **Rollback Strategy:** Create rollback migration script, reference [Migration Strategy](../../02-architecture/database/migration-strategy.md) for rollback procedures
@@ -348,7 +348,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     - Timezone default: 'UTC+01:00' (Morocco standard time)
     - Language default: 'en' (English)
     - Notification preferences: JSONB object with boolean flags (see schema-design.md for structure)
-    - **All database operations must use Supabase MCP tools (not Supabase CLI)**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.1.1.2d:** Create database migration for communication tables (conversations, messages, message_attachments, message_read_receipts, conversation_participants)
   - **Reference:** [Schema Design - Communication Tables](../../02-architecture/database/schema-design.md#communication-tables)
   - **Phase 0.6 Updates:**
@@ -356,28 +356,30 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     - messages.delivered_at (timestamptz, NULLABLE) - Delivery timestamp tracking
   - **Migration Scripts:** See [Schema Updates - Phase 0.6 Critical Gaps](../../02-architecture/database/schema-updates-phase0-6-critical-gaps.md) - Changes 2, 3
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities](../../05-project-management/phases/phase-0-6-implementation-priorities.md#2-conversations-table---lifecycle-state)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_communication_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables and new fields using `mcp_supabase_execute_sql` (check lifecycle_state, delivered_at columns)
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_communication_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables and new fields using SQL queries (check lifecycle_state, delivered_at columns)
+    - Verify security best practices via SQL queries
   - **Estimated Time:** 2-4 hours (1-2h lifecycle_state, 1-2h delivered_at)
   - **Developer Notes:**
     - Lifecycle state transitions: CREATED → SENT → DELIVERED → READ → THREADED → WORKFLOW_LINKED → ARCHIVED
     - Use `idx_conversations_lifecycle_state` index for filtering
     - `delivered_at` is different from `read_at` (in message_read_receipts table)
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.1.1.2e:** Create database migration for governance tables (follow_ups, meetings, meeting_attendees)
   - **Reference:** [Schema Design - Governance Tables](../../02-architecture/database/schema-design.md#follow_ups)
   - **Phase 0.6 Addition:** New tables for governance follow-up tracking and meeting scheduling
   - **Migration Scripts:** See [Schema Updates - Phase 0.6 Critical Gaps](../../02-architecture/database/schema-updates-phase0-6-critical-gaps.md) - Changes 4, 5, 6
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities](../../05-project-management/phases/phase-0-6-implementation-priorities.md#3-follow_ups-table)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_governance_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables created using `mcp_supabase_list_tables` (verify follow_ups, meetings, meeting_attendees)
-    - Verify schema using `mcp_supabase_execute_sql` (check columns, foreign keys, indexes)
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_governance_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables created using SQL queries (verify follow_ups, meetings, meeting_attendees exist)
+    - Verify schema using SQL queries (check columns, foreign keys, indexes)
+    - Verify security best practices via SQL queries
   - **Estimated Time:** 8-13 hours (3-4h follow_ups, 3-4h meetings, 2-5h meeting_attendees)
   - **Tables to Create:**
     - follow_ups (governance follow-up tracking)
@@ -388,7 +390,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     - meetings supports polymorphic relationships via related_reference_id + related_reference_table
     - All tables include comprehensive indexes for performance
     - See schema-design.md for complete field definitions and constraints
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 ### RLS Policies for Core Tables (Tasks 1.1.1.3a-3f)
 - [ ] **Task 1.1.1.3a:** Implement RLS policies for `users` table (company users see own record, MOH see all, self-service profile updates)
   - **Depends on:** Task 1.1.1.2 (users table migration), Task 1.1.1.2a (indexes for RLS performance)
@@ -506,21 +508,22 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Estimated Time:** 2-4 hours
 - [ ] **Task 1.1.1.7:** Create database migration for RMM core tables (companies, products, skus, atc_codes, critical_medicines)
   - **Depends on:** Task 1.1.1.2 (core tables migration - users table for foreign keys)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_rmm_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables created using `mcp_supabase_list_tables` (verify companies, products, skus, atc_codes, critical_medicines)
-    - Verify SKU pharmaceutical attributes using `mcp_supabase_execute_sql` (check dosage_strength, dosage_form, pack_size, unit_of_measure columns)
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_rmm_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables created using SQL queries (verify companies, products, skus, atc_codes, critical_medicines exist)
+    - Verify SKU pharmaceutical attributes using SQL queries (check dosage_strength, dosage_form, pack_size, unit_of_measure columns)
+    - Verify security best practices via SQL queries
   - **Estimated Time:** 4-6 hours
   - **Developer Notes:**
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.1.1.7a:** Verify RMM schema completeness (all columns per schema-design.md, data types, nullable rules, **including SKU pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure**)
   - **Depends on:** Task 1.1.1.7 (RMM migration)
-  - **MCP Requirements:**
-    - Use `mcp_supabase_list_tables` to verify all tables exist
-    - Use `mcp_supabase_execute_sql` to verify column definitions, data types, constraints, indexes
-    - Verify SKU pharmaceutical attributes using SQL queries via `mcp_supabase_execute_sql`
+  - **Verification Requirements:**
+    - Verify all tables exist using SQL queries via Supabase dashboard
+    - Use SQL queries to verify column definitions, data types, constraints, indexes
+    - Verify SKU pharmaceutical attributes using SQL queries
   - **Estimated Time:** 1 hour
 - [ ] **Task 1.1.1.7b:** Verify SKU pharmaceutical attributes implementation (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are NOT NULL, add index on dosage_form)
   - **Depends on:** Task 1.1.1.7a (schema verification)
@@ -544,24 +547,25 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - [ ] **Task 1.1.1.9:** Create database migration for VCI core tables (aams_submissions, msq_submissions, wsl_submissions, thresholds, breaches, breach_analyses)
   - **Depends on:** Task 1.1.1.7 (RMM tables migration - references skus, companies)
   - **Reference:** [Schema Design - VCI Tables](../../02-architecture/database/schema-design.md#vci-tables), [Data Dictionary](../../02-architecture/database/data-dictionary.md)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_vci_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables created using `mcp_supabase_list_tables` (verify all VCI tables)
-    - Verify foreign keys using `mcp_supabase_execute_sql` (check foreign key constraints)
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_vci_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables created using SQL queries (verify all VCI tables exist)
+    - Verify foreign keys using SQL queries (check foreign key constraints)
+    - Verify security best practices via SQL queries
   - **Foreign Key Constraints:** Explicitly define all foreign key relationships per schema-design.md (e.g., aams_submissions.sku_id → skus.id, aams_submissions.company_id → companies.id, thresholds.sku_id → skus.id)
   - **Data Type Validation:** Verify all data types match schema-design.md and data-dictionary.md specifications (e.g., submission_data JSONB structure, threshold values numeric precision)
   - **Rollback Strategy:** Create rollback migration script, reference [Migration Strategy](../../02-architecture/database/migration-strategy.md) for rollback procedures
   - **Estimated Time:** 6-8 hours (multiple complex tables)
   - **Developer Notes:**
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.1.1.9a:** Verify VCI schema completeness (all columns per schema-design.md, relationships)
   - **Depends on:** Task 1.1.1.9 (VCI migration)
   - **Reference:** [Schema Design - VCI Tables](../../02-architecture/database/schema-design.md#vci-tables), [Data Dictionary](../../02-architecture/database/data-dictionary.md)
-  - **MCP Requirements:**
-    - Use `mcp_supabase_list_tables` to verify all VCI tables exist
-    - Use `mcp_supabase_execute_sql` to verify columns, data types, nullable rules, foreign keys, indexes, constraints
+  - **Verification Requirements:**
+    - Verify all VCI tables exist using SQL queries via Supabase dashboard
+    - Use SQL queries to verify columns, data types, nullable rules, foreign keys, indexes, constraints
   - **Verification Checklist:** Verify all tables, columns, data types, nullable rules, foreign key constraints, indexes, and constraints match schema-design.md exactly
   - **Estimated Time:** 1-2 hours
 - [ ] **Task 1.1.1.10a:** Implement RLS policies for all VCI tables (aams_submissions, msq_submissions, wsl_submissions, thresholds, breaches, breach_analyses) with company isolation
@@ -714,16 +718,16 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - [ ] **Task 1.1.1.21b:** Comprehensive schema verification after all migrations (Nadia's Audit - Issue #13)
   - **Depends on:** All migration tasks (1.1.1.2, 1.1.1.7, 1.1.1.9)
   - **Reference:** [Schema Design](../../02-architecture/database/schema-design.md), [Data Dictionary](../../02-architecture/database/data-dictionary.md)
-  - **MCP Requirements:**
-    - Use `mcp_supabase_list_migrations` to verify all migrations applied
-    - Use `mcp_supabase_list_tables` to verify all tables exist
-    - Use `mcp_supabase_execute_sql` for comprehensive schema verification queries:
+  - **Verification Requirements:**
+    - Verify all migrations applied via `supabase migration list` or Supabase dashboard migration history
+    - Verify all tables exist using SQL queries via Supabase dashboard
+    - Use SQL queries for comprehensive schema verification:
       - Verify all columns with correct data types (query information_schema.columns)
       - Verify all foreign key constraints (query information_schema.table_constraints, key_column_usage)
       - Verify all indexes (query pg_indexes)
       - Verify all constraints (NOT NULL, CHECK, UNIQUE) (query information_schema.constraint_column_usage)
       - Verify all triggers (query pg_trigger)
-    - Use `mcp_supabase_get_advisors` to check for security and performance issues
+    - Verify security and performance best practices via SQL queries and EXPLAIN ANALYZE
   - **Verification Checklist:**
     - Verify all tables exist per schema-design.md
     - Verify all columns exist with correct data types per data-dictionary.md
@@ -731,7 +735,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     - Verify all indexes are created per schema-design.md
     - Verify all constraints (NOT NULL, CHECK, UNIQUE) are correctly defined
     - Verify all triggers are correctly applied (audit logging)
-    - Create automated schema verification script using MCP tools (compare actual schema to schema-design.md)
+    - Create automated schema verification script using SQL queries (compare actual schema to schema-design.md via information_schema queries)
   - **Estimated Time:** 3-4 hours
 - [ ] **Task 1.1.1.22:** Configure environment variables (dev, staging, prod)
 - [ ] **Task 1.1.1.23:** Set up database seeding script structure (seeded Supabase dev/staging data only - TypeScript/JavaScript, seed files location, execution order)
@@ -753,7 +757,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 ## Subphase 1.1.2: RMM Module - Core Registry Management (Week 2-3)
 
 **Seed Data Gate (Required):**
-- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
+- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
 
 ### RMM Backend Tasks
 - [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD (rmm_create_company, rmm_update_company, rmm_get_company, rmm_list_companies)
@@ -902,7 +906,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 ## Subphase 1.1.3: VCI Module - AAMS Workflow (Week 4)
 
 **Seed Data Gate (Required):**
-- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md) (MCP migrations only, idempotent).
+- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
 
 ### VCI AAMS Backend Tasks
 - [ ] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
@@ -1079,26 +1083,94 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ---
 
-## Subphase 1.1.6: Seed Data Generation & Supabase Population (Week 7)
+## Subphase 1.1.6: Seed Data Validation & Enhancement (Week 7)
 
-### Seed Data Tasks (Supabase DB Only)
-- [ ] **Task 1.1.6.1:** Create mock data generation script - Companies (75 companies: 15 IPCs + 60 Wholesalers, diverse profiles)
-- [ ] **Task 1.1.6.2:** Create mock data generation script - Products (2-5 products per company, varied types)
-- [ ] **Task 1.1.6.3:** Create mock data generation script - SKUs (3-10 SKUs per product, varied codes, **include pharmaceutical attributes: realistic dosage_strength, dosage_form, pack_size, unit_of_measure**)
-- [ ] **Task 1.1.6.3a:** Generate realistic SKU pharmaceutical data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
-- [ ] **Task 1.1.6.4:** Create mock data generation script - ATC Codes (comprehensive ATC code list)
-- [ ] **Task 1.1.6.5:** Create mock data generation script - Critical Medicines (designate subset of SKUs as critical)
-- [ ] **Task 1.1.6.6:** Create mock data generation script - AAMS (2-3 years historical AAMS data per company, **submission_data as array of {sku_id, quantity} objects**)
-- [ ] **Task 1.1.6.7:** Create mock data generation script - MSQ (2-3 years historical monthly MSQ data, **submission_data as array of {sku_id, quantity} objects**)
-- [ ] **Task 1.1.6.8:** Create mock data generation script - WSL (2-3 years historical weekly WSL data, **submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects**, include breach scenarios)
-- [ ] **Task 1.1.6.9:** Create mock data generation script - Thresholds (calculated thresholds for all SKUs)
-- [ ] **Task 1.1.6.10:** Create mock data generation script - Users (company users for each company, MOH users)
-- [ ] **Task 1.1.6.11:** Create mock data generation script - Registry submissions (historical submission workflows)
-- [ ] **Task 1.1.6.12:** Create mock data generation script - Breaches (historical breach records with analyses)
-- [ ] **Task 1.1.6.13:** Execute seed data population scripts into Supabase (validate data integrity)
-- [ ] **Task 1.1.6.14:** Verify seed data completeness and relationships
-- [ ] **Task 1.1.6.15:** Create database seed data validation script (foreign key integrity, constraint validation, data quality checks)
-- [ ] **Task 1.1.6.16:** Performance test seed data scripts (execution time, memory usage, transaction size limits)
+**Purpose:** Validate all applied seed migrations and create additional seed migration stages for comprehensive historical data (MSQ, WSL, breaches, etc.).
+
+**Note:** Initial seed migrations (`seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci_aams`) have already been applied in earlier subphases per the [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md). This subphase focuses on validation and extending seed coverage.
+
+### Additional Seed Migration Stages (Versioned SQL Migrations)
+
+- [ ] **Task 1.1.6.1:** Create and apply seed migration `seed_1_1_4_vci_msq` - MSQ historical data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_4_vci_msq.sql`
+  - **Application Method:** `supabase migration apply` (or auto-applied in local dev via `supabase start`)
+  - **Goal:** 2-3 years historical monthly MSQ data per company
+  - **Tables:** `msq_submissions` (submission_data as array of {sku_id, quantity} objects)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook idempotency patterns](phase-1-1-mockdata.md#idempotency-patterns)
+  - **Reference:** See [Playbook - Seed Strategy: Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) for scenario pack requirements
+  - **Estimated Time:** 3-4 hours
+
+- [ ] **Task 1.1.6.2:** Create and apply seed migration `seed_1_1_5_vci_wsl` - WSL historical data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_5_vci_wsl.sql`
+  - **Application Method:** `supabase migration apply`
+  - **Goal:** 2-3 years historical weekly WSL data per company, include breach scenarios
+  - **Tables:** `wsl_submissions` (submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Estimated Time:** 3-4 hours
+
+- [ ] **Task 1.1.6.3:** Create and apply seed migration `seed_1_1_6_vci_breaches` - Breach records
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_6_vci_breaches.sql`
+  - **Application Method:** `supabase migration apply`
+  - **Goal:** Historical breach records with analyses, various breach scenarios
+  - **Tables:** `breaches`, `breach_analyses`
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Estimated Time:** 2-3 hours
+
+- [ ] **Task 1.1.6.4:** Create and apply seed migration `seed_1_1_7_rmm_comprehensive` - Comprehensive RMM seed data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_7_rmm_comprehensive.sql`
+  - **Application Method:** `supabase migration apply`
+  - **Goal:** Expand RMM seed data to 75 companies (15 IPCs + 60 Wholesalers), 2-5 products per company, 3-10 SKUs per product with realistic pharmaceutical attributes
+  - **Tables:** `companies`, `products`, `skus` (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are populated with realistic values), `atc_codes`, `critical_medicines`, `registry_submissions`
+  - **Pharmaceutical Attributes:** Generate realistic data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Estimated Time:** 4-6 hours
+
+- [ ] **Task 1.1.6.5:** Create and apply seed migration `seed_1_1_8_vci_aams_comprehensive` - Comprehensive AAMS historical data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_8_vci_aams_comprehensive.sql`
+  - **Application Method:** `supabase migration apply`
+  - **Goal:** Expand AAMS seed data to 2-3 years historical data per company
+  - **Tables:** `aams_submissions`, `thresholds` (calculated thresholds for all SKUs)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Estimated Time:** 2-3 hours
+
+### Seed Data Validation Tasks
+
+- [ ] **Task 1.1.6.6:** Validate all seed migrations using SQL verification queries
+  - **Verification Method:** Execute SQL queries via Supabase dashboard SQL editor or `supabase db execute`
+  - **Verification Checklist:** Per [Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration)
+    - Foreign key integrity (no orphan rows)
+    - Unique constraints respected
+    - Required Phase 0.6 fields populated where needed
+    - Indexes exist for key lists/filters
+  - **SQL Example:**
+    ```sql
+    -- Verify foreign key integrity
+    SELECT COUNT(*) FROM companies WHERE id NOT IN (SELECT DISTINCT company_id FROM users WHERE company_id IS NOT NULL);
+    
+    -- Verify unique constraints
+    SELECT email, COUNT(*) FROM users GROUP BY email HAVING COUNT(*) > 1;
+    
+    -- Verify Phase 0.6 fields populated
+    SELECT COUNT(*) FROM users WHERE avatar_url IS NULL OR timezone IS NULL;
+    ```
+  - **Estimated Time:** 2-3 hours
+
+- [ ] **Task 1.1.6.7:** Verify seed data completeness and relationships
+  - **Verification Method:** Execute SQL queries via Supabase dashboard or CLI
+  - **Verify:**
+    - All foreign key relationships are valid
+    - Scenario packs are complete (pack_foundation_moh_ops, pack_company_active, pack_company_empty, etc.)
+    - Wireframe coverage requirements met
+  - **Estimated Time:** 2-3 hours
+
+- [ ] **Task 1.1.6.8:** Performance test seed data queries (execution time, index effectiveness)
+  - **Verification Method:** Use `EXPLAIN ANALYZE` queries via Supabase SQL editor
+  - **Test:** Key list queries, filter queries, pagination queries
+  - **Example:**
+    ```sql
+    EXPLAIN ANALYZE SELECT * FROM companies WHERE type = 'IPC' ORDER BY name LIMIT 20;
+    ```
+  - **Estimated Time:** 1-2 hours
 
 #### Farah’s Seed Data Quality Gate (Required)
 
@@ -1192,17 +1264,18 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ### ECS Backend Setup Tasks
 - [ ] **Task 1.2.1.1:** Create database migration for ECS tables (export_requests, export_authorizations, replenishment_schedules)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_ecs_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables using `mcp_supabase_list_tables` and `mcp_supabase_execute_sql`
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_ecs_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables using SQL queries via Supabase dashboard
+    - Verify security best practices via SQL queries
   - **Developer Notes:**
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.2.1.1a:** Verify ECS schema completeness (all columns, foreign key relationships to RMM/VCI)
-  - **MCP Requirements:**
-    - Use `mcp_supabase_list_tables` to verify all ECS tables exist
-    - Use `mcp_supabase_execute_sql` to verify columns, foreign keys, constraints
+  - **Verification Requirements:**
+    - Verify all ECS tables exist using SQL queries via Supabase dashboard
+    - Use SQL queries to verify columns, foreign keys, constraints
 - [ ] **Task 1.2.1.1b:** Define ECS integration points with RMM+VCI (threshold switching contract, data dependencies)
 - [ ] **Task 1.2.1.2:** Implement RLS policies for ECS tables (module activation check, company isolation)
 - [ ] **Task 1.2.1.2a:** Implement detailed RLS policies for ECS tables (export_requests, export_authorizations, replenishment_schedules) with module activation checks
@@ -1311,17 +1384,18 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ### CMC Backend Setup Tasks
 - [ ] **Task 1.3.1.1:** Create database migration for CMC tables (compliance_scores, compliance_score_components, disputes, regulatory_reports)
-  - **MCP Requirements:**
-    - Apply migration using `mcp_supabase_apply_migration` (migration name: `create_cmc_tables`)
-    - Verify migration using `mcp_supabase_list_migrations`
-    - Verify tables using `mcp_supabase_list_tables` and `mcp_supabase_execute_sql`
-    - Check security advisors using `mcp_supabase_get_advisors`
+  - **Migration Requirements:**
+    - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_cmc_tables.sql`
+    - Apply migration using `supabase migration apply` or auto-apply in local dev
+    - Verify migration via `supabase migration list` or Supabase dashboard
+    - Verify tables using SQL queries via Supabase dashboard
+    - Verify security best practices via SQL queries
   - **Developer Notes:**
-    - **All database operations must use Supabase MCP tools**
+    - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 - [ ] **Task 1.3.1.1a:** Verify CMC schema completeness (all columns, score calculation fields, dispute workflow fields)
-  - **MCP Requirements:**
-    - Use `mcp_supabase_list_tables` to verify all CMC tables exist
-    - Use `mcp_supabase_execute_sql` to verify columns, constraints, indexes
+  - **Verification Requirements:**
+    - Verify all CMC tables exist using SQL queries via Supabase dashboard
+    - Use SQL queries to verify columns, constraints, indexes
 - [ ] **Task 1.3.1.1b:** Define CMC integration points with all modules (event triggers, score calculation dependencies)
 - [ ] **Task 1.3.1.2:** Implement RLS policies for CMC tables (module activation check, score visibility rules)
 - [ ] **Task 1.3.1.2a:** Implement detailed RLS policies for CMC tables (compliance_scores visibility rules, disputes, regulatory_reports) with module activation checks

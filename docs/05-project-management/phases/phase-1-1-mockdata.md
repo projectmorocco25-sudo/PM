@@ -1,4 +1,4 @@
-# Phase 1.1: Seeded Supabase “Mock Data” Playbook (MCP Migrations Only)
+# Phase 1.1: Seeded Supabase "Mock Data" Playbook (Versioned Migrations)
 
 **Owner (Seed Realism Gate):** Farah (Analytics/CMC Specialist)  
 **DB Integrity Owner:** Nadia (Supabase/Postgres Data Modeler)  
@@ -11,7 +11,7 @@
 ## Non‑Negotiable Rules
 
 1. **Single source of truth:** Phase 1.1 “mock data” = **seeded records in Supabase dev/staging DB**.
-2. **MCP migrations only:** Seed data must be applied via `mcp_supabase_apply_migration` using **versioned migrations**.
+2. **Versioned migrations only:** Seed data must be applied via **versioned SQL migration files** in `supabase/migrations/` directory, using standard Supabase CLI (`supabase migration apply`) or auto-applied in local development via `supabase start`.
 3. **Idempotent by design:** Seed migrations must be safe to re-run (deterministic identifiers + `UPSERT` / `ON CONFLICT`).
 4. **No manual edits:** No Supabase dashboard hand-edits for seed data (they are not reproducible).
 5. **No local runtime mocks:** No hooks/services/repositories that return synthetic records for app runtime.

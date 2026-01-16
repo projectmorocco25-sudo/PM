@@ -10,19 +10,41 @@ When implementing **Phase 1** (and any UI work), enforce **wireframe-first + dat
 - If there is no wireframe for a requested page/task: **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
 - If the plan, wireframe, and/or DB schema conflict: **STOP** and surface the conflict with a clear recommendation. Do not invent requirements.
 
-### No hardcoded demo data in production UI
+### No local mock data — Supabase is the single source of truth
 
-- Production pages/components must **not** use inline arrays/objects as the source of truth for cards/tables/lists.
-- During Phase 1, all “mock data” must be **seeded into Supabase** (dev/staging) and queried by the frontend.
-- Local runtime mock providers (hooks/services returning synthetic records) are **not allowed**.
-- Prefer querying real Supabase data once tables/RPCs exist. If a required table/field/RPC does not exist, implement the missing backend task first (migrations/RPC/RLS as per the plan).
+**CRITICAL:** All data (including mock/test data) must originate from Supabase. Local mock data is strictly forbidden.
 
-### Seed data must be applied via Supabase MCP migrations (Phase 1)
+**Prohibited:**
+- ❌ Inline arrays/objects as data sources in components (`const mockData = [...]`)
+- ❌ Local mock data files (`mockData.ts`, `fixtures.ts`, etc.)
+- ❌ Runtime mock providers/hooks/services that generate synthetic records
+- ❌ In-memory mock data generators or factories
+- ❌ Any form of synthetic data created at runtime in frontend code
 
-- All Phase 1 “mock data” must be seeded into Supabase via **versioned migrations** executed with `mcp_supabase_apply_migration`.
+**Required:**
+- ✅ All mock/test data must be **seeded into Supabase** via migrations (see "Seed data" section below)
+- ✅ Frontend must query Supabase tables/RPCs for all data
+- ✅ Apply to **all environments** (dev, staging, production) during Phase 1
+
+**If a required table/field/RPC does not exist:** Implement the missing backend task first (migrations/RPC/RLS as per the plan). Do not create local mocks as a workaround.
+
+### Seed data must be applied via versioned Supabase migrations (Phase 1)
+
+**The only acceptable way to create mock/test data:**
+
+- All Phase 1 "mock data" must be seeded into Supabase via **versioned SQL migrations** stored in `supabase/migrations/` directory.
+- Seed migrations must be applied using standard Supabase CLI (`supabase migration apply`) or automatically in local development via `supabase start`.
 - Seed migrations must be **idempotent** (deterministic IDs + UPSERT/`ON CONFLICT`) so they can be safely re-run.
-- Do not seed via Supabase CLI, manual dashboard edits, or local runtime mocks.
 - Seed migrations should be staged by subphase (e.g., `seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci`, etc.).
+- Migration files should follow naming convention: `YYYYMMDDHHMMSS_seed_description.sql`
+
+**Do NOT seed data via:**
+- ❌ Manual dashboard edits (not versioned or reproducible)
+- ❌ Local runtime mocks (see "No local mock data" section above)
+- ❌ Frontend code that inserts data on component mount
+- ❌ Scripts executed outside of migration workflow
+
+**Verification:** Before implementing UI that displays data, ensure the required seed migration exists and has been applied to your Supabase instance. Verify via `supabase migration list` or Supabase dashboard migration history.
 
 ### DB binding (Phase 0.6 coverage)
 

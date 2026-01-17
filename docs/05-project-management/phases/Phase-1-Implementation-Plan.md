@@ -17,9 +17,36 @@
   - Migration scripts created
 - **Phase 1 Pre-Implementation Audit** ✅ COMPLETE - See [Phase 1 Audit Status Tracker](phase-1-audit-status-tracker.md)
   - 60 issues addressed (44 critical + 16 medium)
-  - All 11 team members audited and approved
+  - All 12 team members audited and approved (including Sami - Implementation Compliance Specialist)
 
-**✅ READY FOR IMPLEMENTATION:** This plan has been fully audited by all 11 team members. All 60 issues (44 critical + 16 medium) have been addressed. Begin with **Subphase 1.1.1: Core Foundation**.
+**✅ READY FOR IMPLEMENTATION:** This plan has been fully audited by all 12 team members. All 60 issues (44 critical + 16 medium) have been addressed. Begin with **Subphase 1.1.1: Core Foundation**.
+
+---
+
+## 🔒 COMPLIANCE ENFORCEMENT (Sami - Implementation Compliance Specialist)
+
+**CRITICAL:** Before starting ANY implementation task, Sami (Implementation Compliance Specialist) must validate compliance with [Wireframe DB Compliance Rules](../.cursor/rules/wireframe_db_compliance.md).
+
+**Sami's Compliance Checklist (MUST verify before EVERY task):**
+- [ ] Wireframe file read (if task has wireframe link) - Wireframe requirements understood: Layout, states, role variants
+- [ ] Database tables/RPCs/fields exist and verified - Use SQL queries to verify existence
+- [ ] Seed migration applied (verified via `supabase migration list`) - Seed data covers required wireframe states
+- [ ] NO local mock data will be created - Will query Supabase tables/RPCs only (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mock providers)
+- [ ] Wireframe binding comment will be added to code - JSDoc comment with wireframe link at top of component/page file
+- [ ] PR proof requirements understood - Wireframe link, screenshots (roles + states), data proof (tables/queries), deviations documented
+
+**Sami's Stop Authority:** If any compliance rule is violated, Sami must **STOP** implementation immediately and require fix before proceeding. Implementation cannot continue until Sami approves compliance.
+
+**Common Violations Sami Must Block:**
+- ❌ Creating `const data = [...]` or `const mockData = [...]` in components
+- ❌ Importing from `mockData.ts`, `fixtures.ts`, or any local seed data files
+- ❌ Generating synthetic data at runtime (mock providers, factories, generators)
+- ❌ Skipping wireframe reading before coding
+- ❌ Missing wireframe binding comments in code
+- ❌ Querying non-existent tables/RPCs instead of implementing backend first
+- ❌ Using placeholder data instead of seeded Supabase data
+
+**For complete compliance rules, see:** [Wireframe DB Compliance](../.cursor/rules/wireframe_db_compliance.md)
 
 ---
 
@@ -30,23 +57,40 @@ These gates apply to **every** Phase 1 frontend page/component. If a gate is not
 ### No Hardcoded UI Data
 
 - Production pages/components must **not** use inline arrays/objects as the source of truth for cards/tables/lists.
-- All “mock data” used during Phase 1 must be **seeded into the Supabase database** (dev/staging), then queried by the frontend.
+- All seed data used during Phase 1 must be **seeded into the Supabase database** (dev/staging), then queried by the frontend.
 - Local mock providers (hooks/services/repositories returning synthetic records) are **not allowed** for application runtime.
  - **Seed playbook (required):** See [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md).
 
-#### Phase 1 “Mock Data” Clarification (Required)
+#### Phase 1 Seed Data Clarification (Required)
 
 - **Allowed:** Seeded Supabase database records (dev/staging) that are realistic and cover wireframe scenarios; test data inserted into the **test database** for automated tests.
 - **Not allowed:** Any locally-mocked application runtime data (including mocks behind data access layers) and any inline arrays/objects used as the source of truth in pages/components.
-- **Goal:** UI components always read from the database in Phase 1; “mock” means **seeded DB data**, not local placeholders.
+- **Goal:** UI components always read from the database in Phase 1; seed data means **seeded DB records**, not local placeholders or runtime mocks.
 
 ### Wireframe Binding
 
 - Every implemented route/page must declare the exact wireframe task file(s) it implements (e.g., `task-0.5.x.x-...`).
 - Wireframe binding must appear in **both**:
-  - the PR description checklist (see “Proof Required”), and
-  - the codebase (either a top-of-file comment in the route/page file, or a maintained mapping module such as “route → wireframe task id(s)”).
+  - the PR description checklist (see "Proof Required"), and
+  - the codebase (either a top-of-file comment in the route/page file, or a maintained mapping module such as "route → wireframe task id(s)").
 - If there is no wireframe for a page/task: **STOP** and create/approve the wireframe **before** coding.
+
+**Wireframe binding code example (preferred format):**
+```typescript
+/**
+ * Wireframe: task-0.5.1.1-dashboard.md
+ * Route: /dashboard
+ * Implements: Dashboard page for Company role
+ * Wireframe Link: ../../04-design/user-experience/wireframes/00-core-foundation/dashboard/task-0.5.1.1-dashboard.md
+ */
+export default function DashboardPage() {
+  // Implementation...
+}
+```
+
+**Alternative: Maintained mapping module** (if using centralized route-to-wireframe mapping):
+- Location: `src/wireframe-bindings.ts` or similar
+- Format: `{ route: '/dashboard', wireframe: 'task-0.5.1.1-dashboard.md' }`
 
 ### DB Binding
 
@@ -74,17 +118,36 @@ For every frontend task marked complete, the PR description must include:
 
 ### Stop Conditions (Do Not Proceed)
 
-Stop implementation and resolve before proceeding if any of the following is true:
-- No wireframe link exists for the page/route being implemented.
-- Wireframe is ambiguous or missing a required state/role behavior.
-- Required DB table/field/RPC does not exist yet (implement the missing backend task first).
-- RLS/policies prevent required access for the wireframed role.
-- Plan and wireframe conflict (wireframe wins; document and propose plan update instead of guessing).
+**STOP implementation and resolve before proceeding** if any of the following is true:
 
-### Repo Enforcement (Required for Phase 1.1 unless explicitly waived)
+**Wireframe Requirements:**
+- No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- Wireframe is ambiguous or missing a required state/role behavior. **STOP** and clarify with wireframe owner before proceeding.
 
-- Add a PR template that embeds the “Proof Required” checklist above.
+**Database & Schema Requirements:**
+- Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- A required wireframe state cannot be reproduced from seeded DB data. **STOP** and ensure seed migration covers the required state before proceeding.
+
+**Security & Access Requirements:**
+- RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+
+**Seed Data Requirements:**
+- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
+- Seed data depends on manual dashboard edits (must use versioned migrations only). **STOP** and convert to versioned migration.
+
+**Conflicts & Ambiguities:**
+- Plan, wireframe, and/or DB schema conflict. **STOP** and surface the conflict with a clear recommendation. Wireframe wins for UI decisions; document and propose plan update. Do not invent requirements.
+
+**Cross-References:**
+- See [Cursor Rule - Wireframe Compliance](.cursor/rules/wireframe_db_compliance.md) for enforcement details
+- See [Playbook - Stop Conditions](phase-1-1-mockdata.md#stop-conditions-do-not-proceed) for seed data-specific stop conditions
+
+### Repo Enforcement (Required for All Phase 1 Frontend Tasks)
+
+- **Compliance Enforcement:** Sami (Implementation Compliance Specialist) reviews ALL PRs for wireframe + database compliance before merge. No PR can merge without Sami's compliance approval.
+- Add a PR template that embeds the "Proof Required" checklist above.
 - Require reviewers by change type:
+  - **Compliance (All PRs - REQUIRED):** Sami (Implementation Compliance Specialist) - validates wireframe binding, seed data usage, Supabase-only access, PR proof completeness
   - UI pages/layouts: UI/UX reviewer (Emma) or designated delegate
   - DB queries/schema usage: DB reviewer (Nadia) or designated delegate
   - RLS/RBAC/policies: RLS reviewer (Rafi) or designated delegate
@@ -269,11 +332,14 @@ All database setup, migrations, schema verification, and management operations t
 
 1. **All migrations** must be versioned SQL files in `supabase/migrations/` directory
 2. **All migrations** must be idempotent (safe to re-run) when possible
+   - **Seed migrations:** Must use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+   - **Example pattern:** Use `INSERT ... ON CONFLICT DO UPDATE` with deterministic UUIDs or unique keys
+   - See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements
 3. **Migration tracking** should verify via `supabase migration list` or dashboard
 4. **Schema validation** should use standard SQL queries via Supabase dashboard or CLI
 5. **Security checks** should follow standard PostgreSQL security best practices (RLS policies, indexes, constraints)
 
-**Reference:** Follow standard Supabase migration practices as documented in [Supabase Migration Guide](https://supabase.com/docs/guides/cli/local-development#database-migrations).
+**Reference:** Follow standard Supabase migration practices as documented in [Supabase Migration Guide](https://supabase.com/docs/guides/cli/local-development#database-migrations). For seed migration idempotency patterns and examples, see [Phase 1.1 Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
 
 ---
 
@@ -294,6 +360,12 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ## Subphase 1.1.1: Foundation & Infrastructure Setup (Week 1)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (if applicable - see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
 **Prerequisites:**
 - Phase 0.5 (Wireframes) completed and approved
 - Phase 0.6 (Database Schema Audit & Alignment) completed
@@ -301,7 +373,31 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - Development environment configured
 
 **Seed Data Gate (Required):**
-- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
+- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Playbook - Stage: seed_1_1_1_foundation](phase-1-1-mockdata.md#stage-seed_1_1_1_foundation-subphase-111) (versioned SQL migrations, idempotent).
+
+**Seed Stage Acceptance Criteria (from Playbook):**
+- **Goal:** Make Core Foundation wireframes testable using DB data.
+- **Minimum tables touched (expected):**
+  - `users` (MOH + company users; include Phase 0.6 fields)
+  - `companies` (at least active + empty company)
+  - `system_config` (module activation flags used by navigation)
+  - `notifications`
+  - `audit_logs`
+  - `conversations`, `messages`, `conversation_participants`, `message_read_receipts`
+  - `follow_ups`, `meetings`, `meeting_attendees`
+- **Scenario packs required (deterministic IDs):**
+  - `pack_foundation_moh_ops` - MOH Tier 1 + Tier 2 users, notifications (read/unread), audit logs, comms conversations/messages across lifecycle states, at least one follow-up and one meeting
+  - `pack_company_active` - one company with meaningful activity (messages, notifications, follow-ups)
+  - `pack_company_empty` - one company intentionally empty (to validate empty states)
+- **Acceptance criteria:**
+  - Company/MOH roles can sign-in and see the correct scoped data (RLS validated).
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Header/avatar/notification badge has real data.
+  - Comms inbox shows lifecycle states; sent/delivered/read evidence exists where wireframes require it.
+  - Both populated and empty states are reproducible for at least one key page per role.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_1_foundation](phase-1-1-mockdata.md#stage-seed_1_1_1_foundation-subphase-111), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
 
 **Execution Notes:**
 - Tasks should be executed in dependency order (check `Depends on:` fields)
@@ -326,22 +422,35 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities - Users Table](../../05-project-management/phases/phase-0-6-implementation-priorities.md#1-users-table---profile-preferences)
   - **Migration Requirements:**
     - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_core_tables.sql`
+    - **Indexes MUST be created in the same migration file as table creation** (atomic schema definition - required for seed data validation and analytics queries)
     - Apply migration using `supabase migration apply` or auto-apply in local dev
     - Verify migration applied via `supabase migration list` or Supabase dashboard
-    - Verify tables created using SQL queries via Supabase dashboard (e.g., `SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`)
+    - Verify tables created using SQL queries via Supabase dashboard (verify users, system_config, audit_logs, notifications, approvals exist - e.g., `SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`)
     - Verify schema using SQL queries (check columns, data types, constraints)
+    - **Verify indexes exist immediately after migration** (use SQL queries to verify pg_indexes: `SELECT indexname, tablename FROM pg_indexes WHERE schemaname = 'public'`)
     - Verify security best practices (RLS policies, indexes, constraints) via SQL queries
   - **Foreign Key Constraints:** Explicitly define all foreign key relationships per schema-design.md (e.g., notifications.user_id → users.id, approvals.user_id → users.id)
   - **Data Type Validation:** Verify all data types match schema-design.md and data-dictionary.md specifications (e.g., timestamps with timezone, JSONB structures, text length limits)
   - **Rollback Strategy:** Create rollback migration script, reference [Migration Strategy](../../02-architecture/database/migration-strategy.md) for rollback procedures
-  - **Index Specifications:** (Nadia's Audit - Issue #44)
+  - **Index Specifications:** (Nadia's Audit - Issue #44) - **REQUIRED IN THIS MIGRATION:**
     - users: idx_users_company_id, idx_users_role, idx_users_email
     - audit_logs: idx_audit_logs_created_at, idx_audit_logs_table_name, idx_audit_logs_user_id
     - notifications: idx_notifications_user_id, idx_notifications_read_at, idx_notifications_created_at
+    - approvals: idx_approvals_submission_id (for submission approval history queries), idx_approvals_approver_id (for user approval activity queries), idx_approvals_created_at (for timeline/sorting queries)
+  - **Analytics Indexes (Farah's Requirement):** - **REQUIRED IN THIS MIGRATION for seed data validation and analytics queries:**
+    - audit_logs: idx_audit_logs_table_created (composite: table_name, created_at) for historical timeline queries
+    - notifications: idx_notifications_user_read_created (composite: user_id, read_at, created_at) for aggregation queries and badge counts
+  - **approvals Table Specifications:**
+    - **Core Fields:** id (uuid, PK), submission_id (uuid, NULLABLE - polymorphic relationship via submission_type), submission_type (text, NOT NULL - CHECK constraint: registry, aams, msq, wsl, export_request, enforcement_action), from_status (text, NOT NULL - previous workflow status), to_status (text, NOT NULL - new workflow status), approver_id (uuid, FK to users.id, NOT NULL), approval_type (text, NOT NULL - CHECK constraint: verify, approve, implement, reject), comments (text, NULLABLE), created_at (timestamptz, NOT NULL, default now())
+    - **Purpose:** Approval history for all workflows (registry submissions, VCI submissions, export requests, enforcement actions)
+    - **Polymorphic Relationship:** submission_id + submission_type combination identifies the specific submission/workflow entity being approved
   - **Constraint Specifications:** (Nadia's Audit - Issue #45)
     - users.email: UNIQUE constraint
     - users.role: CHECK constraint (valid roles: company_user, moh_tier1, moh_tier2)
     - audit_logs.action: CHECK constraint (valid actions: INSERT, UPDATE, DELETE)
+    - approvals.approver_id: FOREIGN KEY constraint (REFERENCES users(id), NOT NULL)
+    - approvals.submission_type: CHECK constraint (valid types: registry, aams, msq, wsl, export_request, enforcement_action - per workflow requirements)
+    - approvals.approval_type: CHECK constraint (valid types: verify, approve, implement, reject - per workflow requirements)
   - **Estimated Time:** 1-2 hours
   - **Developer Notes:**
     - Avatar uploads should use Supabase Storage: `avatars/{user_id}/{filename}`
@@ -358,10 +467,18 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities](../../05-project-management/phases/phase-0-6-implementation-priorities.md#2-conversations-table---lifecycle-state)
   - **Migration Requirements:**
     - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_communication_tables.sql`
+    - **Indexes MUST be created in the same migration file as table creation** (atomic schema definition - required for seed data validation and analytics queries)
     - Apply migration using `supabase migration apply` or auto-apply in local dev
     - Verify migration via `supabase migration list` or Supabase dashboard
     - Verify tables and new fields using SQL queries (check lifecycle_state, delivered_at columns)
+    - **Verify indexes exist immediately after migration** (use SQL queries to verify pg_indexes)
     - Verify security best practices via SQL queries
+  - **Index Specifications - REQUIRED IN THIS MIGRATION:**
+    - conversations: idx_conversations_company_id (for company-scoped queries), idx_conversations_workflow_entity (composite: workflow_entity_type, workflow_entity_id - for workflow-linked conversations), idx_conversations_created_by (for user activity queries), idx_conversations_created_at (for timeline queries), idx_conversations_type (for filtering by conversation type), idx_conversations_lifecycle_state (for filtering by lifecycle state)
+    - messages: idx_messages_conversation_id (for thread loading), idx_messages_sender_id (for user activity queries), idx_messages_recipient_id (for user inbox queries), idx_messages_created_at (for thread ordering), idx_messages_delivered_at (for delivery tracking - WHERE delivered_at IS NOT NULL)
+    - message_read_receipts: idx_message_read_receipts_message_id (for read status queries), idx_message_read_receipts_user_id (for user read history), idx_message_read_receipts_read_at (for read timeline queries)
+    - conversation_participants: idx_conversation_participants_conversation_id (for participant lookup), idx_conversation_participants_user_id (for user participation queries)
+    - message_attachments: idx_message_attachments_message_id (for attachment queries), idx_message_attachments_uploaded_by (for user upload tracking)
   - **Estimated Time:** 2-4 hours (1-2h lifecycle_state, 1-2h delivered_at)
   - **Developer Notes:**
     - Lifecycle state transitions: CREATED → SENT → DELIVERED → READ → THREADED → WORKFLOW_LINKED → ARCHIVED
@@ -375,11 +492,17 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Implementation Guide:** See [Phase 0.6 Implementation Priorities](../../05-project-management/phases/phase-0-6-implementation-priorities.md#3-follow_ups-table)
   - **Migration Requirements:**
     - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_governance_tables.sql`
+    - **Indexes MUST be created in the same migration file as table creation** (atomic schema definition - required for seed data validation and analytics queries)
     - Apply migration using `supabase migration apply` or auto-apply in local dev
     - Verify migration via `supabase migration list` or Supabase dashboard
     - Verify tables created using SQL queries (verify follow_ups, meetings, meeting_attendees exist)
     - Verify schema using SQL queries (check columns, foreign keys, indexes)
+    - **Verify indexes exist immediately after migration** (use SQL queries to verify pg_indexes)
     - Verify security best practices via SQL queries
+  - **Index Specifications - REQUIRED IN THIS MIGRATION:**
+    - follow_ups: idx_follow_ups_company_id (for company-scoped queries), idx_follow_ups_assigned_to (for user assignment queries), idx_follow_ups_due_date (for due date sorting/filtering), idx_follow_ups_status (for status filtering), idx_follow_ups_priority (for priority filtering), idx_follow_ups_active_priority (composite: status, priority, due_date WHERE status IN ('pending', 'in_progress') - for dashboard widget), idx_follow_ups_issue_reference (composite: issue_reference_table, issue_reference_id WHERE issue_reference_id IS NOT NULL - for polymorphic relationship queries)
+    - meetings: idx_meetings_scheduled_at (for calendar queries), idx_meetings_status (for status filtering), idx_meetings_meeting_type (for type filtering), idx_meetings_upcoming (composite: scheduled_at, status WHERE status = 'scheduled' AND scheduled_at >= now() - for dashboard widget), idx_meetings_related_reference (composite: related_reference_table, related_reference_id WHERE related_reference_id IS NOT NULL - for polymorphic relationship queries)
+    - meeting_attendees: idx_meeting_attendees_meeting_id (for meeting attendee lookup), idx_meeting_attendees_user_id (for user calendar queries), idx_meeting_attendees_status (for attendance status filtering), idx_meeting_attendees_pending (composite: meeting_id, attendance_status WHERE attendance_status = 'invited' AND responded_at IS NULL - for pending invitation queries)
   - **Estimated Time:** 8-13 hours (3-4h follow_ups, 3-4h meetings, 2-5h meeting_attendees)
   - **Tables to Create:**
     - follow_ups (governance follow-up tracking)
@@ -388,24 +511,24 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Developer Notes:**
     - follow_ups supports polymorphic relationships via issue_reference_id + issue_reference_table
     - meetings supports polymorphic relationships via related_reference_id + related_reference_table
-    - All tables include comprehensive indexes for performance
+    - All tables include comprehensive indexes for performance (see Index Specifications above)
     - See schema-design.md for complete field definitions and constraints
     - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
 ### RLS Policies for Core Tables (Tasks 1.1.1.3a-3f)
 - [ ] **Task 1.1.1.3a:** Implement RLS policies for `users` table (company users see own record, MOH see all, self-service profile updates)
-  - **Depends on:** Task 1.1.1.2 (users table migration), Task 1.1.1.2a (indexes for RLS performance)
+  - **Depends on:** Task 1.1.1.2 (users table migration including indexes)
   - **Estimated Time:** 2-3 hours
 - [ ] **Task 1.1.1.3b:** Implement RLS policies for `system_config` table (Tier 1 only for module activation, read-only for others)
-  - **Depends on:** Task 1.1.1.2 (system_config table migration), Task 1.1.1.2a (indexes)
+  - **Depends on:** Task 1.1.1.2 (system_config table migration including indexes)
   - **Estimated Time:** 1-2 hours
 - [ ] **Task 1.1.1.3c:** Implement RLS policies for `audit_logs` table (MOH only, companies see own company's audit logs only)
-  - **Depends on:** Task 1.1.1.2 (audit_logs table migration), Task 1.1.1.2a (indexes)
+  - **Depends on:** Task 1.1.1.2 (audit_logs table migration including indexes)
   - **Estimated Time:** 2-3 hours
 - [ ] **Task 1.1.1.3d:** Implement RLS policies for `notifications` table (users see own notifications only)
-  - **Depends on:** Task 1.1.1.2 (notifications table migration), Task 1.1.1.2a (indexes)
+  - **Depends on:** Task 1.1.1.2 (notifications table migration including indexes)
   - **Estimated Time:** 1-2 hours
 - [ ] **Task 1.1.1.3e:** Implement RLS policies for communication tables (conversations, messages, message_attachments, message_read_receipts, conversation_participants - company isolation, MOH system-wide access, internal MOH conversations)
-  - **Depends on:** Task 1.1.1.2d (communication tables migration), Task 1.1.1.2a (indexes)
+  - **Depends on:** Task 1.1.1.2d (communication tables migration including indexes)
   - **Estimated Time:** 4-6 hours (complex policies for multiple tables)
 - [ ] **Task 1.1.1.3f:** Implement RLS policies for governance tables (follow_ups, meetings, meeting_attendees)
   - **follow_ups:** 
@@ -491,10 +614,23 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Estimated Time:** 4-6 hours
 ### Audit Logging Triggers (Tasks 1.1.1.5a-5c)
 - [ ] **Task 1.1.1.5a:** Implement audit logging trigger function (hash chaining logic, previous_hash calculation, current_hash generation)
-  - **Depends on:** Task 1.1.1.3c (audit_logs table RLS policies), Task 1.1.1.2c (triggers infrastructure)
+  - **Depends on:** Task 1.1.1.2 (audit_logs table migration), Task 1.1.1.3c (audit_logs table RLS policies)
+  - **Security Note:** This trigger function is the audit logging infrastructure. No separate infrastructure setup is required - PostgreSQL triggers are native database features. The trigger function must be implemented before any auditable tables are modified to ensure complete audit trail coverage from the start.
+  - **Hash Chaining Requirements:**
+    - Calculate previous_hash from most recent audit_logs entry (for same table_name)
+    - Generate current_hash: SHA256(previous_hash + table_name + record_id + action + changed_data + timestamp + user_id)
+    - Store both previous_hash and current_hash in audit_logs entry
+    - First entry for a table has previous_hash = NULL (chain starts here)
+    - Ensure hash chain integrity: if previous_hash doesn't match last entry, detect tampering
+  - **Reference:** [Audit Logging Specification](../../02-architecture/security/audit-logging-spec.md)
   - **Estimated Time:** 6-8 hours (complex hash chaining logic)
 - [ ] **Task 1.1.1.5b:** Apply audit triggers to all audited tables (companies, products, skus, submissions, etc.)
   - **Depends on:** Task 1.1.1.5a (trigger function), Task 1.1.1.7 (RMM tables), Task 1.1.1.9 (VCI tables)
+  - **Security Note:** Triggers must be applied immediately after tables are created to ensure complete audit coverage from the first modification. Any table modifications before triggers are applied will not be audited, creating security gaps and compliance violations.
+  - **Tables Requiring Audit Triggers:**
+    - RMM: companies, products, skus, registry_submissions
+    - VCI: aams_submissions, msq_submissions, wsl_submissions, thresholds, breaches, breach_analyses
+    - Enforcement: enforcement_actions
   - **Estimated Time:** 2-4 hours
 - [ ] **Task 1.1.1.5c:** Implement audit log hash verification function (verify hash chain integrity, detect tampering)
   - **Depends on:** Task 1.1.1.5a (hash chaining logic)
@@ -506,31 +642,91 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - [ ] **Task 1.1.1.6b:** Implement session management (session timeout, concurrent session limits, session invalidation)
   - **Depends on:** Task 1.1.1.6a (Auth configuration)
   - **Estimated Time:** 2-4 hours
-- [ ] **Task 1.1.1.7:** Create database migration for RMM core tables (companies, products, skus, atc_codes, critical_medicines)
+- [ ] **Task 1.1.1.7:** Create database migration for RMM core tables (companies, products, skus, atc_codes, critical_medicines, enforcement_actions, registry_submissions)
   - **Depends on:** Task 1.1.1.2 (core tables migration - users table for foreign keys)
+  - **Reference:** [Enforcement Cycle Specification](../../03-governance/enforcement-cycle-specification.md), [Schema Design - RMM Tables](../../02-architecture/database/schema-design.md#rmm-tables)
   - **Migration Requirements:**
     - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_rmm_tables.sql`
+    - **Indexes MUST be created in the same migration file as table creation** (atomic schema definition - required for seed data validation and analytics queries)
     - Apply migration using `supabase migration apply` or auto-apply in local dev
     - Verify migration via `supabase migration list` or Supabase dashboard
-    - Verify tables created using SQL queries (verify companies, products, skus, atc_codes, critical_medicines exist)
+    - Verify tables created using SQL queries (verify companies, products, skus, atc_codes, critical_medicines, enforcement_actions, registry_submissions exist)
     - Verify SKU pharmaceutical attributes using SQL queries (check dosage_strength, dosage_form, pack_size, unit_of_measure columns)
+    - **Verify indexes exist immediately after migration** (use SQL queries to verify pg_indexes)
     - Verify security best practices via SQL queries
-  - **Estimated Time:** 4-6 hours
+  - **Tables to Create:**
+    - companies (company registry)
+    - products (product registry)
+    - skus (SKU registry with pharmaceutical attributes)
+    - atc_codes (ATC code reference)
+    - critical_medicines (critical medicine designations)
+    - enforcement_actions (enforcement action workflow table with state machine, approval chain, appeal tracking)
+    - registry_submissions (registry update submissions workflow table with state machine, approval chain, implementation tracking)
+  - **enforcement_actions Table Specifications (Governance Requirement):**
+    - **State Machine:** status field with CHECK constraint (draft, pending_review, pending_approval, approved, executed, appealed, resolved, cancelled)
+    - **Action Types:** action_type field with CHECK constraint (warning, fine, suspension)
+    - **Violation Types:** violation_type field with CHECK constraint (submission_non_compliance, threshold_breach, critical_medicine_non_compliance, export_violation, data_quality_issue, repeated_offender)
+    - **Required Fields:**
+      - company_id (foreign key to companies.id, NOT NULL)
+      - action_type (NOT NULL)
+      - violation_type (NOT NULL)
+      - legal_basis (text, NOT NULL)
+      - justification (text, NOT NULL, minimum 50 characters for Tier 1 actions - enforced in RPC function)
+      - amount (numeric, NULLABLE - required if action_type = 'fine')
+      - status (NOT NULL, default 'draft')
+    - **Two-Person Rule Fields:**
+      - requestor_id (foreign key to users.id, NOT NULL)
+      - approver_id (foreign key to users.id, NULLABLE - populated on approval, must be different from requestor_id)
+    - **Appeal Workflow Fields:**
+      - appeal_grounds (text, NULLABLE)
+      - appeal_submitted_at (timestamptz, NULLABLE)
+      - appeal_resolved_at (timestamptz, NULLABLE)
+      - appeal_resolution_notes (text, NULLABLE)
+    - **Workflow Tracking Fields:**
+      - created_at (timestamptz, NOT NULL, default now())
+      - submitted_at (timestamptz, NULLABLE)
+      - reviewed_at (timestamptz, NULLABLE)
+      - approved_at (timestamptz, NULLABLE)
+      - executed_at (timestamptz, NULLABLE)
+    - **Review/Approval Notes:**
+      - review_notes (text, NULLABLE)
+      - approval_notes (text, NULLABLE - required for Tier 1 approvals)
+      - execution_notes (text, NULLABLE)
+      - cancellation_reason (text, NULLABLE)
+  - **registry_submissions Table Requirements:**
+    - **Core Fields:** id (uuid, PK), submission_type (text, NOT NULL - CHECK constraint: company_create, company_update, product_create, product_update, sku_create, sku_update, company_delete, product_delete, sku_delete), entity_type (text, NOT NULL - CHECK constraint: company, product, sku), entity_id (uuid, NULLABLE - for updates/deletes), submission_data (jsonb, NOT NULL), status (text, NOT NULL, DEFAULT 'draft' - CHECK constraint: draft, submitted, tier2_verified, tier1_approved, tier2_implemented, completed, rejected)
+    - **Workflow Fields:** submitted_by (uuid, FK to users.id, NOT NULL), verified_by (uuid, FK to users.id, NULLABLE), verified_at (timestamptz, NULLABLE), approved_by (uuid, FK to users.id, NULLABLE), approved_at (timestamptz, NULLABLE), implemented_by (uuid, FK to users.id, NULLABLE), implemented_at (timestamptz, NULLABLE), rejection_reason (text, NULLABLE)
+    - **Timestamps:** created_at (timestamptz, NOT NULL, default now()), updated_at (timestamptz, NOT NULL, default now())
+  - **Index Specifications - REQUIRED IN THIS MIGRATION:**
+    - companies: idx_companies_type, idx_companies_name (for listing/filtering queries)
+    - products: idx_products_company_id, idx_products_name
+    - skus: idx_skus_product_id, idx_skus_dosage_form (per Task 1.1.1.7b), idx_skus_company_id (via product relationship for RLS)
+    - atc_codes: indexes for code lookup and filtering
+    - critical_medicines: indexes for designation queries
+    - enforcement_actions: idx_enforcement_company_id, idx_enforcement_status, idx_enforcement_action_type, idx_enforcement_created_at, idx_enforcement_status_company (composite: status, company_id for filtering), idx_enforcement_requestor_id, idx_enforcement_approver_id
+    - registry_submissions: idx_registry_submissions_status (on status), idx_registry_submissions_submitted_by (on submitted_by), idx_registry_submissions_entity_type (on entity_type)
+  - **Estimated Time:** 8-10 hours (4-6h for RMM tables + 2h for enforcement_actions table + 2h for registry_submissions table with state machine and workflow fields)
   - **Developer Notes:**
     - Follow standard Supabase migration practices (see [Database Management with Supabase](#database-management-with-supabase) section)
-- [ ] **Task 1.1.1.7a:** Verify RMM schema completeness (all columns per schema-design.md, data types, nullable rules, **including SKU pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure**)
+    - enforcement_actions table is a critical governance requirement - must support complete enforcement workflow per [Enforcement Cycle Specification](../../03-governance/enforcement-cycle-specification.md)
+    - Two-person rule: approver_id must be different from requestor_id (enforced in RPC functions)
+    - Justification minimum length (50+ chars for Tier 1 actions) enforced in RPC functions, not database constraint
+- [ ] **Task 1.1.1.7a:** Verify RMM schema completeness (all columns per schema-design.md, data types, nullable rules, **including SKU pharmaceutical attributes: dosage_strength, dosage_form, pack_size, unit_of_measure**, **including enforcement_actions state machine and workflow fields**, **including registry_submissions state machine and workflow fields**)
   - **Depends on:** Task 1.1.1.7 (RMM migration)
   - **Verification Requirements:**
-    - Verify all tables exist using SQL queries via Supabase dashboard
+    - Verify all tables exist using SQL queries via Supabase dashboard (companies, products, skus, atc_codes, critical_medicines, enforcement_actions, registry_submissions)
     - Use SQL queries to verify column definitions, data types, constraints, indexes
     - Verify SKU pharmaceutical attributes using SQL queries
-  - **Estimated Time:** 1 hour
-- [ ] **Task 1.1.1.7b:** Verify SKU pharmaceutical attributes implementation (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are NOT NULL, add index on dosage_form)
+    - Verify enforcement_actions table: state machine (status CHECK constraint), action types, violation types, two-person rule fields, appeal workflow fields, workflow tracking fields
+    - Verify registry_submissions table: state machine (status CHECK constraint), submission_type CHECK constraint, entity_type CHECK constraint, workflow fields (submitted_by, verified_by, approved_by, implemented_by), indexes (status, submitted_by, entity_type)
+  - **Estimated Time:** 1-2 hours
+- [ ] **Task 1.1.1.7b:** Verify SKU pharmaceutical attributes implementation (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are NOT NULL, verify index on dosage_form exists from migration)
   - **Depends on:** Task 1.1.1.7a (schema verification)
+  - **Note:** Index on dosage_form must have been created in Task 1.1.1.7 migration (see Index Specifications)
   - **Estimated Time:** 1 hour
-### RLS Policies for RMM Tables (Tasks 1.1.1.8a-8e)
+### RLS Policies for RMM Tables (Tasks 1.1.1.8a-8g)
 - [ ] **Task 1.1.1.8a:** Implement RLS policies for `companies` table (company isolation, MOH system-wide access, two-person rule enforcement)
-  - **Depends on:** Task 1.1.1.7 (companies table migration), Task 1.1.1.2a (indexes)
+  - **Depends on:** Task 1.1.1.7 (companies table migration including indexes)
   - **Estimated Time:** 3-4 hours (complex two-person rule logic)
 - [ ] **Task 1.1.1.8b:** Implement RLS policies for `products` table (company-scoped, relationship-based via company_id)
   - **Depends on:** Task 1.1.1.8a (companies RLS), Task 1.1.1.7 (products table migration)
@@ -544,18 +740,47 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 - [ ] **Task 1.1.1.8e:** Implement RLS policies for `critical_medicines` table (MOH Tier 1 only)
   - **Depends on:** Task 1.1.1.7 (critical_medicines table migration)
   - **Estimated Time:** 1-2 hours
+- [ ] **Task 1.1.1.8f:** Implement RLS policies for `enforcement_actions` table (company isolation, MOH system-wide access, two-person rule enforcement)
+  - **Depends on:** Task 1.1.1.7 (enforcement_actions table migration including indexes)
+  - **RLS Policy Requirements:**
+    - Company users: See enforcement_actions for their company only (company_id match)
+    - MOH Tier 1/2: See all enforcement_actions (system-wide access)
+    - Create: MOH Tier 1/2 only (enforcement actions can only be created by MOH)
+    - Update: Role-based (Tier 2 can update draft/pending_review, Tier 1 can update pending_approval/approved)
+    - Two-person rule: RPC functions enforce approver_id != requestor_id (not in RLS, but RLS ensures proper role access)
+  - **Reference:** [Enforcement Cycle Specification](../../03-governance/enforcement-cycle-specification.md), [Approvals Authority Matrix](../../03-governance/approvals-authority-matrix.md)
+  - **Estimated Time:** 3-4 hours (complex policies for workflow state transitions)
+- [ ] **Task 1.1.1.8g:** Implement RLS policies for `registry_submissions` table (company isolation, MOH system-wide access, role-based creation/update based on workflow state)
+  - **Depends on:** Task 1.1.1.7 (registry_submissions table migration including indexes)
+  - **RLS Policy Requirements:**
+    - Company users: See registry_submissions for their company only (entity_id matches company via entity_type + entity_id relationship, or submission_data contains company_id)
+    - MOH Tier 1/2: See all registry_submissions (system-wide access)
+    - Create: Company users can create draft submissions for their company; MOH can create submissions for any company
+    - Update: Role-based based on workflow state (company users can update own draft submissions, Tier 2 can update submitted/tier2_verified submissions, Tier 1 can update tier1_approved submissions)
+    - Read: Company users see own company's submissions only; MOH see all submissions
+  - **Reference:** [Schema Design - RMM Tables](../../02-architecture/database/schema-design.md#rmm-tables), [Workflow Architecture](../../02-architecture/workflow-architecture.md)
+  - **Estimated Time:** 3-4 hours (complex policies for workflow states and entity relationships)
 - [ ] **Task 1.1.1.9:** Create database migration for VCI core tables (aams_submissions, msq_submissions, wsl_submissions, thresholds, breaches, breach_analyses)
   - **Depends on:** Task 1.1.1.7 (RMM tables migration - references skus, companies)
   - **Reference:** [Schema Design - VCI Tables](../../02-architecture/database/schema-design.md#vci-tables), [Data Dictionary](../../02-architecture/database/data-dictionary.md)
   - **Migration Requirements:**
     - Create migration file: `supabase/migrations/YYYYMMDDHHMMSS_create_vci_tables.sql`
+    - **Indexes MUST be created in the same migration file as table creation** (atomic schema definition - required for seed data validation and analytics queries)
     - Apply migration using `supabase migration apply` or auto-apply in local dev
     - Verify migration via `supabase migration list` or Supabase dashboard
     - Verify tables created using SQL queries (verify all VCI tables exist)
     - Verify foreign keys using SQL queries (check foreign key constraints)
+    - **Verify indexes exist immediately after migration** (use SQL queries to verify pg_indexes)
     - Verify security best practices via SQL queries
   - **Foreign Key Constraints:** Explicitly define all foreign key relationships per schema-design.md (e.g., aams_submissions.sku_id → skus.id, aams_submissions.company_id → companies.id, thresholds.sku_id → skus.id)
   - **Data Type Validation:** Verify all data types match schema-design.md and data-dictionary.md specifications (e.g., submission_data JSONB structure, threshold values numeric precision)
+  - **Index Specifications - REQUIRED IN THIS MIGRATION:**
+    - aams_submissions: idx_aams_company_id, idx_aams_year, idx_aams_company_year (composite for historical queries)
+    - msq_submissions: idx_msq_company_id, idx_msq_year_month, idx_msq_company_year_month (composite for historical queries)
+    - wsl_submissions: idx_wsl_company_id, idx_wsl_week_ending, idx_wsl_company_week (composite for historical queries)
+    - thresholds: idx_thresholds_sku_id, idx_thresholds_type, idx_thresholds_duration_type
+    - breaches: idx_breaches_company_id, idx_breaches_status, idx_breaches_detected_at, idx_breaches_company_status (composite)
+    - breach_analyses: idx_breach_analyses_breach_id, idx_breach_analyses_analyzed_at
   - **Rollback Strategy:** Create rollback migration script, reference [Migration Strategy](../../02-architecture/database/migration-strategy.md) for rollback procedures
   - **Estimated Time:** 6-8 hours (multiple complex tables)
   - **Developer Notes:**
@@ -756,8 +981,36 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ## Subphase 1.1.2: RMM Module - Core Registry Management (Week 2-3)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
 **Seed Data Gate (Required):**
-- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
+- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112) (versioned SQL migrations, idempotent).
+
+**Seed Stage Acceptance Criteria (from Playbook):**
+- **Goal:** Make RMM pages (companies/products/SKUs/registry submissions) testable.
+- **Minimum tables touched (expected):**
+  - `companies`, `users`
+  - `atc_codes`
+  - `products`
+  - `skus` (must include Phase 0.6 pharma attributes: dosage_strength/dosage_form/pack_size/unit_of_measure)
+  - `registry_submissions` + approvals/workflow history tables as defined in schema
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` and `pack_company_empty` from foundation stage
+  - Extend `pack_company_active` with registry submissions across workflow statuses (draft, pending_verification, pending_approval, approved, pending_implementation, implemented, completed, rejected)
+  - Ensure `pack_company_active` has registry submission activity to validate workflow wireframes
+- **Acceptance criteria:**
+  - Companies list has enough rows to validate pagination/sorting/filtering.
+  - Company detail tabs have meaningful content for "active" company and empty state for "empty" company.
+  - SKU list/detail show pharma attributes, not blanks.
+  - Registry submissions exist across statuses required by the wireframes.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
 
 ### RMM Backend Tasks
 - [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD (rmm_create_company, rmm_update_company, rmm_get_company, rmm_list_companies)
@@ -810,7 +1063,15 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 ### RMM Frontend Tasks
 - [ ] **Task 1.1.2.16:** Create RMM module layout and navigation - **Wireframe:** [Task 0.5.2.1 - RMM Overview](../../04-design/user-experience/wireframes/01-rmm/overview/task-0.5.2.1-rmm-overview.md)
 - [ ] **Task 1.1.2.16a:** Implement module activation banner/indicator (if module inactive) - **Wireframe:** [Task 0.5.2.1 - RMM Overview](../../04-design/user-experience/wireframes/01-rmm/overview/task-0.5.2.1-rmm-overview.md)
-- [ ] **Task 1.1.2.17:** Implement Companies list page (table view, filters, search, pagination) - **Wireframe:** [Task 0.5.2.2 - Companies List](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.2-companies-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
+- [ ] **Task 1.1.2.17:** Implement Companies list page (table view, filters, search, pagination)
+  - **🔒 Sami's Compliance Check (REQUIRED BEFORE START):**
+    - [ ] Wireframe read: [Task 0.5.2.2 - Companies List](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.2-companies-list.md) - Layout, states, role variants understood
+    - [ ] Seed migration verified: `seed_1_1_2_rmm` applied (verify via `supabase migration list`)
+    - [ ] Database tables verified: `companies` table exists and accessible (use SQL queries)
+    - [ ] Supabase queries planned: Will query `companies` via Supabase client/hook (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks)
+    - [ ] Wireframe binding comment will be added to component file (JSDoc format with wireframe link)
+    - [ ] PR proof prepared: wireframe link, screenshots (Company + MOH Tier 1/2 roles + loading/empty/error states), data proof (companies table + query location/file path)
+  - **Wireframe:** [Task 0.5.2.2 - Companies List](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.2-companies-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
 - [ ] **Task 1.1.2.17a:** Implement DataTable component (sorting, filtering, pagination, row selection - per ui-component-specifications.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
 - [ ] **Task 1.1.2.17b:** Implement SearchBar component (search input with filters dropdown) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
 - [ ] **Task 1.1.2.17c:** Implement responsive table (horizontal scroll, card view on mobile) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
@@ -853,7 +1114,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     - Tier 1: Can submit fines, suspensions for review
     - Action type determines required approval level (warnings: Tier 2 final, fines/suspensions: Tier 1 final)
   - **Estimated Time:** 4-6 hours
-  - **Depends on:** Task 1.1.1.7 (enforcement_actions table migration)
+  - **Depends on:** Task 1.1.1.7 (enforcement_actions table migration), Task 1.1.1.8f (enforcement_actions RLS policies)
 
 - [ ] **Task 1.1.2.32:** Create Enforcement RPC function - Review action (enforcement_review_action)
   - **Description:** Tier 2 review action (pending_review → pending_approval or draft)
@@ -905,8 +1166,39 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ## Subphase 1.1.3: VCI Module - AAMS Workflow (Week 4)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
 **Seed Data Gate (Required):**
-- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md) (versioned SQL migrations, idempotent).
+- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_1_3_vci_aams](phase-1-1-mockdata.md#stage-seed_1_1_3_vci_aams-subphase-113) (versioned SQL migrations, idempotent).
+
+**Seed Stage Acceptance Criteria (from Playbook):**
+- **Goal:** Make VCI AAMS wireframes testable (including threshold and duration types).
+- **Minimum tables touched (expected):**
+  - `aams_submissions`
+  - `thresholds` (global/local, permanent + temporary duration types)
+  - any supporting tables for threshold history / reversions defined in schema
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` from previous stages
+  - Add threshold-related scenario packs:
+    - `pack_threshold_reversion_auto` - temporary_auto_revert thresholds with upcoming revert dates
+    - `pack_threshold_manual_review_pending` - temporary_manual_review thresholds pending review workflow
+    - `pack_threshold_permanent` - permanent threshold examples (global and local)
+  - Ensure AAMS submissions span multiple years with late/grace-period scenarios
+- **Acceptance criteria:**
+  - AAMS lists have multi-year records and at least one late/grace-period scenario.
+  - Thresholds include examples of:
+    - permanent
+    - temporary_auto_revert (with upcoming revert date)
+    - temporary_manual_review (pending review workflow)
+  - MOH and company role views match wireframes for visibility timing.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_3_vci_aams](phase-1-1-mockdata.md#stage-seed_1_1_3_vci_aams-subphase-113), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
 
 ### VCI AAMS Backend Tasks
 - [ ] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
@@ -943,6 +1235,39 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ## Subphase 1.1.4: VCI Module - MSQ Workflow (Week 5)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
+**Seed Data Gate (Required):**
+- Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_1_4_vci_msq` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- **Note:** This creates minimal viable seed data for MSQ wireframe testing. Comprehensive historical data will be added in Subphase 1.1.6.
+- **Dependency:** MSQ validation (Task 1.1.4.3) requires AAMS seed data from `seed_1_1_3_vci_aams` to be present.
+
+**Seed Stage Acceptance Criteria (from Playbook pattern):**
+- **Goal:** Make VCI MSQ wireframes testable (including monthly submissions, validation scenarios, grace period scenarios).
+- **Minimum tables touched (expected):**
+  - `msq_submissions` (submission_data as array of {sku_id, quantity} objects)
+  - supporting tables for MSQ workflow status and validation flags
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` from previous stages
+  - Add MSQ-specific scenario packs:
+    - MSQ submissions with flagged-for-review status (for MOH review workflow)
+    - MSQ grace period scenarios (submissions within 7-day correction window)
+    - MSQ vs AAMS validation scenarios (20% threshold comparison test cases)
+- **Acceptance criteria:**
+  - MSQ lists have multi-month records and at least one flagged-for-review scenario.
+  - MSQ submissions include examples across workflow statuses (pending, accepted, rejected, flagged).
+  - Grace period scenarios exist (7-day correction window).
+  - MSQ vs AAMS validation scenarios exist (20% threshold comparison test cases).
+  - MOH and company role views match wireframes for visibility timing.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+
 ### VCI MSQ Backend Tasks
 - [ ] **Task 1.1.4.1:** Create VCI RPC function - MSQ submission (vci_submit_msq)
 - [ ] **Task 1.1.4.2:** Implement MSQ validation logic (completeness checks, format validation, historical pattern comparison)
@@ -965,6 +1290,41 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 ---
 
 ## Subphase 1.1.5: VCI Module - WSL Workflow & Breach Detection (Week 6)
+
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
+**Seed Data Gate (Required):**
+- Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_1_5_vci_wsl` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- **Note:** This creates minimal viable seed data for WSL/Breaches wireframe testing. Comprehensive historical data and breach scenarios will be added in Subphase 1.1.6.
+
+**Seed Stage Acceptance Criteria (from Playbook pattern):**
+- **Goal:** Make VCI WSL wireframes testable (including weekly submissions, breach detection, breach workflow scenarios).
+- **Minimum tables touched (expected):**
+  - `wsl_submissions` (submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects)
+  - `breaches` (automatic breach creation on WSL submission when stock < threshold)
+  - `breach_analyses` (Tier 2 analysis records)
+  - supporting tables for breach workflow status and priority
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` from previous stages
+  - Add WSL/Breach-specific scenario packs:
+    - `pack_company_breach_heavy` - company with multiple breaches across priority levels (critical medicine breaches, multiple SKUs, extended breaches)
+    - WSL submissions with breach scenarios (stock < threshold)
+    - Breach workflow scenarios (detected, analyzed, action_suggested, action_approved, resolved states)
+    - Batch breach analysis scenarios (Tier 2 batch analysis examples)
+- **Acceptance criteria:**
+  - WSL lists have multi-week records and at least one breach scenario.
+  - Breaches include examples across priority levels (critical medicine breaches, multiple SKUs, extended breaches).
+  - Breach workflow states exist (detected, analyzed, action_suggested, action_approved, resolved).
+  - Breach analysis scenarios exist (Tier 2 analysis records, batch analysis examples).
+  - MOH Tier 1/2 and company role views match wireframes for visibility timing.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
 
 ### VCI WSL Backend Tasks
 - [ ] **Task 1.1.5.1:** Create VCI RPC function - WSL submission (vci_submit_wsl)
@@ -1003,6 +1363,26 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ### VCI WSL Frontend Tasks
 - [ ] **Task 1.1.5.13:** Implement WSL submissions list page (my submissions, all submissions for MOH) - **Wireframe:** [Task 0.5.3.13 - WSL Submissions List](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md)
+- [ ] **Task 1.1.5.13a:** Implement VCI Submissions overview page (unified view of all current submissions - AAMS, MSQ, WSL with type filters/tabs, status filters, role-based) - **Wireframe:** [Task 0.5.3.26 - VCI Submissions Overview](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.26-vci-submissions.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md), [Role-Based UI Patterns](../../02-architecture/frontend/role-based-ui-patterns.md), [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+  - **Depends on:** Task 1.1.3.12 (AAMS submissions list), Task 1.1.4.8 (MSQ submissions list), Task 1.1.5.13 (WSL submissions list)
+  - **Implementation Notes:**
+    - Unified table showing all three submission types (AAMS, MSQ, WSL) with type badge/icon
+    - Type filter tabs (All, AAMS, MSQ, WSL) with URL query parameter updates
+    - Status filters (Pending, Approved/Completed/Accepted, Rejected/Flagged)
+    - Date range filter (This Month, Last Month, Custom Range)
+    - Role-based views: Company users see "My Submissions", MOH see "All Submissions" with company filter
+    - Quick action buttons (New AAMS, New MSQ, New WSL) shown conditionally based on submission windows
+    - Table columns: Submission Type, Period (year/month/week), Status, Actions
+    - Row click navigates to appropriate detail page based on submission type
+    - Responsive: Card layout on mobile, table with horizontal scroll on tablet
+  - **Estimated Time:** 4-6 hours
+- [ ] **Task 1.1.5.13b:** Add Submissions link to VCI section navigation (links to `/vci/submissions` unified submissions overview page)
+  - **Depends on:** Task 1.1.5.13a (VCI Submissions overview page)
+  - **Implementation Notes:**
+    - Add "Submissions" link to VCI module sidebar navigation (after individual submission type links)
+    - Link should be visible to all roles (Company, MOH Tier 1, Tier 2)
+    - Update VCI Overview page quick links to include "All Submissions" link
+  - **Estimated Time:** 1 hour
 - [ ] **Task 1.1.5.14:** Implement WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
 - [ ] **Task 1.1.5.14a:** Implement WSLBulkEntryTable component (pre-populated with all company SKUs showing full description, quantity input only, optional breach reason/replenishment date fields) - **Wireframe:** [Task 0.5.3.14 - WSL Submission Form](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md), [Form Design Patterns](../../02-architecture/frontend/form-design-patterns.md)
 - [ ] **Task 1.1.5.15:** Implement WSL submission detail page (submission data, breach indicators) - **Wireframe:** [Task 0.5.3.15 - WSL Submission Detail](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md) - **Reference:** [Navigation & Layout Patterns](../../02-architecture/frontend/navigation-layout-patterns.md)
@@ -1023,89 +1403,31 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
 
 ---
 
-## Subphase 1.1.5.5: Historical Data Frontend Tasks
-
-### Historical Data Component Implementation
-- [ ] **Task 1.1.5.21:** Implement Timeline component (vertical timeline, date/user/action display, expandable details, filter by date range) - **Wireframe Reference:** See [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md) for timeline pattern
-- [ ] **Task 1.1.5.22:** Implement DateRangePicker component (start/end date selection, quick filters: Last 7 days, 30 days, 3 months, year, 7 years, custom range, Morocco timezone support) - **Wireframe:** [Task 0.5.8.3 - Date Range Picker Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.3-date-range-picker-modal.md)
-- [ ] **Task 1.1.5.23:** Implement ExportButton component (dropdown with PDF/Excel/CSV options, progress indicator, export metadata tracking) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
-- [ ] **Task 1.1.5.24:** Implement virtual scrolling component for large lists (using @tanstack/react-virtual, for audit logs)
-
-### History Tabs on Detail Pages
-- [ ] **Task 1.1.5.25:** Implement History tab on Company detail page (registry changes timeline, submission history, compliance history, lazy loading)
-- [ ] **Task 1.1.5.26:** Implement History tab on Product detail page (product changes timeline, SKU history)
-- [ ] **Task 1.1.5.27:** Implement History tab on SKU detail page (SKU changes timeline)
-- [ ] **Task 1.1.5.28:** Implement History tab on AAMS submission detail page (corrections history, status changes)
-- [ ] **Task 1.1.5.29:** Implement History tab on MSQ submission detail page (corrections history, status changes)
-- [ ] **Task 1.1.5.30:** Implement History tab on WSL submission detail page (submission history)
-- [ ] **Task 1.1.5.31:** Implement History tab on Breach detail page (resolution timeline, actions taken)
-- [ ] **Task 1.1.5.32:** Implement History tab on Compliance Score detail page (score trends, component breakdown over time)
-
-### Filtered List Views
-- [ ] **Task 1.1.5.33:** Add year filter to AAMS submissions list page (query parameter ?year=2023, quick filter chips, default to current year)
-- [ ] **Task 1.1.5.34:** Add year/month filters to MSQ submissions list page (query parameters ?year=2023&month=6, quick filter chips)
-- [ ] **Task 1.1.5.35:** Add week filter to WSL submissions list page (query parameter ?week=2023-W01, quick filter chips)
-- [ ] **Task 1.1.5.36:** Add status/year filters to Breaches list page (query parameters ?status=resolved&year=2023, filter tabs)
-- [ ] **Task 1.1.5.37:** Add year filter to Compliance Scores list page (query parameter ?year=2023, quick filter chips)
-
-### Dedicated History Routes
-- [ ] **Task 1.1.5.38:** Implement `/history` route (role-based historical overview page, company users: personal, MOH: system-wide) - **Wireframe:** [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md)
-- [ ] **Task 1.1.5.39:** Implement `/audit/logs` route (audit log list page, MOH/Auditors only, virtual scrolling, search, date range filter) - **Wireframe:** [Task 0.5.1.32 - Audit Logs List](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md)
-- [ ] **Task 1.1.5.40:** Implement `/audit/logs/[id]` route (audit log detail page) - **Wireframe:** [Task 0.5.1.33 - Audit Log Detail](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.33-audit-log-detail.md)
-- [ ] **Task 1.1.5.41:** Implement `/audit/reports` route (audit reports page, MOH/Auditors only) - **Wireframe:** [Task 0.5.1.34 - Audit Reports](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.34-audit-reports.md)
-- [ ] **Task 1.1.5.42:** Implement `/vci/submissions/history` route (all past submissions, filterable by type, year, company) - **Wireframe:** [Task 0.5.3.28 - Submission History](../../04-design/user-experience/wireframes/05-audit-historical/historical-data/task-0.5.3.28-submission-history.md)
-- [ ] **Task 1.1.5.43:** Implement `/vci/submissions/history/trends` route (trend analysis charts, MOH Tier 1 only, AAMS/MSQ/WSL trends, multi-year comparisons) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-
-### Modal Patterns for Historical Data
-- [ ] **Task 1.1.5.44:** Implement Quick History Preview modal (recent 5-10 changes, timeline view, "View Full History" button) - **Wireframe:** [Task 0.5.8.6 - Quick History Preview Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.6-quick-history-preview-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.45:** Implement Comparison modal (current vs historical side-by-side, highlight differences) - **Wireframe:** [Task 0.5.8.7 - Comparison Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.7-comparison-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
-- [ ] **Task 1.1.5.46:** Implement Export Options modal (format selection, date range picker, progress indicator) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
-- [ ] **Task 1.1.5.47:** Implement Detail Inspection modal (quick detail view from list, "View Full Page" button) - **Wireframe:** [Task 0.5.8.8 - Detail Inspection Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.8-detail-inspection-modal.md)
-
-### Module Activation Impact
-- [ ] **Task 1.1.5.48:** Implement inactive module indicators (informational banners, read-only badges, module activation period display)
-- [ ] **Task 1.1.5.49:** Implement data existence checks for ECS/CMC routes (has_historical_ecs_data, has_historical_cmc_data RPC calls)
-- [ ] **Task 1.1.5.50:** Update navigation to show ECS/CMC if active OR historical data exists (with "Historical" badge if inactive)
-- [ ] **Task 1.1.5.51:** Implement route protection pattern for historical data (check data existence, not module status)
-
-### Navigation Updates
-- [ ] **Task 1.1.5.52:** Add History link to sidebar navigation (all roles, links to `/history`)
-- [ ] **Task 1.1.5.53:** Add Audit link to sidebar navigation (MOH Tier 1/2, links to `/audit/logs`)
-- [ ] **Task 1.1.5.54:** Add Submissions History link to VCI section (links to `/vci/submissions/history`)
-- [ ] **Task 1.1.5.55:** Add Trends link to VCI section (Tier 1 only, links to `/vci/submissions/history/trends`)
-- [ ] **Task 1.1.5.56:** Update breadcrumbs for historical routes (Home > History, Home > Audit > Logs, etc.)
-
-### Trend Analysis Components (MOH Tier 1)
-- [ ] **Task 1.1.5.57:** Implement AAMS trend analysis component (year-over-year comparison, seasonal patterns, line/bar charts) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.58:** Implement MSQ trend analysis component (monthly patterns, growth trends, anomaly detection) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.59:** Implement WSL trend analysis component (stock level patterns, stockout identification) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-- [ ] **Task 1.1.5.60:** Implement cross-metric analysis component (AAMS vs MSQ vs WSL correlations) - **Wireframe:** [Task 0.5.3.20 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.20-submission-trends-analysis.md)
-
----
-
 ## Subphase 1.1.6: Seed Data Validation & Enhancement (Week 7)
 
-**Purpose:** Validate all applied seed migrations and create additional seed migration stages for comprehensive historical data (MSQ, WSL, breaches, etc.).
+**Purpose:** Validate all applied seed migrations and create additional seed migration stages for comprehensive historical data (expanding MSQ, WSL, breaches, etc.).
 
-**Note:** Initial seed migrations (`seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci_aams`) have already been applied in earlier subphases per the [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md). This subphase focuses on validation and extending seed coverage.
+**Prerequisites:**
+- Subphases 1.1.3, 1.1.4, and 1.1.5 complete (all VCI modules implemented)
+- Initial seed migrations (`seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci_aams`, `seed_1_1_4_vci_msq`, `seed_1_1_5_vci_wsl`) have already been applied in earlier subphases per the [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md). This subphase focuses on validation and extending seed coverage with comprehensive historical data (2-3 years) and additional scenario packs.
 
 ### Additional Seed Migration Stages (Versioned SQL Migrations)
 
-- [ ] **Task 1.1.6.1:** Create and apply seed migration `seed_1_1_4_vci_msq` - MSQ historical data
-  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_4_vci_msq.sql`
-  - **Application Method:** `supabase migration apply` (or auto-applied in local dev via `supabase start`)
-  - **Goal:** 2-3 years historical monthly MSQ data per company
+- [ ] **Task 1.1.6.1:** Expand seed migration `seed_1_1_4_vci_msq` - Comprehensive MSQ historical data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_4_vci_msq_comprehensive.sql`
+  - **Application Method:** `supabase migration apply`
+  - **Goal:** Expand existing MSQ seed data to 2-3 years historical monthly MSQ data per company
   - **Tables:** `msq_submissions` (submission_data as array of {sku_id, quantity} objects)
   - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook idempotency patterns](phase-1-1-mockdata.md#idempotency-patterns)
   - **Reference:** See [Playbook - Seed Strategy: Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) for scenario pack requirements
   - **Estimated Time:** 3-4 hours
 
-- [ ] **Task 1.1.6.2:** Create and apply seed migration `seed_1_1_5_vci_wsl` - WSL historical data
-  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_5_vci_wsl.sql`
+- [ ] **Task 1.1.6.2:** Expand seed migration `seed_1_1_5_vci_wsl` - Comprehensive WSL historical data
+  - **Migration File:** `supabase/migrations/YYYYMMDDHHMMSS_seed_1_1_5_vci_wsl_comprehensive.sql`
   - **Application Method:** `supabase migration apply`
-  - **Goal:** 2-3 years historical weekly WSL data per company, include breach scenarios
+  - **Goal:** Expand existing WSL seed data to 2-3 years historical weekly WSL data per company, add comprehensive breach scenarios
   - **Tables:** `wsl_submissions` (submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
   - **Estimated Time:** 3-4 hours
 
 - [ ] **Task 1.1.6.3:** Create and apply seed migration `seed_1_1_6_vci_breaches` - Breach records
@@ -1113,7 +1435,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Application Method:** `supabase migration apply`
   - **Goal:** Historical breach records with analyses, various breach scenarios
   - **Tables:** `breaches`, `breach_analyses`
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
   - **Estimated Time:** 2-3 hours
 
 - [ ] **Task 1.1.6.4:** Create and apply seed migration `seed_1_1_7_rmm_comprehensive` - Comprehensive RMM seed data
@@ -1122,7 +1444,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Goal:** Expand RMM seed data to 75 companies (15 IPCs + 60 Wholesalers), 2-5 products per company, 3-10 SKUs per product with realistic pharmaceutical attributes
   - **Tables:** `companies`, `products`, `skus` (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are populated with realistic values), `atc_codes`, `critical_medicines`, `registry_submissions`
   - **Pharmaceutical Attributes:** Generate realistic data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
   - **Estimated Time:** 4-6 hours
 
 - [ ] **Task 1.1.6.5:** Create and apply seed migration `seed_1_1_8_vci_aams_comprehensive` - Comprehensive AAMS historical data
@@ -1130,7 +1452,7 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
   - **Application Method:** `supabase migration apply`
   - **Goal:** Expand AAMS seed data to 2-3 years historical data per company
   - **Tables:** `aams_submissions`, `thresholds` (calculated thresholds for all SKUs)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
   - **Estimated Time:** 2-3 hours
 
 ### Seed Data Validation Tasks
@@ -1172,9 +1494,9 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into 4 se
     ```
   - **Estimated Time:** 1-2 hours
 
-#### Farah’s Seed Data Quality Gate (Required)
+#### Farah's Seed Data Quality Gate (Required)
 
-Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declaring “seed complete”:
+Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declaring "seed complete":
 - **Wireframe coverage:** every major wireframe filter/state has supporting records (empty states are intentional and reproducible).
 - **Distribution realism:** no uniform/random-only distributions for scores/breaches/thresholds; include plausible clustering and outliers.
 - **State coverage:** include examples across workflow statuses needed for dashboards and lists (pending, approved, rejected, implemented, archived, etc.).
@@ -1182,24 +1504,113 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ---
 
-## Subphase 1.1.7: Integration Testing & Documentation (Week 8)
+## Subphase 1.1.7: Historical Data Frontend (Week 8 - First Half)
+
+**Prerequisites:**
+- Subphases 1.1.3, 1.1.4, and 1.1.5 complete (all VCI AAMS, MSQ, WSL/Breaches frontend pages implemented)
+- Subphase 1.1.6 complete (comprehensive historical seed data available)
+- All detail pages for AAMS, MSQ, WSL, and Breaches must exist before implementing history tabs
+
+**Purpose:** Implement historical data visualization features that require data from all VCI modules (AAMS, MSQ, WSL) and comprehensive seed data to display meaningful trends and history.
+
+### Historical Data Component Implementation
+- [ ] **Task 1.1.7.1:** Implement Timeline component (vertical timeline, date/user/action display, expandable details, filter by date range) - **Wireframe Reference:** See [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md) for timeline pattern
+- [ ] **Task 1.1.7.2:** Implement DateRangePicker component (start/end date selection, quick filters: Last 7 days, 30 days, 3 months, year, 7 years, custom range, Morocco timezone support) - **Wireframe:** [Task 0.5.8.3 - Date Range Picker Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.3-date-range-picker-modal.md)
+- [ ] **Task 1.1.7.3:** Implement ExportButton component (dropdown with PDF/Excel/CSV options, progress indicator, export metadata tracking) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
+- [ ] **Task 1.1.7.4:** Implement virtual scrolling component for large lists (using @tanstack/react-virtual, for audit logs)
+
+### History Tabs on Detail Pages
+- [ ] **Task 1.1.7.5:** Implement History tab on Company detail page (registry changes timeline, submission history, compliance history, lazy loading)
+  - **Depends on:** Task 1.1.2.18 (Company detail page must exist - frontend implementation complete)
+- [ ] **Task 1.1.7.6:** Implement History tab on Product detail page (product changes timeline, SKU history)
+  - **Depends on:** Task 1.1.2.21 (Product detail page must exist - frontend implementation complete)
+- [ ] **Task 1.1.7.7:** Implement History tab on SKU detail page (SKU changes timeline)
+  - **Depends on:** Task 1.1.2.24 (SKU detail page must exist - frontend implementation complete)
+- [ ] **Task 1.1.7.8:** Implement History tab on AAMS submission detail page (corrections history, status changes)
+  - **Depends on:** Task 1.1.3.14 (AAMS submission detail page must exist)
+- [ ] **Task 1.1.7.9:** Implement History tab on MSQ submission detail page (corrections history, status changes)
+  - **Depends on:** Task 1.1.4.10 (MSQ submission detail page must exist)
+- [ ] **Task 1.1.7.10:** Implement History tab on WSL submission detail page (submission history)
+  - **Depends on:** Task 1.1.5.15 (WSL submission detail page must exist)
+- [ ] **Task 1.1.7.11:** Implement History tab on Breach detail page (resolution timeline, actions taken)
+  - **Depends on:** Task 1.1.5.17 (Breach detail page must exist)
+- [ ] **Task 1.1.7.12:** Implement History tab on Compliance Score detail page (score trends, component breakdown over time)
+  - **Depends on:** CMC module implementation (Phase 1.3 or later - Compliance Score detail page must exist before History tab can be added)
+  - **Note:** This task is deferred until CMC module detail pages are implemented. Do not start this task until explicit approval to proceed with CMC historical data features.
+
+### Filtered List Views
+- [ ] **Task 1.1.7.13:** Add year filter to AAMS submissions list page (query parameter ?year=2023, quick filter chips, default to current year)
+  - **Depends on:** Task 1.1.3.12 (AAMS submissions list page must exist)
+- [ ] **Task 1.1.7.14:** Add year/month filters to MSQ submissions list page (query parameters ?year=2023&month=6, quick filter chips)
+  - **Depends on:** Task 1.1.4.8 (MSQ submissions list page must exist)
+- [ ] **Task 1.1.7.15:** Add week filter to WSL submissions list page (query parameter ?week=2023-W01, quick filter chips)
+  - **Depends on:** Task 1.1.5.13 (WSL submissions list page must exist)
+- [ ] **Task 1.1.7.16:** Add status/year filters to Breaches list page (query parameters ?status=resolved&year=2023, filter tabs)
+  - **Depends on:** Task 1.1.5.16 (Breaches list page must exist)
+- [ ] **Task 1.1.7.17:** Add year filter to Compliance Scores list page (query parameter ?year=2023, quick filter chips)
+  - **Depends on:** CMC module list pages (future phase)
+
+### Dedicated History Routes
+- [ ] **Task 1.1.7.18:** Implement `/history` route (role-based historical overview page, company users: personal, MOH: system-wide) - **Wireframe:** [Task 0.5.1.30 - History Overview](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.30-history-overview.md)
+- [ ] **Task 1.1.7.19:** Implement `/audit/logs` route (audit log list page, MOH/Auditors only, virtual scrolling, search, date range filter) - **Wireframe:** [Task 0.5.1.32 - Audit Logs List](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md)
+- [ ] **Task 1.1.7.20:** Implement `/audit/logs/[id]` route (audit log detail page) - **Wireframe:** [Task 0.5.1.33 - Audit Log Detail](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.33-audit-log-detail.md)
+- [ ] **Task 1.1.7.21:** Implement `/audit/reports` route (audit reports page, MOH/Auditors only) - **Wireframe:** [Task 0.5.1.34 - Audit Reports](../../04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.34-audit-reports.md)
+- [ ] **Task 1.1.7.22:** Implement `/vci/submissions/history` route (all past submissions, filterable by type, year, company) - **Wireframe:** [Task 0.5.3.28 - Submission History](../../04-design/user-experience/wireframes/05-audit-historical/historical-data/task-0.5.3.28-submission-history.md)
+  - **Depends on:** Subphases 1.1.3, 1.1.4, 1.1.5 complete (all VCI submission types available)
+- [ ] **Task 1.1.7.23:** Implement `/vci/submissions/history/trends` route (trend analysis charts, MOH Tier 1 only, AAMS/MSQ/WSL trends, multi-year comparisons) - **Wireframe:** [Task 0.5.3.21 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+  - **Depends on:** Subphases 1.1.3, 1.1.4, 1.1.5, and 1.1.6 complete (all modules + comprehensive historical data)
+
+### Modal Patterns for Historical Data
+- [ ] **Task 1.1.7.24:** Implement Quick History Preview modal (recent 5-10 changes, timeline view, "View Full History" button) - **Wireframe:** [Task 0.5.8.6 - Quick History Preview Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.6-quick-history-preview-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+- [ ] **Task 1.1.7.25:** Implement Comparison modal (current vs historical side-by-side, highlight differences) - **Wireframe:** [Task 0.5.8.7 - Comparison Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.7-comparison-modal.md) - **Reference:** [UI Component Specifications](../../02-architecture/frontend/ui-component-specifications.md)
+- [ ] **Task 1.1.7.26:** Implement Export Options modal (format selection, date range picker, progress indicator) - **Wireframe:** [Task 0.5.8.5 - Export Options Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.5-export-options-modal.md)
+- [ ] **Task 1.1.7.27:** Implement Detail Inspection modal (quick detail view from list, "View Full Page" button) - **Wireframe:** [Task 0.5.8.8 - Detail Inspection Modal](../../04-design/user-experience/wireframes/07-modals/task-0.5.8.8-detail-inspection-modal.md)
+
+### Module Activation Impact
+- [ ] **Task 1.1.7.28:** Implement inactive module indicators (informational banners, read-only badges, module activation period display)
+- [ ] **Task 1.1.7.29:** Implement data existence checks for ECS/CMC routes (has_historical_ecs_data, has_historical_cmc_data RPC calls)
+- [ ] **Task 1.1.7.30:** Update navigation to show ECS/CMC if active OR historical data exists (with "Historical" badge if inactive)
+- [ ] **Task 1.1.7.31:** Implement route protection pattern for historical data (check data existence, not module status)
+
+### Navigation Updates
+- [ ] **Task 1.1.7.32:** Add History link to sidebar navigation (all roles, links to `/history`)
+- [ ] **Task 1.1.7.33:** Add Audit link to sidebar navigation (MOH Tier 1/2, links to `/audit/logs`)
+- [ ] **Task 1.1.7.34:** Add Submissions History link to VCI section (links to `/vci/submissions/history`)
+- [ ] **Task 1.1.7.35:** Add Trends link to VCI section (Tier 1 only, links to `/vci/submissions/history/trends`)
+- [ ] **Task 1.1.7.36:** Update breadcrumbs for historical routes (Home > History, Home > Audit > Logs, etc.)
+
+### Trend Analysis Components (MOH Tier 1)
+- [ ] **Task 1.1.7.37:** Implement AAMS trend analysis component (year-over-year comparison, seasonal patterns, line/bar charts) - **Wireframe:** [Task 0.5.3.21 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+  - **Depends on:** Task 1.1.6 complete (comprehensive AAMS historical data available)
+- [ ] **Task 1.1.7.38:** Implement MSQ trend analysis component (monthly patterns, growth trends, anomaly detection) - **Wireframe:** [Task 0.5.3.21 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+  - **Depends on:** Task 1.1.6 complete (comprehensive MSQ historical data available)
+- [ ] **Task 1.1.7.39:** Implement WSL trend analysis component (stock level patterns, stockout identification) - **Wireframe:** [Task 0.5.3.21 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+  - **Depends on:** Task 1.1.6 complete (comprehensive WSL historical data available)
+- [ ] **Task 1.1.7.40:** Implement cross-metric analysis component (AAMS vs MSQ vs WSL correlations) - **Wireframe:** [Task 0.5.3.21 - Submission Trends Analysis](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+  - **Depends on:** Tasks 1.1.7.37, 1.1.7.38, 1.1.7.39 complete (all individual trend components must exist)
+
+---
+
+## Subphase 1.1.8: Integration Testing & Documentation (Week 8 - Second Half)
 
 ### Integration Contract Verification Tasks
-- [ ] **Task 1.1.7.0:** Verify RMM→VCI integration contract (data flow specs, threshold switching contract, data dependencies) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+- [ ] **Task 1.1.8.0:** Verify RMM→VCI integration contract (data flow specs, threshold switching contract, data dependencies) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
   - **Depends on:** Task 1.1.1.1a (module integration contracts definition)
   - **Verification:** Verify RMM data (companies, products, SKUs) is accessible to VCI; verify threshold data flow from VCI to RMM
   - **Estimated Time:** 4-6 hours
-- [ ] **Task 1.1.7.0a:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
-  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.2.1.1b (ECS integration points)
+- [ ] **Task 1.1.8.0a:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies, conditional validation) - **DEFERRED TO PHASE 1.2.4** - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.2.1.1b (ECS integration points), **Subphase 1.2.4 complete (ECS module fully implemented)**
+  - **Note:** This verification task is deferred until Phase 1.2 ECS implementation is complete. VCI→ECS integration contract cannot be verified until ECS module exists. See Task 1.2.4.X for Phase 1.2 integration verification.
   - **Verification:** Verify VCI threshold data is accessible to ECS; verify threshold switching logic (VCI → ECS → VCI reversion); verify conditional validation (CMC score-based if CMC active)
-  - **Estimated Time:** 4-6 hours
-- [ ] **Task 1.1.7.0b:** Verify ECS→CMC integration contract (score recalculation triggers, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
-  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.3.2.3a (event-triggered recalculation coordinator)
+  - **Estimated Time:** 4-6 hours (will be scheduled in Phase 1.2.4)
+- [ ] **Task 1.1.8.0b:** Verify ECS→CMC integration contract (score recalculation triggers, conditional validation) - **DEFERRED TO PHASE 1.3.4** - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.3.2.3a (event-triggered recalculation coordinator), **Subphase 1.3.4 complete (CMC module fully implemented)**
+  - **Note:** This verification task is deferred until Phase 1.3 CMC implementation is complete. ECS→CMC integration contract cannot be verified until CMC module exists. See Task 1.3.4.X for Phase 1.3 integration verification.
   - **Verification:** Verify ECS export approval events trigger CMC score recalculation; verify CMC scores are accessible to ECS for conditional validation
-  - **Estimated Time:** 4-6 hours
+  - **Estimated Time:** 4-6 hours (will be scheduled in Phase 1.3.4)
 
 ### Testing Infrastructure Setup (Hassan's Audit - Issue #54)
-- [ ] **Task 1.1.7.0c:** Set up comprehensive testing infrastructure
+- [ ] **Task 1.1.8.0c:** Set up comprehensive testing infrastructure
   - **Reference:** [Testing Framework](../../08-deployment/testing-framework.md)
   - **Testing Infrastructure Specifications:**
     - Test database: Separate test database with transaction rollback after each test
@@ -1210,7 +1621,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
   - **Estimated Time:** 4-6 hours
 
 ### Test Data Management (Hassan's Audit - Issue #55)
-- [ ] **Task 1.1.7.0d:** Set up test data management infrastructure
+- [ ] **Task 1.1.8.0d:** Set up test data management infrastructure
   - **Reference:** [Mock Data README](../../07-testing/mock-data/README.md)
   - **Test Data Management Specifications:**
     - Test data generation: Scripts to generate realistic test data (companies, products, skus, submissions)
@@ -1221,33 +1632,33 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
   - **Estimated Time:** 3-4 hours
 
 ### Testing Tasks
-- [ ] **Task 1.1.7.1:** Create RMM module test suite (unit tests for RPC functions)
-- [ ] **Task 1.1.7.1a:** Create RPC function unit test framework (test database setup, transaction isolation, mock data helpers)
-- [ ] **Task 1.1.7.2:** Create VCI module test suite (unit tests for RPC functions)
-- [ ] **Task 1.1.7.2a:** Set up frontend testing framework (Jest configuration, React Testing Library setup, Playwright configuration, test utilities)
-- [ ] **Task 1.1.7.2b:** Create component unit tests (test base components, form components)
-- [ ] **Task 1.1.7.2c:** Create integration tests for forms (form submission, validation)
-- [ ] **Task 1.1.7.2d:** Create E2E tests for critical user flows (login, submission, approval workflows)
-- [ ] **Task 1.1.7.2e:** Create accessibility tests (keyboard navigation, screen reader)
-- [ ] **Task 1.1.7.2f:** Create visual regression testing setup (screenshot comparison, component visual tests)
-- [ ] **Task 1.1.7.3:** Create integration tests - RMM workflows (end-to-end submission → approval → implementation)
-- [ ] **Task 1.1.7.3a:** Create integration test data fixtures (realistic test scenarios, edge case data, workflow test data)
-- [ ] **Task 1.1.7.4:** Create integration tests - VCI AAMS workflow (submission → verification → approval)
-- [ ] **Task 1.1.7.5:** Create integration tests - VCI MSQ workflow (submission → validation → acceptance)
-- [ ] **Task 1.1.7.6:** Create integration tests - VCI WSL workflow (submission → breach detection → analysis)
-- [ ] **Task 1.1.7.7:** Create integration tests - Cross-module (RMM registry → VCI submissions)
-- [ ] **Task 1.1.7.7a:** Create integration test framework setup (test database, test data isolation, parallel test execution)
-- [ ] **Task 1.1.7.8:** Perform role-based access testing (company users, MOH users, permissions)
-- [ ] **Task 1.1.7.9:** Perform RLS policy testing (data isolation, module activation checks)
-- [ ] **Task 1.1.7.9a:** Create RLS policy test suite (test company data isolation, test MOH access, test module activation blocking)
-- [ ] **Task 1.1.7.10:** Perform audit logging verification (all actions logged correctly)
-- [ ] **Task 1.1.7.10a:** Create audit log verification test suite (hash chain integrity, completeness, tampering detection)
+- [ ] **Task 1.1.8.1:** Create RMM module test suite (unit tests for RPC functions)
+- [ ] **Task 1.1.8.1a:** Create RPC function unit test framework (test database setup, transaction isolation, seed data helpers)
+- [ ] **Task 1.1.8.2:** Create VCI module test suite (unit tests for RPC functions)
+- [ ] **Task 1.1.8.2a:** Set up frontend testing framework (Jest configuration, React Testing Library setup, Playwright configuration, test utilities)
+- [ ] **Task 1.1.8.2b:** Create component unit tests (test base components, form components)
+- [ ] **Task 1.1.8.2c:** Create integration tests for forms (form submission, validation)
+- [ ] **Task 1.1.8.2d:** Create E2E tests for critical user flows (login, submission, approval workflows)
+- [ ] **Task 1.1.8.2e:** Create accessibility tests (keyboard navigation, screen reader)
+- [ ] **Task 1.1.8.2f:** Create visual regression testing setup (screenshot comparison, component visual tests)
+- [ ] **Task 1.1.8.3:** Create integration tests - RMM workflows (end-to-end submission → approval → implementation)
+- [ ] **Task 1.1.8.3a:** Create integration test data fixtures (realistic test scenarios, edge case data, workflow test data)
+- [ ] **Task 1.1.8.4:** Create integration tests - VCI AAMS workflow (submission → verification → approval)
+- [ ] **Task 1.1.8.5:** Create integration tests - VCI MSQ workflow (submission → validation → acceptance)
+- [ ] **Task 1.1.8.6:** Create integration tests - VCI WSL workflow (submission → breach detection → analysis)
+- [ ] **Task 1.1.8.7:** Create integration tests - Cross-module (RMM registry → VCI submissions)
+- [ ] **Task 1.1.8.7a:** Create integration test framework setup (test database, test data isolation, parallel test execution)
+- [ ] **Task 1.1.8.8:** Perform role-based access testing (company users, MOH users, permissions)
+- [ ] **Task 1.1.8.9:** Perform RLS policy testing (data isolation, module activation checks)
+- [ ] **Task 1.1.8.9a:** Create RLS policy test suite (test company data isolation, test MOH access, test module activation blocking)
+- [ ] **Task 1.1.8.10:** Perform audit logging verification (all actions logged correctly)
+- [ ] **Task 1.1.8.10a:** Create audit log verification test suite (hash chain integrity, completeness, tampering detection)
 
 ### Documentation Tasks
-- [ ] **Task 1.1.7.11:** Create RMM module user documentation (company user guide, MOH user guide)
-- [ ] **Task 1.1.7.12:** Create VCI module user documentation (AAMS, MSQ, WSL submission guides)
-- [ ] **Task 1.1.7.13:** Create API documentation (RPC function documentation, request/response schemas)
-- [ ] **Task 1.1.7.14:** Create developer documentation (setup guide, architecture overview)
+- [ ] **Task 1.1.8.11:** Create RMM module user documentation (company user guide, MOH user guide)
+- [ ] **Task 1.1.8.12:** Create VCI module user documentation (AAMS, MSQ, WSL submission guides)
+- [ ] **Task 1.1.8.13:** Create API documentation (RPC function documentation, request/response schemas)
+- [ ] **Task 1.1.8.14:** Create developer documentation (setup guide, architecture overview)
 
 ### Phase 1.1 Sign-off
 - [ ] **Task 1.1.7.15:** Phase 1.1 internal review and testing
@@ -1323,6 +1734,38 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Subphase 1.2.3: ECS Post-Authorization & Replenishment (Week 11)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
+**Seed Data Gate (Required):**
+- Before starting ECS frontend pages, apply the seed migration stage `seed_1_2_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+
+**Seed Stage Acceptance Criteria (from Playbook pattern):**
+- **Goal:** Make ECS pages (export requests, authorizations, replenishment) testable.
+- **Minimum tables touched (expected):**
+  - `export_requests` (across workflow statuses)
+  - `export_authorizations` (active and expired)
+  - `replenishment_schedules` (various scenarios including delays)
+  - supporting tables for export workflow
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` from previous stages
+  - Add ECS-specific scenario packs:
+    - Export requests across workflow statuses (draft, pending_review, approved, authorized, completed)
+    - Active and expired export authorizations
+    - Replenishment schedules with delay scenarios
+- **Acceptance criteria:**
+  - Export requests list has enough rows to validate pagination/sorting/filtering.
+  - Export request detail pages have meaningful content across workflow states.
+  - Export authorizations include active and expired examples.
+  - Replenishment schedules include delay scenarios for escalation testing.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+
 ### ECS Post-Authorization Backend Tasks
 - [ ] **Task 1.2.3.1:** Create ECS RPC function - Export completion report (ecs_report_export_completion)
 - [ ] **Task 1.2.3.2:** Create ECS RPC function - Export cancellation/modification request (ecs_request_export_change)
@@ -1359,6 +1802,13 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Subphase 1.2.4: ECS Integration Testing & Seed Data (Week 12)
 
+### Integration Contract Verification (Deferred from Phase 1.1.8)
+- [ ] **Task 1.2.4.0:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.2.1.1b (ECS integration points), Subphase 1.2.3 complete (ECS module fully implemented)
+  - **Verification:** Verify VCI threshold data is accessible to ECS; verify threshold switching logic (VCI → ECS → VCI reversion); verify conditional validation (CMC score-based if CMC active)
+  - **Estimated Time:** 4-6 hours
+  - **Note:** This task was deferred from Phase 1.1.8 (Task 1.1.8.0a) because ECS module did not exist at that time. Integration contract verification requires both modules to be implemented.
+
 ### ECS Testing & Data Tasks
 - [ ] **Task 1.2.4.1:** Create ECS module test suite (unit tests for RPC functions)
 - [ ] **Task 1.2.4.1a:** Create ECS-specific test scenarios (threshold switching tests, conditional validation tests, intervention window tests)
@@ -1366,10 +1816,10 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - [ ] **Task 1.2.4.3:** Create integration tests - Threshold switching (VCI → ECS → VCI)
 - [ ] **Task 1.2.4.4:** Create integration tests - Conditional validation (CMC score integration)
 - [ ] **Task 1.2.4.5:** Create integration tests - Replenishment delay escalation
-- [ ] **Task 1.2.4.6:** Create mock data generation script - Export requests (historical export request scenarios)
-- [ ] **Task 1.2.4.7:** Create mock data generation script - Export authorizations (active and expired authorizations)
-- [ ] **Task 1.2.4.8:** Create mock data generation script - Replenishment schedules (various scenarios including delays)
-- [ ] **Task 1.2.4.9:** Execute ECS mock data population
+- [ ] **Task 1.2.4.6:** Create seed data generation script - Export requests (historical export request scenarios)
+- [ ] **Task 1.2.4.7:** Create seed data generation script - Export authorizations (active and expired authorizations)
+- [ ] **Task 1.2.4.8:** Create seed data generation script - Replenishment schedules (various scenarios including delays)
+- [ ] **Task 1.2.4.9:** Execute ECS seed data population
 - [ ] **Task 1.2.4.10:** Create ECS module user documentation
 - [ ] **Task 1.2.4.11:** Phase 1.2 internal review and sign-off
 
@@ -1424,6 +1874,40 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Subphase 1.3.2: CMC Monthly Calculation & Disputes (Week 14)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Any Task):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified (see below)
+- [ ] Sami's compliance checklist will be used for every task in this subphase
+
+**Seed Data Gate (Required):**
+- Before starting CMC frontend pages, apply the seed migration stage `seed_1_3_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+
+**Seed Stage Acceptance Criteria (from Playbook pattern):**
+- **Goal:** Make CMC pages (compliance scores, disputes, reports) testable.
+- **Minimum tables touched (expected):**
+  - `compliance_scores` (historical scores across multiple months)
+  - `compliance_score_components` (component breakdowns)
+  - `disputes` (dispute workflow states)
+  - `regulatory_reports` (historical reports)
+  - supporting tables for CMC workflows
+- **Scenario packs required (deterministic IDs):**
+  - Continue using `pack_company_active` from previous stages
+  - Add CMC-specific scenario packs:
+    - Compliance scores across multiple months (2-3 years historical data)
+    - Disputes across workflow states (pending, under_review, resolved, rejected)
+    - Regulatory reports (monthly, quarterly, annual)
+    - Score calculation scenarios (various component combinations)
+- **Acceptance criteria:**
+  - Compliance scores list has enough rows to validate pagination/sorting/filtering.
+  - Score detail pages show meaningful component breakdowns.
+  - Disputes exist across workflow states required by wireframes.
+  - Reports include examples of monthly, quarterly, and annual reports.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+
 ### CMC Calculation Backend Tasks
 - [ ] **Task 1.3.2.1:** Create CMC RPC function - Monthly score calculation (cmc_calculate_monthly_scores)
 - [ ] **Task 1.3.2.2:** Create scheduled trigger for monthly compliance score calculation (1st of month at 2 AM)
@@ -1471,6 +1955,12 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Subphase 1.3.3: CMC Reports & Integration (Week 15)
 
+**🔒 COMPLIANCE VALIDATION (Sami - Required Before Frontend Tasks):**
+- [ ] Wireframe DB Compliance Rules reviewed: [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md)
+- [ ] Understanding confirmed: NO local mocks ever, Supabase queries only, wireframe first always
+- [ ] Seed Data Gate verified: `seed_1_3_2_cmc` applied (verify via `supabase migration list`)
+- [ ] Sami's compliance checklist will be used for every frontend task in this subphase
+
 ### CMC Reports Backend Tasks
 - [ ] **Task 1.3.3.1:** Create CMC RPC function - Report generation (cmc_generate_regulatory_report)
 - [ ] **Task 1.3.3.2:** Implement monthly report template
@@ -1501,6 +1991,13 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Subphase 1.3.4: CMC Testing & Seed Data (Week 16)
 
+### Integration Contract Verification (Deferred from Phase 1.1.8)
+- [ ] **Task 1.3.4.0:** Verify ECS→CMC integration contract (score recalculation triggers, conditional validation) - **Reference:** [Module Dependency Diagram](../../02-architecture/modules/module-dependency-diagram.md), [Integration Architecture](../../02-architecture/integration/integration-architecture.md)
+  - **Depends on:** Task 1.1.1.1a (module integration contracts definition), Task 1.3.2.3a (event-triggered recalculation coordinator), Subphase 1.3.3 complete (CMC module fully implemented)
+  - **Verification:** Verify ECS export approval events trigger CMC score recalculation; verify CMC scores are accessible to ECS for conditional validation
+  - **Estimated Time:** 4-6 hours
+  - **Note:** This task was deferred from Phase 1.1.8 (Task 1.1.8.0b) because CMC module did not exist at that time. Integration contract verification requires both modules to be implemented.
+
 ### CMC Testing & Data Tasks
 - [ ] **Task 1.3.4.1:** Create CMC module test suite (unit tests for scoring calculations)
 - [ ] **Task 1.3.4.1a:** Create CMC-specific test scenarios (score calculation accuracy tests, dispute workflow tests, report generation tests)
@@ -1509,10 +2006,10 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - [ ] **Task 1.3.4.4:** Create integration tests - Report generation (monthly, quarterly, annual templates)
 - [ ] **Task 1.3.4.5:** Create integration tests - CMC-ECS integration (scores to ECS validation)
 - [ ] **Task 1.3.4.6:** Create integration tests - Event-triggered recalculation (ECS approval triggers)
-- [ ] **Task 1.3.4.7:** Create mock data generation script - Compliance scores (2-3 years monthly scores for all companies)
-- [ ] **Task 1.3.4.8:** Create mock data generation script - Disputes (historical dispute scenarios)
-- [ ] **Task 1.3.4.9:** Create mock data generation script - Regulatory reports (historical reports)
-- [ ] **Task 1.3.4.10:** Execute CMC mock data population
+- [ ] **Task 1.3.4.7:** Create seed data generation script - Compliance scores (2-3 years monthly scores for all companies)
+- [ ] **Task 1.3.4.8:** Create seed data generation script - Disputes (historical dispute scenarios)
+- [ ] **Task 1.3.4.9:** Create seed data generation script - Regulatory reports (historical reports)
+- [ ] **Task 1.3.4.10:** Execute CMC seed data population
 - [ ] **Task 1.3.4.11:** Create CMC module user documentation
 - [ ] **Task 1.3.4.12:** Phase 1.3 internal review and sign-off
 
@@ -1618,7 +2115,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - [ ] **Task 1.4.4.2:** Create user manuals (company user guide, MOH user guide, role-specific guides)
 - [ ] **Task 1.4.4.3:** Create API documentation (complete RPC function documentation, request/response schemas)
 - [ ] **Task 1.4.4.4:** Create administrator documentation (deployment guide, configuration guide, troubleshooting)
-- [ ] **Task 1.4.4.5:** Create mock data documentation (data structure, usage instructions)
+- [ ] **Task 1.4.4.5:** Create seed data documentation (data structure, usage instructions)
 
 ### Customer Presentation Tasks
 - [ ] **Task 1.4.4.6:** Prepare demo scenarios (realistic workflows showcasing all modules)
@@ -1641,7 +2138,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 ### Phase 1.1 (RMM + VCI)
 ✅ All RMM workflows functional (CRUD, approval chains, two-person rule)  
 ✅ All VCI workflows functional (submissions, threshold calculation, breach detection)  
-✅ Mock data successfully populated (75 companies)  
+✅ Seed data successfully populated (75 companies)  
 ✅ Internal testing passed  
 ✅ Documentation complete
 
@@ -1700,6 +2197,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - **Emma:** Frontend development, UI/UX (using wireframes as reference)
 - **Hassan:** Testing strategy, test implementation
 - **Farah:** Seed data generation oversight, analytics realism, data validation (coverage + distributions + KPI sanity checks)
+- **Sami:** Implementation compliance enforcement - validates wireframe-first + database-first compliance for EVERY task; stops implementation if compliance violated; ensures wireframe binding, seed data usage, Supabase-only access in all implementations
 
 **Phase 1.2-1.4:**
 - Similar team assignments with module-specific focus
@@ -1710,8 +2208,8 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 
 ## Audit Notes
 
-**Last Updated:** 2025-01-01  
-**Audited By:** Fatima (MOH Governance & Regulation SME), Dr. Samir (Pharma Value Chain SME), Emma (UI/UX + Next.js Frontend Specialist), Oliver (Chief Architect), Nadia (Database Modeler), Rafi (RLS/RBAC Specialist), Maya (Workflow/RPC Engineer), Salim (Security & Audit Engineer), Leila (Edge Functions/Jobs Engineer), Hassan (QA/Assurance Engineer), Farah (Analytics/CMC Specialist)
+**Last Updated:** 2025-01-12  
+**Audited By:** Fatima (MOH Governance & Regulation SME), Dr. Samir (Pharma Value Chain SME), Emma (UI/UX + Next.js Frontend Specialist), Oliver (Chief Architect), Nadia (Database Modeler), Rafi (RLS/RBAC Specialist), Maya (Workflow/RPC Engineer), Salim (Security & Audit Engineer), Leila (Edge Functions/Jobs Engineer), Hassan (QA/Assurance Engineer), Farah (Analytics/CMC Specialist), **Sami (Implementation Compliance Specialist)**
 
 ### Key Additions from Audits
 
@@ -1886,3 +2384,18 @@ These foundational phases must be reviewed before implementation:
 - Cross-references added between all phases
 - Phase completion sequence documented
 - See [Retroactive Update Plan](phase-0-0.5-0.6-retroactive-update-plan.md) for details
+
+**Implementation Compliance Enforcement (January 12, 2026):**
+- Sami (Implementation Compliance Specialist) added to team roster
+- Compliance enforcement section added to Phase 1 plan header
+- Compliance validation checkpoints added to all subphases (1.1.1, 1.1.2, 1.1.3, 1.1.4, 1.1.5)
+- Example compliance checks added to frontend tasks (Task 1.1.2.17 as template)
+- Sami's compliance review required for all PRs before merge
+- Compliance checklist must be verified before every implementation task
+
+**Compliance Checkpoint Updates (Post-Sami Audit - January 12, 2026):**
+- Added Sami compliance validation checkpoints to Phase 1.2 subphases (1.2.3 - ECS frontend tasks)
+- Added Sami compliance validation checkpoints to Phase 1.3 subphases (1.3.2, 1.3.3 - CMC frontend tasks)
+- Added seed data gates for ECS (`seed_1_2_3_ecs`) and CMC (`seed_1_3_2_cmc`) modules
+- Updated repo enforcement section to clarify it applies to all Phase 1 frontend tasks (not just Phase 1.1)
+- All Phase 1 frontend subphases now have consistent compliance checkpoints and seed data gates

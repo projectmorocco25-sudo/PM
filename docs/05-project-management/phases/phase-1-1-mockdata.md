@@ -10,7 +10,7 @@
 
 ## Non‑Negotiable Rules
 
-1. **Single source of truth:** Phase 1.1 “mock data” = **seeded records in Supabase dev/staging DB**.
+1. **Single source of truth:** Phase 1.1 seed data = **seeded records in Supabase dev/staging DB** (note: the term "mock data" in the title refers to test/development data, but implementation uses "seed data" consistently).
 2. **Versioned migrations only:** Seed data must be applied via **versioned SQL migration files** in `supabase/migrations/` directory, using standard Supabase CLI (`supabase migration apply`) or auto-applied in local development via `supabase start`.
 3. **Idempotent by design:** Seed migrations must be safe to re-run (deterministic identifiers + `UPSERT` / `ON CONFLICT`).
 4. **No manual edits:** No Supabase dashboard hand-edits for seed data (they are not reproducible).
@@ -159,13 +159,15 @@ If a table does not have a stable unique key suitable for idempotency, **Nadia m
 
 ---
 
-## “Stop” conditions (do not proceed)
+## "Stop" conditions (do not proceed)
 
-Stop and fix before implementing UI if:
+**STOP and fix before implementing UI** if:
 - A required wireframe state cannot be reproduced from seeded DB data.
-- Seed migration is not idempotent.
-- Seed data depends on manual dashboard edits.
+- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns per [Idempotency Patterns](#idempotency-patterns)).
+- Seed data depends on manual dashboard edits (must use versioned migrations only).
 - RLS prevents required role views.
+
+**For complete stop conditions list (including wireframe, schema, and conflict requirements), see:** [Phase 1 Implementation Plan - Stop Conditions](../Phase-1-Implementation-Plan.md#stop-conditions-do-not-proceed)
 
 ---
 

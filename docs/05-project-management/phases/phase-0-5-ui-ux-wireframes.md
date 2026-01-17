@@ -246,6 +246,10 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 - [x] **Task 0.5.3.11:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md)
 - [x] **Task 0.5.3.12:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
 
+### VCI Combined Submissions Overview
+- [x] **Task 0.5.3.26:** Wireframe - VCI Submissions overview page (all current submissions - AAMS, MSQ, WSL in unified view, type filters/tabs, status filters, role-based) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.26-vci-submissions.md)
+- [x] **Task 0.5.3.21:** Wireframe - Submission Trends Analysis page (MOH Tier 1 only - trend analysis charts, AAMS/MSQ/WSL trends, multi-year comparisons) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/analytics/task-0.5.3.21-submission-trends-analysis.md)
+
 ### RMM MOH-Only Pages
 - [x] **Task 0.5.2.14:** Wireframe - ATC Codes list page (MOH only, read-only for companies, search, filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/task-0.5.2.14-atc-codes-list.md)
 - [x] **Task 0.5.2.15:** Wireframe - Critical Medicines list page (MOH Tier 1 only, designation interface, filters) - [Wireframe](../../04-design/user-experience/wireframes/01-rmm/task-0.5.2.15-critical-medicines-list.md)

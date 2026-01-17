@@ -1,8 +1,9 @@
-# Task 0.5.3.12: WSL Submission Form Wireframe
+# Task 0.5.3.14: WSL Submission Form Wireframe
 
 **Status:** 🟡 In Progress  
 **Route:** `/vci/wsl/new` (create) or `/vci/wsl/[id]/edit` (edit draft)  
 **File:** `task-0.5.3.12-wsl-submission-form.png`  
+**Note:** File name uses 0.5.3.12 but task number is 0.5.3.14 per phase-0-5-ui-ux-wireframes.md  
 **Priority:** 🔴 Critical VCI Workflows
 
 **Design Approach:** Modern data entry form with SKU stock quantity table, validation, and bulk entry capabilities. Professional, accessible, and optimized for weekly compliance monitoring with deadline awareness.

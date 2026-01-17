@@ -1,8 +1,9 @@
-# Task 0.5.3.11: WSL Submissions List Page Wireframe
+# Task 0.5.3.13: WSL Submissions List Page Wireframe
 
 **Status:** 🟡 In Progress  
 **Route:** `/vci/wsl`  
 **File:** `task-0.5.3.11-wsl-submissions-list.png`  
+**Note:** File name uses 0.5.3.11 but task number is 0.5.3.13 per phase-0-5-ui-ux-wireframes.md  
 **Priority:** 🔴 Critical VCI Workflows
 
 **Design Approach:** Modern submission queue interface with week filters, deadline indicators, and role-based views. Professional, accessible, and optimized for weekly compliance monitoring workflows.

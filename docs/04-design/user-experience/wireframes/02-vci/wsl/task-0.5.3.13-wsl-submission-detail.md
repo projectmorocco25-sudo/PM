@@ -1,8 +1,9 @@
-# Task 0.5.3.13: WSL Submission Detail Page Wireframe
+# Task 0.5.3.15: WSL Submission Detail Page Wireframe
 
 **Status:** 🟡 In Progress  
 **Route:** `/vci/wsl/[id]`  
 **File:** `task-0.5.3.13-wsl-submission-detail.png`  
+**Note:** File name uses 0.5.3.13 but task number is 0.5.3.15 per phase-0-5-ui-ux-wireframes.md  
 **Priority:** 🔴 Critical VCI Workflows
 
 **Design Approach:** Modern detail page with workflow status, stock levels table, compliance violation indicators, and approval history timeline. Professional, accessible, and optimized for weekly compliance monitoring review workflows.

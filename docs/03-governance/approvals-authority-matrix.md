@@ -30,6 +30,7 @@ The PM platform implements role-based approval authority to ensure proper govern
 - **MOH DMP Tier 2 Registrar:** Implementation of approved registry changes
 - **Auditor:** Read-only access for monitoring and compliance review
 - **System Administrator:** Technical configuration and maintenance
+- **Vendor:** Module licensing and control (activation/deactivation of license-controlled modules)
 
 ## Registry Management Authority
 
@@ -95,19 +96,19 @@ The PM platform implements role-based approval authority to ensure proper govern
 
 ## System Configuration Authority
 
-| Action | Company Admin | Company Manager | Company User | Tier 2 Officer | Tier 2 Registrar | Tier 1 | System Admin |
-|--------|--------------|-----------------|--------------|---------------|------------------|--------|--------------|
-| Configure Thresholds | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access |
-| Modify Threshold (Permanent) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| Modify Threshold (Temporary) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| Confirm Threshold Reversion | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| Manually Revert Threshold | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| View Pending Reversions | No Access | No Access | No Access | Read Only | No Access | Full Authority | No Access |
-| Schedule Reversion Notifications | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| Configure Multipliers | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access |
-| Configure Component Weights | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
-| Activate Modules | No Access | No Access | No Access | No Access | No Access | Full Authority | Technical Support |
-| Configure Intervention Windows | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access |
+| Action | Company Admin | Company Manager | Company User | Tier 2 Officer | Tier 2 Registrar | Tier 1 | System Admin | Vendor |
+|--------|--------------|-----------------|--------------|---------------|------------------|--------|--------------|--------|
+| Configure Thresholds | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access | No Access |
+| Modify Threshold (Permanent) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| Modify Threshold (Temporary) | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| Confirm Threshold Reversion | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| Manually Revert Threshold | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| View Pending Reversions | No Access | No Access | No Access | Read Only | No Access | Full Authority | No Access | Read Only |
+| Schedule Reversion Notifications | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| Configure Multipliers | No Access | No Access | No Access | Suggest | No Access | Full Authority | No Access | No Access |
+| Configure Component Weights | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
+| Activate Modules | No Access | No Access | No Access | No Access | No Access | Full Authority | Technical Support | **Full Authority** (License-Controlled Modules) |
+| Configure Intervention Windows | No Access | No Access | No Access | No Access | No Access | Full Authority | No Access | No Access |
 
 ## Audit and Reporting Authority
 

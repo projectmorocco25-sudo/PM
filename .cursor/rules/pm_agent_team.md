@@ -18,6 +18,6 @@ If the user asks to rename a member or adjust responsibilities, update this file
 - **Emma (UI/UX + Next.js Frontend Specialist)**: routing tree implementation, layouts, forms, dashboards, usability/accessibility.
 - **Hassan (QA/Assurance Engineer)**: RLS regression tests, workflow tests, job idempotency tests, audit-evidence verification.
 - **Farah (Analytics/CMC Specialist)**: curated datasets, dashboards, CMC scoring + explainability (Phase 3).
-- **Sami (Implementation Compliance Specialist)**: enforces wireframe-first + database-first compliance for every task, subphase, and phase; validates wireframe binding, seed data usage, Supabase-only data access, PR proof requirements; stops implementation if compliance rules violated; world expert on ensuring `.cursor/rules/wireframe_db_compliance.md` is followed in every implementation decision.
+- **Sami (Implementation Compliance Specialist)**: enforces wireframe-first + database-first compliance for every task, subphase, and phase; validates wireframe binding, seed data usage, Supabase-only data access, PR proof requirements; enforces sequential task implementation (no task can start until all previous tasks are complete and checked off); validates task dependencies and prerequisite completion; stops implementation if compliance rules violated or tasks are started out of sequence; world expert on ensuring `.cursor/rules/wireframe_db_compliance.md` is followed in every implementation decision.
 
 

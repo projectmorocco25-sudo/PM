@@ -1,6 +1,6 @@
 # Task 0.5.1.32: Audit Logs List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/audit/logs` (MOH/Auditors only)  
 **File:** `task-0.5.1.32-audit-logs-list.png`  
 **Priority:** 🔴 Critical Foundation
@@ -18,28 +18,45 @@
 │ Audit Logs                    [Export] [Filters ▼] [Search] │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ ℹ️ Compliance Information                                 ││
+│ │ ℹ️ Regulatory Compliance Information                     ││
 │ │                                                          ││
-│ │ • Data Retention: 7 years minimum (per regulatory      ││
-│ │   requirements - Law No. 09-08, DMP regulations)        ││
+│ │ • Data Retention: 7 years minimum (Law No. 09-08)       ││
+│ │   Status: ✓ All logs retained per Law No. 09-08         ││
+│ │   Retention Period: 7 years from creation date          ││
+│ │   ⚠️ [X] logs approaching retention expiration           ││
+│ │                                                          ││
 │ │ • CNDP Compliance: All audit log access complies with   ││
 │ │   Law No. 09-08 (Protection of Personal Data)           ││
-│ │ • [View Regulatory Framework]                           ││
+│ │                                                          ││
+│ │ • Regulatory Framework Changes: Last updated [date]     ││
+│ │   [View Regulatory Framework] [View Change Log]         ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Timestamp      User      Action    Table    Record  Details││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ 2025-01-01     John Doe  CREATE    products 12345   [View]││
-│ │ 10:30:45       Company   UPDATE    skus     67890   [View]││
+│ │ 10:30:45       Company   DMP Art.8 Product Registry       ││
 │ │               XYZ                                      ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ 2025-01-01     Jane      CREATE    enforcement 33333 [View]││
-│ │ 09:15:22       Smith     APPROVE   enforcement 33333 [View]││
-│ │               MOH Tier 1                               ││
+│ │ 09:15:22       Smith     Legal: DMP Art.12               ││
+│ │               MOH Tier 1  Justification: Submitted       ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 2025-01-01     Jane      APPROVE   enforcement 33333 [View]││
+│ │ 09:20:10       Smith     Legal: ✓ Verified DMP Art.12    ││
+│ │               MOH Tier 1  Approved per DMP Art.15        ││
+│ │                         Compliance: ✓ Compliant          ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ 2025-01-01     Admin     EXECUTE   enforcement 33333 [View]││
-│ │ 08:00:00       MOH Tier 1                               ││
+│ │ 08:00:00       MOH Tier 1 Legal: DMP Art.12 - Executed   ││
+│ │                         Compliance: ✓ Verified           ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 2024-12-30     System    UPDATE    regulatory  v2.1  [View]││
+│ │ 14:00:00                  Framework                      ││
+│ │                         Regulatory Update: DMP Art.20    ││
+│ │                         Effective: 2025-01-01            ││
+│ │                         Impact: 15 existing records      ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [< Previous]  [1] [2] [3] ... [Next >]                    │
@@ -55,28 +72,67 @@
 - **Title:** "Audit Logs"
 - **Actions:** Export button (MOH Tier 1 only), Filters, Search
 
-### Compliance Information Section
-- **Data Retention:** "7 years minimum (per regulatory requirements - Law No. 09-08, DMP regulations)"
+### Regulatory Compliance Information Section (Enhanced per Fatima's Requirements)
+- **Data Retention Status (Fatima's Requirement):**
+  - "Data Retention: 7 years minimum (Law No. 09-08)"
+  - "Status: ✓ All logs retained per Law No. 09-08" or "⚠️ [X] logs approaching retention expiration"
+  - "Retention Period: 7 years from creation date"
+  - Warning indicator if any logs are approaching expiration (within 6 months)
 - **CNDP Compliance:** "All audit log access complies with Law No. 09-08 (Protection of Personal Data)"
-- **Regulatory Reference:** Link to regulatory framework document
-- **Display:** Info banner at top of page (collapsible)
-- **Styling:** Light blue background (#eff6ff), info icon, dismissible
+- **Regulatory Framework Change Tracking (Fatima's Requirement):**
+  - "Regulatory Framework Changes: Last updated [date]"
+  - Link to "View Regulatory Framework"
+  - Link to "View Change Log" - shows all regulatory framework updates
+- **Display:** Info banner at top of page (collapsible but visible by default)
+- **Styling:** Light blue background (#eff6ff), info icon, dismissible (but reappears on page load for compliance visibility)
 
-### Audit Log Table
+### Audit Log Table (Enhanced per Fatima's Requirements)
 - **Columns:** Timestamp, User, Action, Table, Record ID, Details
 - **Sortable:** All columns
 - **Pagination:** Page numbers or virtual scrolling
-- **Enforcement Actions Display:**
+- **Regulatory Reference Display (Fatima's Requirement):**
+  - All entries show regulatory framework reference when applicable
+  - Format: "DMP Art.[X]" or "Law No. 09-08" displayed in Details column or as additional row
+- **Enforcement Actions Display (Enhanced per Fatima's Requirements):**
+  - **CREATE Action:**
+    - Show: "Legal: [Regulation Article]"
+    - Show: "Justification: [Status]" (Submitted, Under Review, Approved)
+  - **APPROVE Action:**
+    - Show: "Legal: ✓ Verified [Regulation Article]"
+    - Show: "Approved per [Regulation Article]"
+    - Show: "Compliance: ✓ Compliant" or "⚠️ Review Required"
+    - Show: "Approval Chain: [User] approved per [Regulation Article] on [date]"
+  - **EXECUTE Action:**
+    - Show: "Legal: [Regulation Article] - Executed"
+    - Show: "Compliance: ✓ Verified"
   - When table is "enforcement_actions", show action type (Warning/Fine/Suspension) in Details column
   - Link to enforcement action detail page from Record ID
   - Show workflow status (Draft, Pending Approval, Approved, Executed) in Details
+  - **Full Audit Trail Required (Fatima's Requirement):**
+    - Legal basis selection (which regulation/article was selected)
+    - Justification review status
+    - Approval workflow compliance verification
+    - Execution tracking and compliance verification
+- **Regulatory Framework Changes Display (Fatima's Requirement):**
+  - When table is "regulatory_framework", show:
+    - "Regulatory Update: [Regulation Article/Reference]"
+    - "Effective: [date]"
+    - "Impact: [X] existing records" (how many records are affected by this change)
+    - Link to impact analysis
 
-### Filters
+### Filters (Enhanced per Fatima's Requirement)
 - **Date Range:** Date picker
-- **Table:** Dropdown (products, skus, companies, enforcement_actions, enforcement_action_appeals, etc.)
+- **Table:** Dropdown (products, skus, companies, enforcement_actions, enforcement_action_appeals, regulatory_framework, etc.)
 - **User:** User selector
 - **Action:** CREATE, UPDATE, DELETE, APPROVE, EXECUTE, APPEAL, etc.
 - **Enforcement Filter (Optional):** Filter by enforcement action type (warning, fine, suspension) when table is enforcement_actions
+- **Legal Basis Filter (Fatima's Requirement):** Filter by regulation article (DMP Art. 12, Art. 15, etc.)
+- **Compliance Status Filter (Fatima's Requirement):** 
+  - All
+  - Compliant
+  - Review Required
+  - Non-Compliant
+- **Regulatory Framework Change Filter (Fatima's Requirement):** Filter by regulatory framework updates
 
 ### Export
 - **Format:** CSV, PDF

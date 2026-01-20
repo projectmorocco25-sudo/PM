@@ -221,16 +221,16 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 - [x] **Task 0.5.3.8:** Wireframe - Pending reversions list page (all thresholds with pending reversions, filters: type/days until/company, color-coded by urgency, bulk actions) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/aams/task-0.5.3.8-pending-reversions-list.md)
 
 ### VCI WSL (Weekly Compliance — Critical for Compliance Violation Detection)
-- [x] **Task 0.5.3.13:** Wireframe - WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md)
-- [x] **Task 0.5.3.14:** Wireframe - WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold (read-only), threshold compliance % (calculated), replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md)
-- [x] **Task 0.5.3.15:** Wireframe - WSL submission detail page (submission data, compliance violation indicators, stock level visualization, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md)
-- [x] **Task 0.5.3.16:** Wireframe - Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md)
-- [x] **Task 0.5.3.17:** Wireframe - Compliance Violation detail page (compliance violation information, stock level vs threshold comparison, reason, replenishment date, priority indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md)
-- [x] **Task 0.5.3.18:** Wireframe - Compliance Violation analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md)
-- [x] **Task 0.5.3.19:** Wireframe - Compliance Violation action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.17-compliance-violation-action-approval-interface.md)
+- [x] **Task 0.5.3.11:** Wireframe - WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md)
+- [x] **Task 0.5.3.12:** Wireframe - WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold (read-only), threshold compliance % (calculated), replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md)
+- [x] **Task 0.5.3.13:** Wireframe - WSL submission detail page (submission data, compliance violation indicators, stock level visualization, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md)
+- [x] **Task 0.5.3.14:** Wireframe - Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range, replenishment date, compliance violation reason) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md)
+- [x] **Task 0.5.3.15:** Wireframe - Compliance Violation detail page (compliance violation information, stock level vs threshold comparison, reason, replenishment date, priority indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.15-compliance-violation-detail.md)
+- [x] **Task 0.5.3.16:** Wireframe - Compliance Violation analysis interface (Tier 2 - analysis form, action suggestions dropdown, comments, batch analysis option) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.16-compliance-violation-analysis-interface.md)
+- [x] **Task 0.5.3.17:** Wireframe - Compliance Violation action approval interface (Tier 1 - review suggestions, approve/reject/independent action, justification input) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.17-compliance-violation-action-approval-interface.md)
 
 ### VCI Governance Dashboard (MOH Oversight Priority)
-- [x] **Task 0.5.3.20:** Wireframe - Governance Dashboard (MOH - real-time stock sufficiency charts, compliance violation status overview, action recommendations, widget layout, pending threshold reversions metric) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.18-governance-dashboard.md)
+- [x] **Task 0.5.3.18:** Wireframe - Governance Dashboard (MOH - real-time stock sufficiency charts, compliance violation status overview, action recommendations, widget layout, pending threshold reversions metric) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.18-governance-dashboard.md)
 
 **📋 Module Review Checkpoint:** After Priority 3, schedule stakeholder review for RMM + VCI modules to ensure regulatory compliance validation.
 
@@ -243,8 +243,8 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 ### VCI MSQ (Monthly Reporting)
 - [x] **Task 0.5.3.9:** Wireframe - MSQ submissions list page (my submissions, flagged for review for MOH, month filter) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.9-msq-submissions-list.md)
 - [x] **Task 0.5.3.10:** Wireframe - MSQ submission form (month selection, **SKU_ID + Quantity data entry only** - simplified submission structure) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.10-msq-submission-form.md)
-- [x] **Task 0.5.3.11:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md)
-- [x] **Task 0.5.3.12:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
+- [x] **Task 0.5.3.19:** Wireframe - MSQ submission detail page (submission data, validation status indicator, review actions, 7-day grace period indicator) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md)
+- [x] **Task 0.5.3.20:** Wireframe - MSQ correction interface (editable submitted data, grace period countdown, correction form) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md)
 
 ### VCI Combined Submissions Overview
 - [x] **Task 0.5.3.26:** Wireframe - VCI Submissions overview page (all current submissions - AAMS, MSQ, WSL in unified view, type filters/tabs, status filters, role-based) - [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.26-vci-submissions.md)
@@ -547,13 +547,179 @@ See Priority 2 for dedicated enforcement module wireframes (dashboard, actions l
 
 **Phase 1 Pre-Implementation Audit Integration (January 2026):**
 - All 120 wireframes validated during Phase 1 Pre-Implementation Audit
+
+---
+
+## 🔴 CRITICAL: Missing Wireframes for Phase 1.1.1.FIX Routes
+
+**Status:** ✅ COMPLETE - P0 Wireframes Signed Off (2026-01-12)  
+**Created:** 2026-01-12  
+**Last Updated:** 2026-01-12  
+**Owner:** Emma (UI/UX) with guidance from Fatima (MOH Governance) and Dr. Samir (Pharma Value Chain SME)
+
+### Problem Statement
+
+During Phase 1.1.1.FIX route inventory, we identified routes that need placeholder pages. These routes require wireframes before implementation can proceed. Wireframes must be created, reviewed by team specialists, and signed off before Phase 1.1.2 begins.
+
+**✅ RESOLVED:** All P0 wireframes for Phase 1.1.2 have been created, reviewed, and signed off.
+
+### Wireframes Status
+
+The following wireframes have been created and signed off for routes identified in Phase 1.1.1.FIX:
+
+#### Global Section Routes (Core Foundation)
+| Task ID | Wireframe | Route | Status | Priority | Sign-Off Date |
+|---------|-----------|-------|--------|----------|---------------|
+| 0.5.1.30 | History overview page | `/history` | ✅ Signed Off | P0 - CRITICAL | 2026-01-12 |
+| 0.5.1.31 | Notifications page | `/notifications` | ✅ Signed Off | P0 - CRITICAL | 2026-01-12 |
+| 0.5.1.32 | Audit logs list page | `/audit/logs` | ✅ Signed Off | P0 - CRITICAL | 2026-01-12 |
+| 0.5.1.33 | Audit log detail page | `/audit/logs/[id]` | ⚪ Not Started | P1 - HIGH | - |
+| 0.5.1.34 | Audit reports page | `/audit/reports` | ⚪ Not Started | P1 - HIGH | - |
+| 0.5.1.35 | System Configuration page | `/system-config` | ✅ Signed Off | P0 - CRITICAL | 2026-01-12 |
+
+#### Public Routes (Support & Status)
+| Task ID | Wireframe | Route | Status | Priority | Sign-Off Date |
+|---------|-----------|-------|--------|----------|---------------|
+| 0.5.1.37 | Support center page | `/support` | ✅ Complete | P1 - HIGH | - |
+| 0.5.1.38 | FAQ page | `/support/faq` | ✅ Complete | P1 - HIGH | - |
+| 0.5.1.39 | Contact support page | `/support/contact` | ✅ Complete | P1 - HIGH | - |
+| 0.5.1.40 | Documentation page | `/support/documentation` | ✅ Complete | P1 - HIGH | - |
+| 0.5.1.41 | System status page | `/status` | ✅ Complete | P1 - HIGH | - |
+
+#### RMM Module Routes
+| Task ID | Wireframe | Route | Status | Priority | Sign-Off Date |
+|---------|-----------|-------|--------|----------|---------------|
+| 0.5.2.1 | RMM overview page | `/rmm` | ✅ Signed Off | P0 - CRITICAL (Phase 1.1.2) | 2026-01-12 |
+| 0.5.2.2 | Companies list page | `/rmm/companies` | ✅ Complete | P0 - CRITICAL (Phase 1.1.2) | - |
+| 0.5.2.4 | Products list page | `/rmm/products` | ✅ Complete | P0 - CRITICAL (Phase 1.1.2) | - |
+| 0.5.2.6 | SKUs list page | `/rmm/skus` | ✅ Complete | P0 - CRITICAL (Phase 1.1.2) | - |
+
+#### VCI Module Routes
+| Task ID | Wireframe | Route | Status | Priority |
+|---------|-----------|-------|--------|----------|
+| 0.5.3.0 | VCI overview page | `/vci` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.3) |
+| 0.5.3.1 | AAMS submissions list page | `/vci/submissions/aams` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.3) |
+| 0.5.3.9 | MSQ submissions list page | `/vci/submissions/msq` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.4) |
+| 0.5.3.11 | WSL submissions list page | `/vci/submissions/wsl` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.5) |
+| 0.5.3.28 | Submission history page | `/vci/submissions/history` | ⚪ Not Started | P1 - HIGH (Phase 1.1.7) |
+| 0.5.3.4 | Threshold management page | `/vci/thresholds` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.3) |
+| 0.5.3.14 | Compliance Violations list page | `/vci/breaches` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.5) |
+| 0.5.3.18 | Governance Dashboard | `/vci/governance` | ⚪ Not Started | P0 - CRITICAL (Phase 1.1.5) |
+
+#### ECS Module Routes
+| Task ID | Wireframe | Route | Status | Priority |
+|---------|-----------|-------|--------|----------|
+| 0.5.4.0 | ECS overview page | `/ecs` | ⚪ Not Started | P0 - CRITICAL (Phase 1.2) |
+| 0.5.4.1 | Export requests list page | `/ecs/export-requests` | ⚪ Not Started | P0 - CRITICAL (Phase 1.2) |
+| 0.5.4.5 | Export authorizations list page | `/ecs/authorizations` | ⚪ Not Started | P0 - CRITICAL (Phase 1.2) |
+
+#### CMC Module Routes
+| Task ID | Wireframe | Route | Status | Priority |
+|---------|-----------|-------|--------|----------|
+| 0.5.5.0 | CMC overview page | `/cmc` | ⚪ Not Started | P0 - CRITICAL (Phase 1.3) |
+| 0.5.5.1 | Compliance scores list page | `/cmc/scores` | ⚪ Not Started | P0 - CRITICAL (Phase 1.3) |
+| 0.5.5.8 | Compliance Disputes list page | `/cmc/disputes` | ⚪ Not Started | P0 - CRITICAL (Phase 1.3) |
+| 0.5.5.10 | Reports list page | `/cmc/reports` | ⚪ Not Started | P0 - CRITICAL (Phase 1.3) |
+
+#### Enforcement Module Routes
+| Task ID | Wireframe | Route | Status | Priority | Sign-Off Date |
+|---------|-----------|-------|--------|----------|---------------|
+| 0.5.2.0 | Enforcement Dashboard | `/enforcement` | ✅ Signed Off | P0 - CRITICAL (Phase 1.1.2) | 2026-01-12 |
+| 0.5.2.1 | Enforcement Actions list page | `/enforcement/actions` | ✅ Signed Off | P0 - CRITICAL (Phase 1.1.2) | 2026-01-12 |
+| 0.5.2.1c | Pending Approvals page | `/enforcement/pending-approvals` | ✅ Signed Off | P0 - CRITICAL (Phase 1.1.2) | 2026-01-12 |
+| 0.5.2.1d | Enforcement Reports page | `/enforcement/reports` | ✅ Signed Off | P0 - CRITICAL (Phase 1.1.2) | 2026-01-12 |
+
+### Wireframe Creation Workflow
+
+**Step 1: Wireframe Creation (Emma)**
+- Emma creates wireframes following established patterns
+- Reference existing wireframes for consistency
+- Follow design system and component specifications
+- Include role-based variations where applicable
+
+**Step 2: Team Specialist Review**
+- **Fatima (MOH Governance & Regulation SME):** Review for regulatory compliance, governance workflows, MOH requirements
+- **Dr. Samir (Pharma Value Chain SME):** Review for business process accuracy, value chain workflows
+- **Oliver (Chief Architect):** Review for technical feasibility, integration considerations
+- **Emma (UI/UX):** Incorporate feedback and iterate
+
+**Step 3: Sign-Off Process**
+- Present wireframes to project stakeholders
+- Document approval and sign-off
+- Update wireframe index with status
+- Link wireframes to Phase 1 Implementation Plan tasks
+
+**Step 4: Database Schema Review (Phase 0.6)**
+- After wireframe sign-off, update Phase 0.6 database audit
+- Identify any new database requirements from wireframes
+- Update schema-design.md if needed
+- Create migration tasks if schema changes required
+
+**Step 5: Phase 1 Plan Integration**
+- Add tasks to Phase 1 Implementation Plan with:
+  - Wireframe links (task-0.5.X.X)
+  - Database requirements (if any)
+  - Implementation phase reference
+
+### Priority Order
+
+**P0 - CRITICAL (Must Complete Before Phase 1.1.2):**
+1. RMM overview (0.5.2.1)
+2. Companies list (0.5.2.2)
+3. Products list (0.5.2.4)
+4. SKUs list (0.5.2.6)
+5. Enforcement Dashboard (0.5.2.0)
+6. Enforcement Actions list (0.5.2.1)
+7. History overview (0.5.1.30)
+8. Notifications page (0.5.1.31)
+9. Audit logs list (0.5.1.32)
+10. System Configuration (0.5.1.35)
+
+**P1 - HIGH (Complete Before Phase 1.1.3):**
+- VCI overview and submission routes
+- Support routes
+- Audit detail routes
+
+**P2 - MEDIUM (Complete Before Respective Phases):**
+- ECS routes (Phase 1.2)
+- CMC routes (Phase 1.3)
+
+### Deliverables
+
+1. ✅ **Wireframe List Created:** This section documents all missing wireframes
+2. ✅ **P0 Wireframes Created:** All 9 P0 wireframes for Phase 1.1.2 created by Emma with team guidance
+3. ✅ **Team Review Complete:** Fatima, Dr. Samir, Oliver reviewed and approved
+4. ✅ **Sign-Off Obtained:** Stakeholder sign-off documented (2026-01-12)
+5. ⏳ **Phase 0.6 Updated:** Database requirements identified and documented (in progress)
+6. ⏳ **Phase 1 Plan Updated:** Tasks added with wireframe and DB links (in progress)
+
+### P0 Wireframes Signed Off (2026-01-12)
+
+All 9 P0 wireframes for Phase 1.1.2 have been created, reviewed, and signed off:
+
+1. ✅ **task-0.5.1.30** - History overview page (`/history`)
+2. ✅ **task-0.5.1.31** - Notifications page (`/notifications`)
+3. ✅ **task-0.5.1.32** - Audit logs list page (`/audit/logs`)
+4. ✅ **task-0.5.1.35** - System Configuration page (`/system-config`)
+5. ✅ **task-0.5.2.1** - RMM overview page (`/rmm`)
+6. ✅ **task-0.5.2.0** - Enforcement Dashboard (`/enforcement`)
+7. ✅ **task-0.5.2.1** - Enforcement Actions list page (`/enforcement/actions`)
+8. ✅ **task-0.5.2.1c** - Pending Approvals page (`/enforcement/pending-approvals`)
+9. ✅ **task-0.5.2.1d** - Enforcement Reports page (`/enforcement/reports`)
+
+**Sign-Off Date:** 2026-01-12  
+**Status:** ✅ Ready for Phase 1.1.2 implementation
+
+---
+
+**Last Updated:** 2026-01-12  
+**Next Action:** Emma to create P0 wireframes with team specialist guidance
 - Wireframe references added to all frontend tasks in Phase 1 Implementation Plan
 - Pattern document references added to all frontend tasks (Navigation Layout, Form Design, Role-Based UI, Component Specifications)
 - Wireframe-First Implementation Principle established and documented
 - 11 team members audited and approved wireframe-implementation alignment
 - 60 audit issues addressed (44 critical + 16 medium)
 - See [Phase 1 Audit Status Tracker](phase-1-audit-status-tracker.md) for complete audit details
-
 **Post-Audit Wireframe Review (January 12, 2026):**
 - Validation error states verified/enhanced in form wireframes:
   - ✅ SKU Form (task-0.5.2.10): Pharmaceutical attributes validation already complete

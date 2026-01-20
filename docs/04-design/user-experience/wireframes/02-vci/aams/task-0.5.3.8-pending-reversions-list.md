@@ -1,6 +1,6 @@
 # Task 0.5.3.8: Pending Reversions List Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/thresholds/pending-reversions`  
 **File:** `task-0.5.3.8-pending-reversions-list.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -51,10 +51,18 @@
 │              │ ☑ Select All  [Bulk Review] [Export]    ││
 │              └───────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Pending reversions are thresholds scheduled to revert. ││
+│ ℹ️ Pending Threshold Reversions                           ││
+│    Pending reversions are thresholds scheduled to revert. ││
 │    Auto-revert thresholds will revert automatically.      ││
 │    Manual review thresholds require Tier 1 confirmation.   ││
-│    [View Regulatory Framework]                            ││
+│                                                             │
+│    Regulatory Deadline Tracking (Fatima's Requirement):    ││
+│    • Days until reversion shown per threshold             ││
+│    • Regulatory impact priority displayed                  ││
+│    • Compliance risk level indicated                       ││
+│    • Regulatory basis: DMP Art. [X]                        ││
+│                                                             │
+│    [View Regulatory Framework]                             ││
 └─────────────────────────────────────────────────────────────┘
 ```
 

@@ -41,10 +41,14 @@
 │ │ ⚠️ 5 Active Violations                                  ││
 │ │                                                          ││
 │ │ • SKU001: Below threshold (2 days)                      ││
+│ │   Regulatory: DMP Art.15 [View]                        ││
 │ │ • SKU002: Below threshold (5 days)                      ││
+│ │   Regulatory: DMP Art.15 [View]                        ││
 │ │ • SKU003: Below threshold (1 day)                       ││
+│ │   Regulatory: DMP Art.15 [View]                        ││
 │ │                                                          ││
-│ │ [View All Violations]                                   ││
+│ │ Regulatory Basis: DMP Regulation Article 15            ││
+│ │ [View All Violations] [View Regulatory Framework]       ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

@@ -1,6 +1,6 @@
 # Task 0.5.2.10: SKU Create/Edit Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/products/[id]/skus/new` (create) or `/rmm/skus/[id]/edit` (edit)  
 **File:** `task-0.5.2.10-sku-create-edit-form.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -77,6 +77,15 @@
 │ │ ℹ️ Pharmaceutical attributes are critical for          ││
 │ │    regulatory submissions (AAMS, MSQ, WSL).             ││
 │ │    Submissions reference SKU_ID + Quantity.             ││
+│ │                                                          ││
+│ │ Regulatory Notice (Fatima's Requirement):                 ││
+│ │ • SKU data is used in regulatory submissions (AAMS,     ││
+│ │   MSQ, WSL) per DMP Art.15                              ││
+│ │ • All SKU data is retained for 7 years per regulatory   ││
+│ │   requirements (Law No. 09-08)                          ││
+│ │ • SKU information is subject to compliance monitoring    ││
+│ │   and threshold calculations                            ││
+│ │ • [View Regulatory Framework]                           ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

@@ -1,6 +1,6 @@
 # Task 0.5.1.29: Communication Integration in Workflow Pages Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Component integration (not a route)  
 **File:** `task-0.5.1.29-communication-integration-workflow.png`  
 **Priority:** 🔴 Critical Foundation
@@ -19,6 +19,12 @@
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Related Conversations                    [💬 3] [New]   ││
+│ │                                                          ││
+│ │ Regulatory Context (Fatima's Requirement):                ││
+│ │ • All workflow-linked conversations are retained for     ││
+│ │   7 years per regulatory requirements (Law No. 09-08)    ││
+│ │ • Conversations become part of regulatory audit trail    ││
+│ │ • [View Regulatory Framework]                            ││
 │ │                                                          ││
 │ │ ┌─────────────────────────────────────────────────────┐ ││
 │ │ │ MOH Tier 1                   2 hours ago  ● Unread   │ ││

@@ -1,6 +1,6 @@
 # Task 0.5.3.1: AAMS Submissions List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/aams`  
 **File:** `task-0.5.3.1-aams-submissions-list.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -40,8 +40,12 @@
 │ │ [Load More]                                              ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Deadline: January 31, 2025 (15-day grace period until  ││
-│   February 15, 2025)                                       ││
+│ ℹ️ Annual Submission Deadline                              ││
+│   Deadline: January 31, 2025 (15 days remaining)           ││
+│   Grace Period: Until February 15, 2025 (30 days total)   ││
+│   Regulatory Basis: DMP Regulation Article 12 - Annual    ││
+│   Registry Submission                                      ││
+│   Late Submission Penalties: [Link to penalties]          ││
 │   [View Regulatory Framework]                              ││
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -64,13 +68,17 @@
 - **Date Range:** Optional date range picker for custom filtering
 - **Layout:** Horizontal bar above table, responsive (stacks on mobile)
 
-### Compliance Information Banner
-- **Display:** Info banner below filters (collapsible)
+### Compliance Information Banner (Enhanced per Fatima's Requirement)
+- **Display:** Info banner below filters (collapsible but visible by default)
 - **Content:**
-  - Deadline: January 31, 2025
-  - Grace Period: 15 days (until February 15, 2025)
-  - Regulatory Reference: Link to regulatory framework
-- **Styling:** Light blue background (#eff6ff), info icon, dismissible
+  - **Deadline:** "January 31, 2025 ([X] days remaining)"
+  - **Grace Period:** "Until February 15, 2025 (30 days total)"
+  - **Regulatory Basis (Fatima's Requirement - REQUIRED):** "DMP Regulation Article 12 - Annual Registry Submission"
+  - **Legal Requirement Explanation:** Brief explanation of regulatory requirement
+  - **Late Submission Penalties (Fatima's Requirement):** Link to penalties or penalty information
+  - **Regulatory Reference:** Link to regulatory framework document
+- **Styling:** Light blue background (#eff6ff), info icon, dismissible (but reappears on page load for compliance visibility)
+- **Urgency Indicator:** 🔴 if <7 days remaining, 🟡 if 7-15 days, 🟢 if >15 days
 
 ### Submissions Table
 - **Layout:** Full-width table with horizontal scroll on mobile

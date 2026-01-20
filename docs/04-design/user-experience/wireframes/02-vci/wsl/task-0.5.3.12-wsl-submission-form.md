@@ -1,6 +1,6 @@
 # Task 0.5.3.14: WSL Submission Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/wsl/new` (create) or `/vci/wsl/[id]/edit` (edit draft)  
 **File:** `task-0.5.3.12-wsl-submission-form.png`  
 **Note:** File name uses 0.5.3.12 but task number is 0.5.3.14 per phase-0-5-ui-ux-wireframes.md  
@@ -60,8 +60,16 @@
 │ │                                                          ││
 │ │ [Save Draft] [Validate] [Submit]                        ││
 │ │                                                          ││
-│ │ ℹ️ Deadline: Friday, January 19, 2025 at 5:00 PM      ││
+│ │ ℹ️ Weekly Submission Deadline                          ││
+│ │    Deadline: Friday, January 19, 2025 at 5:00 PM      ││
+│ │    ([X] days remaining)                               ││
+│ │    Submission Window: Monday-Friday 17:00             ││
 │ │    Late submissions trigger compliance violations.      ││
+│ │                                                          │
+│ │    Regulatory Basis (Fatima's Requirement):            ││
+│ │    DMP Regulation Article [X] - Weekly Stock Level     ││
+│ │    Submission                                          ││
+│ │    Late Submission Penalties: [Link to penalties]      ││
 │ │    [View Regulatory Framework]                          ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘

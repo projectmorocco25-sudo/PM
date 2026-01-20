@@ -1,6 +1,6 @@
 # Task 0.5.2.9: Product Create/Edit Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/products/new` (create) or `/rmm/products/[id]/edit` (edit) or `/rmm/companies/[id]/products/new` (company-scoped)  
 **File:** `task-0.5.2.9-product-create-edit-form.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -49,6 +49,12 @@
 │ │                                                          ││
 │ │ ℹ️ ATC codes are MOH-controlled and read-only.       ││
 │ │    Select the appropriate ATC code for classification. ││
+│ │                                                          ││
+│ │ Regulatory Notice (Fatima's Requirement):               ││
+│ │ • Product registrations are subject to DMP regulations ││
+│ │ • All product data is retained for 7 years per         ││
+│ │   regulatory requirements (Law No. 09-08)              ││
+│ │ • [View Regulatory Framework]                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

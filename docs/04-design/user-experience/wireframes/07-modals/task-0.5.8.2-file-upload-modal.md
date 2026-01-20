@@ -1,6 +1,6 @@
 # Task 0.5.8.2: File Upload Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.2-file-upload-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -44,6 +44,12 @@
 │  │ │                               │      │         │       ││ │
 │  │ │ ⚠️ report.docx: File size exceeds 10 MB limit      ││ │
 │  │ │   [Remove] [Retry]                                  ││ │
+│  │ │                                                     ││ │
+│  │ │ Regulatory Notice (Fatima's Requirement):           ││ │
+│  │ │ • Uploaded documents are retained for 7 years      ││ │
+│  │ │   per regulatory requirements (Law No. 09-08)      ││ │
+│  │ │ • Documents become part of regulatory audit trail  ││ │
+│  │ │ • [View Regulatory Framework]                      ││ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ [Cancel]                                   [Upload]   │ │

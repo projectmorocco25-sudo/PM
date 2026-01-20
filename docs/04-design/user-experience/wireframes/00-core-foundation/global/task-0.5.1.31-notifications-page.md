@@ -1,6 +1,6 @@
 # Task 0.5.1.31: Notifications Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/notifications`  
 **File:** `task-0.5.1.31-notifications-page.png`  
 **Priority:** 🔴 Critical Foundation
@@ -30,48 +30,76 @@
 │ │   You have a new message from MOH                        ││
 │ │   1 day ago                               [Mark read]     ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Enforcement Action Created                            ││
-│ │   Enforcement action ENF-2025-001 created - Requires Review││
-│ │   1 hour ago                               [Mark read]    ││
+│ │ 🔴 URGENT - Enforcement Action Executed                  ││
+│ │   ⚠️ Warning issued: Submission Non-Compliance          ││
+│ │   Legal Basis: DMP Regulation Article 12 - Non-Compliance││
+│ │   Action Required: Review enforcement action details     ││
+│ │   🔴 Appeal Window: 23 days remaining (Deadline: [date]) ││
+│ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
+│ │   2 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Enforcement Action Requires Approval                   ││
-│ │   Enforcement action ENF-2025-001 requires your approval ││
+│ │ 🔴 URGENT - Appeal Window Open (Deadline Critical)       ││
+│ │   ⚠️ You have 23 days remaining to appeal               ││
+│ │   Enforcement Action: ENF-2025-001                      ││
+│ │   Legal Basis: DMP Regulation Article 12                ││
+│ │   Appeal Deadline: [Date + 30 days from execution]      ││
+│ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
+│ │   Action Required: Submit appeal before deadline        ││
+│ │   2 days ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 🟡 Enforcement Action Requires Approval                  ││
+│ │   ⚠️ Enforcement action ENF-2025-002 requires approval ││
+│ │   Legal Basis: DMP Regulation Article 15                ││
+│ │   Approval Deadline: 5 days remaining                   ││
+│ │   Action Required: Review and approve/reject            ││
 │ │   2 hours ago                              [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Enforcement Action Executed                           ││
-│ │   Warning issued: Submission Non-Compliance              ││
-│ │   2 days ago                               [Mark read]    ││
+│ │ ● Enforcement Action Created                            ││
+│ │   Enforcement action ENF-2025-003 created - Requires Review││
+│ │   Legal Basis: DMP Regulation Article 12                ││
+│ │   1 hour ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ○ Enforcement Action Executed                           ││
 │ │   Fine executed: 50,000 MAD                              ││
+│ │   Legal Basis: DMP Regulation Article 15                ││
+│ │   Appeal Window: Closed                                  ││
 │ │   3 days ago                               [Mark read]    ││
-│ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Appeal Window Open                                    ││
-│ │   You have 30 days to appeal enforcement action ENF-001 ││
-│ │   2 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Appeal Submitted                                      ││
 │ │   Your appeal for ENF-2025-001 is under review          ││
+│ │   Regulatory: Appeal review process (DMP Regulation)    ││
+│ │   Review Timeline: 30 days (per regulatory requirement) ││
 │ │   1 day ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Appeal Requires Review                                ││
 │ │   Appeal for enforcement action ENF-2025-001 requires review││
+│ │   Regulatory: DMP Regulation - Appeal Review Process    ││
 │ │   1 day ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Appeal Status Update                                  ││
 │ │   Your appeal for enforcement action #12345 was reviewed││
+│ │   Regulatory: Appeal decision per DMP Regulation        ││
 │ │   4 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ○ Appeal Deadline Reminder                              ││
+│ │ 🟡 Appeal Deadline Reminder (7 Days Remaining)          ││
 │ │   Appeal deadline approaching - 7 days remaining       ││
+│ │   Enforcement Action: ENF-2025-004                      ││
+│ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
 │ │   23 days ago                              [Mark read]   ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ● Threshold Reversion - 7 Day Warning                  ││
+│ │ 🟡 Threshold Reversion - 7 Day Warning                  ││
 │ │   Threshold for SKU002 will revert on 25/06/2025        ││
+│ │   Regulatory Impact: Reverting to default threshold     ││
+│ │   per DMP Regulation Article 20                         ││
+│ │   Compliance Impact: Your compliance status may change  ││
+│ │   after reversion                                        ││
 │ │   1 day ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
-│ │ ○ Threshold Reversion - 1 Day Warning                  ││
+│ │ 🔴 URGENT - Threshold Reversion - 1 Day Warning         ││
 │ │   Threshold for SKU003 will revert tomorrow (30/06/2025)││
+│ │   Regulatory Impact: Reverting to default threshold     ││
+│ │   per DMP Regulation Article 20                         ││
+│ │   Compliance Impact: Immediate compliance status change ││
 │ │   6 hours ago                              [Mark read]   ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ ● Threshold Reversion Completed                        ││
@@ -99,22 +127,55 @@
 - **Items:** Type icon, Title, Message, Timestamp, Mark read button
 - **Unread Indicator:** Blue dot (●)
 - **Read Indicator:** Gray circle (○) or none
+- **Priority Indicators (Fatima's Requirement):**
+  - **🔴 URGENT (Red Border):** Deadline-critical notifications (<7 days remaining for appeals, <3 days for approvals)
+  - **🟡 HIGH (Yellow Border):** Important deadlines (7-14 days remaining)
+  - **⚪ NORMAL:** Standard notifications
+- **Sorting (Fatima's Requirement):**
+  - **Primary Sort:** Regulatory deadline urgency (deadline-critical first)
+  - **Secondary Sort:** Unread status (unread first)
+  - **Tertiary Sort:** Timestamp (newest first)
+- **Enforcement Notifications (Enhanced per Fatima's Requirements):**
+  - **Legal Basis Citation (REQUIRED):** "Legal Basis: DMP Regulation Article X"
+  - **Appeal Deadline Countdown (REQUIRED):** "🔴 Appeal Window: [X] days remaining (Deadline: [date])"
+  - **Regulatory Action Required:** "Action Required: [specific action]"
+  - **Regulatory Framework Reference:** "Regulatory: Law No. 09-08 - 30-day appeal window"
+- **Threshold Reversion Notifications (Enhanced per Fatima's Requirements):**
+  - **Regulatory Impact:** "Regulatory Impact: Reverting to default threshold per DMP Regulation Article Y"
+  - **Compliance Impact:** "Compliance Impact: Your compliance status may change after reversion"
+  - **Legal Basis:** "Legal Basis: DMP Regulation Article 20"
+- **Appeal Notifications (Enhanced per Fatima's Requirements):**
+  - **Regulatory Basis:** "Regulatory: [Regulation Article] - Appeal Process"
+  - **Appeal Process Timeline:** "Review Timeline: 30 days (per regulatory requirement)"
+  - **Legal Requirements:** Link to appeal submission requirements
 
 ### Filters
 - **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, Threshold Reversion, System
 - **Status:** All, Unread, Read
 - **Date Range:** Last 7 days, Last 30 days, Custom
+- **Priority (Fatima's Requirement):** 
+  - All Priorities
+  - Urgent (deadline-critical)
+  - High Priority
+  - Normal Priority
+- **Regulatory Deadline Status (Fatima's Requirement):**
+  - All
+  - Deadline Critical (<7 days)
+  - Deadline Approaching (7-14 days)
+  - Deadline Safe (>14 days)
+  - No Deadline
 - **Enforcement Filter (if Type = Enforcement):**
   - All Enforcement
   - Created
   - Requires Approval
   - Executed
-  - Appeal Window
+  - Appeal Window (with countdown)
   - Appeal Submitted
   - Appeal Review Required
   - Appeal Status Update
   - Appeal Deadline Reminder
 - **Enforcement Action Type Filter (if Type = Enforcement):** Warning, Fine, Suspension
+- **Legal Basis Filter (Fatima's Requirement):** Filter by regulation article (DMP Art. 12, Art. 15, etc.)
 - **Threshold Reversion Filter (if Type = Threshold Reversion):**
   - 7-Day Warning
   - 1-Day Warning

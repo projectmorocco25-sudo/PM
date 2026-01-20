@@ -24,6 +24,10 @@
 │ │ and compliance with stock threshold requirements.        ││
 │ │ Export requests are evaluated against VCI thresholds     ││
 │ │ and CMC compliance scores (if active).                   ││
+│ │                                                          ││
+│ │ Regulatory Framework (Fatima's Requirement):             ││
+│ │ DMP Regulation Article [X] - Export Control              ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │

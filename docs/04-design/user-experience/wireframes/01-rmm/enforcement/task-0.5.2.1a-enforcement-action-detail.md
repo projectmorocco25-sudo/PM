@@ -1,6 +1,6 @@
 # Task 0.5.2.1a: Enforcement Action Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/actions/[id]` (MOH Tier 1, Tier 2, and Company users for their own actions)  
 **File:** `task-0.5.2.1a-enforcement-action-detail.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -53,7 +53,10 @@
 │ │ supplier contacted for emergency supply."               ││
 │ │ (From WSL Submission)                                   ││
 │ │                                                          ││
-│ │ Legal Basis: Article 15, Section 3 of Regulation...   ││
+│ │ Legal Basis (Fatima's Requirement):                     ││
+│ │ DMP Regulation Article [X], Section [Y]                ││
+│ │ Regulatory Framework Reference: [Citation]             ││
+│ │ Legal Authority: [Legal authority citation]            ││
 │ │ [View Regulatory Framework]                             ││
 │ │                                                          ││
 │ │ Justification:                                          ││
@@ -86,8 +89,10 @@
 │ │ Appeal Status                                            ││
 │ │                                                          ││
 │ │ Status: No Appeal                                       ││
-│ │ Appeal Window: 28 days remaining (30-day window)      ││
+│ │ Appeal Window: ⏱ 28 days remaining (30-day window)     ││
 │ │ Appeal Period: 30 calendar days from execution date     ││
+│ │ Regulatory Basis: Law No. 09-08 - 30-day appeal window ││
+│ │ Appeal Deadline: [Date + 30 days from execution]       ││
 │ │ (per DMP regulations)                                   ││
 │ │                                                          ││
 │ │ [Company users only: Submit Appeal button]              ││

@@ -1,6 +1,6 @@
 # Task 0.5.2.5: Product Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/products/[id]` or `/rmm/companies/[id]/products/[product_id]`  
 **File:** `task-0.5.2.5-product-detail.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -30,6 +30,13 @@
 │ │                                                          ││
 │ │ Created: 2024-01-15                                      ││
 │ │ Last Updated: 2024-12-20                                 ││
+│ │                                                          ││
+│ │ Regulatory Compliance Status (Fatima's Requirement):     ││
+│ │ • Regulatory Framework: DMP Art. [X]                     ││
+│ │ • Registration Status: ✓ Approved                        ││
+│ │ • Compliance Verification: ✓ Complete                    ││
+│ │ • Last Verified: [Date]                                  ││
+│ │ [View Regulatory Framework] [View Compliance History]    ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ Tabs: [Overview] [SKUs] [History]                          │

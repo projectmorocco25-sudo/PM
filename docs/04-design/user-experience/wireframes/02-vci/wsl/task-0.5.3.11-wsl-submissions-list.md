@@ -1,6 +1,6 @@
 # Task 0.5.3.13: WSL Submissions List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/wsl`  
 **File:** `task-0.5.3.11-wsl-submissions-list.png`  
 **Note:** File name uses 0.5.3.11 but task number is 0.5.3.13 per phase-0-5-ui-ux-wireframes.md  
@@ -45,8 +45,14 @@
 │ │ [Load More]                                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Deadline: Friday 5:00 PM (submission window: Mon-Fri)  ││
+│ ℹ️ Weekly Submission Deadline                              ││
+│    Deadline: Friday 5:00 PM (submission window: Mon-Fri)  ││
+│    Next Deadline: [Date] ([X] days remaining)             ││
 │    Late submissions trigger compliance violations.         ││
+│                                                             │
+│    Regulatory Basis (Fatima's Requirement):               ││
+│    DMP Regulation Article [X] - Weekly Stock Level Submission││
+│    Late Submission Penalties: [Link to penalties]         ││
 │    [View Regulatory Framework]                             ││
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -69,14 +75,17 @@
 - **Date Range:** Optional date range picker for custom filtering
 - **Layout:** Horizontal bar above table, responsive (stacks on mobile)
 
-### Compliance Information Banner
-- **Display:** Info banner below filters (collapsible)
+### Compliance Information Banner (Enhanced per Fatima's Requirement)
+- **Display:** Info banner below filters (collapsible but visible by default)
 - **Content:**
-  - Deadline: Friday 5:00 PM
-  - Submission Window: Monday-Friday 17:00
-  - Late submission consequences
-  - Regulatory reference link
-- **Styling:** Light blue background (#eff6ff), info icon, dismissible
+  - **Deadline:** "Friday 5:00 PM (submission window: Mon-Fri)"
+  - **Next Deadline:** "[Date] ([X] days remaining)"
+  - **Regulatory Basis (Fatima's Requirement - REQUIRED):** "DMP Regulation Article [X] - Weekly Stock Level Submission"
+  - **Late Submission Consequences:** Description of penalties
+  - **Late Submission Penalties:** Link to penalties or penalty information
+  - **Regulatory Reference:** Link to regulatory framework document
+- **Styling:** Light blue background (#eff6ff), info icon, dismissible (but reappears on page load for compliance visibility)
+- **Urgency Indicator:** 🔴 if <2 days remaining, 🟡 if 2-5 days, 🟢 if >5 days
 
 ### Submissions Table
 - **Layout:** Full-width table with horizontal scroll on mobile

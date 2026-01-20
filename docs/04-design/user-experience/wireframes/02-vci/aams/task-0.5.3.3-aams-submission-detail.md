@@ -1,6 +1,6 @@
 # Task 0.5.3.3: AAMS Submission Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/aams/[id]`  
 **File:** `task-0.5.3.3-aams-submission-detail.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -38,7 +38,12 @@
 │ │                                                          ││
 │ │ Calculated Threshold: 1,234 units                       ││
 │ │ (Based on 12 months sales data)                         ││
-│ │ [View Threshold Details]                                 ││
+│ │                                                          ││
+│ │ Regulatory Basis (Fatima's Requirement):                ││
+│ │ DMP Regulation Article [X] - Threshold Calculation      ││
+│ │ Legal Authority: [Citation]                             ││
+│ │ Threshold Modification: Not applicable                  ││
+│ │ [View Threshold Details] [View Regulatory Framework]    ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -90,14 +95,29 @@
 │ │                                                          ││
 │ │ Calculated Threshold: 1,234 units                       ││
 │ │                                                          ││
+│ │ Regulatory Basis (Fatima's Requirement):                ││
+│ │ DMP Regulation Article [X] - Threshold Calculation      ││
+│ │ Legal Authority: [Legal citation for threshold calculation]││
+│ │ [View Regulatory Framework]                             ││
+│ │                                                          ││
 │ │ Calculation Method:                                      ││
 │ │ Sum of 12 months sales (Jan + Feb + ... + Dec)         ││
 │ │                                                          ││
 │ │ Threshold Multiplier: 1.0x (default)                    ││
 │ │ Duration Type: Permanent                                ││
+│ │                                                          ││
+│ │ Threshold Modification Status:                          ││
+│ │ • Regulatory Approval: Not applicable (default threshold)││
+│ │ • If Modified: Show regulatory approval reference       ││
+│ │                                                          ││
 │ │ [View Threshold Management] (MOH Tier 1 only)          ││
 │ │                                                          ││
 │ │ [If Temporary Threshold]                                ││
+│ │ Regulatory Impact (Fatima's Requirement):               ││
+│ │ • Regulatory Basis for Reversion: DMP Art. [X]          ││
+│ │ • Compliance Impact After Reversion: [Description]      ││
+│ │ • Legal Notification Requirements: [Requirements]       ││
+│ │ • Revert Date: [Date] (if temporary)                    ││
 │ │ Duration Type: Temporary (Auto-Revert)                  ││
 │ │ Revert Date: 25/06/2025 (12 days remaining)            ││
 │ │ Revert To: 1.0x (default multiplier)                    ││

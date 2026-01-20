@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, Eye, EyeOff, Check, X } from 'lucide-react'
 
 interface PasswordRequirements {
@@ -42,7 +42,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const supabase = createBrowserClient()
+      const supabase = createClient()
 
   useEffect(() => {
     // Check for access_token in URL on component mount

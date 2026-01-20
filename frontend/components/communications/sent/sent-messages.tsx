@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input'
 import { MessageSquare, Filter, CheckCheck } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { cn } from '@/lib/utils'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { useEffect } from 'react'
 
 interface SentMessageItemProps {
@@ -127,7 +127,7 @@ export function SentMessages() {
   
   // Get current user ID
   useEffect(() => {
-    const supabase = createBrowserClient()
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data }) => {
       setCurrentUserId(data.user?.id || null)
     })

@@ -36,6 +36,16 @@
 │ │ ℹ️ Only SKUs from your company's products can be      ││
 │ │    selected for export requests.                       ││
 │ │                                                          ││
+│ │ Regulatory Authorization (Fatima's Requirement):       ││
+│ │ • Regulatory Basis: DMP Regulation Article [X] -       ││
+│ │   Export Control                                        ││
+│ │ • Legal Authority: [Legal citation]                    ││
+│ │ • Regulatory Requirement Checklist:                    ││
+│ │   ☑ Export control requirements reviewed              ││
+│ │   ☑ Threshold compliance verified                      ││
+│ │   ☐ [Other requirements as applicable]                 ││
+│ │ [View Regulatory Framework]                            ││
+│ │                                                          ││
 │ │ Export Destination *                                   ││
 │ │ [____________________________________________]         ││
 │ │ Placeholder: "Enter destination country/region..."    ││

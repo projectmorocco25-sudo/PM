@@ -1,6 +1,6 @@
 # Task 0.5.2.1f: Appeal Submission Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/actions/[id]/appeal` (Company users only)  
 **File:** `task-0.5.2.1f-appeal-submission-form.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -25,10 +25,15 @@
 │ │ Violation: Submission Non-Compliance                    ││
 │ │ Executed: 2 days ago                                    ││
 │ │                                                          ││
-│ │ Legal Basis: Article 12, Section 3                      ││
+│ │ Legal Basis (Fatima's Requirement):                      ││
+│ │ DMP Regulation Article [X], Section [Y]                ││
+│ │ Regulatory Framework Reference: [Citation]             ││
 │ │ Justification: [View Full Justification]                ││
+│ │ [View Regulatory Framework]                             ││
 │ │                                                          ││
-│ │ Appeal Deadline: 28 days remaining                      ││
+│ │ Appeal Deadline: ⏱ 28 days remaining                   ││
+│ │ Regulatory Basis: Law No. 09-08 - 30-day appeal window ││
+│ │ Appeal Deadline Date: [Date + 30 days from execution]  ││
 │ │ (30-day window per DMP regulations)                     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │

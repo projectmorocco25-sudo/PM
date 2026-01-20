@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, Eye, EyeOff, Check, X } from 'lucide-react'
 
 interface PasswordRequirements {
@@ -68,7 +68,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      const supabase = createBrowserClient()
+      const supabase = createClient()
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: companyEmail,
         password,
@@ -326,6 +326,25 @@ export default function RegisterPage() {
                   </Link>
                 </span>
               </label>
+            </div>
+
+            {/* Data Protection Notice (Wireframe requirement) */}
+            <div
+              className="mt-4 rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700"
+              style={{
+                marginTop: '16px',
+                padding: '12px',
+                backgroundColor: '#f9fafb',
+                fontSize: '14px',
+                color: '#374151',
+              }}
+            >
+              <p className="font-medium text-gray-900" style={{ fontWeight: 500, marginBottom: '4px' }}>
+                Data Protection Notice:
+              </p>
+              <p style={{ lineHeight: '1.5' }}>
+                Your registration data is processed per Law No. 09-08 (CNDP) data protection requirements. By registering, you acknowledge the regulatory retention period of 7 years.
+              </p>
             </div>
 
             {/* Register Button - Full width, 40px height, 24px below checkbox, disabled until valid */}

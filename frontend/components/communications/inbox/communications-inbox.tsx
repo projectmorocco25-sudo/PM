@@ -98,6 +98,29 @@ function ConversationItem({ conversation, onClick }: ConversationItemProps) {
             >
               Conversation preview...
             </div>
+            
+            {/* Regulatory Context (Fatima's Requirement - for workflow-linked messages) */}
+            {conversation.workflow_entity_type === 'enforcement_action' && (
+              <div className="mt-2 flex items-center gap-2 text-xs text-blue-600" style={{ fontSize: '12px', color: '#2563eb', marginTop: '8px' }}>
+                <LinkIcon className="h-3 w-3" />
+                <span>Regulatory: DMP Art.12</span>
+                <Link 
+                  href={`/enforcement/actions/${conversation.workflow_entity_id}`}
+                  className="underline hover:text-blue-700"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  [View]
+                </Link>
+                <span>Legal Basis:</span>
+                <Link 
+                  href={`/enforcement/actions/${conversation.workflow_entity_id}#legal-basis`}
+                  className="underline hover:text-blue-700"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  [Link to enforcement]
+                </Link>
+              </div>
+            )}
           </div>
           
           {/* Right side - Timestamp and status indicators */}

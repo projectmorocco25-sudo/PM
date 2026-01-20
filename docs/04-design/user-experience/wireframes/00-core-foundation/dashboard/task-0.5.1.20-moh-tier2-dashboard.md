@@ -1,6 +1,6 @@
 # Task 0.5.1.20: MOH Tier 2 Dashboard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/dashboard` (MOH Tier 2 role)  
 **File:** `task-0.5.1.20-moh-tier2-dashboard.png`  
 **Priority:** 🔴 Critical Foundation
@@ -65,23 +65,25 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ Pending      │ │ Oversight    │ │ Review Queue │        ││
-│ │ Verifications│ │ Metrics      │ │              │        ││
-│ │              │ │              │ │              │        ││
-│ │ 8            │ │ Verification │ │ • Submission │        ││
-│ │              │ │ Rate: 95%    │ │   #12345     │        ││
-│ │ Recent:      │ │              │ │   Company ABC│        ││
-│ │ • Submission │ │ Avg. Time:   │ │   High       │        ││
-│ │   #12345     │ │   2.5 hours  │ │   [Verify]   │        ││
-│ │   Company ABC│ │              │ │              │        ││
-│ │   High       │ │ Trend: ↗ +2% │ │ • Submission │        ││
-│ │   1h ago     │ │              │ │   #12346     │        ││
-│ │              │ │ [Details →] │ │   Company XYZ│        ││
-│ │ • Submission │ │              │ │   Medium     │        ││
-│ │   #12346     │ │              │ │   [Verify]   │        ││
-│ │   Company XYZ│ │              │ │              │        ││
-│ │   Medium     │ │              │ │ [View All →]│        ││
-│ │   2h ago     │ │              │ │              │        ││
-│ │              │ │              │ │              │        ││
+│ │ Verifications│ │ Metrics      │ │ (Sorted by   │        ││
+│ │              │ │              │ │ Regulatory   │        ││
+│ │ 8            │ │ Verification │ │ Deadline)    │        ││
+│ │              │ │ Rate: 95%    │ │              │        ││
+│ │ Recent:      │ │              │ │ • Submission │        ││
+│ │ • Submission │ │ Avg. Time:   │ │   #12345     │        ││
+│ │   #12345     │ │   2.5 hours  │ │   Company ABC│        ││
+│ │   Company ABC│ │              │ │   🔴 1d deadline│        ││
+│ │   High       │ │ Trend: ↗ +2% │ │   High       │        ││
+│ │   1h ago     │ │              │ │   [Verify]   │        ││
+│ │   ⚠️ 1d deadline│ │ [Details →] │ │              │        ││
+│ │              │ │              │ │ • Submission │        ││
+│ │ • Submission │ │              │ │   #12346     │        ││
+│ │   #12346     │ │              │ │   Company XYZ│        ││
+│ │   Company XYZ│ │              │ │   🟡 3d deadline│        ││
+│ │   Medium     │ │              │ │   Medium     │        ││
+│ │   2h ago     │ │              │ │   [Verify]   │        ││
+│ │   ⚠️ 3d deadline│ │              │ │              │        ││
+│ │              │ │              │ │ [View All →]│        ││
 │ │ [View All →]│ │              │ │              │        ││
 │ └──────────────┘ └──────────────┘ └──────────────┘        ││
 └─────────────────────────────────────────────────────────────┘
@@ -594,6 +596,23 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 - **Shadow:** Large elevation shadow
 - **Animation:** Slide up + fade in 200ms
 - **Padding:** 24px
+
+### Pending Verifications Widget (Enhanced per Fatima's Requirement)
+- **Layout:** Card widget
+- **Content:** List of pending verifications
+- **Each Verification Item Shows:**
+  - **Regulatory Deadline Tracking (Fatima's Requirement):** "⚠️ [X]d deadline" indicator
+  - **Urgency Indicator:** 🔴 if <3 days, 🟡 if 3-7 days, 🟢 if >7 days
+- **Sorting:** By regulatory deadline urgency (deadline-critical first)
+
+### Review Queue Widget (Enhanced per Fatima's Requirement)
+- **Layout:** Card widget
+- **Title:** "Review Queue (Sorted by Regulatory Deadline)"
+- **Content:** List of items requiring review
+- **Sorting (Fatima's Requirement):** Primary sort by regulatory deadline urgency (deadline-critical first)
+- **Each Item Shows:**
+  - **Regulatory Deadline Indicator:** 🔴 if <3 days, 🟡 if 3-7 days
+  - Days until deadline
 
 ### Collapsible Sections
 - **Collapsed Height:** 64px (summary only)

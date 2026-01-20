@@ -2,9 +2,11 @@
 
 **Purpose:** This document defines role-based UI patterns, showing how the interface adapts for different user roles (Company Users, MOH Users, Auditors).
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2026-01-12  
 **Status:** ✅ Complete (Phase 0, Frontend UI/UX Gap Resolution)  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+
+**⚠️ CRITICAL:** This document defines role-based UI patterns and visibility rules. Navigation structure is defined in [navigation-layout-patterns.md](./navigation-layout-patterns.md). Routes are defined in [routing-structure.md](./routing-structure.md).
 
 ## Overview
 
@@ -1053,7 +1055,22 @@ export function useRole() {
 
 ---
 
-**Last Updated:** 2025-12-31  
+## Related Documents
+
+### Primary References
+- [routing-structure.md](./routing-structure.md) - Route definitions (role-based routes and route protection)
+- [navigation-layout-patterns.md](./navigation-layout-patterns.md) - Navigation structure (role-based navigation visibility and sidebar organization)
+- [historical-data-routing-proposal.md](./historical-data-routing-proposal.md) - Historical data routing (role-based historical data access patterns)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [ui-component-specifications.md](./ui-component-specifications.md) - Component library specifications (role-based component rendering)
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (role-based error messages and empty states)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (role-based form fields and permissions)
+
+---
+
+**Last Updated:** 2026-01-12  
 **Next Steps:**
 1. Implement role detection hooks
 2. Create role-based components

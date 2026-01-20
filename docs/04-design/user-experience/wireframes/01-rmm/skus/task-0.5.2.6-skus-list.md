@@ -1,6 +1,6 @@
 # Task 0.5.2.6: SKUs List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/products/[id]/skus` (product-scoped) or `/rmm/skus` (all SKUs)  
 **File:** `task-0.5.2.6-skus-list.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -244,6 +244,12 @@
 - **Unit of Measure:** e.g., "tablets", "ml", "capsules", "vials", "boxes"
 
 These attributes are critical for pharmaceutical product identification and are used in all submissions (AAMS, MSQ, WSL).
+
+**Regulatory Context (Fatima's Requirement):**
+- SKU data is used in regulatory submissions (AAMS, MSQ, WSL) per DMP Art.15
+- All SKU data is retained for 7 years per regulatory requirements (Law No. 09-08)
+- SKU information is subject to compliance monitoring and threshold calculations
+- [View Regulatory Framework]
 
 ---
 

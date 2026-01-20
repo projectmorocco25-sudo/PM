@@ -1,6 +1,6 @@
 # Task 0.5.1.25: Conversation Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/communications/inbox/[conversation_id]`  
 **File:** `task-0.5.1.25-conversation-detail.png`  
 **Priority:** 🔴 Critical Foundation
@@ -31,6 +31,10 @@
 │ │ Linked to: Enforcement Action #33333                  ││
 │ │ Action Type: Warning  Company: XYZ                      ││
 │ │ Status: Executed                                        ││
+│ │                                                          ││
+│ │ Regulatory Context (Fatima's Requirement):              ││
+│ │ Legal Basis: DMP Art. [X] [View]                       ││
+│ │ Regulatory Framework: [Link to framework]               ││
 │ │                                                          ││
 │ │ [View Enforcement Action]                              ││
 │ └─────────────────────────────────────────────────────────┘│

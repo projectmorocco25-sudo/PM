@@ -1,6 +1,6 @@
 # Task 0.5.2.7: SKU Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/skus/[id]` or `/rmm/products/[id]/skus/[sku_id]`  
 **File:** `task-0.5.2.7-sku-detail.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -63,9 +63,15 @@
 │ │ ⚠️ Warning - ENF-2025-001                               ││
 │ │   Created from: Threshold breach violation               ││
 │ │   Status: Executed  Date: 2 days ago                    ││
+│ │   Legal Basis: DMP Art.[X] [View Framework]            ││
 │ │   [View Enforcement Action Detail →]                    ││
 │ │                                                          ││
 │ │ [View All Enforcement Actions →]                        ││
+│ │                                                          ││
+│ │ Regulatory Compliance (Fatima's Requirement):             ││
+│ │ • Regulatory Framework: DMP Art.15 - Stock Monitoring  ││
+│ │ • Compliance Status: [View Compliance Score]            ││
+│ │ • [View Regulatory Framework]                           ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

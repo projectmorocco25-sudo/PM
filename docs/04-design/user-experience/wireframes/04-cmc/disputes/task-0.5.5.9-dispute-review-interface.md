@@ -23,6 +23,14 @@
 │         │ Company: ABC Pharma Inc.                     │     │
 │         │ Score: 78/100 (December 2024)                │     │
 │         │                                              │     │
+│         │ Regulatory Context (Fatima's Requirement):   │     │
+│         │ • Regulatory Basis for Dispute Resolution:   │     │
+│         │   Law No. 09-08 - Compliance Dispute Process │     │
+│         │ • Legal Authority for Decisions: [Citation]  │     │
+│         │ • Compliance Requirement Verification:       │     │
+│         │   [Status]                                    │     │
+│         │ [View Regulatory Framework]                   │     │
+│         │                                              │     │
 │         │ [For Tier 2: Review Interface]              │     │
 │         │ ┌─────────────────────────────────────────┐ │     │
 │         │ │ Dispute Information                      │ │     │

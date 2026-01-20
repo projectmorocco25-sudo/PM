@@ -1,6 +1,6 @@
 # Task 0.5.8.7: Comparison Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.7-comparison-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -47,6 +47,12 @@
 │  │ └────────────────────┴───────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ Differences Found: 2                                  │ │
+│  │                                                       │ │
+│  │ Regulatory Context (Fatima's Requirement):            │ │
+│  │ • Version history maintained per regulatory audit     │ │
+│  │   requirements (Law No. 09-08)                        │ │
+│  │ • Historical data retention: 7 years                  │ │
+│  │ • [View Regulatory Framework]                         │ │
 │  │                                                       │ │
 │  │ [View Full History]                   [Close]        │ │
 │  └───────────────────────────────────────────────────────┘ │

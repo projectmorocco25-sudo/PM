@@ -34,12 +34,19 @@
 │ │ │ Progress: 50% complete (45 of 90 days remaining)   │ ││
 │ │ └────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
+│ │ Regulatory Deadline Tracking (Fatima's Requirement):    ││
+│ │ • Regulatory Deadline: [Date] (per DMP Art. [X])       ││
+│ │ • 90-Day Authorization Period: Regulatory requirement  ││
+│ │ • Expiration Consequences: [Link to consequences]      ││
+│ │                                                          ││
 │ │ [If Expiring Soon]                                      ││
-│ │ ⚠️ Warning: Authorization expires in 7 days             ││
+│ │ ⚠️ Warning: Authorization expires in 🔴 7 days          ││
+│ │ Regulatory Deadline: [Date]                             ││
 │ │ [Request Extension] [View Extension Options]            ││
 │ │                                                          ││
 │ │ [If Expired]                                            ││
 │ │ ⚠️ Status: Expired (Authorization expired on Apr 15)   ││
+│ │ Regulatory: Authorization period exceeded               ││
 │ │ [View History]                                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │

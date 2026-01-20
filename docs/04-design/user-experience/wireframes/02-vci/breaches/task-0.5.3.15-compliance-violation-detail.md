@@ -1,6 +1,6 @@
  # Task 0.5.3.15: Compliance Violation Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/compliance-violations/[id]`  
 **File:** `task-0.5.3.15-compliance-violation-detail.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -24,6 +24,12 @@
 │ │ Priority: 🔴 High (Critical Medicine)                    ││
 │ │ Detected: January 17, 2025                              ││
 │ │ Duration: 3 days                                         ││
+│ │                                                          ││
+│ │ Legal Basis (Fatima's Requirement):                     ││
+│ │ DMP Regulation Article 15 - Stock Level Compliance     ││
+│ │ Regulatory Requirement Violated: [Description]          ││
+│ │ Enforcement Action Authority: [Legal basis]            ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

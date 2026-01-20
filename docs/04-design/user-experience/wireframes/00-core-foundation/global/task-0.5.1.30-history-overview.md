@@ -1,6 +1,6 @@
 # Task 0.5.1.30: History Overview Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/history`  
 **File:** `task-0.5.1.30-history-overview.png`  
 **Priority:** 🔴 Critical Foundation
@@ -17,35 +17,56 @@
 │                                                             │
 │ History                    [Date Range: Last 30 days ▼]   │
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ ℹ️ Regulatory Compliance Information                     ││
+│ │                                                          ││
+│ │ ⚠️ Historical data is immutable per regulatory          ││
+│ │    requirements (Law No. 09-08). No modifications allowed.││
+│ │                                                          ││
+│ │ 📅 Data Retention: 7 years minimum (Law No. 09-08)      ││
+│ │    Retention Period: [Created Date] to [Date + 7 years] ││
+│ │    Status: ✓ All historical data compliant              ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ History Timeline                           ││
 │ │          │ │                                             ││
 │ │ Type     │ │ ┌─────────────────────────────────────────┐ ││
 │ │ ☐ All    │ │ │ Submission #12345  Created              │ ││
-│ │ ☑ Subm...│ │ │ Company XYZ  User: John Doe             │ ││
-│ │ ☐ Breach │ │ │ 2 hours ago                              │ ││
-│ │ ☐ Export │ │ │ [View Submission]                       │ ││
-│ │ ☐ Enforcement│ │ │                                         │ ││
+│ │ ☑ Subm...│ │ │ DMP Regulation Article 12 - Annual      │ ││
+│ │ ☐ Breach │ │ │ Registry Submission                     │ ││
+│ │ ☐ Export │ │ │ Company XYZ  User: John Doe             │ ││
+│ │ ☐ Enforcement│ │ │ 2 hours ago                              │ ││
+│ │          │ │ │ [View Submission]                       │ ││
 │ │          │ │ └─────────────────────────────────────────┘ ││
 │ │ Entity   │ │                                             ││
 │ │ ☐ All    │ │ ┌─────────────────────────────────────────┐ ││
 │ │ ☐ Product│ │ │ Product ABC  Updated                   │ ││
-│ │ ☐ SKU    │ │ │ Company XYZ  User: Jane Smith          │ ││
-│ │          │ │ │ 5 hours ago                             │ ││
-│ │ Company  │ │ │ [View Product]                           │ ││
-│ │ ☐ All    │ │ └─────────────────────────────────────────┘ ││
-│ │ ☐ ABC    │ │                                             ││
-│ │ ☐ XYZ    │ │ ┌─────────────────────────────────────────┐ ││
+│ │ ☐ SKU    │ │ │ DMP Regulation Article 8 - Product      │ ││
+│ │          │ │ │ Registry                                │ ││
+│ │ Company  │ │ │ Company XYZ  User: Jane Smith          │ ││
+│ │ ☐ All    │ │ │ 5 hours ago                             │ ││
+│ │ ☐ ABC    │ │ │ [View Product]                           │ ││
+│ │ ☐ XYZ    │ │ └─────────────────────────────────────────┘ ││
+│ │          │ │                                             ││
+│ │ [Clear]  │ │ ┌─────────────────────────────────────────┐ ││
 │ │          │ │ │ Breach Alert  Created                   │ ││
-│ │ [Clear]  │ │ │ System  Auto-generated                  │ ││
+│ │          │ │ │ DMP Regulation Article 15 - Stock       │ ││
+│ │          │ │ │ Level Compliance                        │ ││
+│ │          │ │ │ System  Auto-generated                  │ ││
 │ │          │ │ │ 1 day ago                               │ ││
 │ │          │ │ │ [View Breach]                           │ ││
 │ │          │ │ └─────────────────────────────────────────┘ ││
 │ │          │ │                                             ││
 │ │          │ │ ┌─────────────────────────────────────────┐ ││
-│ │          │ │ │ Enforcement Action  Created             │ ││
+│ │          │ │ │ ⚠️ Enforcement Action Created           │ ││
 │ │          │ │ │ Warning - Submission Non-Compliance    │ ││
+│ │          │ │ │ Legal Basis: DMP Art. 12 - Non-        │ ││
+│ │          │ │ │ Compliance Penalty                      │ ││
 │ │          │ │ │ MOH Tier 1  User: Jane Smith           │ ││
+│ │          │ │ │ Status: ✓ Compliant                    │ ││
+│ │          │ │ │ Appeal Window: 🔴 23 days remaining     │ ││
+│ │          │ │ │ Deadline: [Date + 30 days from creation]│ ││
 │ │          │ │ │ 2 days ago                              │ ││
 │ │          │ │ │ [View Enforcement Action]               │ ││
 │ │          │ │ └─────────────────────────────────────────┘ ││
@@ -62,7 +83,21 @@
 ### Page Header
 - **Breadcrumbs:** "Home > History"
 - **Title:** "History"
-- **Date Range Picker:** Dropdown (Last 7 days, Last 30 days, Last 90 days, Custom)
+- **Date Range Picker:** Dropdown (Last 7 days, Last 30 days, Last 90 days, Last 7 years, Custom)
+  - **Default:** Last 30 days (user preference)
+  - **7-Year Option:** For regulatory compliance verification (Law No. 09-08 minimum retention)
+
+### Regulatory Compliance Information Banner (Fatima's Requirement)
+- **Location:** Prominent banner below page header
+- **Background:** Light blue (#eff6ff) with info icon
+- **Content:**
+  - **Immutability Warning:** "⚠️ Historical data is immutable per regulatory requirements (Law No. 09-08). No modifications allowed."
+  - **Data Retention Status:**
+    - "📅 Data Retention: 7 years minimum (Law No. 09-08)"
+    - "Retention Period: [Created Date] to [Date + 7 years]"
+    - "Status: ✓ All historical data compliant" or "⚠️ [X] records approaching expiration"
+  - **Collapsible:** Can be collapsed but visible by default
+  - **Dismissible:** Can be dismissed but reappears on page reload (regulatory requirement visibility)
 
 ### Filters Sidebar
 - **Type Filter:** Submission, Breach, Export Request, Enforcement Action, Appeal, etc.
@@ -75,11 +110,30 @@
 - **Format:** Timeline or list view
 - **Item Components:**
   - **Action:** Entity type + action (e.g., "Submission #12345 Created", "Enforcement Action Created")
+  - **Regulatory Reference (Fatima's Requirement):** 
+    - **Submission:** "DMP Regulation Article 12 - Annual Registry Submission"
+    - **Product Update:** "DMP Regulation Article 8 - Product Registry"
+    - **Breach:** "DMP Regulation Article 15 - Stock Level Compliance"
+    - **Enforcement:** Legal basis citation (see Enforcement Action Items below)
   - **Entity Details:** Company, User, Action Type (for enforcement)
   - **Timestamp:** Relative time
   - **View Link:** Navigate to entity detail
-- **Enforcement Action Items:**
-  - **Format:** "Enforcement Action Created" or "Enforcement Action Executed"
+- **Enforcement Action Items (Enhanced per Fatima's Requirements):**
+  - **Format:** "⚠️ Enforcement Action Created" or "✅ Enforcement Action Executed"
+  - **Legal Basis (REQUIRED):** 
+    - "Legal Basis: DMP Art. 12 - Non-Compliance Penalty"
+    - Must be prominently displayed (not hidden in tooltip)
+  - **Compliance Status Indicator:**
+    - "✓ Compliant" (green) - Action meets all regulatory requirements
+    - "⚠️ Review Required" (yellow) - Regulatory review needed
+  - **Appeal Window Tracking (if applicable):**
+    - "Appeal Window: 🔴 [X] days remaining" (red if <7 days, yellow if 7-14 days, green if >14 days)
+    - "Deadline: [Date + 30 days from creation]"
+    - Only shown if appeal window is open
+  - **Appeal Status (if applicable):**
+    - "Appealed" - Appeal submitted
+    - "Appeal Under Review" - Appeal being reviewed
+    - "Appeal Resolved" - Appeal decision made
   - **Details:** Action type (Warning/Fine/Suspension), violation type, company
   - **Link:** Navigate to `/enforcement/actions/[id]` (read-only for companies)
 

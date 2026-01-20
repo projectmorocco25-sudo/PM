@@ -1750,6 +1750,131 @@ For each wireframe file, use this checklist:
 
 ---
 
+## 🔴 CRITICAL: Database Requirements for Phase 1.1.1.FIX Routes
+
+**Status:** ✅ WIREFRAMES SIGNED OFF - Database Review Ready (2026-01-12)  
+**Created:** 2026-01-12  
+**Last Updated:** 2026-01-12  
+**Owner:** Nadia (Database Specialist) with support from Fatima (MOH Governance)
+
+### Problem Statement
+
+During Phase 1.1.1.FIX route inventory, we identified routes that need placeholder pages. These routes may require database schema updates or verification. After wireframes are created and signed off, this section will be updated with database requirements.
+
+**✅ WIREFRAMES SIGNED OFF:** All 9 P0 wireframes for Phase 1.1.2 have been signed off (2026-01-12). Database review can now proceed.
+
+### Database Review Workflow
+
+**Step 1: Wireframe Sign-Off (Prerequisite)** ✅ COMPLETE
+- ✅ Wireframes created and signed off (2026-01-12)
+- ✅ Wireframes define data requirements and UI needs
+
+**Step 2: Database Requirements Analysis (Nadia)** ⏳ IN PROGRESS
+- Review each wireframe for database requirements
+- Identify missing tables, fields, indexes, relationships
+- Check if existing schema supports wireframe requirements
+- Document any gaps or needed changes
+
+**Step 3: Schema Update (If Needed)** ⏳ PENDING
+- Update schema-design.md with new requirements
+- Create migration scripts if schema changes needed
+- Update ERD and data dictionary
+- Document RLS policy requirements
+
+**Step 4: Phase 1 Plan Integration** ⏳ PENDING
+- Add database tasks to Phase 1 Implementation Plan
+- Link database tasks to wireframe tasks
+- Ensure migration tasks are sequenced correctly
+
+### Routes Requiring Database Review
+
+**After wireframes are created, review the following routes for database requirements:**
+
+#### Global Section Routes
+- `/history` - Historical data access patterns, RPC functions
+- `/notifications` - Notification table already exists, verify coverage
+- `/audit/logs` - Audit log table exists, verify query patterns
+- `/audit/reports` - Audit report generation, aggregation queries
+- `/system-config` - System configuration table exists, verify fields
+
+#### Public Routes
+- `/support/*` - No database requirements (static content)
+- `/status` - System status monitoring, may need status tracking table
+
+#### RMM Module Routes
+- `/rmm` - Overview dashboard, may need aggregation queries
+- `/rmm/companies` - Companies table exists, verify indexes
+- `/rmm/products` - Products table exists, verify indexes
+- `/rmm/skus` - SKUs table exists, verify pharmaceutical attributes
+
+#### VCI Module Routes
+- `/vci` - Overview dashboard, may need aggregation queries
+- `/vci/submissions/aams` - AAMS submissions table exists
+- `/vci/submissions/msq` - MSQ submissions table exists
+- `/vci/submissions/wsl` - WSL submissions table exists
+- `/vci/submissions/history` - Historical data RPC functions
+- `/vci/thresholds` - Thresholds table exists
+- `/vci/breaches` - Breaches table exists
+- `/vci/governance` - Governance dashboard, aggregation queries
+
+#### ECS Module Routes
+- `/ecs` - Overview dashboard, aggregation queries
+- `/ecs/export-requests` - Export requests table exists
+- `/ecs/authorizations` - Export authorizations table exists
+
+#### CMC Module Routes
+- `/cmc` - Overview dashboard, aggregation queries
+- `/cmc/scores` - Compliance scores table exists
+- `/cmc/disputes` - Disputes table exists
+- `/cmc/reports` - Reports table exists
+
+#### Enforcement Module Routes
+- `/enforcement` - Enforcement dashboard, aggregation queries
+- `/enforcement/actions` - Enforcement actions table exists
+- `/enforcement/pending-approvals` - Approval workflow queries
+- `/enforcement/reports` - Enforcement analytics queries
+
+### Database Requirements Checklist
+
+For each P0 route (wireframes signed off 2026-01-12), verify:
+
+#### P0 Routes - Phase 1.1.2 (Wireframes Signed Off)
+
+| Route | Wireframe | Tables | Status | Notes |
+|-------|-----------|--------|--------|-------|
+| `/history` | task-0.5.1.30 | Historical data RPC functions | ⏳ Review Needed | Verify RPC functions for historical data access |
+| `/notifications` | task-0.5.1.31 | notifications | ⏳ Review Needed | Verify notification table coverage |
+| `/audit/logs` | task-0.5.1.32 | audit_logs | ⏳ Review Needed | Verify query patterns, indexes |
+| `/system-config` | task-0.5.1.35 | system_config, modules | ⏳ Review Needed | Verify configuration fields |
+| `/rmm` | task-0.5.2.1 | companies, products, skus | ⏳ Review Needed | Verify aggregation queries for dashboard |
+| `/enforcement` | task-0.5.2.0 | enforcement_actions | ⏳ Review Needed | Verify aggregation queries for dashboard |
+| `/enforcement/actions` | task-0.5.2.1 | enforcement_actions | ⏳ Review Needed | Verify indexes, filters |
+| `/enforcement/pending-approvals` | task-0.5.2.1c | enforcement_actions | ⏳ Review Needed | Verify approval workflow queries |
+| `/enforcement/reports` | task-0.5.2.1d | enforcement_actions | ⏳ Review Needed | Verify analytics queries |
+
+**Database Review Checklist:**
+- [ ] **Tables Exist:** All required tables exist in schema
+- [ ] **Fields Complete:** All wireframe-required fields exist
+- [ ] **Indexes Present:** Performance indexes for list/filter queries
+- [ ] **RLS Policies:** Access control policies defined
+- [ ] **RPC Functions:** Query functions available (if needed)
+- [ ] **Relationships:** Foreign keys and relationships correct
+- [ ] **Data Types:** Field types match wireframe requirements
+
+### Next Steps
+
+1. ✅ **Wireframe Sign-Off:** All P0 wireframes signed off (2026-01-12)
+2. ⏳ **Database Review:** Nadia reviews wireframes for database requirements (ready to proceed)
+3. ⏳ **Schema Updates:** Update schema if gaps identified
+4. ⏳ **Phase 1 Plan Update:** Add database tasks to implementation plan
+
+---
+
+**Last Updated:** 2026-01-12  
+**Next Action:** Nadia to conduct database review for P0 routes (wireframes signed off)
+
+---
+
 ## Database Management with Supabase MCP
 
 **⚠️ CRITICAL:** All database operations during Phase 1 implementation MUST use Supabase MCP (Model Context Protocol) tools.

@@ -1,6 +1,6 @@
 # Task 0.5.2.3: Company Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/companies/[id]`  
 **File:** `task-0.5.2.3-company-detail.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -56,6 +56,13 @@
 │ │ • SKU "Paracetamol 500mg 30-pack" updated - 1 week ago ││
 │ │ • Company information updated - 2 weeks ago            ││
 │ │                                                          ││
+│ │ Regulatory Compliance Status:                           ││
+│ │ Status: ⚠️ Non-Compliant (2 violations)                ││
+│ │ Active Enforcement Actions: 2                            ││
+│ │ Regulatory Framework: DMP Regulations                   ││
+│ │ Compliance Verification: Last verified 2025-01-10       ││
+│ │ [View Detailed Compliance Status]                        ││
+│ │                                                          ││
 │ │ Enforcement History:                                    ││
 │ │ • 3 enforcement actions for this company                ││
 │ │   [View Enforcement History →]                          ││
@@ -85,17 +92,22 @@
 │ │   Action ID: ENF-2025-001                               ││
 │ │   Status: Executed  Date: 2 days ago                    ││
 │ │   Violation: WSL submission overdue (2 weeks)           ││
-│ │   Legal Basis: Article 12, Section 3                    ││
-│ │   Appeal Deadline: 28 days remaining                    ││
-│ │   (30-day window per DMP regulations)                  ││
+│ │   Legal Basis (Fatima's Requirement): DMP Regulation Article 12││
+│ │   Regulatory Framework: [Link to DMP Regulation]        ││
+│ │   Appeal Window: 🔴 Open (28 days remaining)            ││
+│ │   Appeal Deadline: [Date + 30 days from execution]      ││
+│ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
+│ │   Compliance Verification: Required action pending      ││
 │ │   [View Full Details] [Appeal] (Company users only)     ││
 │ │                                                          ││
 │ │ 💰 Fine - $5,000 - Threshold Breach                    ││
 │ │   Action ID: ENF-2024-045                               ││
 │ │   Status: Executed  Date: 1 week ago                    ││
 │ │   Violation: Critical medicine stock below threshold   ││
-│ │   Legal Basis: Article 15, Section 2                    ││
-│ │   Appeal Deadline: Expired                              ││
+│ │   Legal Basis (Fatima's Requirement): DMP Regulation Article 15││
+│ │   Regulatory Framework: [Link to DMP Regulation]        ││
+│ │   Appeal Window: Closed                                 ││
+│ │   Compliance Verification: Action executed              ││
 │ │   [View Full Details]                                   ││
 │ │                                                          ││
 │ │ [View All Enforcement Actions →]                        ││

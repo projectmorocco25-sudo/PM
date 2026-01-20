@@ -190,6 +190,34 @@ export function WorkflowCommunicationPanel({
         </Button>
       </div>
       
+      {/* Regulatory Context (Fatima's Requirement - for enforcement actions) */}
+      {workflowEntityType === 'enforcement_action' && (
+        <div
+          className="border-b border-gray-200 bg-blue-50 p-3"
+          style={{
+            padding: '12px',
+            backgroundColor: '#eff6ff',
+            borderBottom: '1px solid #e5e7eb',
+          }}
+        >
+          <div className="mb-1 text-xs font-semibold text-blue-900" style={{ fontSize: '12px', fontWeight: 600, color: '#1e3a8a', marginBottom: '4px' }}>
+            Regulatory Context
+          </div>
+          <div className="space-y-1 text-xs text-blue-800" style={{ fontSize: '11px', color: '#1e40af' }}>
+            <div>• All workflow-linked conversations are retained for 7 years per regulatory requirements (Law No. 09-08)</div>
+            <div>• Conversations become part of regulatory audit trail</div>
+            <div>
+              <a
+                href={`/enforcement/actions/${workflowEntityId}`}
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                [View Regulatory Framework]
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Conversation List */}
       <div
         className="max-h-[600px] overflow-y-auto p-4"

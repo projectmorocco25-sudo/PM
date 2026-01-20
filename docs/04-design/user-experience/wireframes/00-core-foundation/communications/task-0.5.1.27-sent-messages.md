@@ -1,6 +1,6 @@
 # Task 0.5.1.27: Sent Messages Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/communications/sent`  
 **File:** `task-0.5.1.27-sent-messages.png`  
 **Priority:** 🔴 Critical Foundation
@@ -21,6 +21,7 @@
 │ │ To: Company ABC                    ✓✓ Read  2 hours ago││
 │ │ Subject: Product Submission #12345                      ││
 │ │ Preview: Your submission has been reviewed...           ││
+│ │ 🔗 Regulatory: DMP Art.[X] [View] (if workflow-linked) ││
 │ ├─────────────────────────────────────────────────────────┤│
 │ │ To: MOH Tier 1                    ✓ Delivered 1 day  ││
 │ │ Subject: Request for Additional Info                  ││

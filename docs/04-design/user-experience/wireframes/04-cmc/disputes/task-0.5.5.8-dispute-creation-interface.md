@@ -20,14 +20,22 @@
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ ⏱ Dispute Window: 30 days from score publication        ││
 │ │                                                          ││
+│ │ Regulatory Basis (Fatima's Requirement):                ││
+│ │ Law No. 09-08 - 30-day appeal window                    ││
+│ │ [View Regulatory Framework]                             ││
+│ │                                                          ││
 │ │ [Score Selection Dropdown ▼]                             ││
 │ │                                                          ││
 │ │ • December 2024: 78/100 (23 days remaining) ⏱          ││
+│ │   Appeal Deadline: [Date + 30 days from publication]   ││
 │ │ • November 2024: 76/100 (Expired) ⚠                    ││
+│ │   Appeal Deadline: [Date] (Window Closed)               ││
 │ │ • October 2024: 74/100 (Expired) ⚠                     ││
+│ │   Appeal Deadline: [Date] (Window Closed)               ││
 │ │                                                          ││
 │ │ Selected: December 2024 - 78/100                        ││
-│ │ Days Remaining: 23 days ⏱                                ││
+│ │ Days Remaining: 🔴 23 days remaining ⏱                  ││
+│ │ Appeal Deadline: [Date + 30 days] (Prominently displayed)││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

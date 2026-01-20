@@ -44,8 +44,15 @@
 │ │ [Load More]                                                                              ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Monthly submissions are due by end of month.             ││
-│    7-day grace period for corrections after submission.     ││
+│ ℹ️ Monthly Submission Deadline                              ││
+│    Deadline: End of month ([X] days remaining)             ││
+│    7-day grace period for corrections after submission     ││
+│    (Until [date + 7 days])                                 ││
+│                                                             │
+│    Regulatory Basis (Fatima's Requirement):                ││
+│    DMP Regulation Article [X] - Monthly Stock Quantity     ││
+│    Submission                                               ││
+│    Late Submission Penalties: [Link to penalties]          ││
 │    [View Regulatory Framework]                              ││
 └─────────────────────────────────────────────────────────────┘
 ```

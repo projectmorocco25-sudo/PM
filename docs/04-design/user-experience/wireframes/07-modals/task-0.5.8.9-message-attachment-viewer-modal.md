@@ -1,6 +1,6 @@
 # Task 0.5.8.9: Message Attachment Viewer Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.9-message-attachment-viewer-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -50,6 +50,12 @@
 │  │ │ (1) document.pdf       2.3 MB    [View] [Download]│ │ │
 │  │ │ (2) image.png          1.2 MB    [View] [Download]│ │ │
 │  │ │ (3) report.xlsx        0.8 MB    [View] [Download]│ │ │
+│  │ │                                                   │ │ │
+│  │ │ Regulatory Notice (Fatima's Requirement):          │ │ │
+│  │ │ ⚠️ Attachments are retained for 7 years per        │ │ │
+│  │ │    regulatory requirements (Law No. 09-08)        │ │ │
+│  │ │    Handle downloaded documents per compliance      │ │ │
+│  │ │    guidelines                                      │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ [Download All]                    [Close]             │ │

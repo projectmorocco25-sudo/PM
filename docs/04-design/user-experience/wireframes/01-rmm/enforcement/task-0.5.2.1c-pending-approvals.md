@@ -1,6 +1,6 @@
 # Task 0.5.2.1c: Pending Approvals Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/pending-approvals` (MOH Tier 1 only)  
 **File:** `task-0.5.2.1c-pending-approvals.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -26,13 +26,27 @@
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ ⚠️ Warning - ABC Pharmaceuticals Inc.                   ││
+│ │ ☑ ⚠️ Warning - ABC Pharmaceuticals Inc.                  ││
+│ │                                                          ││
+│ │ Legal Basis: DMP Regulation Article 12 - Non-Compliance││
+│ │ Legal Authority: ✓ Verified                            ││
+│ │ Regulatory Limit: N/A (Warning)                        ││
 │ │                                                          ││
 │ │ Violation: Submission Non-Compliance                    ││
 │ │ Created: 2 days ago  |  Reviewed by: Ahmed Benali       ││
 │ │                                                          ││
+│ │ Approval Deadline: 🔴 5 days remaining (Due: [date])   ││
+│ │                                                          ││
+│ │ Regulatory Requirements Checklist:                      ││
+│ │ ☑ Legal basis verified                                 ││
+│ │ ☑ Legal authority confirmed                            ││
+│ │ ☑ Regulatory deadline met                              ││
+│ │ ☐ Amount within regulatory limits (N/A - Warning)      ││
+│ │ ☑ Justification meets regulatory requirements          ││
+│ │                                                          ││
 │ │ Justification Preview:                                  ││
 │ │ The company failed to submit weekly stock levels...     ││
+│ │ ✓ Meets regulatory requirements                         ││
 │ │                                                          ││
 │ │ [View Details] [Approve] [Reject] [Request Info]        ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -84,15 +98,23 @@
   - **Sort:** Dropdown (Date, Priority, Company)
 - **Styling:** Compact filter controls
 
-### Bulk Actions Bar
+### Bulk Actions Bar (Enhanced per Fatima's Requirement)
 - **Layout:** Horizontal bar with checkboxes and buttons
 - **Select All Checkbox:** Select/deselect all items
 - **Bulk Actions:**
   - **Bulk Approve Button:** Primary button (enabled when items selected)
+    - **Regulatory Validation (Fatima's Requirement):**
+      - Before bulk approval, validates all selected actions can be bulk approved
+      - Verifies all legal bases are confirmed
+      - Shows regulatory requirement status for bulk selection
+      - Warns if any action requires individual review per regulations
   - **Bulk Reject Button:** Secondary/destructive button (enabled when items selected)
+- **Regulatory Status Indicator (Fatima's Requirement):**
+  - Shows count of selected actions that pass all regulatory requirements
+  - Warning if any selected actions have incomplete regulatory checklists
 - **Styling:** Sticky bar (stays visible when scrolling)
 
-### Approval Cards
+### Approval Cards (Enhanced per Fatima's Requirements)
 - **Layout:** Card-based layout (one card per pending action)
 - **Card Structure:**
   - **Header:**
@@ -100,12 +122,32 @@
     - **Action Type Icon:** ⚠️ Warning, 💰 Fine, 🚫 Suspension
     - **Title:** Action type + company name
   - **Body:**
+    - **Legal Basis (Fatima's Requirement - REQUIRED):**
+      - Prominently displayed: "Legal Basis: [Regulation Article X] - [Description]"
+      - **Legal Authority Verification:** "Legal Authority: ✓ Verified" or "⚠️ Needs Verification"
+    - **Regulatory Limit Check (Fatima's Requirement):**
+      - For fines: "Regulatory Limit: [Maximum] MAD"
+      - Verification: "✓ Within limit" or "⚠️ Verify" indicator
+      - For warnings/suspensions: "Regulatory Limit: N/A"
     - **Violation Type:** Violation description
     - **Metadata:** Created date, reviewed by (Tier 2 officer)
+    - **Approval Deadline Tracking (Fatima's Requirement):**
+      - "Approval Deadline: 🔴 [X] days remaining (Due: [date])"
+      - Urgency indicator: 🔴 if <3 days, 🟡 if 3-7 days, 🟢 if >7 days
+    - **Regulatory Requirements Checklist (Fatima's Requirement - REQUIRED):**
+      - Checklist items:
+        - ☑ Legal basis verified
+        - ☑ Legal authority confirmed
+        - ☑ Regulatory deadline met (if applicable)
+        - ☐ Amount within regulatory limits (if fine)
+        - ☑ Justification meets regulatory requirements
+      - **BLOCKER:** Cannot approve unless all checks pass (blocked by UI)
     - **Justification Preview:** Truncated justification text
+      - **Justification Validation Indicator (Fatima's Requirement):**
+        - "✓ Meets regulatory requirements" or "⚠️ Missing required elements: [list]"
   - **Actions:**
     - **View Details Button:** Navigate to action detail
-    - **Approve Button:** Primary button
+    - **Approve Button:** Primary button (disabled if regulatory checklist incomplete)
     - **Reject Button:** Secondary/destructive button
     - **Request Info Button:** Secondary button (request additional information)
 

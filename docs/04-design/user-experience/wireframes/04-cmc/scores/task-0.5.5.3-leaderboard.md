@@ -25,6 +25,12 @@
 │ │ [Apply Filters] [Clear] [Export CSV]                    ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Compliance Leaderboard                                   ││
+│    Regulatory Framework (Fatima's Requirement):             ││
+│    DMP Regulation Article [X] - Compliance Scoring         ││
+│    Legal Basis: [Citation]                                 ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ [For Companies: Anonymized Leaderboard]                    │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Your Position                                            ││

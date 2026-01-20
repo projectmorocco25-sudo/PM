@@ -43,6 +43,32 @@
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance Status                             ││
+│ │                                                          ││
+│ │ Status: ✓ Compliant  |  ⚠️ Non-Compliant (3 violations)││
+│ │                                                          ││
+│ │ [View Detailed Compliance Status]                       ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Active Enforcement Actions (Company Users Only)         ││
+│ │                                                          ││
+│ │ ⚠️ Warning - Submission Non-Compliance                  ││
+│ │   Legal Basis: DMP Art. 12                              ││
+│ │   Appeal Deadline: 23 days remaining                    ││
+│ │   Required Action: Review enforcement details           ││
+│ │   [View Enforcement Action]                             ││
+│ │                                                          ││
+│ │ 💰 Fine - 5,000 MAD - Threshold Breach                  ││
+│ │   Legal Basis: DMP Art. 15                              ││
+│ │   Appeal Window: Closed                                 ││
+│ │   Status: Payment pending                               ││
+│ │   [View Enforcement Action]                             ││
+│ │                                                          ││
+│ │ [View All Enforcement Actions]                          ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
 │ │ Recent Activity                                          ││
 │ │                                                          ││
 │ │ • Company "ABC Pharma" registered (2 hours ago)         ││
@@ -57,6 +83,11 @@
 │ │ Registry Submissions Status                             ││
 │ │                                                          ││
 │ │ Pending: 12  |  Approved: 45  |  Rejected: 3           ││
+│ │                                                          ││
+│ │ Submission Deadlines:                                    ││
+│ │ • Annual Registry: Due 2025-03-31 (78 days remaining)  ││
+│ │ • Weekly Stock Report: Due 2025-01-15 (3 days)         ││
+│ │   Regulatory: DMP Art. 12 - Annual Submission          ││
 │ │                                                          ││
 │ │ [View All Submissions]                                  ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -112,6 +143,32 @@
 - **Styling:** Button group with icons (optional)
 - **Responsive:** Wraps on mobile
 
+### Regulatory Compliance Status Section (Fatima's Requirement)
+- **Layout:** Card with compliance status indicator
+- **Content:**
+  - **Status Badge:** "✓ Compliant" (green), "⚠️ Non-Compliant ([X] violations)" (red), or "🟡 Under Review" (yellow)
+  - Link to detailed compliance status page
+- **Display:** Prominent section at top for Company users, optional for MOH users
+- **Styling:** Color-coded badge with compliance indicator
+
+### Active Enforcement Actions Section (Fatima's Requirement - Company Users Only)
+- **Layout:** Card with enforcement actions list
+- **Visibility:** Only shown for Company users (not MOH users)
+- **Content:** List of active enforcement actions against the company
+- **Each Enforcement Action Shows:**
+  - **Action Type:** Warning, Fine, or Suspension (with icon)
+  - **Legal Basis (Fatima's Requirement):** "Legal Basis: DMP Art. [X]"
+  - **Appeal Deadline (Fatima's Requirement):** 
+    - "Appeal Deadline: [X] days remaining" (if appeal window open)
+    - "Appeal Window: Closed" (if closed)
+    - Urgency indicator (🔴 if <7 days, 🟡 if 7-14 days)
+  - **Required Action:** What the company must do
+  - **Status:** Current status (e.g., "Payment pending", "Under review")
+  - **Link:** "[View Enforcement Action]" to detail page
+- **Actions:**
+  - "[View All Enforcement Actions]" link
+- **Display:** Prominent section (regulatory transparency requirement)
+
 ### Recent Activity Section
 - **Layout:** Card with activity list
 - **Content:** Chronological list of recent RMM activities
@@ -122,12 +179,20 @@
   - "View Full History" link
 - **Limit:** Show last 5-10 activities
 
-### Registry Submissions Status Card
+### Registry Submissions Status Card (Enhanced per Fatima's Requirement)
 - **Layout:** Card with status summary
 - **Metrics:**
   - Pending submissions count
   - Approved submissions count
   - Rejected submissions count
+- **Submission Deadline Tracking (Fatima's Requirement):**
+  - List of upcoming submission deadlines
+  - Each deadline shows:
+    - Submission type (e.g., "Annual Registry", "Weekly Stock Report")
+    - Due date
+    - Days remaining countdown
+    - Regulatory reference: "Regulatory: DMP Art. [X] - [Description]"
+  - Urgency indicators (🔴 if <7 days, 🟡 if 7-14 days)
 - **Actions:**
   - "View All Submissions" button
 - **Styling:** Status badges with color coding

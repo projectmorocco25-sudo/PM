@@ -1,6 +1,6 @@
 # Task 0.5.1.17: Notification Center Component Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Component in header (all dashboard pages)  
 **File:** `task-0.5.1.17-notification-center-component.png`  
 **Priority:** 🔴 Critical Foundation
@@ -36,6 +36,7 @@
 │ ● Threshold Reversion - 7 Day Warning│
 │   Threshold for SKU002 will revert  │
 │   on 25/06/2025 (7 days)            │
+│   Regulatory: DMP Art.[X] [View]    │
 │   1 day ago                          │
 ├─────────────────────────────────────┤
 │ ● Threshold Reversion Review Required│
@@ -46,6 +47,8 @@
 │ ● Enforcement Action                │
 │   Warning issued: Submission         │
 │   Non-Compliance                     │
+│   Regulatory: DMP Art.12 [View]     │
+│   Appeal Deadline: ⏱ 27 days        │
 │   3 days ago                         │
 ├─────────────────────────────────────┤
 │         [View All Notifications]     │

@@ -69,12 +69,12 @@ This index provides a complete navigation guide to all wireframes in the PM plat
 ### Global Section Pages (Critical Foundation)
 | Task ID | Wireframe | Status | Location | Route Reference |
 |---------|-----------|--------|----------|-----------------|
-| 0.5.1.30 | History overview page | ⚪ | `00-core-foundation/global/task-0.5.1.30-history-overview.png` | `/history` |
-| 0.5.1.31 | Notifications page | ⚪ | `00-core-foundation/global/task-0.5.1.31-notifications-page.png` | `/notifications` |
-| 0.5.1.32 | Audit logs list page | ⚪ | `00-core-foundation/global/task-0.5.1.32-audit-logs-list.png` | `/audit/logs` (MOH/Auditors only) |
-| 0.5.1.33 | Audit log detail page | ⚪ | `00-core-foundation/global/task-0.5.1.33-audit-log-detail.png` | `/audit/logs/[id]` |
-| 0.5.1.34 | Audit reports page | ⚪ | `00-core-foundation/global/task-0.5.1.34-audit-reports.png` | `/audit/reports` (MOH/Auditors only) |
-| 0.5.1.35 | System Configuration page | ⚪ | `00-core-foundation/global/task-0.5.1.35-system-configuration.png` | `/system-config` (MOH Tier 1 only) |
+| 0.5.1.30 | History overview page | ✅ | `00-core-foundation/global/task-0.5.1.30-history-overview.md` | `/history` |
+| 0.5.1.31 | Notifications page | ✅ | `00-core-foundation/global/task-0.5.1.31-notifications-page.md` | `/notifications` |
+| 0.5.1.32 | Audit logs list page | ✅ | `00-core-foundation/global/task-0.5.1.32-audit-logs-list.md` | `/audit/logs` (MOH/Auditors only) |
+| 0.5.1.33 | Audit log detail page | ✅ | `00-core-foundation/global/task-0.5.1.33-audit-log-detail.md` | `/audit/logs/[id]` |
+| 0.5.1.34 | Audit reports page | ✅ | `00-core-foundation/global/task-0.5.1.34-audit-reports.md` | `/audit/reports` (MOH/Auditors only) |
+| 0.5.1.35 | System Configuration page | ✅ | `00-core-foundation/global/task-0.5.1.35-system-configuration.md` | `/system-config` (MOH Tier 1 only) |
 
 ### Dashboard Utility Pages
 | Task ID | Wireframe | Status | Location | Route Reference |

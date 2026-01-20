@@ -1,6 +1,6 @@
 # Task 0.5.1.26: Compose Message Interface Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/communications/compose`  
 **File:** `task-0.5.1.26-compose-message.png`  
 **Priority:** 🔴 Critical Foundation
@@ -61,6 +61,13 @@
 │ │            Enforcement Action, Compliance Score,        ││
 │ │            Dispute                                       ││
 │ │ Entity: [Search or select...]                          ││
+│ │                                                          ││
+│ │ [If Workflow Entity Selected]                           ││
+│ │ Regulatory Context (Fatima's Requirement):              ││
+│ │ • Regulatory Reference: [Auto-populated from entity]   ││
+│ │   Example: "DMP Art.12" or relevant regulation         ││
+│ │ • Legal Basis: [Link to legal basis for entity]        ││
+│ │ • [View Regulatory Framework]                           ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [Cancel]                                    [Send] [Draft] │

@@ -722,8 +722,19 @@ const form = useForm({
 4. **Accessibility:** Keyboard navigation, screen readers
 5. **Performance:** Large forms, many fields
 
-## References
+## Related Documents
 
+### Primary References
+- [ui-component-specifications.md](./ui-component-specifications.md) - Component library specifications (form components: inputs, selects, checkboxes, textareas, etc.)
+- [design-system.md](./design-system.md) - Design tokens (colors, typography, spacing used in forms)
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (form loading, error, success states)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [routing-structure.md](./routing-structure.md) - Route definitions (form routes: create, edit, submission routes)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI patterns (role-based form fields and permissions)
+
+### External References
 - [React Hook Form Documentation](https://react-hook-form.com/)
 - [Zod Validation](https://zod.dev/)
 - [WCAG Form Guidelines](https://www.w3.org/WAI/WCAG21/quickref/#input-assistance)

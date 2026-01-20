@@ -401,8 +401,19 @@ All design tokens are available as:
 4. **Performance:** Use CSS variables for dynamic theming
 5. **Documentation:** Document any customizations or extensions
 
-## References
+## Related Documents
 
+### Primary References
+- [ui-component-specifications.md](./ui-component-specifications.md) - Component library specifications (uses design tokens from this document)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (uses design tokens for form styling)
+- [navigation-layout-patterns.md](./navigation-layout-patterns.md) - Layout patterns (uses design tokens for spacing and colors)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (uses design tokens for loading/error states)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI patterns (uses design tokens for role-based styling)
+
+### External References
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [shadcn/ui Components](https://ui.shadcn.com/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)

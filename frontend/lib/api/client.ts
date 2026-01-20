@@ -6,13 +6,13 @@
  * Base API client for Supabase queries and RPC calls
  */
 
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import type { SupabaseClient } from '@supabase/supabase-js'
 
 export type Database = any // Will be typed properly when types are generated
 
 export function getSupabaseClient(): SupabaseClient<Database> {
-  return createBrowserClient()
+  return createClient()
 }
 
 /**

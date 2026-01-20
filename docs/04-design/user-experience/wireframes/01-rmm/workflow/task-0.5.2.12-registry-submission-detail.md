@@ -1,6 +1,6 @@
 # Task 0.5.2.12: Registry Submission Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/submissions/[id]`  
 **File:** `task-0.5.2.12-registry-submission-detail.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -24,6 +24,11 @@
 │ │   ✓        ✓              ✓              ✓             ││
 │ │                                                          ││
 │ │ Current Status: Tier 1 Approved                         ││
+│ │                                                          ││
+│ │ Regulatory Deadline Tracking:                            ││
+│ │ • Tier 2 Verification: ✓ On-time (Regulatory: DMP Art.10)││
+│ │ • Tier 1 Approval: ✓ On-time (Regulatory: DMP Art.10)  ││
+│ │ • Implementation Deadline: ⚠️ 5d remaining (Regulatory: DMP Art.10)││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -42,12 +47,32 @@
 │ │ Approval History                                         ││
 │ │                                                          ││
 │ │ • Tier 1 Approved by Dr. Samir Hassan - 2 days ago    ││
+│ │   Regulatory Basis: DMP Art. 10 - Registry Approval    ││
+│ │   Regulatory Requirements: ✓ Verified                   ││
+│ │                                                          ││
 │ │ • Tier 2 Verified by Ahmed Benali - 3 days ago         ││
+│ │   Regulatory Basis: DMP Art. 10 - Registry Verification││
+│ │   Regulatory Requirements: ✓ Verified                   ││
+│ │                                                          ││
 │ │ • Submitted by Company Admin - 4 days ago              ││
+│ │   Regulatory Basis: DMP Art. 10 - Registry Submission  ││
+│ │                                                          ││
 │ │ • Created (Draft) - 5 days ago                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Requirement Checklist (Fatima's Requirement) ││
+│ │                                                          ││
+│ │ ☑ Legal Basis Verified: DMP Art. 10                    ││
+│ │ ☑ Legal Authority Verified: Tier 1 Approval Authority  ││
+│ │ ☑ Regulatory Requirements Met                           ││
+│ │ ☑ Compliance Verification Complete                     ││
+│ │                                                          ││
+│ │ [View Regulatory Framework]                             ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ [Approve] [Reject] [Request Info] (MOH actions)            │
+│ ⚠️ Approval blocked if regulatory checklist incomplete    │
 └─────────────────────────────────────────────────────────────┘
 ```
 

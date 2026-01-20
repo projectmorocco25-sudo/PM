@@ -1,6 +1,6 @@
 # Task 0.5.3.23: Products Treemap Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/treemap?atc=J01` (Level 2 - Products within selected ATC code)  
 **File:** `task-0.5.3.23-products-treemap.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -27,6 +27,10 @@
 │ │                                                          ││
 │ │ ATC: J01 - Anti-infectives for systemic use            ││
 │ │ Compliance: 8% (28 violations)                          ││
+│ │                                                          ││
+│ │ Regulatory Framework (Fatima's Requirement):            ││
+│ │ Stock Level Compliance: DMP Art.15                      ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

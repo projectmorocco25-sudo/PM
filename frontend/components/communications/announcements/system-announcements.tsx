@@ -207,7 +207,7 @@ export function SystemAnnouncements() {
   
   const handleDelete = (announcementId: string) => {
     // TODO: Implement delete functionality (soft delete, no hard deletes allowed)
-    if (confirm('Delete this announcement? (Note: Announcements are retained for 7 years per regulatory compliance)')) {
+    if (confirm('Delete this announcement? (Note: Announcements are retained for 7 years per regulatory compliance - Law No. 09-08)')) {
       // Delete logic
     }
   }
@@ -329,7 +329,7 @@ export function SystemAnnouncements() {
                 Read status will be tracked per company/user
                 <br />
                 <br />
-                All announcements are retained for 7 years for regulatory compliance (no hard deletes allowed)
+                All announcements are retained for 7 years for regulatory compliance (Law No. 09-08) (no hard deletes allowed)
                 <br />
                 <br />
                 Expired announcements remain accessible but marked as expired

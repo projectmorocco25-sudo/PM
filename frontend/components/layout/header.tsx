@@ -10,7 +10,7 @@ import { useState, useEffect, useRef } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { useAppContext } from '@/lib/context/app-context'
 import { Search, Bell, ChevronDown, User, Settings, LogOut, Menu as MenuIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -41,7 +41,7 @@ export function Header() {
             : null
 
   useEffect(() => {
-    const supabase = createBrowserClient()
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
   }, [])
 
@@ -57,7 +57,7 @@ export function Header() {
   }, [])
 
   const handleSignOut = async () => {
-    const supabase = createBrowserClient()
+    const supabase = createClient()
     await supabase.auth.signOut()
     router.push('/auth/login')
     router.refresh()

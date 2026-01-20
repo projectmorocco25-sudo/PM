@@ -1,6 +1,6 @@
 # Task 0.5.3.4: Threshold Management Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/thresholds` (MOH Tier 1 only)  
 **File:** `task-0.5.3.4-threshold-management.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -48,9 +48,17 @@
 │ │ [Clear]  │ │                                             ││
 │ └──────────┘ └───────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Thresholds are calculated from AAMS submissions.       ││
+│ ℹ️ Threshold Management                                   ││
+│    Thresholds are calculated from AAMS submissions.       ││
 │    Multipliers can be modified per regulatory requirements.││
-│    [View Regulatory Framework]                            ││
+│                                                             │
+│    Regulatory Authorization Required (Fatima's Requirement):││
+│    • DMP Regulation Article [X] - Threshold Modification    ││
+│    • Legal Authority: Tier 1 Approval Required             ││
+│    • Approval Workflow Compliance: Required                 ││
+│    • Stakeholder Notification: Required                     ││
+│                                                             │
+│    [View Regulatory Framework]                             ││
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,7 +109,7 @@
 - **Style:** Secondary button
 - **Action:** Resets all filters to default
 
-### Thresholds Table
+### Thresholds Table (Enhanced per Fatima's Requirement)
 - **Layout:** Full-width table with horizontal scroll on mobile
 - **Columns:**
   1. **SKU:** SKU code/identifier (link to SKU detail)
@@ -109,19 +117,21 @@
   3. **Threshold Value:** Calculated threshold value (read-only, from AAMS)
   4. **Multiplier (B):** Current multiplier value (1.0x default, editable)
   5. **Duration Type:** Badge showing duration type:
-     - **Permanent:** Gray badge - "Permanent"
-     - **Temporary Auto-Revert:** Orange badge - "Temp Auto Revert"
-     - **Temporary Manual Review:** Yellow badge - "Temp Manual Review"
+    - **Permanent:** Gray badge - "Permanent"
+    - **Temporary Auto-Revert:** Orange badge - "Temp Auto Revert"
+    - **Temporary Manual Review:** Yellow badge - "Temp Manual Review"
   6. **Revert Date:** Date when temporary threshold reverts:
-     - Format: DD/MM/YY (e.g., "25/06/25")
-     - Shows "-" for permanent thresholds
-     - Shows days until reversion in parentheses (e.g., "(7 days)")
-     - Color-coded: Green (>30 days), Yellow (7-30 days), Red (<7 days)
+    - Format: DD/MM/YY (e.g., "25/06/25")
+    - Shows "-" for permanent thresholds
+    - Shows days until reversion in parentheses (e.g., "(7 days)")
+    - Color-coded: Green (>30 days), Yellow (7-30 days), Red (<7 days)
+    - **Regulatory Deadline Tracking (Fatima's Requirement):** Days until reversion with urgency indicator
   7. **Status:** Badge showing status:
-     - **Active:** Green badge - "Active"
-     - **Pending Reversion:** Orange badge with warning icon - "⚠️ Pending Reversion"
-     - **Review Required:** Yellow badge with warning icon - "⚠️ Review Required"
-  8. **Actions:** Modify button, View Details link
+    - **Active:** Green badge - "Active"
+    - **Pending Reversion:** Orange badge with warning icon - "⚠️ Pending Reversion"
+    - **Review Required:** Yellow badge with warning icon - "⚠️ Review Required"
+  8. **Regulatory Authorization (Fatima's Requirement):** Shows if threshold modification is authorized per regulation
+  9. **Actions:** Modify button, View Details link
 - **Row Features:**
   - **Checkbox:** Select row for bulk actions
   - **Row Hover:** Background color change (#f9fafb)

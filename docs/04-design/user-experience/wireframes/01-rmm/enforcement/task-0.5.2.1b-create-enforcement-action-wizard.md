@@ -1,6 +1,6 @@
 # Task 0.5.2.1b: Create Enforcement Action Wizard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/actions/new` (MOH Tier 1 and Tier 2 only)  
 **File:** `task-0.5.2.1b-create-enforcement-action-wizard.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -92,6 +92,13 @@
 │ │ Or enter custom legal basis:                            ││
 │ │ [________________________________________________]      ││
 │ │                                                          ││
+│ │                                                          ││
+│ │ ⚠️ CRITICAL (Fatima's Requirement):                      ││
+│ │ Legal basis is REQUIRED for all enforcement actions.   ││
+│ │ All enforcement actions must cite specific DMP          ││
+│ │ regulation articles. Legal basis cannot be changed      ││
+│ │ after action creation (immutable per audit requirements)││
+│ │                                                          ││
 │ │ ℹ️ Legal basis must align with DMP regulations.        ││
 │ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -143,6 +150,14 @@
 │ │ [Preview of justification text...]                      ││
 │ │                                                          ││
 │ │ Approval Required: No (Warning - Tier 2 can approve)  ││
+│ │                                                          ││
+│ │ Regulatory Compliance Notice (Fatima's Requirement):     ││
+│ │ • This enforcement action will be retained for 7 years  ││
+│ │   per regulatory requirements (Law No. 09-08)           ││
+│ │ • Legal basis is immutable and cannot be changed after  ││
+│ │   creation                                               ││
+│ │ • All actions are logged in regulatory audit trail      ││
+│ │ • [View Regulatory Framework]                           ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -150,6 +165,10 @@
 │ │                                                          ││
 │ │ ☑ I confirm that all information is accurate           ││
 │ │ ☑ I understand this action will be logged in audit trail││
+│ │ ☑ I confirm the legal basis is correct and aligned      ││
+│ │    with DMP regulations                                  ││
+│ │ ☑ I understand this action is subject to regulatory    ││
+│ │    retention requirements (7 years minimum)             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [← Previous Step]                    [Create Action]       │

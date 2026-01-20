@@ -9,7 +9,7 @@
 'use client'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { useEffect } from 'react'
 
 export interface Conversation {
@@ -67,7 +67,7 @@ async function fetchConversations(params?: {
   limit?: number
   offset?: number
 }): Promise<{ conversations: Conversation[]; total: number }> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -169,7 +169,7 @@ async function fetchConversations(params?: {
  * Fetch conversation messages and conversation data
  */
 async function fetchConversationMessages(conversationId: string): Promise<{ messages: Message[]; conversation: Conversation | null }> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   
   // Fetch conversation data
   const { data: conversationData, error: conversationError } = await supabase
@@ -242,7 +242,7 @@ async function fetchConversationMessages(conversationId: string): Promise<{ mess
  * Mark conversation messages as read
  */
 async function markConversationAsRead(conversationId: string): Promise<void> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -347,7 +347,7 @@ async function createConversation(params: {
   workflowEntityId?: string | null
   attachments?: File[]
 }): Promise<{ conversation: Conversation; message: Message }> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -484,7 +484,7 @@ async function sendMessage(params: {
   recipientId: string | null
   attachments?: File[]
 }): Promise<Message> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -568,7 +568,7 @@ export function useCommunicationRealtime() {
   const queryClient = useQueryClient()
   
   useEffect(() => {
-    const supabase = createBrowserClient()
+    const supabase = createClient()
     
     // Subscribe to conversations changes
     const conversationsChannel = supabase

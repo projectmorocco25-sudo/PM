@@ -9,7 +9,7 @@
 'use client'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { createBrowserClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import { useEffect } from 'react'
 
 export interface Notification {
@@ -28,7 +28,7 @@ export interface Notification {
  * Fetch user notifications
  */
 async function fetchNotifications(limit: number = 15): Promise<Notification[]> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   
   const { data, error } = await supabase
     .from('notifications')
@@ -48,7 +48,7 @@ async function fetchNotifications(limit: number = 15): Promise<Notification[]> {
  * Fetch unread notification count
  */
 async function fetchUnreadCount(): Promise<number> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -72,7 +72,7 @@ async function fetchUnreadCount(): Promise<number> {
  * Mark notification as read
  */
 async function markAsRead(notificationId: string): Promise<void> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   
   const { error } = await supabase
     .from('notifications')
@@ -89,7 +89,7 @@ async function markAsRead(notificationId: string): Promise<void> {
  * Mark all notifications as read
  */
 async function markAllAsRead(): Promise<void> {
-  const supabase = createBrowserClient()
+  const supabase = createClient()
   const userId = (await supabase.auth.getUser()).data.user?.id
   
   if (!userId) {
@@ -170,7 +170,7 @@ export function useNotificationRealtime() {
   const queryClient = useQueryClient()
   
   useEffect(() => {
-    const supabase = createBrowserClient()
+    const supabase = createClient()
     
     const channel = supabase
       .channel('notifications-changes')

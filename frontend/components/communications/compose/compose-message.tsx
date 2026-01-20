@@ -353,6 +353,47 @@ export function ComposeMessage() {
                   </div>
                 </div>
               )}
+              
+              {/* Regulatory Context (Fatima's Requirement - for enforcement actions) */}
+              {workflowEntityType === 'enforcement_action' && workflowEntityId && (
+                <div
+                  className="rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800"
+                  style={{
+                    padding: '12px',
+                    borderRadius: '6px',
+                    border: '1px solid #bfdbfe',
+                    backgroundColor: '#eff6ff',
+                    fontSize: '14px',
+                    color: '#1e40af',
+                  }}
+                >
+                  <div className="mb-1 font-semibold" style={{ fontWeight: 600, marginBottom: '4px' }}>
+                    Regulatory Context
+                  </div>
+                  <div className="space-y-1 text-xs" style={{ fontSize: '12px' }}>
+                    <div>
+                      <strong>Regulatory Reference:</strong> DMP Art.12
+                    </div>
+                    <div>
+                      <strong>Legal Basis:</strong>{' '}
+                      <a
+                        href={`/enforcement/actions/${workflowEntityId}#legal-basis`}
+                        className="underline hover:text-blue-900"
+                      >
+                        [Link to legal basis for enforcement]
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        href={`/enforcement/actions/${workflowEntityId}`}
+                        className="text-blue-600 underline hover:text-blue-800"
+                      >
+                        [View Regulatory Framework]
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           
@@ -379,7 +420,7 @@ export function ComposeMessage() {
               )}
               <br />
               <br />
-              All conversations are retained for 7 years for regulatory compliance (no hard deletes allowed).
+              All conversations are retained for 7 years for regulatory compliance (Law No. 09-08) (no hard deletes allowed).
             </p>
           </div>
           

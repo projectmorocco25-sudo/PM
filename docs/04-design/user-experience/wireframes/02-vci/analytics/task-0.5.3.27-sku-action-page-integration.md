@@ -1,6 +1,6 @@
 # Task 0.5.3.27: SKU Action Page Integration Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/skus/[id]?back=treemap&atc=J01&product=amoxicillin` (Level 5 - uses existing SKU detail route)  
 **File:** `task-0.5.3.27-sku-action-page-integration.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -54,6 +54,12 @@
 │ │ Last WSL Submission: December 31, 2024                   ││
 │ │                                                          ││
 │ │ ⚠️ Below threshold - Compliance violation detected       ││
+│ │                                                          ││
+│ │ Regulatory Framework (Fatima's Requirement):               ││
+│ │ • Stock Level Compliance: DMP Art.15                    ││
+│ │ • Threshold compliance is monitored per regulatory       ││
+│ │   requirements                                           ││
+│ │ • [View Regulatory Framework]                           ││
 │ │                                                          ││
 │ │ [View WSL Submissions] [View Compliance History]         ││
 │ └─────────────────────────────────────────────────────────┘│

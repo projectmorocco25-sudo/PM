@@ -1,6 +1,6 @@
 # Task 0.5.1.35: System Configuration Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/system-config` (MOH Tier 1 only)  
 **File:** `task-0.5.1.35-system-configuration.png`  
 **Priority:** 🔴 Critical Foundation
@@ -21,17 +21,33 @@
 │ │ Module Activation                                        ││
 │ │                                                          ││
 │ │ RMM (Registry Management)          ✓ Always Active     ││
+│ │   Regulatory: ✓ Authorized per DMP Regulation Art. 5    ││
 │ │                                                          ││
 │ │ VCI (Value Chain Intelligence)      ✓ Always Active     ││
+│ │   Regulatory: ✓ Authorized per DMP Regulation Art. 8    ││
 │ │                                                          ││
 │ │ ECS (Export Control System)        [Toggle: ON]        ││
 │ │   Activation Period: [Start Date] to [End Date]         ││
 │ │   Status: 🟢 Active                                    ││
+│ │   Regulatory Authorization: ✓ Verified                  ││
+│ │   Authorization: DMP Regulation Art. 10                  ││
+│ │   Prerequisites: ✓ All regulatory requirements met      ││
+│ │     ☑ Risk assessment completed                        ││
+│ │     ☑ Stakeholder notification sent                    ││
+│ │     ☑ Compliance verification passed                   ││
+│ │   Notification Status: ✓ Stakeholders notified         ││
 │ │                                                          ││
 │ │ CMC (Compliance Monitoring)         [Toggle: OFF]       ││
 │ │   Activation Period: Not set                            ││
 │ │   Status: ⚪ Inactive                                   ││
 │ │   Historical Data: 📜 Available                         ││
+│ │   Regulatory Authorization: ⚠️ Verify before activation ││
+│ │   Authorization: DMP Regulation Art. 12                  ││
+│ │   Prerequisites: ⚠️ Incomplete                          ││
+│ │     ☐ Risk assessment pending                          ││
+│ │     ☐ Stakeholder notification required                 ││
+│ │     ☐ Compliance verification required                  ││
+│ │   [View Regulatory Requirements]                        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -57,13 +73,28 @@
 │ │ Qualification Level: [Level 2 ▼] (To be validated)    ││
 │ │ Compliance Status: 🟡 In Progress                       ││
 │ │                                                          ││
-│ │ Compliance Deadline: October 22, 2026                   ││
-│ │ Days Remaining: [XXX days]                              ││
+│ │ 🔴 Compliance Deadline: October 22, 2026                ││
+│ │ Days Remaining: 290 days                                ││
+│ │ Regulatory: 2024 Cloud Services Regulation Art. 15      ││
+│ │                                                          ││
+│ │ ⚠️ Non-Compliance Warning:                              ││
+│ │   If deadline missed: System suspension, regulatory      ││
+│ │   penalties, data migration required per Regulation      ││
 │ │                                                          ││
 │ │ Compliance Actions:                                      ││
 │ │ ☑ Risk Assessment: [Status: Completed]                 ││
+│ │   Regulatory Basis: 2024 Regulation Art. 12             ││
+│ │   Assessment Date: 2025-01-01                           ││
+│ │   Next Review: 2025-07-01                               ││
+│ │                                                          ││
 │ │ ☐ Qualification Validation: [Status: Pending]            ││
+│ │   Regulatory Basis: 2024 Regulation Art. 10             ││
+│ │   Deadline: 2025-06-01 (120 days before compliance)      ││
+│ │                                                          ││
 │ │ ☐ Data Residency: [Status: In Review]                   ││
+│ │   Regulatory Basis: Law No. 09-08 Art. 45               ││
+│ │   Requirement: All data must reside within Morocco       ││
+│ │   Status: ✓ Verified (Supabase Morocco region)          ││
 │ │                                                          ││
 │ │ [View Compliance Details] [View Regulatory Framework]   ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -73,11 +104,38 @@
 │ │                                                          ││
 │ │ CNDP Compliance (Law No. 09-08):                        ││
 │ │ Status: ✓ Compliant                                      ││
+│ │ Regulatory Articles: Law No. 09-08 Art. 1-50            ││
+│ │ Verification Method: External audit (CNDP)              ││
+│ │ Last Compliance Review: 2024-12-01                      ││
+│ │ Next Review: 2025-06-01 (6-month schedule)              ││
+│ │ Compliance Details:                                      ││
+│ │   • Data protection: ✓ Compliant                        ││
+│ │   • Data retention: ✓ Compliant (7 years)               ││
+│ │   • Data access rights: ✓ Implemented                   ││
+│ │   • Consent management: ✓ Compliant                     ││
 │ │                                                          ││
 │ │ DMP Regulations:                                         ││
 │ │ Status: ⚠️ Validation Pending                           ││
+│ │ Regulatory Articles: DMP Art. 1-25                      ││
+│ │ Verification Method: Internal review                    ││
+│ │ Last Compliance Review: 2024-11-15                      ││
+│ │ Next Review: 2025-02-15 (quarterly schedule)            ││
+│ │ Non-Compliance Actions:                                  ││
+│ │   ⚠️ Module activation validation pending               ││
+│ │   Remediation Plan: Complete by 2025-02-01              ││
 │ │                                                          ││
-│ │ [View Regulatory Framework]                             ││
+│ │ Regulatory Change Log:                                   ││
+│ │ • 2025-01-01: DMP Regulation Art. 20 updated           ││
+│ │   Effective: 2025-01-01                                 ││
+│ │   Impact: Threshold reversion rules changed             ││
+│ │   System Config Change: Threshold reversion updated     ││
+│ │                                                          ││
+│ │ • 2024-12-15: Cloud Services Regulation Art. 10 updated││
+│ │   Effective: 2024-12-15                                 ││
+│ │   Impact: Qualification requirements updated            ││
+│ │   System Config Change: Compliance tracking updated     ││
+│ │                                                          ││
+│ │ [View Regulatory Framework] [View Full Change Log]     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [Cancel]                                    [Save Changes] │
@@ -92,34 +150,93 @@
 - **Breadcrumbs:** "Home > System Configuration"
 - **Title:** "System Configuration"
 
-### Module Activation Section
+### Module Activation Section (Enhanced per Fatima's Requirements)
 - **RMM:** Always active (no toggle)
+  - **Regulatory Authorization (Fatima's Requirement):** "✓ Authorized per DMP Regulation Art. 5"
 - **VCI:** Always active (no toggle)
+  - **Regulatory Authorization (Fatima's Requirement):** "✓ Authorized per DMP Regulation Art. 8"
 - **ECS:** Toggle switch, activation period, status indicator
+  - **Regulatory Authorization Check (Fatima's Requirement):**
+    - "✓ Authorized per [Regulation Article X]" or "⚠️ Verify before activation"
+    - "Authorization: [Regulation Article]"
+  - **Prerequisites Checklist (Fatima's Requirement):**
+    - "✓ All regulatory requirements met" or "⚠️ Incomplete"
+    - Checklist items:
+      - ☑ Risk assessment completed
+      - ☑ Stakeholder notification sent
+      - ☑ Compliance verification passed
+  - **Notification Status (Fatima's Requirement):** "✓ Stakeholders notified" or "⚠️ Notification required"
+  - **Block Activation:** Cannot activate until all checks pass
 - **CMC:** Toggle switch, activation period, status indicator, historical data badge
+  - **Same regulatory authorization and prerequisites as ECS**
+  - **Link:** "[View Regulatory Requirements]" if prerequisites incomplete
 
 ### System Settings Section
 - **General Settings:** System name, timezone
 - **Notification Settings:** Email, SMS toggles
 - **Security Settings:** Session timeout, password policy
 
-### Cloud Services Compliance Section (2024 Regulation)
+### Cloud Services Compliance Section (Enhanced per Fatima's Requirements)
 - **Provider:** Supabase (cloud service provider)
 - **Qualification Level:** Dropdown (Level 1 / Level 2) - To be validated
 - **Compliance Status:** Status indicator (🟡 In Progress, ✓ Compliant, ⚠️ Pending)
-- **Compliance Deadline:** October 22, 2026 (24 months from enactment)
-- **Days Remaining:** Countdown display (calculated from current date)
-- **Compliance Actions:**
-  - Risk Assessment: Checkbox with status
-  - Qualification Validation: Checkbox with status
-  - Data Residency: Checkbox with status
+- **Compliance Deadline (Fatima's Requirement):**
+  - **Date:** October 22, 2026 (24 months from enactment)
+  - **Days Remaining:** Countdown display with urgency indicator (🔴 if <90 days, 🟡 if 90-180 days, 🟢 if >180 days)
+  - **Regulatory Basis:** "Regulatory: 2024 Cloud Services Regulation Art. 15"
+- **Non-Compliance Warning (Fatima's Requirement):**
+  - Display prominently with red border if <90 days remaining
+  - "⚠️ Non-Compliance Warning: If deadline missed: [regulatory consequences]"
+  - Shows consequences: System suspension, regulatory penalties, data migration required
+- **Compliance Actions (Enhanced per Fatima's Requirements):**
+  - **Risk Assessment:**
+    - Checkbox with status
+    - **Regulatory Basis:** "Regulatory Basis: 2024 Regulation Art. 12"
+    - Assessment date and next review date displayed
+  - **Qualification Validation:**
+    - Checkbox with status
+    - **Regulatory Basis:** "Regulatory Basis: 2024 Regulation Art. 10"
+    - Deadline tracking: "[X] days before compliance deadline"
+  - **Data Residency:**
+    - Checkbox with status
+    - **Regulatory Basis:** "Regulatory Basis: Law No. 09-08 Art. 45"
+    - Requirement explanation: "All data must reside within Morocco"
+    - Compliance verification status displayed
 - **Actions:** Links to compliance details and regulatory framework
 - **Display:** Card section with clear status indicators
 - **Styling:** Status colors (green for complete, yellow for in progress, red for pending)
 
-### Regulatory Compliance Section
-- **CNDP Compliance (Law No. 09-08):** Status indicator (✓ Compliant / ⚠️ In Review)
-- **DMP Regulations:** Status indicator (✓ Compliant / ⚠️ Validation Pending)
+### Regulatory Compliance Section (Enhanced per Fatima's Requirements)
+- **CNDP Compliance (Law No. 09-08):**
+  - Status indicator (✓ Compliant / ⚠️ In Review)
+  - **Regulatory Articles (Fatima's Requirement):** "Regulatory Articles: Law No. 09-08 Art. 1-50"
+  - **Compliance Verification Method (Fatima's Requirement):** "Verification Method: External audit (CNDP)"
+  - **Review Schedule (Fatima's Requirement):**
+    - "Last Compliance Review: [date]"
+    - "Next Review: [date] ([schedule])"
+  - **Compliance Details (Fatima's Requirement):** Expandable section showing:
+    - Data protection status
+    - Data retention compliance (7 years)
+    - Data access rights implementation
+    - Consent management compliance
+- **DMP Regulations:**
+  - Status indicator (✓ Compliant / ⚠️ Validation Pending)
+  - **Regulatory Articles (Fatima's Requirement):** "Regulatory Articles: DMP Art. 1-25"
+  - **Compliance Verification Method (Fatima's Requirement):** "Verification Method: Internal review"
+  - **Review Schedule (Fatima's Requirement):**
+    - "Last Compliance Review: [date]"
+    - "Next Review: [date] ([schedule])"
+  - **Non-Compliance Actions (Fatima's Requirement):** If non-compliant, show:
+    - ⚠️ Specific non-compliance items
+    - Remediation plan with deadline
+- **Regulatory Change Log (Fatima's Requirement):**
+  - List of regulatory framework updates with:
+    - Date of change
+    - Regulation/article updated
+    - Effective date
+    - Impact description (how many records affected, what changed)
+    - System configuration changes made in response
+  - Link to "View Full Change Log" for complete history
 - **Regulatory Framework Link:** Link to comprehensive regulatory framework document
 - **Display:** Card section showing overall compliance status
 - **Styling:** Status badges with color coding

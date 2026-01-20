@@ -1,6 +1,6 @@
 # Task 0.5.3.20: Governance Dashboard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/governance` or `/vci/dashboard`  
 **File:** `task-0.5.3.18-governance-dashboard.png`  
 **Note:** File name uses 0.5.3.18 but task number is 0.5.3.20 per phase-0-5-ui-ux-wireframes.md  
@@ -22,6 +22,14 @@
 │ │ Quick Actions                                            ││
 │ │ [View All Submissions] [View All Compliance Violations] [Export] ││
 │ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ℹ️ Governance Dashboard                                    ││
+│    Regulatory Metrics (Fatima's Requirement):              ││
+│    • Regulatory compliance rate tracking                    ││
+│    • Legal basis compliance verification                    ││
+│    • Regulatory deadline compliance tracking                ││
+│    • Regulatory framework: DMP Art. [X]                     ││
+│    [View Regulatory Framework]                             ││
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ Submission   │ │ Compliance    │ │ Compliance    │        ││

@@ -115,8 +115,8 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white/10"
-                  style={{ height: '48px', padding: '12px 24px' }}
+                  className="!bg-transparent border-white !text-white hover:!bg-white/10 hover:!text-white"
+                  style={{ height: '48px', padding: '12px 24px', backgroundColor: 'transparent', color: '#ffffff' }}
                 >
                   Learn More →
                 </Button>

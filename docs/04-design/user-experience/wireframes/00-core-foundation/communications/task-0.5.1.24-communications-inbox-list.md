@@ -1,6 +1,6 @@
 # Task 0.5.1.24: Communications Inbox List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/communications/inbox`  
 **File:** `task-0.5.1.24-communications-inbox-list.png`  
 **Priority:** 🔴 Critical Foundation
@@ -48,6 +48,8 @@
 │ │          │ │   From: MOH Tier 1                        ││
 │ │          │ │   Preview: A warning has been issued...  ││
 │ │          │ │   3 days ago                               ││
+│ │          │ │   🔗 Regulatory: DMP Art.12 [View]        ││
+│ │          │ │   Legal Basis: [Link to enforcement]      ││
 │ │          │ │                                             ││
 │ │ [Clear]  │ │ [Load More]                                ││
 │ └──────────┘ └───────────────────────────────────────────┘│
@@ -110,7 +112,7 @@
 - **Item Height:** Auto (min 80px)
 - **Spacing:** 1px border between items
 
-**Conversation Item:**
+**Conversation Item (Enhanced per Fatima's Requirement):**
 - **Unread Indicator:** Blue dot (●) on left (8px × 8px)
 - **Read Indicator:** Gray circle (○) or "✓✓ Read" text indicator
 - **Subject:** Bold (unread) or normal (read), 16px, color: #111827
@@ -119,6 +121,10 @@
 - **Preview:** 14px, color: #6b7280, 2 lines max (truncate with ellipsis)
 - **Timestamp:** 12px, color: #9ca3af, right-aligned
   - Format: Relative time (e.g., "2 hours ago") or absolute date
+- **Regulatory Context (Fatima's Requirement - for workflow-linked messages):**
+  - **Regulatory Reference:** "🔗 Regulatory: DMP Art.[X]" or "[Regulation Article]"
+  - **Legal Basis Link:** Link to legal basis for related enforcement/workflow
+  - **Display:** Shown for messages linked to enforcement actions, workflows, or regulatory entities
 - **Conversation Item Status Indicators:**
   - **Unread Indicator:** Blue dot (●) on left (8px × 8px)
   - **Read Indicator:** Gray circle (○) or "✓✓ Read" text indicator

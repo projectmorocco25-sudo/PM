@@ -8,6 +8,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { MainContent } from '@/components/layout/main-content'
 import {
   useConversationMessages,
@@ -170,7 +171,7 @@ export function ConversationDetail({ conversationId }: ConversationDetailProps) 
   
   const handleArchive = () => {
     // TODO: Implement archive confirmation modal and archive action
-    if (confirm('Archive this conversation? It will be moved to Archived folder but remain accessible for 7 years (regulatory requirement).')) {
+    if (confirm('Archive this conversation? It will be moved to Archived folder but remain accessible for 7 years (regulatory requirement - Law No. 09-08). This action is irreversible.')) {
       // Archive conversation
     }
   }
@@ -230,10 +231,66 @@ export function ConversationDetail({ conversationId }: ConversationDetailProps) 
             <div className="text-sm text-gray-600" style={{ fontSize: '14px', color: '#6b7280' }}>
               Linked to: {conversation.workflow_entity_type} #{conversation.workflow_entity_id}
             </div>
+            
+            {/* Regulatory Context (Fatima's Requirement - for enforcement actions) */}
+            {conversation.workflow_entity_type === 'enforcement_action' && (
+              <div
+                className="my-3 rounded border border-blue-200 bg-blue-50 p-3"
+                style={{
+                  padding: '12px',
+                  borderRadius: '6px',
+                  border: '1px solid #bfdbfe',
+                  backgroundColor: '#eff6ff',
+                  marginTop: '12px',
+                  marginBottom: '12px',
+                }}
+              >
+                <div
+                  className="mb-1 text-sm font-semibold text-blue-900"
+                  style={{ fontSize: '14px', fontWeight: 600, color: '#1e3a8a', marginBottom: '4px' }}
+                >
+                  Regulatory Information
+                </div>
+                <div className="space-y-1 text-xs text-blue-800" style={{ fontSize: '12px', color: '#1e40af' }}>
+                  <div>
+                    <strong>Legal Basis:</strong> DMP Regulation Article 12
+                  </div>
+                  <div>
+                    <strong>Regulatory Reference:</strong> Law No. 09-08 - 30-day appeal window
+                  </div>
+                  <div>
+                    <strong>Appeal Deadline:</strong>{' '}
+                    {conversation.workflow_entity_id ? (
+                      <a
+                        href={`/enforcement/actions/${conversation.workflow_entity_id}#appeal-deadline`}
+                        className="underline hover:text-blue-900"
+                      >
+                        View appeal deadline
+                      </a>
+                    ) : (
+                      'Check enforcement action details'
+                    )}
+                  </div>
+                  <div>
+                    <a
+                      href={`/enforcement/actions/${conversation.workflow_entity_id}#legal-basis`}
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      View full legal basis
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {/* TODO: Add entity details and action buttons based on entity type */}
             <div className="mt-2">
-              <Button variant="outline" size="sm">
-                View {conversation.workflow_entity_type}
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => router.push(`/${conversation.workflow_entity_type === 'enforcement_action' ? 'enforcement/actions' : conversation.workflow_entity_type}/${conversation.workflow_entity_id}`)}
+              >
+                View {conversation.workflow_entity_type.replace('_', ' ')}
               </Button>
             </div>
           </div>

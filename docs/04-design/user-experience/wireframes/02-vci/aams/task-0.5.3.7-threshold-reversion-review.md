@@ -1,6 +1,6 @@
 # Task 0.5.3.7: Threshold Reversion Review Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/thresholds/[id]/revert-review`  
 **File:** `task-0.5.3.7-threshold-reversion-review.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -50,19 +50,33 @@
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Requirement Checklist (Fatima's Requirement) ││
+│ │                                                          ││
+│ │ ☑ Regulatory Basis for Reversion: DMP Art. [X]        ││
+│ │ ☑ Legal Authority Verification: ✓ Verified             ││
+│ │ ☑ Compliance Impact Assessment: ✓ Complete             ││
+│ │ ☑ Regulatory Requirement Compliance: ✓ Complete        ││
+│ │                                                          ││
+│ │ [View Regulatory Framework]                             ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
 │ │ Review Decision *                                         ││
 │ │                                                          ││
 │ │ ○ Confirm Reversion                                      ││
 │ │   Threshold will revert to 1.0x (400 units) today.     ││
 │ │   Company will be notified.                             ││
+│ │   Regulatory: Reversion per DMP Art. [X]                ││
 │ │                                                          ││
 │ │ ○ Cancel Reversion                                       ││
 │ │   Threshold will remain at 1.5x (600 units).            ││
 │ │   You can set a new revert date if needed.               ││
+│ │   Regulatory: Requires justification                     ││
 │ │                                                          ││
 │ │ ○ Extend Temporary Period                                ││
 │ │   Keep threshold at 1.5x and set new revert date.      ││
 │ │   [New Revert Date: DD/MM/YYYY]                         ││
+│ │   Regulatory: Requires regulatory authorization         ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

@@ -1,6 +1,6 @@
 # Task 0.5.2.2: Companies List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/companies`  
 **File:** `task-0.5.2.2-companies-list.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -92,7 +92,7 @@
 - **Style:** Secondary button
 - **Action:** Resets all filters to default
 
-### Companies Table
+### Companies Table (Enhanced per Fatima's Requirement)
 - **Layout:** Full-width table with horizontal scroll on mobile
 - **Columns:**
   1. **Name:** Company name (link to company detail)
@@ -102,7 +102,13 @@
      - **Width:** Fixed width or minimum width to prevent wrapping
   3. **Type:** IPC or Wholesaler (badge)
   4. **Status:** Active/Inactive (badge with color coding)
-  5. **Actions:** Action buttons (View, Edit)
+  5. **Compliance Status (Fatima's Requirement - REQUIRED):**
+     - "✓ Compliant" (green badge)
+     - "⚠️ [X] violations" (yellow/red badge with violation count)
+     - "🟡 Under Review" (yellow badge)
+     - **Enforcement Actions Count:** "🔴 Enforcement: [X]" badge showing active enforcement actions
+     - Link to detailed compliance status
+  6. **Actions:** Action buttons (View, Edit)
 
 **Table Features:**
 - **Sortable Columns:** Name, Registration Number, Type, Status (click header to sort)

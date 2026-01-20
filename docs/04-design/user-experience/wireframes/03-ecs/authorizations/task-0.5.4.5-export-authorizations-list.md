@@ -21,6 +21,13 @@
 │ │ Search authorizations...              [🔍] [Filters ▼] ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Export Authorizations                                   ││
+│    Regulatory Compliance (Fatima's Requirement):            ││
+│    • 90-Day Authorization Period: Regulatory requirement   ││
+│    • Regulatory Deadline: Per DMP Art. [X]                 ││
+│    • Expiration Consequences: [Link to consequences]       ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Export Authorizations Table                  ││
 │ │          │ │                                             ││

@@ -1,6 +1,6 @@
 # Task 0.5.2.4: Products List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/products` (all products) or `/rmm/companies/[id]/products` (company-scoped)  
 **File:** `task-0.5.2.4-products-list.png`  
 **Priority:** 🔴 Core RMM Workflows (Supporting Pages)
@@ -24,9 +24,9 @@
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Products Table                             ││
 │ │          │ │                                             ││
-│ │ Company  │ │ Product Name    Company      ATC Code    Status    Actions ││
-│ │ ☐ All    │ │ ────────────    ────────      ─────────   ──────    ────── ││
-│ │ ☑ ABC    │ │ Paracetamol    ABC Pharma    N02BE01     Active    [View]  ││
+│ │ Company  │ │ Product Name    Company      ATC Code    Compliance Status    Actions ││
+│ │ ☐ All    │ │ ────────────    ────────      ─────────   ─────────────────    ────── ││
+│ │ ☑ ABC    │ │ Paracetamol    ABC Pharma    N02BE01     ✓ Compliant        [View]  ││
 │ │   Pharma │ │                 Inc.                                  [Edit]  ││
 │ │ ☐ XYZ    │ │                                             ││
 │ │   Medical│ │ Ibuprofen      ABC Pharma    M01AE01     Active    [View]  ││
@@ -133,6 +133,12 @@
 - **Load More Button:** At bottom of table
 - **Pagination Info:** "Showing 1-20 of 150 products"
 - **Page Size:** 20 items per page (default)
+
+**Regulatory Context (Fatima's Requirement):**
+- Product registrations are subject to DMP regulations
+- All product data is retained for 7 years per regulatory requirements (Law No. 09-08)
+- Product compliance status is monitored per DMP Art.15
+- [View Regulatory Framework]
 
 ---
 

@@ -1,6 +1,6 @@
 # Task 0.5.3.24: Dosage/Forms Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (Level 3 - no route change, opened from Products Treemap)  
 **File:** `task-0.5.3.24-dosage-forms-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -24,6 +24,10 @@
 │  │ Product: Amoxicillin                                  │ │
 │  │ ATC Code: J01CA04                                     │ │
 │  │ Total Compliance: 5% (15 violations)                  │ │
+│  │                                                       │ │
+│  │ Regulatory Framework (Fatima's Requirement):          │ │
+│  │ Stock Level Compliance: DMP Art.15                    │ │
+│  │ [View Regulatory Framework]                           │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │
 │  │ │ Dosage/Forms Table                                │ │ │
@@ -55,6 +59,10 @@
 │  │ Product: Amoxicillin                                  │ │
 │  │ ATC Code: J01CA04                                     │ │
 │  │ Total Compliance: 5% (15 violations)                  │ │
+│  │                                                       │ │
+│  │ Regulatory Framework (Fatima's Requirement):          │ │
+│  │ Stock Level Compliance: DMP Art.15                    │ │
+│  │ [View Regulatory Framework]                           │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │
 │  │ │ Dosage/Forms Table                                │ │ │

@@ -1,6 +1,6 @@
 # Task 0.5.2.11: Registry Submission List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/submissions`  
 **File:** `task-0.5.2.11-registry-submission-list.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -21,14 +21,21 @@
 │ │ Filters: [All Status ▼] [All Types ▼] [Date Range]     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Submission Deadlines                                    ││
+│   Regulatory: DMP Regulation Article 10 - Registry        ││
+│   Submission Requirements                                  ││
+│   [View Regulatory Framework]                              ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Entity    Type      Status          Date      Actions   ││
-│ │ ──────    ────      ──────────      ────      ──────   ││
-│ │ Company   Create    Pending         2h ago    [View]    ││
-│ │ ABC       Approval                  [Details]           ││
+│ │ Entity    Type      Status          Date      Deadline  Actions││
+│ │ ──────    ────      ──────────      ────      ────────  ──────││
+│ │ Company   Create    Pending         2h ago    ⚠️ 3d [View]    ││
+│ │ ABC       Approval                  Regulatory:[Details]││
+│ │                                    DMP Art.10            ││
 │ │                                                          ││
-│ │ Product   Update    Tier 2          1d ago    [View]    ││
-│ │ XYZ       Verified                  [Details]           ││
+│ │ Product   Update    Tier 2          1d ago    ✓ On-time[View] ││
+│ │ XYZ       Verified                  Regulatory:[Details]││
+│ │                                    DMP Art.10            ││
 │ │                                                          ││
 │ │ SKU       Create    Tier 1          3d ago    [View]    ││
 │ │ DEF       Approved                  [Details]           ││
@@ -55,12 +62,22 @@
 - **Type Filter:** Dropdown (All, Company, Product, SKU)
 - **Date Range:** Date range picker
 
-### Submissions Table
+### Submission Deadlines Banner (Fatima's Requirement)
+- **Display:** Info banner below filters
+- **Content:**
+  - **Regulatory Basis (REQUIRED):** "DMP Regulation Article 10 - Registry Submission Requirements"
+  - **Link:** "[View Regulatory Framework]" to regulatory framework document
+
+### Submissions Table (Enhanced per Fatima's Requirement)
 - **Columns:**
   - **Entity:** Entity name and type
   - **Type:** Create, Update, Delete
   - **Status:** Workflow status with badge
   - **Date:** Submission date
+  - **Deadline (Fatima's Requirement - REQUIRED):**
+    - **Regulatory Deadline Status:** "⚠️ [X]d" (days until deadline) or "✓ On-time"
+    - **Regulatory Basis:** "Regulatory: DMP Art. X" (per submission type)
+    - **Urgency Indicators:** 🔴 if <3 days, 🟡 if 3-7 days, ✓ if on-time
   - **Actions:** View, Details buttons
 - **Status Badges:**
   - Draft: Gray

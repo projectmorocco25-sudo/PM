@@ -50,6 +50,15 @@
 │                                                             │
 │ ℹ️ Critical medicines are designated by MOH Tier 1.      ││
 │    These medicines receive higher threshold multipliers.  ││
+│                                                             │
+│ Regulatory Context (Fatima's Requirement):                 ││
+│ • Critical medicine designations are regulatory           ││
+│   decisions per DMP regulations                           ││
+│ • Designations affect threshold multipliers and           ││
+│   compliance monitoring per DMP Art.15                    ││
+│ • All designation changes are logged for regulatory       ││
+│   audit (7-year retention per Law No. 09-08)             ││
+│ • [View Regulatory Framework]                              ││
 └─────────────────────────────────────────────────────────────┘
 ```
 

@@ -1,6 +1,6 @@
 # Task 0.5.8.8: Detail Inspection Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.8-detail-inspection-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -35,6 +35,10 @@
 │  │ │ Verified: February 5, 2024 (Tier 2 - Ahmed Benali)│ │ │
 │  │ │                                                   │ │ │
 │  │ │ Calculated Threshold: 1,234 units                │ │ │
+│  │ │                                                   │ │ │
+│  │ │ Regulatory Framework (Fatima's Requirement):      │ │ │
+│  │ │ Stock Level Compliance: DMP Art.15                │ │ │
+│  │ │ [View Regulatory Framework]                       │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │

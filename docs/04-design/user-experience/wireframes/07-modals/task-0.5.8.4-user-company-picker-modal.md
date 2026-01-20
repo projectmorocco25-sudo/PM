@@ -1,6 +1,6 @@
 # Task 0.5.8.4: User/Company Picker Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.4-user-company-picker-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -65,6 +65,12 @@
 │  │ │ [✓ Fatima Alami ×]                                │ │ │
 │  │ │                                                   │ │ │
 │  │ │ [Clear All]                                       │ │ │
+│  │ │                                                   │ │ │
+│  │ │ Regulatory Notice (if used for communications):   │ │ │
+│  │ │ • Selected recipients are subject to regulatory   │ │ │
+│  │ │   communication retention requirements            │ │ │
+│  │ │ • Messages sent to selected recipients are        │ │ │
+│  │ │   retained for 7 years per Law No. 09-08         │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ [Cancel]                                 [Confirm]   │ │

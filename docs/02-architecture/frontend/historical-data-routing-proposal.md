@@ -597,11 +597,29 @@ export default async function ECSExportHistoryPage() {
 ## References
 
 - **Routing Structure:** `docs/02-architecture/frontend/routing-structure.md`
-- **Role-Based UI Patterns:** `docs/02-architecture/frontend/role-based-ui-patterns.md`
-- **UI Component Specifications:** `docs/02-architecture/frontend/ui-component-specifications.md`
-- **Audit Logging Spec:** `docs/02-architecture/security/audit-logging-spec.md`
-- **RPC Functions:** `docs/02-architecture/api/rpc-functions.md`
-- **Data Retention:** 7 years (regulatory requirement)
+## Related Documents
+
+### Implementation Documents (Where Details Are Documented)
+- [routing-structure.md](./routing-structure.md) - Route definitions and Next.js App Router structure (SINGLE SOURCE OF TRUTH for routes)
+- [navigation-layout-patterns.md](./navigation-layout-patterns.md) - Navigation structure (historical data navigation items)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI patterns (role-based historical data access)
+- [ui-component-specifications.md](./ui-component-specifications.md) - UI component specifications (Timeline, DateRangePicker, ExportButton components)
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (historical data loading states)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [route-inventory.md](./route-inventory.md) - Route implementation status (historical route status)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (historical data filter forms)
+
+### Architecture & Security
+- [Security Architecture](../security/security-architecture.md) - Security architecture (RLS policies for historical data)
+- [Audit Logging Spec](../security/audit-logging-spec.md) - Audit logging specifications
+- [RPC Functions](../api/rpc-functions.md) - Database RPC function specifications (historical data access functions)
+
+### Project Management
+- [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md) - Implementation plan with historical data tasks
+
+**Note:** This proposal document is a **reference document** and decision log. Implementation details are in the specification files listed above.
 
 ---
 

@@ -26,6 +26,13 @@
 │ │ [Apply Filters] [Clear] [Export CSV]                    ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Compliance Scores                                       ││
+│    Regulatory Framework (Fatima's Requirement):            ││
+│    DMP Regulation Article [X] - Compliance Scoring         ││
+│    Legal Basis: [Citation]                                ││
+│    Compliance Requirement Reference: [Link]                ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Compliance Scores Table                                  ││
 │ │                                                          ││

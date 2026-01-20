@@ -21,6 +21,12 @@
 │ │ Search export requests...              [🔍] [Filters ▼] ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Export Control                                           ││
+│    Regulatory Basis (Fatima's Requirement):                ││
+│    DMP Regulation Article [X] - Export Control             ││
+│    Legal Authority: [Citation]                             ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Export Requests Table                       ││
 │ │          │ │                                             ││

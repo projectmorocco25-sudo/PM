@@ -2,9 +2,11 @@
 
 **Purpose:** This document defines navigation patterns, layout structures, and responsive design patterns for the PM platform.
 
-**Last Updated:** 2025-01-01  
-**Status:** ✅ Complete (Phase 0, Frontend UI/UX Gap Resolution)  
+**Last Updated:** 2026-01-12  
+**Status:** ⚠️ PARTIALLY COMPLETE - Route fixes in progress (Phase 1.1.1.FIX)  
 **Owner:** Emma (UI/UX + Next.js Frontend Specialist)
+
+**⚠️ CRITICAL:** This document is the SINGLE SOURCE OF TRUTH for navigation structure (sidebar organization, layout patterns). For route definitions, see [routing-structure.md](./routing-structure.md). For route implementation status, see [route-inventory.md](./route-inventory.md).
 
 ## Overview
 
@@ -18,21 +20,27 @@ The sidebar navigation is organized into six main sections:
    - Dashboard, Communications, History, Notifications
    - Audit (MOH Tier 1/2, Auditors only)
    - System Configuration (MOH Tier 1 only)
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete route paths
 
 2. **[Registry Management (RMM)]** - Registry Management Module
    - Overview, Companies, Products, SKUs
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete RMM route paths
 
 3. **[Value Chain Intelligence (VCI)]** - Value Chain Intelligence Module
    - Dashboard, Submissions (AAMS, MSQ, WSL), Regulatory Submission History, Compliance Trend Analysis, Thresholds, Compliance Violations, Governance, Treemap
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete VCI route paths
 
 4. **[Export Control System (ECS)]** - Export Control System Module (conditional - if active OR historical data exists)
    - Overview, Export Authorization Requests, Export Authorizations, Export Authorization History
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete ECS route paths
 
 5. **[Compliance Monitoring Center (CMC)]** - Compliance Monitoring Center Module (conditional - if active OR historical data exists)
    - Overview, Regulatory Compliance Ratings, Compliance Rating History, Compliance Disputes, Compliance Disputes History, Reports
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete CMC route paths
 
 6. **[Help & Info]** - Support and information resources
    - Support Center, FAQ, Documentation, Contact Support, System Status
+   - **Route Reference:** See [routing-structure.md](./routing-structure.md) for complete support route paths
 
 **Note:** Profile and account settings are accessed via the header user menu dropdown, not the sidebar.
 
@@ -961,11 +969,34 @@ The sidebar navigation is organized into six main sections:
 - **Columns:** 12-column grid (desktop)
 - **Gutters:** 24px (desktop), 16px (tablet)
 
-## References
+## Related Documents
 
+### Primary References
+- [routing-structure.md](./routing-structure.md) - **Route definitions and Next.js App Router structure** (SINGLE SOURCE OF TRUTH for route paths)
+- [route-inventory.md](./route-inventory.md) - Route implementation status and detailed status matrix
+- [route-naming-decision.md](./route-naming-decision.md) - Route naming conventions and standards
+
+### Supporting Documents
+- [design-system.md](./design-system.md) - Design tokens, colors, typography (used in navigation components)
+- [ui-component-specifications.md](./ui-component-specifications.md) - Component library specifications (Sidebar, Header, Breadcrumbs components)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI adaptations (role-based navigation visibility)
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (loading states for navigation)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (search forms in navigation)
+
+### Architecture & Governance
+- [System Architecture](../system-architecture.md) - System overview
+- [Security Architecture](../security/security-architecture.md) - Security details
+- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns and implementation details
+- [Regulatory Framework](../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference
+- [Compliance Requirements](../../../03-governance/compliance-requirements.md) - Detailed compliance requirements
+- [Regulatory Policies](../../../03-governance/regulatory-policies.md) - Regulatory policies and guidelines
+
+### Documentation
+- [Frontend Documentation README](./README.md) - Frontend documentation overview and navigation guide
+
+### External References
 - [Next.js Layout Documentation](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts)
 - [WCAG Navigation Guidelines](https://www.w3.org/WAI/WCAG21/quickref/#navigable)
-- [Historical Data Routing Proposal](./historical-data-routing-proposal.md) - Historical data access patterns
 
 ---
 

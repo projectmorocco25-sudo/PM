@@ -1166,6 +1166,26 @@ interface ButtonProps {
 
 ---
 
+## Related Documents
+
+### Primary References
+- [design-system.md](./design-system.md) - Design tokens (colors, typography, spacing used in all components)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (form component usage and validation patterns)
+- [state-management-ui-patterns.md](./state-management-ui-patterns.md) - State management patterns (loading, error, empty, success component usage)
+- [navigation-layout-patterns.md](./navigation-layout-patterns.md) - Navigation structure (Sidebar, Header, Breadcrumbs component specifications)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [routing-structure.md](./routing-structure.md) - Route definitions (routes that use these components)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI patterns (role-based component rendering)
+
+### External References
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
+- [Radix UI Primitives](https://www.radix-ui.com/)
+- [Lucide Icons](https://lucide.dev/)
+
+---
+
 **Last Updated:** 2025-12-31  
 **Next Steps:**
 1. Install shadcn/ui components

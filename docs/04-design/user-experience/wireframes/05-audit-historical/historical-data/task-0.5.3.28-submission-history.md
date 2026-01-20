@@ -1,6 +1,6 @@
 # Task 0.5.3.28: Submission History Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/submissions/history` (all past submissions, filterable)  
 **File:** `task-0.5.3.28-submission-history.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -18,6 +18,18 @@
 │ Home > VCI > Submissions > History                          │
 │                                                             │
 │ Submission History (All Past Submissions)                   │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Data Retention Compliance (Fatima's Requirement)         ││
+│ │                                                          ││
+│ │ Retention Status:                                        ││
+│ │ • Data retained until [date + 7 years]                  ││
+│ │ • Retention period: 7 years (regulatory minimum)        ││
+│ │ • Regulatory Basis: Law No. 09-08                       ││
+│ │ • Immutability Warning: ⚠️ Historical data cannot be   ││
+│ │   modified                                               ││
+│ │ [View Retention Policy] [View Regulatory Framework]     ││
+│ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Filters & Search                                         ││
@@ -39,9 +51,9 @@
 │ │                                                          ││
 │ │ Showing 247 submissions (2018-2024)                      ││
 │ │                                                          ││
-│ │ Type  │ Year │ Company              │ Submitted │ Status ││
-│ │ ───── │ ──── │ ─────────────────── │ ────────  │ ────── ││
-│ │ AAMS  │ 2024 │ ABC Pharmaceuticals  │ Jan 20    │ ✓ Done ││
+│ │ Type  │ Year │ Company              │ Submitted │ Regulatory│ Status ││
+│ │ ───── │ ──── │ ─────────────────── │ ────────  │ Framework │ ────── ││
+│ │ AAMS  │ 2024 │ ABC Pharmaceuticals  │ Jan 20    │ DMP Art.12│ ✓ Done ││
 │ │ MSQ   │ 2024 │ ABC Pharmaceuticals  │ Feb 15    │ ✓ Done ││
 │ │ WSL   │ 2024 │ ABC Pharmaceuticals  │ Dec 31    │ ✓ Done ││
 │ │ AAMS  │ 2024 │ XYZ Pharmaceuticals  │ Jan 18    │ ✓ Done ││
@@ -80,8 +92,12 @@
 - **Quick Filters:** Last Year, Last 3 Years, Last 7 Years, All Time
 - **Export:** Download filtered report (PDF/CSV)
 
-### Submissions Table
-- **Columns:** Type, Year, Company, Submitted Date, Status, Actions
+### Submissions Table (Enhanced per Fatima's Requirement)
+- **Columns:** Type, Year, Company, Submitted Date, Regulatory Framework, Status, Actions
+- **Regulatory Framework Column (Fatima's Requirement - REQUIRED):**
+  - **Display:** "DMP Art.[X]" or relevant regulation reference
+  - **Link:** "[View]" to regulatory framework document at time of creation
+  - **Legal Basis:** Shows legal basis applicable at time of submission creation
 - **Sortable:** Click column header to sort
 - **Status Badges:** Color-coded (✓ Done, ⏳ Pending, ❌ Rejected)
 - **Actions:** View details, Export individual submission

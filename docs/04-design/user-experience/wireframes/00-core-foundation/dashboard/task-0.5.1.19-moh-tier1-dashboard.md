@@ -1,6 +1,6 @@
 # Task 0.5.1.19: MOH Tier 1 Dashboard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/dashboard` (MOH Tier 1 role)  
 **File:** `task-0.5.1.19-moh-tier1-dashboard.png`  
 **Priority:** 🔴 Critical Foundation
@@ -79,12 +79,40 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ │ Companies:   │ │ • AAMS #12345│ │ • ABC Pharma │        ││
 │ │ 245          │ │   High       │ │   Critical   │        ││
 │ │              │ │   1h ago     │ │   2 SKUs     │        ││
-│ │ Active Subm: │ │              │ │              │        ││
-│ │ 1,234        │ │ • Threshold  │ │ • XYZ Corp   │        ││
-│ │              │ │   Medium     │ │   5 SKUs     │        ││
-│ │ [Details →] │ │   2h ago     │ │              │        ││
+│ │ Active Subm: │ │   ⚠️ 2d deadline│ │   Legal: DMP Art.15│        ││
+│ │ 1,234        │ │              │ │              │        ││
+│ │              │ │ • Threshold  │ │ • XYZ Corp   │        ││
+│ │ [Details →] │ │   Medium     │ │   5 SKUs     │        ││
+│ │              │ │   2h ago     │ │   Legal: DMP Art.12│        ││
+│ │              │ │   ⚠️ 3d deadline│ │              │        ││
 │ │              │ │              │ │              │        ││
 │ │              │ │ [View All →]│ │ [View All →]│        ││
+│ └──────────────┘ └──────────────┘ └──────────────┘        ││
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance Metrics                            ││
+│ │                                                          ││
+│ │ Legal Basis Compliance: 95% (57/60 actions)             ││
+│ │ Deadline Compliance: 92% (55/60 actions)                ││
+│ │ Regulatory Requirements: 98% (59/60 actions)            ││
+│ │                                                          ││
+│ │ [View Compliance Details]                               ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
+│ │ Module       │ │              │ │              │        ││
+│ │ Activation   │ │              │ │              │        ││
+│ │ Status       │ │              │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ ECS: 🟢 ON  │ │              │ │              │        ││
+│ │ Regulatory: ✓│ │              │ │              │        ││
+│ │ Auth: DMP Art.10│ │              │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ CMC: ⚪ OFF │ │              │ │              │        ││
+│ │ Regulatory: ⚠️│ │              │ │              │        ││
+│ │ Verify       │ │              │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │ [View Config]│ │              │ │              │        ││
 │ └──────────────┘ └──────────────┘ └──────────────┘        ││
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
@@ -708,6 +736,38 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 - **Icon:** Chevron (rotate 180° when expanded)
 - **Header:** Sticky when scrolling
 
+### Regulatory Compliance Metrics Widget (Fatima's Requirement)
+- **Layout:** Full-width card section
+- **Title:** "Regulatory Compliance Metrics"
+- **Metrics:**
+  - **Legal Basis Compliance:** "% (X/Y actions)" - % of actions with proper legal basis
+  - **Deadline Compliance:** "% (X/Y actions)" - % of actions within regulatory deadlines
+  - **Regulatory Requirements:** "% (X/Y actions)" - % of actions meeting all regulatory requirements
+- **Display:** Large numbers with percentage and count
+- **Color Coding:**
+  - Green (90-100%): Excellent compliance
+  - Yellow (70-89%): Good compliance, needs attention
+  - Red (<70%): Poor compliance, requires immediate action
+- **Action Link:** "[View Compliance Details]" to detailed compliance report
+
+### Pending Approvals Widget (Enhanced per Fatima's Requirement)
+- **Layout:** Card widget
+- **Content:** List of pending approvals
+- **Each Approval Item Shows:**
+  - **Legal Basis Verification Status (Fatima's Requirement):** "✓ Verified" or "⚠️ Needs Verification"
+  - **Regulatory Deadline Countdown (Fatima's Requirement):** "⚠️ [X]d deadline" indicator
+  - **Regulatory Requirement Checklist Status (Fatima's Requirement):** "✓ Complete" or "⚠️ Incomplete"
+- **Priority:** Sort by regulatory deadline urgency (deadline-critical first)
+
+### Module Activation Status Widget (Fatima's Requirement)
+- **Layout:** Card widget in Modules tab or Overview
+- **Content:** Status of each module (ECS, CMC)
+- **Each Module Shows:**
+  - **Status:** Active/Inactive
+  - **Regulatory Authorization (Fatima's Requirement):** "✓ Authorized per [Regulation Article]" or "⚠️ Verify Authorization"
+  - **Regulatory Basis:** "DMP Art. X" or relevant regulation
+- **Link:** "[View Config]" to system configuration page
+
 ### Pending Threshold Reversions Widget
 - **Layout:** Card widget (same size as other dashboard widgets)
 - **Title:** "Pending Threshold Reversions"
@@ -721,6 +781,7 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
     - Revert date (DD/MM/YY format)
     - Days until reversion
     - Duration type (Auto-Revert or Manual Review)
+    - **Regulatory Basis (Fatima's Requirement):** "DMP Art. X - Threshold Reversion"
     - Quick action link (Review, Confirm)
 - **Action Button:** "Review All →" (links to pending reversions list page)
 - **Color Coding:**

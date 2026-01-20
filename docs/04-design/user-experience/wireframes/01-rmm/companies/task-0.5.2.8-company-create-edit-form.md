@@ -1,6 +1,6 @@
 # Task 0.5.2.8: Company Create/Edit Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/rmm/companies/new` (create) or `/rmm/companies/[id]/edit` (edit)  
 **File:** `task-0.5.2.8-company-create-edit-form.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -60,6 +60,14 @@
 │ │                                                          ││
 │ │ ℹ️ At least one contact method (Email OR Phone) is     ││
 │ │    required for regulatory communications               ││
+│ │                                                          ││
+│ │ Regulatory Notice (Fatima's Requirement):               ││
+│ │ • Company registrations are subject to DMP regulations ││
+│ │ • All company data is retained for 7 years per         ││
+│ │   regulatory requirements (Law No. 09-08)              ││
+│ │ • Company information may be used for regulatory       ││
+│ │   enforcement actions per DMP Art. [X]                 ││
+│ │ • [View Regulatory Framework]                          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

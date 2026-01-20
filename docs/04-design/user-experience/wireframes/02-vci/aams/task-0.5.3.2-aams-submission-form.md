@@ -1,6 +1,6 @@
 # Task 0.5.3.2: AAMS Submission Form Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/aams/new` (create) or `/vci/aams/[id]/edit` (edit draft)  
 **File:** `task-0.5.3.2-aams-submission-form.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -55,8 +55,12 @@
 │ │                                                          ││
 │ │ [Save Draft] [Validate] [Submit]                        ││
 │ │                                                          ││
-│ │ ℹ️ Deadline: January 31, 2025                            ││
-│ │    Grace Period: Until February 15, 2025                ││
+│ │ ℹ️ Annual Submission Deadline                            ││
+│ │    Deadline: January 31, 2025 (15 days remaining)       ││
+│ │    Grace Period: Until February 15, 2025 (30 days total)││
+│ │    Regulatory Basis (Fatima's Requirement):             ││
+│ │    DMP Regulation Article 12 - Annual Registry Submission││
+│ │    Late Submission Penalties: [Link to penalties]       ││
 │ │    [View Regulatory Framework]                          ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘

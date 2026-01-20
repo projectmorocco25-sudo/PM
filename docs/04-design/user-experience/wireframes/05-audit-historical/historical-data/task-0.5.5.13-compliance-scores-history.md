@@ -1,6 +1,6 @@
 # Task 0.5.5.13: Compliance Scores History Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/cmc/scores/history` (historical compliance scores, filterable)  
 **File:** `task-0.5.5.13-compliance-scores-history.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -18,6 +18,18 @@
 │ Home > CMC > Scores > History                               │
 │                                                             │
 │ Compliance Scores History (All Past Scores)                 │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Data Retention Compliance (Fatima's Requirement)         ││
+│ │                                                          ││
+│ │ Retention Status:                                        ││
+│ │ • Data retained until [date + 7 years]                  ││
+│ │ • Retention period: 7 years (regulatory minimum)        ││
+│ │ • Regulatory Basis: Law No. 09-08                       ││
+│ │ • Immutability Warning: ⚠️ Historical data cannot be   ││
+│ │   modified                                               ││
+│ │ [View Retention Policy] [View Regulatory Framework]     ││
+│ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Filters & Search                                         ││

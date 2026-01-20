@@ -33,6 +33,12 @@
 │ │ Delayed: 5 (20%)                                         ││
 │ │ Critical: 2 (8%)                                         ││
 │ │                                                          ││
+│ │ Regulatory Compliance Status (Fatima's Requirement):     ││
+│ │ • Compliance Rate: 72% on schedule                      ││
+│ │ • Regulatory Requirement: Export replenishment tracking ││
+│ │ • Regulatory Basis: DMP Art. [X]                        ││
+│ │ [View Regulatory Framework]                             ││
+│ │                                                          ││
 │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐                    ││
 │ │ │ On      │ │ Delayed │ │ Critical│                    ││
 │ │ │ Schedule│ │ (1-7d)  │ │ (15+d)  │                    ││

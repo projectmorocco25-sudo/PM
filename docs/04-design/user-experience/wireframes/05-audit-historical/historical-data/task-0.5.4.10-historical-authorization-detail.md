@@ -1,6 +1,6 @@
 # Task 0.5.4.10: Historical Authorization Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/ecs/history/[id]` or `/ecs/exports/history/[id]` (historical authorization details)  
 **File:** `task-0.5.4.10-historical-authorization-detail.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -29,6 +29,13 @@
 │ │                                                          ││
 │ │ Authorization Date: January 15, 2024                     ││
 │ │ Current Status: Completed                               ││
+│ │                                                          ││
+│ │ Regulatory Compliance Notice (Fatima's Requirement):      ││
+│ │ • Historical export authorization data is retained for   ││
+│ │   7 years per regulatory requirements (Law No. 09-08)    ││
+│ │ • Data is immutable and part of regulatory audit trail  ││
+│ │ • Regulatory Framework: DMP Art.[X] - Export Control   ││
+│ │ • [View Regulatory Framework]                           ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│

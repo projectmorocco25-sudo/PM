@@ -133,6 +133,11 @@
 │                    │  folder or try      │                     │
 │                    │  again.             │                     │
 │                    │                     │                     │
+│                    │  Data Protection:   │                     │
+│                    │  Password reset requests are processed   │
+│                    │  per Law No. 09-08 (CNDP) data           │
+│                    │  protection requirements.                 │
+│                    │                     │                     │
 │                    │  [Back to Login]    │                     │
 │                    │                     │                     │
 │                    └─────────────────────┘                     │

@@ -1,6 +1,6 @@
 # Task 0.5.1.34: Audit Reports Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/audit/reports` (MOH/Auditors only)  
 **File:** `task-0.5.1.34-audit-reports.png`  
 **Priority:** 🔴 Critical Foundation
@@ -46,10 +46,13 @@
 │ │ Date Range: [Start Date] to [End Date]                 ││
 │ │ Format: ☑ PDF  ☐ CSV                                   ││
 │ │                                                          ││
-│ │ ℹ️ Compliance Notice:                                   ││
-│ │ Reports generated in compliance with Law No. 09-08     ││
-│ │ (CNDP) and DMP regulations. Reports are retained for   ││
-│ │ minimum 7 years per regulatory requirements.            ││
+│ │ ℹ️ Compliance Notice (Enhanced per Fatima's Requirement):││
+│ │ Reports generated in compliance with:                  ││
+│ │ • Law No. 09-08 (CNDP) - Data Protection              ││
+│ │ • DMP Regulations - Audit Trail Requirements           ││
+│ │ • Retention Period: Minimum 7 years (regulatory requirement)││
+│ │ • Immutability: Historical reports cannot be modified  ││
+│ │ • Regulatory Framework: DMP Art. [X] - Audit Reports  ││
 │ │ [View Regulatory Framework]                            ││
 │ │                                                          ││
 │ │ [Cancel]                                    [Generate]  ││

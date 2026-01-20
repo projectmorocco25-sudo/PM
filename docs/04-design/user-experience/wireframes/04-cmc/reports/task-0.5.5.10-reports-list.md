@@ -26,6 +26,15 @@
 │ │ [Apply Filters] [Clear] [Generate New Report]          ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ Compliance Reports                                      ││
+│    Regulatory Metrics (Fatima's Requirement):              ││
+│    Reports must include:                                    ││
+│    • Legal basis compliance rate                            ││
+│    • Deadline compliance rate                               ││
+│    • Regulatory requirement compliance                      ││
+│    • Regulatory framework references                        ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Compliance Reports Table                                 ││
 │ │                                                          ││

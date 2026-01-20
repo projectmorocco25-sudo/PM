@@ -1,6 +1,6 @@
 # Task 0.5.1.18: Company Dashboard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/dashboard` (Company role)  
 **File:** `task-0.5.1.18-company-dashboard.png`  
 **Priority:** 🔴 Critical Foundation
@@ -33,6 +33,16 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │ [Overview] [Submissions] [Enforcement] [Activity]        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance Status                             ││
+│ │                                                          ││
+│ │ Status: ⚠️ Non-Compliant (2 violations)                  ││
+│ │ Active Enforcement Actions: 2                            ││
+│ │ Required Actions: 1 (Appeal deadline approaching)        ││
+│ │                                                          ││
+│ │ [View Detailed Compliance Status]                        ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ My Submissions│ │ Pending      │ │ Recent Activity│      ││
 │ │              │ │ Approvals    │ │              │        ││
@@ -41,31 +51,38 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │ Recent:      │ │ • Product ABC│ │   Approved   │        ││
 │ │ • Product XYZ│ │   High       │ │   2h ago     │        ││
 │ │   Submitted  │ │   1h ago     │ │              │        ││
-│ │   1 day ago  │ │              │ │ • Submission │        ││
-│ │              │ │ • Product DEF│ │   #12346     │        ││
-│ │ • Product ABC│ │   Medium     │ │   Pending    │        ││
-│ │   Approved   │ │   2h ago     │ │   5h ago     │        ││
-│ │   2 days ago │ │              │ │              │        ││
-│ │              │ │ • Product GHI│ │ • New Message│        ││
-│ │ [View All →]│ │   Low        │ │   from MOH   │        ││
-│ │              │ │   3h ago     │ │   1 day ago  │        ││
+│ │   1 day ago  │ │   ⚠️ 2d deadline│ │ • Submission │        ││
+│ │              │ │              │ │   #12346     │        ││
+│ │ • Product ABC│ │ • Product DEF│ │   Pending    │        ││
+│ │   Approved   │ │   Medium     │ │   5h ago     │        ││
+│ │   2 days ago │ │   2h ago     │ │              │        ││
+│ │              │ │   ⚠️ 3d deadline│ │ • New Message│        ││
+│ │ [View All →]│ │              │ │   from MOH   │        ││
+│ │              │ │ • Product GHI│ │   1 day ago  │        ││
+│ │              │ │   Low        │ │              │        ││
+│ │              │ │   3h ago     │ │ [View All →]│        ││
 │ │              │ │              │ │              │        ││
-│ │              │ │ [View All →]│ │ [View All →]│        ││
+│ │              │ │ [View All →]│ │              │        ││
 │ └──────────────┘ └──────────────┘ └──────────────┘        ││
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Enforcement Actions (My Company)            [Collapse]  ││
+│ │ Active Enforcement Actions (My Company)      [Collapse]  ││
 │ │                                                          ││
 │ │ ⚠️ Warning - Submission Non-Compliance                  ││
 │ │   Status: Executed  Date: 2 days ago                    ││
 │ │   Violation: WSL submission overdue                      ││
-│ │   [View Details] [Appeal] (30 days remaining)           ││
-│ │   Appeal Period: 30 calendar days (per DMP regulations)││
+│ │   Legal Basis: DMP Regulation Article 12 - Non-Compliance││
+│ │   Appeal Deadline: 🔴 28 days remaining (Due: [date])   ││
+│ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
+│ │   Action Required: Submit appeal before deadline        ││
+│ │   [View Details] [Appeal]                                ││
 │ │                                                          ││
 │ │ ⚠️ Warning - Critical Medicine Non-Compliance          ││
 │ │   Status: Executed  Date: 1 week ago                   ││
 │ │   Violation: Critical medicine stock below threshold    ││
-│ │   [View Details] [Appeal Expired]                       ││
+│ │   Legal Basis: DMP Regulation Article 15                ││
+│ │   Appeal Window: Closed                                  ││
+│ │   [View Details]                                         ││
 │ │                                                          ││
 │ │ [View All Enforcement Actions →]                        ││
 │ └─────────────────────────────────────────────────────────┘│
@@ -108,6 +125,8 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │ │ Submission #12345  Product XYZ  [Pending]               ││
 │ │   Type: WSL  Submitted: 1 day ago                       ││
 │ │   Status: Awaiting Verification                          ││
+│ │   Submission Deadline: Due 2025-01-15 (3 days remaining)││
+│ │   Regulatory: DMP Art. 12 - Weekly Submission          ││
 │ │   [View Details] [Edit] [Withdraw]                      ││
 │ │                                                          ││
 │ │ Submission #12344  Product ABC  [Approved] ✓            ││
@@ -271,7 +290,10 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │     │ Type: Warning                                     │  │
 │     │ Violation: WSL submission overdue (2 weeks)      │  │
 │     │ Executed: 2 days ago                              │  │
-│     │ Appeal Deadline: 28 days remaining                │  │
+│     │ Legal Basis: DMP Regulation Article 12            │  │
+│     │ Appeal Deadline: 🔴 28 days remaining              │  │
+│     │ (Deadline: [Date + 30 days from execution])       │  │
+│     │ Regulatory: Law No. 09-08 - 30-day appeal window  │  │
 │     │                                                   │  │
 │     │ Grounds for Appeal:                               │  │
 │     │ ┌───────────────────────────────────────────────┐│  │
@@ -386,8 +408,8 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │     │ • Reference: Submission Period Week 1-2, 2025     │  │
 │     │                                                   │  │
 │     │ Legal Basis:                                      │  │
-│     │ Article 12, Section 3 of the Pharmaceutical       │  │
-│     │ Regulation Act                                    │  │
+│     │ DMP Regulation Article 12 - Non-Compliance        │  │
+│     │ Regulatory Framework: [Link to DMP Regulation]    │  │
 │     │                                                   │  │
 │     │ Justification:                                    │  │
 │     │ Company failed to submit required WSL report      │  │
@@ -402,7 +424,9 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 │     │                                                   │  │
 │     │ Appeal Information:                               │  │
 │     │ • Appeal Deadline: 2025-02-03 (28 days remaining)│  │
+│     │ • Appeal Window: 🔴 Open (Law No. 09-08)         │  │
 │     │ • Appeal Status: Not Appealed                     │  │
+│     │ • Regulatory: 30-day appeal window per Law No. 09-08│ │
 │     │                                                   │  │
 │     │ [Download PDF] [Print] [Appeal] [Close]          │  │
 │     └───────────────────────────────────────────────────┘  │
@@ -446,6 +470,41 @@ This dashboard uses **modals** for quick actions to maintain context and optiona
 - **Shadow:** Large elevation shadow
 - **Animation:** Slide up + fade in 200ms
 - **Padding:** 24px
+
+### Regulatory Compliance Status Widget (Fatima's Requirement)
+- **Layout:** Full-width card section at top of Overview tab
+- **Content:**
+  - **Status Badge:** "✓ Compliant" (green), "⚠️ Non-Compliant ([X] violations)" (red), or "🟡 Under Review" (yellow)
+  - **Active Enforcement Actions Count:** Number of active enforcement actions
+  - **Required Actions:** Count of actions requiring immediate attention (e.g., appeal deadlines approaching)
+  - **Link:** "[View Detailed Compliance Status]" to full compliance page
+- **Styling:** Prominent card with color-coded status badge
+- **Display:** Always visible for Company users (regulatory transparency requirement)
+
+### Active Enforcement Actions Widget (Fatima's Requirement)
+- **Layout:** Full-width card section (prominent placement)
+- **Content:** List of active enforcement actions against the company
+- **Each Enforcement Action Shows:**
+  - **Action Type:** Warning, Fine, or Suspension (with icon)
+  - **Legal Basis (REQUIRED):** "Legal Basis: DMP Regulation Article X"
+  - **Appeal Deadline Tracking (REQUIRED):**
+    - "🔴 Appeal Deadline: [X] days remaining (Due: [date])" (if appeal window open)
+    - "Appeal Window: Closed" (if closed)
+    - Urgency indicator (🔴 if <7 days, 🟡 if 7-14 days, 🟢 if >14 days)
+  - **Regulatory Framework Reference:** "Regulatory: Law No. 09-08 - 30-day appeal window"
+  - **Action Required:** What the company must do
+  - **Status:** Current status (Executed, Appealed, etc.)
+  - **Links:** "[View Details]", "[Appeal]"
+- **Display:** Prominent section (regulatory transparency requirement)
+
+### Submission Deadline Tracking (Fatima's Requirement)
+- **Location:** Submission list items and Upcoming Deadlines widget
+- **Content:** Each submission deadline must show:
+  - **Deadline Date:** "Due: [date] ([X] days remaining)"
+  - **Regulatory Reference (REQUIRED):** "Regulatory: DMP Art. X - [Description]"
+  - **Urgency Indicators:** 🔴 if <3 days, 🟡 if 3-7 days
+  - **Grace Period Information:** If applicable, show grace period
+  - **Penalties:** Late submission penalties (if applicable)
 
 ### Card Component
 - **Background:** White

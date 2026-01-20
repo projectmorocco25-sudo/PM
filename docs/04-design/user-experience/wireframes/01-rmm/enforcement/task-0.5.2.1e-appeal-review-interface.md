@@ -1,6 +1,6 @@
 # Task 0.5.2.1e: Appeal Review Interface Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/actions/[id]/appeal/review` (MOH Tier 1 only)  
 **File:** `task-0.5.2.1e-appeal-review-interface.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -26,8 +26,11 @@
 │ │ Violation: Submission Non-Compliance                    ││
 │ │ Executed: 2 days ago                                    ││
 │ │                                                          ││
-│ │ Legal Basis: Article 12, Section 3                      ││
+│ │ Legal Basis (Fatima's Requirement):                      ││
+│ │ DMP Regulation Article [X], Section [Y]                ││
+│ │ Regulatory Framework Reference: [Citation]             ││
 │ │ Justification: [View Full Justification]                ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -35,7 +38,9 @@
 │ │                                                          ││
 │ │ Submitted: 1 day ago                                   ││
 │ │ Submitted by: Company Admin - John Doe                  ││
-│ │ Appeal Deadline: 28 days remaining                      ││
+│ │ Appeal Deadline: ⏱ 28 days remaining                   ││
+│ │ Regulatory Basis: Law No. 09-08 - 30-day appeal window ││
+│ │ Appeal Deadline Date: [Date + 30 days from execution]  ││
 │ │                                                          ││
 │ │ Grounds for Appeal: Technical Error                    ││
 │ │                                                          ││
@@ -81,6 +86,19 @@
 │ │                                                          ││
 │ │ Character count: 0 / 50 minimum                         ││
 │ │                                                          ││
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Requirement Checklist (Fatima's Requirement) ││
+│ │                                                          ││
+│ │ ☑ Legal Basis for Appeal Review: DMP Art. [X]          ││
+│ │ ☑ Legal Authority Verification: ✓ Verified             ││
+│ │ ☑ Regulatory Requirements Met                           ││
+│ │ ☑ Compliance Verification Complete                     ││
+│ │                                                          ││
+│ │ ⚠️ Review decision blocked if regulatory checklist      ││
+│ │    incomplete                                            ││
+│ │ [View Regulatory Framework]                             ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ │ ℹ️ Justification must align with DMP regulations.   ││
 │ │    [View Regulatory Framework]                         ││
 │ └─────────────────────────────────────────────────────────┘│

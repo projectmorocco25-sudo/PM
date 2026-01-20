@@ -1,6 +1,6 @@
 # Task 0.5.8.1: Confirmation Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.1-confirmation-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -40,6 +40,11 @@
 │  │ │ • Item: Submission #2024-001                       │ │ │
 │  │ │ • Status: Draft                                    │ │ │
 │  │ │ • This action cannot be undone.                    │ │ │
+│  │ │                                                     │ │ │
+│  │ │ Regulatory Notice (for enforcement/approval actions):│ │ │
+│  │ │ ⚠️ This action will be logged in the audit trail  │ │ │
+│  │ │    and retained for 7 years per regulatory        │ │ │
+│  │ │    requirements. Legal basis: DMP Art. [X]        │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ [Cancel]                    [Confirm / Delete / ...]  │ │

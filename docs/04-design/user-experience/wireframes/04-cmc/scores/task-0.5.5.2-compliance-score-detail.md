@@ -27,6 +27,8 @@
 │ │ Published: January 2, 2025                               ││
 │ │                                                          ││
 │ │ Dispute Window: 30 days (27 days remaining) ⏱          ││
+│ │ Regulatory Basis: Law No. 09-08 - 30-day appeal window ││
+│ │ Appeal Deadline: [Date + 30 days from publication]     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -46,7 +48,9 @@
 │ │ └─────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
 │ │ [For Companies: Dispute Window Countdown]               ││
-│ │ ⏱ You have 27 days remaining to dispute this score     ││
+│ │ ⏱ You have 🔴 27 days remaining to dispute this score  ││
+│ │ Appeal Deadline: [Date] (Prominently displayed)        ││
+│ │ Regulatory Basis: Law No. 09-08 - 30-day appeal window ││
 │ │ [Create Dispute]                                        ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │

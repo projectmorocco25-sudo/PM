@@ -1,6 +1,6 @@
 # Task 0.5.8.5: Export Options Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.5-export-options-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -32,6 +32,13 @@
 │  │ │ ( ) JSON - JavaScript Object Notation             │ │ │
 │  │ │                                                   │ │ │
 │  │ │ ℹ️ PDF recommended for regulatory reports          │ │ │
+│  │ │                                                      │ │ │
+│  │ │ Regulatory Compliance Notice (Fatima's Requirement):│ │ │
+│  │ │ • Exported reports contain data subject to Law      │ │ │
+│  │ │   No. 09-08 (CNDP) data protection requirements    │ │ │
+│  │ │ • Reports are retained for minimum 7 years          │ │ │
+│  │ │ • Handle exported data per regulatory guidelines    │ │ │
+│  │ │ [View Regulatory Framework]                         │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │

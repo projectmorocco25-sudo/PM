@@ -1,6 +1,6 @@
 # Task 0.5.2.0: Enforcement Dashboard Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement` (MOH Tier 1 and Tier 2 only)  
 **File:** `task-0.5.2.0-enforcement-dashboard.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -22,18 +22,29 @@
 │ │                 │ │ Approvals       │ │ Metrics         ││
 │ │ 15              │ │ 8               │ │                 ││
 │ │                 │ │ [Gauge: 80%]   │ │ • Warnings: 45  ││
-│ │ Recent:         │ │ Urgency: High  │ │ • Fines: 12     ││
+│ │ Recent:         │ │ 🔴 Urgency: High│ │ • Fines: 12     ││
 │ │ • Warning - XYZ │ │                 │ │ • Suspensions: 3││
-│ │   Executed      │ │ • Fine - ABC    │ │                 ││
-│ │   2 hours ago   │ │   $5,000        │ │ • Total: 60     ││
-│ │                 │ │ • Suspension    │ │                 ││
-│ │ • Fine - ABC    │ │   - DEF         │ │ [View Reports] ││
-│ │   $5,000        │ │ • Warning - GHI │ │                 ││
-│ │   Executed      │ │                 │ │                 ││
-│ │   1 day ago     │ │ [View all →]   │ │                 ││
+│ │   DMP Art.12    │ │ • Fine - ABC    │ │                 ││
+│ │   Executed      │ │   $5,000        │ │ • Total: 60     ││
+│ │   2 hours ago   │ │   ⚠️ 3d deadline│ │                 ││
+│ │                 │ │ • Suspension    │ │ [View Reports] ││
+│ │ • Fine - ABC    │ │   - DEF         │ │                 ││
+│ │   $5,000        │ │   ⚠️ 1d deadline│ │                 ││
+│ │   Executed      │ │ • Warning - GHI │ │                 ││
+│ │   1 day ago     │ │   ✓ 7d remaining│ │                 ││
 │ │                 │ │                 │ │                 ││
-│ │ [View all →]   │ │                 │ │                 ││
+│ │ [View all →]   │ │ [View all →]   │ │                 ││
 │ └─────────────────┘ └─────────────────┘ └─────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance Widget                             ││
+│ │                                                          ││
+│ │ Legal Basis Compliance: 95% (57/60 actions)             ││
+│ │ Deadline Compliance: 92% (55/60 actions)                ││
+│ │ Regulatory Requirements: 98% (59/60 actions)            ││
+│ │                                                          ││
+│ │ [View Compliance Details]                               ││
+│ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Enforcement Trends (Last 30 Days)                        ││
@@ -72,11 +83,22 @@
 │ │ [Horizontal Bar Chart - Sorted by frequency]            ││
 │ │                                                          ││
 │ │ Submission Non-Compliance      ████████████ 25         ││
+│ │ (DMP Art.12) [View Regulation]                          ││
+│ │                                                          ││
 │ │ Threshold Breach               ██████████ 18           ││
+│ │ (DMP Art.15) [View Regulation]                          ││
+│ │                                                          ││
 │ │ Critical Medicine Non-Compl.   █████ 8                 ││
+│ │ (DMP Art.8) [View Regulation]                           ││
+│ │                                                          ││
 │ │ Export Violation              ███ 5                     ││
+│ │ (DMP Art.20) [View Regulation]                          ││
+│ │                                                          ││
 │ │ Data Quality Issue            ██ 3                     ││
+│ │ (DMP Art.10) [View Regulation]                          ││
+│ │                                                          ││
 │ │ Repeated Offender             █ 1                      ││
+│ │ (DMP Art.15) [View Regulation]                          ││
 │ │                                                          ││
 │ │ [Click bar to filter by violation type]                ││
 │ │ [View All Violations]                                   ││
@@ -129,10 +151,15 @@
     - Red (76-100%): High urgency
   - **Threshold Indicator:** Visual line showing threshold (e.g., 10 pending)
   - **Typography:** "Urgency: High" label below gauge
-- **Pending Actions List:**
+- **Pending Actions List (Enhanced per Fatima's Requirement):**
   - **Format:** List items with action type, company, amount (if fine), priority
+  - **Legal Basis Display (Fatima's Requirement):** Shows regulation article (e.g., "DMP Art.12") in each item
+  - **Approval Deadline Tracking (Fatima's Requirement):**
+    - "⚠️ [X]d deadline" indicator for actions with approaching deadlines
+    - Urgency indicator: 🔴 if <3 days, 🟡 if 3-7 days, 🟢 if >7 days
+  - **Legal Basis Verification Status (Fatima's Requirement):** "✓ Verified" or "⚠️ Needs Verification" indicator
   - **Max Items:** 3-5 pending items
-  - **Item Height:** 64px
+  - **Item Height:** 64px (may expand for regulatory info)
   - **Spacing:** 8px between items
   - **Priority Indicator:** Visual indicator for high-priority items
 - **Action Link:** "View all →" (bottom of widget)
@@ -152,6 +179,21 @@
 - **Action Button:** "View Reports" (bottom of widget)
   - **Button Style:** Secondary button
   - **Click Action:** Navigate to `/enforcement/reports`
+
+### Regulatory Compliance Widget (Fatima's Requirement)
+- **Layout:** Full-width card section below top widget row
+- **Title:** "Regulatory Compliance Widget"
+- **Metrics:**
+  - **Legal Basis Compliance:** "% (X/Y actions)" - % of actions with proper legal basis
+  - **Deadline Compliance:** "% (X/Y actions)" - % of actions within regulatory deadlines
+  - **Regulatory Requirements:** "% (X/Y actions)" - % of actions meeting all regulatory requirements
+- **Display:** Large numbers with percentage and count
+- **Color Coding:**
+  - Green (90-100%): Excellent compliance
+  - Yellow (70-89%): Good compliance, needs attention
+  - Red (<70%): Poor compliance, requires immediate action
+- **Action Link:** "[View Compliance Details]" to detailed compliance report
+- **Styling:** Prominent card with compliance metrics
 
 ### Enforcement Trends Section (NEW)
 - **Title:** "Enforcement Trends (Last 30 Days)"
@@ -225,6 +267,8 @@
     - **Option 2:** Color-coded by severity (red for critical, orange for medium, blue for low)
   - **Data Display:**
     - **Labels:** Violation type name (left-aligned)
+    - **Regulatory Reference (Fatima's Requirement):** Each violation type shows "(DMP Art.[X])" below the label
+    - **Link to Regulation (Fatima's Requirement):** "[View Regulation]" link next to each violation type
     - **Bars:** Proportional to count (scaled to max value)
     - **Values:** Count displayed at end of bar (right-aligned)
   - **Chart Data (Always Available):**

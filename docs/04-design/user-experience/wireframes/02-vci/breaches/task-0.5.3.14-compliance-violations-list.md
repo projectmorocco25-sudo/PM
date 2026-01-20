@@ -1,6 +1,6 @@
 # Task 0.5.3.14: Compliance Violations List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/breaches` or `/vci/compliance-violations`  
 **File:** `task-0.5.3.14-compliance-violations-list.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -26,10 +26,10 @@
 │ │          │ │                                             ││
 │ │ Status   │ │ Priority SKU      Product      Status    Enforcement││
 │ │ ☐ All    │ │          Code     Description             Action    ││
-│ │ ☑ Active │ │ ──────── ──────   ──────────── ──────── ────────── ││
-│ │ ☐ Resolv.│ │ 🔴 High  SKU002   Product B /  Active    ⚠️ ENF-001││
-│ │          │ │          (Critical 250mg /      [Analyze] [View →] ││
-│ │ Priority │ │          Medicine) Capsule                ││
+│ │ ☑ Active │ │ ──────── ──────   ──────────── ──────── ──────────────── ────────── ││
+│ │ ☐ Resolv.│ │ 🔴 High  SKU002   Product B /  Active    DMP Art.15    ⚠️ ENF-001││
+│ │          │ │          (Critical 250mg /      [Analyze] Regulation    [View →] ││
+│ │ Priority │ │          Medicine) Capsule                Article [X]            ││
 │ │ ☐ All    │ │                                             ││
 │ │ ☑ High   │ │ 🟡 Med   SKU003   Product C /  Active    -         ││
 │ │ ☐ Medium │ │          100mg /   [Analyze]              ││
@@ -48,9 +48,17 @@
 │ │ [Clear]  │ │ ☑ Select All  [Bulk Analyze]             ││
 │ └──────────┘ └───────────────────────────────────────────┘│
 │                                                             │
-│ ℹ️ Compliance violations are automatically detected from ││
+│ ℹ️ Compliance Violations                                   ││
+│    Compliance violations are automatically detected from ││
 │    WSL submissions when stock levels fall below threshold. ││
-│    [View Regulatory Framework]                            ││
+│                                                             │
+│    Regulatory Basis (Fatima's Requirement):               ││
+│    Each violation must cite the regulation violated:       ││
+│    • DMP Regulation Article [X] - Stock Level Compliance   ││
+│    • Regulatory Requirement: [Description]                 ││
+│    • Enforcement Action Authority: [Legal basis]           ││
+│                                                             │
+│    [View Regulatory Framework]                             ││
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -100,7 +108,7 @@
 - **Style:** Secondary button
 - **Action:** Resets all filters to default
 
-### Violations Table
+### Violations Table (Enhanced per Fatima's Requirement)
 - **Layout:** Full-width table with horizontal scroll on mobile
 - **Columns:**
   1. **Priority:** Priority indicator with badge (🔴 High, 🟡 Medium, 🟢 Low)
@@ -112,7 +120,12 @@
     - Sortable: Sort by date to prioritize by expected resolution
     - Tooltip: Shows full date on hover (e.g., "25/01/2025")
   5. **Status:** Status badge with color coding
-  6. **Enforcement Action:** Enforcement action indicator (if created):
+  6. **Legal Basis (Fatima's Requirement - REQUIRED):**
+    - **Display:** "DMP Art.[X]" or "DMP Regulation Article [X]"
+    - **Link:** "[View →]" to regulatory framework document
+    - **Regulatory Requirement:** Shows which regulation was violated
+    - **Enforcement Action Authority:** Legal basis for enforcement actions
+  7. **Enforcement Action:** Enforcement action indicator (if created):
     - **Display:** Action type icon + Action ID (e.g., "⚠️ ENF-001")
     - **Link:** "View →" button to navigate to enforcement action detail
     - **Empty State:** Shows "-" if no enforcement action created

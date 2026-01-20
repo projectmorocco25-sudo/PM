@@ -1,6 +1,6 @@
 # Task 0.5.1.28: System Announcements Interface Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/communications/announcements` (MOH Tier 1 only)  
 **File:** `task-0.5.1.28-system-announcements.png`  
 **Priority:** 🔴 Critical Foundation
@@ -47,6 +47,13 @@
 │ │                                                          ││
 │ │ Broadcast Date/Time                                      ││
 │ │ [Date picker] [Time picker]  ☐ Schedule for later     ││
+│ │                                                          ││
+│ │ Regulatory Notice (Fatima's Requirement):                ││
+│ │ • Announcements are retained for 7 years per            ││
+│ │   regulatory requirements (Law No. 09-08)               ││
+│ │ • Announcements become part of communication audit      ││
+│ │   trail                                                  ││
+│ │ • [View Regulatory Framework]                           ││
 │ │                                                          ││
 │ │ [Cancel]                                    [Broadcast] ││
 │ └─────────────────────────────────────────────────────────┘│

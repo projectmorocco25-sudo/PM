@@ -1,6 +1,6 @@
 # Task 0.5.3.6: Threshold Modification Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (triggered from threshold management or detail page)  
 **File:** `task-0.5.3.6-threshold-modification-modal.png`  
 **Priority:** 🔴 Critical VCI Workflows
@@ -25,6 +25,20 @@
 │         │ │ Product: Product A / 500mg / Tablet     ││     │
 │         │ │ Current Threshold: 1,234 units           ││     │
 │         │ │ Current Multiplier: 1.0x (default)       ││     │
+│         │ └─────────────────────────────────────────┘│     │
+│         │                                             │     │
+│         │ ┌─────────────────────────────────────────┐│     │
+│         │ │ Regulatory Authorization Verification     ││     │
+│         │ │ (Fatima's Requirement)                    ││     │
+│         │ │                                          ││     │
+│         │ │ ☑ Regulatory Authorization: DMP Art. [X]││     │
+│         │ │ ☑ Legal Authority: Tier 1 Verified       ││     │
+│         │ │ ☑ Approval Workflow Compliance: ✓        ││     │
+│         │ │ ☑ Stakeholder Notification: Required      ││     │
+│         │ │                                          ││     │
+│         │ │ ⚠️ Modification blocked if authorization ││     │
+│         │ │    not verified                            ││     │
+│         │ │ [View Regulatory Framework]               ││     │
 │         │ └─────────────────────────────────────────┘│     │
 │         │                                             │     │
 │         │ ┌─────────────────────────────────────────┐│     │

@@ -46,6 +46,13 @@
 │                                                             │
 │ ℹ️ ATC codes are MOH-controlled and read-only.            ││
 │    These codes are used for product classification.       ││
+│                                                             │
+│ Regulatory Context (Fatima's Requirement):                 ││
+│ • ATC codes are used for regulatory product classification ││
+│   per DMP Art.15                                           ││
+│ • All ATC code data is retained for regulatory audit      ││
+│   (7-year minimum per Law No. 09-08)                      ││
+│ • [View Regulatory Framework]                              ││
 └─────────────────────────────────────────────────────────────┘
 ```
 

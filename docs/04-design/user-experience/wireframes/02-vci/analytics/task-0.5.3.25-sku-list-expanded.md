@@ -1,6 +1,6 @@
 # Task 0.5.3.25: SKU List Expanded View Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (Level 4 - no route change, opened from Dosage/Forms Modal)  
 **File:** `task-0.5.3.25-sku-list-expanded.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -27,6 +27,10 @@
 │  │                                                       │ │
 │  │ ⓘ This view shows all SKUs with compliance data.     │ │
 │  │    Click SKU to open full detail page in new tab.     │ │
+│  │                                                       │ │
+│  │ Regulatory Framework (Fatima's Requirement):          │ │
+│  │ Stock Level Compliance: DMP Art.15                    │ │
+│  │ [View Regulatory Framework]                           │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │
 │  │ │ SKU Compliance Table                              │ │ │

@@ -1,6 +1,6 @@
 # Task 0.5.2.1: Enforcement Actions List Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/actions` (MOH Tier 1 and Tier 2 only)  
 **File:** `task-0.5.2.1-enforcement-actions-list.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -24,17 +24,20 @@
 │ ┌──────────┐ ┌───────────────────────────────────────────┐│
 │ │ Filters  │ │ Actions Table                              ││
 │ │          │ │                                             ││
-│ │ Type     │ │ Type  Company  Violation  Amount  Status  ││
-│ │ ☐ All    │ │ ────  ───────  ─────────  ──────  ────── ││
-│ │ ☑ Warning│ │ ⚠️    ABC Inc   Submission  -      Executed││
-│ │ ☐ Fine   │ │       Pharma   Non-Compl.        2h ago   ││
-│ │ ☐ Susp.  │ │                                             ││
-│ │          │ │ 💰    XYZ Ltd  Threshold  5,000  Pending ││
-│ │ Status   │ │       Pharma   Breach     MAD    Approval ││
-│ │ ☐ All    │ │                                             ││
-│ │ ☑ Pending│ │ 🚫    DEF Co   Critical   -      Executed││
-│ │ ☐ Executed│ │       Pharma   Medicine         1d ago   ││
-│ │ ☐ Appealed│ │                  Non-Compl.               ││
+│ │ Type     │ │ Type  Company  Violation  Legal Basis  Amount  Status  ││
+│ │ ☐ All    │ │ ────  ───────  ─────────  ───────────  ──────  ────── ││
+│ │ ☑ Warning│ │ ⚠️    ABC Inc   Submission  DMP Art.12  -      Executed││
+│ │ ☐ Fine   │ │       Pharma   Non-Compl.              2h ago   ││
+│ │ ☐ Susp.  │ │                  🔴 Appeal: 23d remaining             ││
+│ │          │ │                                             ││
+│ │ Status   │ │ 💰    XYZ Ltd  Threshold   DMP Art.15  5,000  Pending ││
+│ │ ☐ All    │ │       Pharma   Breach     ✓ Within     MAD    Approval ││
+│ │ ☑ Pending│ │                  limit                    ││
+│ │ ☐ Executed│ │                  ⚠️ Approval deadline: 3d remaining   ││
+│ │ ☐ Appealed│ │                                             ││
+│ │          │ │ 🚫    DEF Co   Critical   DMP Art.12  -      Executed││
+│ │          │ │       Pharma   Medicine                1d ago   ││
+│ │          │ │                  Non-Compl.  ✓ Compliant      ││
 │ │          │ │                                             ││
 │ │ Company  │ │ ⚠️    GHI Inc   Export      -      Executed││
 │ │ ☐ All    │ │       Pharma   Violation         3d ago   ││
@@ -86,6 +89,13 @@
 - **Company Filter:**
   - Multi-select dropdown or checkboxes
   - Shows list of companies with actions
+- **Legal Basis Filter (Fatima's Requirement):**
+  - Dropdown/checkboxes: Filter by regulation article (DMP Art. 12, Art. 15, etc.)
+  - Shows all legal bases used in enforcement actions
+- **Regulatory Deadline Filter (Fatima's Requirement):**
+  - Options: All, Deadline Critical (<7 days), Deadline Approaching (7-14 days), Deadline Safe (>14 days), No Deadline
+- **Appeal Status Filter (Fatima's Requirement):**
+  - Options: All, Appeal Window Open, Appeal Submitted, Appeal Under Review, Appeal Closed
 - **Date Range Filter:**
   - Quick filters: Last 7 days, Last 30 days, Custom
   - Custom: Date range picker
@@ -95,15 +105,26 @@
 - **Style:** Secondary button
 - **Action:** Resets all filters to default
 
-### Actions Table
+### Actions Table (Enhanced per Fatima's Requirements)
 - **Layout:** Full-width table with horizontal scroll on mobile
 - **Columns:**
   1. **Type:** Icon + text (⚠️ Warning, 💰 Fine, 🚫 Suspension)
   2. **Company:** Company name (link to company detail)
   3. **Violation:** Violation type (truncated if long)
-  4. **Amount:** Fine amount (MAD) or "-" for warnings/suspensions
-  5. **Status:** Status badge with color coding
-  6. **Date:** Relative time (e.g., "2h ago", "1d ago")
+  4. **Legal Basis (Fatima's Requirement - REQUIRED):** 
+     - Regulation article (e.g., "DMP Art.12")
+     - Must be visible in list view (regulatory requirement)
+     - Tooltip on hover shows full article description
+  5. **Amount:** Fine amount (MAD) or "-" for warnings/suspensions
+     - **Regulatory Limit Validation (Fatima's Requirement):** 
+       - "✓ Within regulatory limits" (green) or "⚠️ Verify regulatory limit" (yellow) for fines
+       - Tooltip shows regulatory maximum
+  6. **Status:** Status badge with color coding
+     - **Enhanced with Regulatory Context (Fatima's Requirement):**
+       - Deadline indicator (if applicable): "⚠️ Approval deadline: [X]d remaining"
+       - Appeal window status: "🔴 Appeal: [X]d remaining" or "✓ Appeal window closed"
+       - Regulatory compliance indicator: "✓ Compliant" or "⚠️ Review Required"
+  7. **Date:** Relative time (e.g., "2h ago", "1d ago")
 
 **Table Features:**
 - **Sortable Columns:** Type, Company, Date (click header to sort)

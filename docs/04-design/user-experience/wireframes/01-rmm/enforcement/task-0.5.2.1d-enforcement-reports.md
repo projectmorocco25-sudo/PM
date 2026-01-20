@@ -1,6 +1,6 @@
 # Task 0.5.2.1d: Enforcement Reports Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/enforcement/reports` (MOH Tier 1 and Tier 2 only)  
 **File:** `task-0.5.2.1d-enforcement-reports.png`  
 **Priority:** 🔴 Core RMM Workflows
@@ -26,13 +26,24 @@
 │ │                 │ │                  │ │ Type            ││
 │ │       60        │ │                  │ │                 ││
 │ │                 │ │  Warning: 45     │ │ Submission: 25  ││
-│ │ ↗ +12% vs last │ │  Fine: 12        │ │ Threshold: 18   ││
-│ │    period       │ │  Suspension: 3    │ │ Critical: 8     ││
+│ │ ↗ +12% vs last │ │  Fine: 12        │ │ (DMP Art.12)    ││
+│ │    period       │ │  Suspension: 3    │ │ Threshold: 18   ││
+│ │                 │ │                  │ │ (DMP Art.15)    ││
+│ │                 │ │ [Chart: Pie]     │ │ Critical: 8     ││
+│ │                 │ │                  │ │ (DMP Art.8)     ││
 │ │                 │ │                  │ │ Export: 5       ││
-│ │                 │ │ [Chart: Pie]     │ │ Data Quality: 3 ││
-│ │                 │ │                  │ │ Repeated: 1     ││
-│ │                 │ │                  │ │                 ││
+│ │                 │ │                  │ │ (DMP Art.20)    ││
 │ └─────────────────┘ └─────────────────┘ └─────────────────┘│
+│                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ Regulatory Compliance Metrics                            ││
+│ │                                                          ││
+│ │ Legal Basis Compliance Rate: 95% (57/60 actions)        ││
+│ │ Deadline Compliance Rate: 92% (55/60 actions)           ││
+│ │ Legal Authority Compliance: 98% (59/60 actions)         ││
+│ │                                                          ││
+│ │ [View Compliance Details]                               ││
+│ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Enforcement Trends (Last 12 Months)                      ││
@@ -98,6 +109,15 @@
 - **Default:** Last 30 days
 - **Functionality:** Updates all charts and metrics when changed
 
+### Regulatory Compliance Metrics Section (Fatima's Requirement)
+- **Layout:** Card section below top metrics cards
+- **Metrics:**
+  - **Legal Basis Compliance Rate:** % of actions with proper legal basis (e.g., "95% (57/60 actions)")
+  - **Deadline Compliance Rate:** % of actions within regulatory deadlines (e.g., "92% (55/60 actions)")
+  - **Legal Authority Compliance:** % of actions within legal authority (e.g., "98% (59/60 actions)")
+- **Display:** Prominent section with compliance percentages
+- **Link:** "[View Compliance Details]" to detailed compliance report
+
 ### Metrics Cards (Top Row)
 - **Layout:** 3-column grid (desktop), 1-column (mobile)
 - **Gap:** 24px between cards
@@ -118,7 +138,9 @@
   - Suspension: 3
 - **Visual:** Pie chart or horizontal bar chart
 
-**By Violation Type Card:**
+**By Violation Type Card (Enhanced per Fatima's Requirement):**
+- **Regulatory References:** Each violation type shows regulation article (e.g., "Submission (DMP Art.12)")
+- **Link to Regulation:** "[View Regulation]" link for each violation type
 - **Title:** "By Violation Type"
 - **Breakdown:** List of violation types with counts
   - Submission Non-Compliance: 25
@@ -161,6 +183,15 @@
   - Rejected: Count and percentage
 - **Chart:** Pie chart showing appeal outcomes
 - **Visual:** Pie chart with percentages
+
+### Regulatory Reporting Deadline Tracking (Fatima's Requirement)
+- **Layout:** Card section or sidebar widget
+- **Content:**
+  - "Quarterly enforcement report due: [date]" with countdown
+  - "Annual compliance report due: [date]" with countdown
+  - Countdown to reporting deadlines displayed prominently
+  - Urgency indicators (🔴 if <7 days, 🟡 if 7-30 days)
+- **Display:** Visible in Reports page header or sidebar
 
 ### Tabs
 - **Tabs:** Overview (default), Trends, Companies, Appeals
@@ -230,6 +261,12 @@
 ### Export Functionality
 - **Format Options:** PDF, Excel, CSV
 - **Content:** Current view with applied filters
+- **Regulatory Documentation (Fatima's Requirement):**
+  - Export must include:
+    - Regulatory framework references for each action
+    - Legal basis for each action
+    - Compliance verification status
+  - Warning displayed: "Exports must include regulatory documentation per DMP Regulation Article X"
 - **Modal:** Export options modal (if needed)
 
 ### Chart Interactions

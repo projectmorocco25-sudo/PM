@@ -1,6 +1,6 @@
 # Task 0.5.1.11: Login Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/login`  
 **File:** `task-0.5.1.11-login-page.png`  
 **Priority:** 🔴 Critical Foundation
@@ -41,6 +41,10 @@
 │                    │                     │                     │
 │                    │  Forgot password? │                     │
 │                    │  Register account │                     │
+│                    │                     │                     │
+│                    │  Data Protection:  │                     │
+│                    │  Your login data is protected per       │
+│                    │  Law No. 09-08 (CNDP)                   │
 │                    │                     │                     │
 │                    └─────────────────────┘                     │
 │                                                                 │

@@ -48,11 +48,19 @@
 │ │ [Clear]  │ │ [Load More]                                ││
 │ └──────────┘ └───────────────────────────────────────────┘│
 │                                                             │
-│ Info: Archived conversations are retained for 7 years     │
-│ (regulatory requirement). After 7 years, conversations     │
-│ are automatically removed from active archive but remain   │
-│ in audit logs for compliance purposes. No hard deletes    │
-│ are allowed.                                               │
+│ ⚠️ Data Retention Compliance (Fatima's Requirement)       │
+│                                                             │
+│ Retention Status:                                           │
+│ • Data retained until [date + 7 years]                     │
+│ • Retention period: 7 years (regulatory minimum)          │
+│ • Regulatory Basis: Law No. 09-08                          │
+│ • Immutability Warning: Historical data cannot be modified │
+│                                                             │
+│ After 7 years, conversations are automatically removed     │
+│ from active archive but remain in audit logs for          │
+│ compliance purposes. No hard deletes are allowed.          │
+│                                                             │
+│ [View Retention Policy] [View Regulatory Framework]        │
 └─────────────────────────────────────────────────────────────┘
 ```
 

@@ -24,6 +24,10 @@
 │ │ management, and regulatory reporting for all companies.  ││
 │ │ Scores are calculated monthly based on regulatory        ││
 │ │ reporting, stock compliance, and export adherence.       ││
+│ │                                                          ││
+│ │ Regulatory Framework (Fatima's Requirement):             ││
+│ │ DMP Regulation Article [X] - Compliance Monitoring       ││
+│ │ [View Regulatory Framework]                             ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │

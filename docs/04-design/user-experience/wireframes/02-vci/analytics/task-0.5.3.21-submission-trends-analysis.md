@@ -19,6 +19,14 @@
 │                                                             │
 │ Submission Trends Analysis (MOH Tier 1 Only)                 │
 │                                                             │
+│ ℹ️ Submission Trends Analysis                              ││
+│    Regulatory Framework (Fatima's Requirement):            ││
+│    • AAMS: DMP Art. [X] - Annual Submission Trends        ││
+│    • MSQ: DMP Art. [X] - Monthly Submission Trends        ││
+│    • WSL: DMP Art. [X] - Weekly Submission Trends         ││
+│    • Trends analyzed per regulatory requirements           ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Filters & Controls                                       ││
 │ │                                                          ││

@@ -1,6 +1,6 @@
 # Task 0.5.8.10: Workflow Status Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.10-workflow-status-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -54,8 +54,13 @@
 │  │ │ 4. Tier 1 Approved                                │ │ │
 │  │ │    ⏳ Pending                                      │ │ │
 │  │ │    Assigned to: MOH Tier 1 - Fatima Alami            │ │ │
-│  │ │    Due: February 20, 2024                          │ │ │
+│  │ │    Due: ⚠️ February 20, 2024 ([X] days remaining)  │ │ │
+│  │ │    Regulatory Deadline: Per DMP Art. [X]           │ │ │
 │  │ │    Notes: Awaiting Tier 1 approval                 │ │ │
+│  │ │                                                      │ │ │
+│  │ │ Regulatory Context (Fatima's Requirement):          │ │ │
+│  │ │ Legal Basis: DMP Art. [X] - Approval Workflow      │ │ │
+│  │ │ [View Regulatory Framework]                         │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │

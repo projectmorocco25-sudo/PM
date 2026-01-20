@@ -1,6 +1,6 @@
 # Task 0.5.3.18: Compliance Violation Analysis Interface Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/compliance-violations/[id]/analyze` (Tier 2 only)  
 **File:** `task-0.5.3.16-compliance-violation-analysis-interface.png`  
 **Note:** File name uses 0.5.3.16 but task number is 0.5.3.18 per phase-0-5-ui-ux-wireframes.md  
@@ -49,6 +49,11 @@
 │ │ • Warning (First violation, minor compliance violation) ││
 │ │ • Fine (Repeated violation, significant compliance violation) ││
 │ │ • Suspension (Critical medicine, extended compliance violation) ││
+│ │                                                          ││
+│ │ Regulatory Context (Fatima's Requirement):              ││
+│ │ • Regulatory Basis for Violation: DMP Art. [X]         ││
+│ │ • Legal Authority for Suggested Actions: DMP Art. [Y]   ││
+│ │ • Regulatory Requirement Compliance: [Status]           ││
 │ │                                                          ││
 │ │ ℹ️ Action suggestions based on:                         ││
 │ │   • Compliance violation severity and duration          ││

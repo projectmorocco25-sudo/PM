@@ -1,6 +1,6 @@
 # Task 0.5.8.3: Date Range Picker Modal Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** Modal overlay (reusable pattern, no specific route)  
 **File:** `task-0.5.8.3-date-range-picker-modal.png`  
 **Priority:** 🟢 Analytics & Historical Data (Reusable UI Patterns)
@@ -25,8 +25,11 @@
 │  │ │ Quick Filters                                     │ │ │
 │  │ │                                                   │ │ │
 │  │ │ [Last 7 Days] [Last 30 Days] [Last 3 Months]     │ │ │
-│  │ │ [Last Year] [Last 3 Years] [Last 7 Years]        │ │ │
+│  │ │ [Last Year] [Last 3 Years] [Last 7 Years] ⚠️      │ │ │
 │  │ │ [Custom Range]                                    │ │ │
+│  │ │                                                   │ │ │
+│  │ │ ℹ️ "Last 7 Years" is the regulatory retention    │ │ │
+│  │ │    period per Law No. 09-08                      │ │ │
 │  │ └───────────────────────────────────────────────────┘ │ │
 │  │                                                       │ │
 │  │ ┌───────────────────────────────────────────────────┐ │ │

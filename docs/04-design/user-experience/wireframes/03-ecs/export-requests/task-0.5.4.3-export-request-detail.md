@@ -24,7 +24,13 @@
 │ │   ✓        ✓            ✓                ⏳          ││
 │ │                                                          ││
 │ │ Current Status: Auto-Approval Queue                     ││
-│ │ Intervention Window: 1 day remaining                    ││
+│ │ Intervention Window: ⚠️ 1 day remaining                ││
+│ │ Regulatory Deadline: [Date] (per DMP Art. [X])         ││
+│ │                                                          ││
+│ │ Regulatory Compliance Verification (Fatima's Requirement):││
+│ │ ☑ Regulatory threshold compliance: Verified            ││
+│ │ ☑ Legal authority compliance: Verified                 ││
+│ │ ☑ Regulatory requirement satisfaction: Complete        ││
 │ │                                                          ││
 │ │ [If Tier 1] [Intervene] [If Tier 2] [Verify]           ││
 │ │ [If Manual Review] [Approve] [Reject]                  ││

@@ -1,6 +1,6 @@
 # Task 0.5.3.15: WSL Submission Detail Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/wsl/[id]`  
 **File:** `task-0.5.3.13-wsl-submission-detail.png`  
 **Note:** File name uses 0.5.3.13 but task number is 0.5.3.15 per phase-0-5-ui-ux-wireframes.md  
@@ -38,6 +38,13 @@
 │ │ Verified: January 18, 2025 (Tier 2 - Ahmed Benali)     ││
 │ │                                                          ││
 │ │ Breaches Detected: 2 compliance violations              ││
+│ │                                                          ││
+│ │ Regulatory Framework (Fatima's Requirement):            ││
+│ │ DMP Regulation Article [X] - Weekly Stock Level         ││
+│ │ Submission                                              ││
+│ │ Compliance Violation Basis: DMP Art.15 [View]          ││
+│ │ [View Regulatory Framework]                             ││
+│ │                                                          ││
 │ │ [View Compliance Violations]                            ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │

@@ -1,6 +1,6 @@
 # Task 0.5.3.22: ATC Treemap Page Wireframe
 
-**Status:** 🟡 In Progress  
+**Status:** ✅ Complete  
 **Route:** `/vci/treemap` (Level 1 - ATC therapeutic area view)  
 **File:** `task-0.5.3.22-atc-treemap.png`  
 **Priority:** 🟢 Analytics & Historical Data
@@ -27,6 +27,13 @@
 │ │ Date Range: [2024-12-01] to [2024-12-31]               ││
 │ │ [Custom Range]                                          ││
 │ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ ℹ️ Compliance Violations Analysis                          ││
+│    Regulatory Framework (Fatima's Requirement):            ││
+│    • Stock Level Compliance: DMP Art.15                    ││
+│    • Critical Medicine Tracking: Regulatory requirement    ││
+│    • Violation Analysis: Per regulatory framework          ││
+│    [View Regulatory Framework]                             ││
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ ATC Treemap Visualization                                ││

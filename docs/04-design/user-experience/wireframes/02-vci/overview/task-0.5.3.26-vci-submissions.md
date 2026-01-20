@@ -27,6 +27,13 @@
 │ │ Date Range: [This Month ▼]                              ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ℹ️ VCI Submissions                                          ││
+│    Regulatory Framework (Fatima's Requirement):             ││
+│    • AAMS: DMP Art. [X] - Annual Submission                ││
+│    • MSQ: DMP Art. [X] - Monthly Submission                ││
+│    • WSL: DMP Art. [X] - Weekly Submission                 ││
+│    [View Regulatory Framework]                             ││
+│                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ Submission Type │ Period      │ Status          │ Actions││
 │ │ ─────────────── │ ──────────  │ ──────────────  │ ──────││

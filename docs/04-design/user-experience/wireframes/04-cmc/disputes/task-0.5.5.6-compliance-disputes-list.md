@@ -59,6 +59,11 @@
 │ ┌─────────────────────────────────────────────────────────┐│
 │ │ ⏱ Dispute Window: 30 days from score publication        ││
 │ │                                                          ││
+│ │ Regulatory Basis (Fatima's Requirement):                ││
+│ │ Law No. 09-08 - 30-day appeal window                    ││
+│ │ Appeal Deadline: [Date + 30 days from publication]      ││
+│ │ [View Regulatory Framework]                             ││
+│ │                                                          ││
 │ │ [Create Dispute]                                         ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘

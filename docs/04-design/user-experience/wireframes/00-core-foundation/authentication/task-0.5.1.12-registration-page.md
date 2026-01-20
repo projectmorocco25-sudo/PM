@@ -60,6 +60,13 @@
 │                    │  ☐ I agree to the Terms of Service       │
 │                    │     and Privacy Policy                   │
 │                    │                     │                     │
+│                    │  Data Protection Notice:                  │
+│                    │  Your registration data is processed     │
+│                    │  per Law No. 09-08 (CNDP) data           │
+│                    │  protection requirements. By              │
+│                    │  registering, you acknowledge the        │
+│                    │  regulatory retention period of 7 years. │
+│                    │                     │                     │
 │                    │  ┌───────────────┐ │                     │
 │                    │  │   Register    │ │                     │
 │                    │  └───────────────┘ │                     │

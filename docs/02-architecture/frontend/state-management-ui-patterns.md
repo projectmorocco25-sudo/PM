@@ -675,6 +675,19 @@ function useApproveSubmission() {
 
 ## References
 
+## Related Documents
+
+### Primary References
+- [ui-component-specifications.md](./ui-component-specifications.md) - Component library specifications (loading indicators, error alerts, empty states, toasts)
+- [design-system.md](./design-system.md) - Design tokens (colors, typography, spacing used in state components)
+- [form-design-patterns.md](./form-design-patterns.md) - Form patterns (form loading, validation error states)
+
+### Supporting Documents
+- [README.md](./README.md) - Frontend documentation overview and navigation guide
+- [routing-structure.md](./routing-structure.md) - Route definitions (routes that use state patterns)
+- [role-based-ui-patterns.md](./role-based-ui-patterns.md) - Role-based UI patterns (role-based error messages and empty states)
+
+### External References
 - [TanStack Query Documentation](https://tanstack.com/query/latest)
 - [React Hook Form Error Handling](https://react-hook-form.com/get-started#Handleerrors)
 - [shadcn/ui Components](https://ui.shadcn.com/)

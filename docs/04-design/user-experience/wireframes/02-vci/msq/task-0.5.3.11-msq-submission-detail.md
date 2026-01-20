@@ -33,6 +33,10 @@
 │ │ │ Submitted By: John Doe (john.doe@abcpharma.com)     ││
 │ │ │ Validation Status: ✓ Valid                          ││
 │ │ │ Flagged for Review: No                              ││
+│ │ │                                                      ││
+│ │ │ Regulatory Framework (Fatima's Requirement):        ││
+│ │ │ DMP Regulation Article [X] - Monthly Submission     ││
+│ │ │ [View Regulatory Framework]                         ││
 │ │ └────────────────────────────────────────────────────┘ ││
 │ │                                                          ││
 │ │ ┌────────────────────────────────────────────────────┐ ││

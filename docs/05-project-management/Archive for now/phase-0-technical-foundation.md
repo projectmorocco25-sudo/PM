@@ -171,7 +171,7 @@ Establish the technical architecture and development foundation for the PM platf
 
 ### Phase 1 Audit Resolution Deliverables
 18. **Module Integration Contracts** (`02-architecture/integration/integration-architecture.md`) - Data flow specifications between modules
-19. **Background Job Queue Specifications** (documented in [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md)) - pg_boss configuration, job types, retry logic
+19. **Background Job Queue Specifications** (documented in [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md)) - pg_boss configuration, job types, retry logic
 20. **Testing Infrastructure Specifications** (`08-deployment/testing-framework.md`) - Test database setup, CI/CD integration
 21. **Implementation Standards** (`05-project-management/phases/phase-1-implementation-standards.md`) - Task format, Definition of Done, testing standards
 
@@ -237,14 +237,14 @@ Establish the technical architecture and development foundation for the PM platf
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 
 ### Subsequent Phase Documents
-- [Phase 0.5: UI/UX Wireframes](phase-0-5-ui-ux-wireframes.md) ✅ COMPLETE - 120 wireframes
-- [Phase 0.6: Database Schema Audit](phase-0-6-databases.md) ✅ COMPLETE - 14 schema changes
-- [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) ✅ APPROVED FOR IMPLEMENTATION
-- [Implementation Standards](phase-1-implementation-standards.md) - Task format, Definition of Done
+- [Phase 0.5: UI/UX Wireframes](./phase-0-5-wireframes-catalog.md) ✅ COMPLETE - 120 wireframes
+- [Phase 0.6: Database Schema Audit](./phase-0-6-databases.md) ✅ COMPLETE - 14 schema changes
+- [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md) ✅ APPROVED FOR IMPLEMENTATION
+- [Implementation Standards](../../phases/phase-1-implementation-standards.md) - Task format, Definition of Done
 
 ---
 
-**Next Phase:** ✅ [Phase 0.5: UI/UX Wireframes](phase-0-5-ui-ux-wireframes.md) COMPLETE → ✅ [Phase 0.6: Database Schema Audit](phase-0-6-databases.md) COMPLETE → ✅ [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) APPROVED  
+**Next Phase:** ✅ [Phase 0.5: UI/UX Wireframes](./phase-0-5-wireframes-catalog.md) COMPLETE → ✅ [Phase 0.6: Database Schema Audit](./phase-0-6-databases.md) COMPLETE → ✅ [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md) APPROVED  
 **Owner:** Oliver (Chief Architect)
 
 ---

@@ -14,6 +14,7 @@ This directory contains 10 core documents covering all aspects of frontend devel
 
 | Document | Purpose | Single Source of Truth For |
 |----------|---------|---------------------------|
+| **[feature-index.md](../feature-index.md)** | **Master feature index** - Links routes, wireframes, database, APIs | ✅ **Complete feature traceability** - Start here for feature overview |
 | [routing-structure.md](./routing-structure.md) | Route definitions and Next.js App Router structure | ✅ All route paths and route organization |
 | [navigation-layout-patterns.md](./navigation-layout-patterns.md) | Navigation structure and layout patterns | ✅ Sidebar organization, layout components, responsive design |
 | [design-system.md](./design-system.md) | Design tokens, colors, typography, spacing | ✅ Visual design system and styling guidelines |
@@ -138,6 +139,7 @@ This directory contains 10 core documents covering all aspects of frontend devel
 
 | I need to find... | Go to... |
 |------------------|----------|
+| **Feature overview (Routes + Wireframes + Database + APIs)** | **[feature-index.md](../feature-index.md)** ⭐ **START HERE** |
 | Route paths and structure | [routing-structure.md](./routing-structure.md) |
 | Route implementation status | [route-inventory.md](./route-inventory.md) |
 | Route naming conventions | [route-naming-decision.md](./route-naming-decision.md) |

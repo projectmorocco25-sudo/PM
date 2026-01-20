@@ -244,7 +244,7 @@ Wireframes are organized by priority to focus on critical path items first, enab
 
 | Task ID | Wireframe Name | Description | Link |
 |---------|----------------|-------------|------|
-| 0.5.3.11 | WSL submissions list page | My submissions, all submissions for MOH, week filter, deadline indicators, threshold, threshold compliance %, replenishment date, compliance violation reason | [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) |
+| 0.5.3.13 | WSL submissions list page | My submissions, all submissions for MOH, week filter, deadline indicators, threshold, threshold compliance %, replenishment date, compliance violation reason | [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) |
 | 0.5.3.12 | WSL submission form | Week ending date, all SKUs with stock quantity entry - SKU_ID + Quantity structure, threshold (read-only), threshold compliance % (calculated), replenishment date, compliance violation reason | [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) |
 | 0.5.3.13 | WSL submission detail page | Submission data, compliance violation indicators, stock level visualization, threshold, threshold compliance %, replenishment date, compliance violation reason | [Wireframe](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.13-wsl-submission-detail.md) |
 | 0.5.3.14 | Compliance Violations list page | Active compliance violations, resolved compliance violations, priority/company/SKU filters, date range, replenishment date, compliance violation reason | [Wireframe](../../04-design/user-experience/wireframes/02-vci/breaches/task-0.5.3.14-compliance-violations-list.md) |
@@ -270,7 +270,7 @@ Wireframes are organized by priority to focus on critical path items first, enab
 |---------|----------------|-------------|------|
 | 0.5.3.9 | MSQ submissions list page | My submissions, flagged for review for MOH, month filter | [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.9-msq-submissions-list.md) |
 | 0.5.3.10 | MSQ submission form | Month selection, SKU_ID + Quantity data entry only - simplified submission structure | [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.10-msq-submission-form.md) |
-| 0.5.3.19 | MSQ submission detail page | Submission data, validation status indicator, review actions, 7-day grace period indicator | [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) |
+| 0.5.3.11 | MSQ submission detail page | Submission data, validation status indicator, review actions, 7-day grace period indicator | [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.11-msq-submission-detail.md) |
 | 0.5.3.20 | MSQ correction interface | Editable submitted data, grace period countdown, correction form | [Wireframe](../../04-design/user-experience/wireframes/02-vci/msq/task-0.5.3.12-msq-correction-interface.md) |
 
 ### VCI Combined Submissions Overview
@@ -291,7 +291,7 @@ Wireframes are organized by priority to focus on critical path items first, enab
 
 | Task ID | Wireframe Name | Description | Link |
 |---------|----------------|-------------|------|
-| 0.5.2.1 | RMM overview page | Module summary, quick links, recent activity, statistics | [Wireframe](../../04-design/user-experience/wireframes/01-rmm/overview/task-0.5.2.1-rmm-overview.md) |
+| 0.5.2.16 | RMM overview page | Module summary, quick links, recent activity, statistics | [Wireframe](../../04-design/user-experience/wireframes/01-rmm/overview/task-0.5.2.1-rmm-overview.md) *(Note: File is named task-0.5.2.1 but task ID is 0.5.2.16)* |
 | 0.5.3.0 | VCI overview page | Module summary, submission overview, compliance violation alerts, quick links | [Wireframe](../../04-design/user-experience/wireframes/02-vci/overview/task-0.5.3.0-vci-overview.md) |
 
 ---
@@ -461,10 +461,10 @@ Wireframes are organized by priority to focus on critical path items first, enab
 
 ### Phase Integration
 
-- [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) - Implementation plan with wireframe references
-- [Wireframe-First Implementation Principle](wireframe-first-implementation-principle.md) - Core implementation directive
-- [Phase 0: Technical Foundation](phase-0-technical-foundation.md)
-- [Phase 0.6: Database Schema Audit](phase-0-6-databases.md)
+- [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md) - Implementation plan with wireframe references
+- [Wireframe-First Implementation Principle](../../phases/guidelines/wireframe-first-implementation-principle.md) - Core implementation directive
+- [Phase 0: Technical Foundation](./phase-0-technical-foundation.md)
+- [Phase 0.6: Database Schema Audit](./phase-0-6-databases.md)
 
 ### Architecture & Design References
 

@@ -1,6 +1,6 @@
 # Frontend Route Inventory & Status
 
-**Purpose:** Complete inventory of all routes: what exists in sidebar, documentation, and codebase.
+**Purpose:** Complete inventory of all routes: what exists in sidebar, documentation, and codebase. This document tracks route implementation status. For comprehensive feature tracking including Database and API references, see [feature-index.md](../feature-index.md).
 
 **Last Updated:** 2026-01-12  
 **Status:** 🔄 IN PROGRESS - Phase 1.1.1.FIX  
@@ -15,6 +15,8 @@
 - ❌ **Missing:** Route in sidebar/docs but doesn't exist in codebase
 - 📋 **Planned:** Route documented but not implemented yet
 - 🔄 **Placeholder:** Placeholder page created (to be implemented)
+
+**Note:** For Database and API references for each route, see [feature-index.md](../feature-index.md). This document focuses on route implementation status.
 
 ---
 
@@ -39,20 +41,20 @@
 | `/audit/logs` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.32 | Wireframe required | 1.1.1.FIX |
 | `/audit/reports` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.34 | Wireframe required | 1.1.1.FIX |
 | `/system-config` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.35 | Wireframe required | 1.1.1.FIX |
-| `/support` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.3 | Wireframe required | 1.1.1.FIX |
-| `/support/faq` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.4 | Wireframe required | 1.1.1.FIX |
-| `/support/contact` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.5 | Wireframe required | 1.1.1.FIX |
-| `/support/documentation` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.6 | Wireframe required | 1.1.1.FIX |
-| `/status` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.1.10 | Wireframe required | 1.1.1.FIX |
-| `/rmm` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.2.1 | Wireframe required | 1.1.1.FIX |
+| `/support` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.1.37 | None | 1.1.1.FIX |
+| `/support/faq` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.1.38 | None | 1.1.1.FIX |
+| `/support/contact` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.1.39 | None | 1.1.1.FIX |
+| `/support/documentation` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.1.40 | None | 1.1.1.FIX |
+| `/status` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.1.41 | None | 1.1.1.FIX |
+| `/rmm` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.16 | None | 1.1.1.FIX |
 | `/rmm/companies` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.2 | None | 1.1.1.FIX |
 | `/rmm/products` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.4 | None | 1.1.1.FIX |
 | `/rmm/skus` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.6 | None | 1.1.1.FIX |
 | `/vci` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.3.0 | Wireframe required | 1.1.1.FIX |
 | `/vci/submissions/aams` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.1 | None | 1.1.1.FIX |
 | `/vci/submissions/msq` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.7 | None | 1.1.1.FIX |
-| `/vci/submissions/wsl` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.11 | None | 1.1.1.FIX |
-| `/vci/submissions/history` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.3.19 | Wireframe required | 1.1.1.FIX |
+| `/vci/submissions/wsl` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.13 | None | 1.1.1.FIX |
+| `/vci/submissions/history` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.28 | None | 1.1.1.FIX |
 | `/vci/thresholds` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.4 | None | 1.1.1.FIX |
 | `/vci/breaches` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.14 | None | 1.1.1.FIX |
 | `/vci/governance` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.18 | None | 1.1.1.FIX |
@@ -63,10 +65,10 @@
 | `/cmc/scores` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.5.1 | None | 1.1.1.FIX |
 | `/cmc/disputes` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.5.8 | None | 1.1.1.FIX |
 | `/cmc/reports` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.5.10 | None | 1.1.1.FIX |
-| `/enforcement` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.2.0 | Wireframe required | 1.1.1.FIX |
-| `/enforcement/actions` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.2.1 | Wireframe required | 1.1.1.FIX |
-| `/enforcement/pending-approvals` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.2.1c | Wireframe required | 1.1.1.FIX |
-| `/enforcement/reports` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.2.1d | Wireframe required | 1.1.1.FIX |
+| `/enforcement` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.0 | None | 1.1.1.FIX |
+| `/enforcement/actions` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.1 | None | 1.1.1.FIX |
+| `/enforcement/pending-approvals` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.1c | None | 1.1.1.FIX |
+| `/enforcement/reports` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.1d | None | 1.1.1.FIX |
 
 ---
 
@@ -81,10 +83,10 @@
 
 ### Wireframe Status
 
-- **✅ Has Wireframe:** 40 (78.4%)
-- **📋 Missing Wireframe:** 11 (21.6%)
+- **✅ Has Wireframe:** 51 (100%)
+- **📋 Missing Wireframe:** 0 (0%)
 
-**Critical:** 9 wireframes missing for Phase 1.1.2 routes. See [wireframe-route-mapping.md](./wireframe-route-mapping.md) for complete mapping.
+**All routes now have wireframes.** See [wireframe-route-mapping.md](./wireframe-route-mapping.md) for complete mapping.
 
 ---
 
@@ -126,6 +128,7 @@
 ## Related Documents
 
 ### Primary References
+- [feature-index.md](../feature-index.md) - **Master feature index** with Database and API references for each route
 - [routing-structure.md](./routing-structure.md) - Route definitions and Next.js App Router structure (SINGLE SOURCE OF TRUTH for route paths)
 - [wireframe-route-mapping.md](./wireframe-route-mapping.md) - Wireframe-route mapping (SINGLE SOURCE OF TRUTH for wireframe-route relationships)
 - [route-naming-decision.md](./route-naming-decision.md) - Route naming conventions and standards

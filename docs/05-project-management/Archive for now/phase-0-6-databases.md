@@ -68,7 +68,7 @@ The following schema changes were implemented as part of Phase 0.6:
 
 ## Phase 1 Implementation Plan Integration
 
-All Phase 0.6 schema changes have been integrated into the [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md):
+All Phase 0.6 schema changes have been integrated into the [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md):
 
 ### Migration Tasks Updated
 - **Task 1.1.1.2:** Core tables migration includes new user profile fields (avatar_url, timezone, language, notification_preferences)
@@ -1710,7 +1710,7 @@ For each wireframe file, use this checklist:
    - Phase 1 Implementation Plan updated with all Phase 0.6 changes
    - Migration tasks added for new fields and tables
    - Task dependencies updated
-   - See [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md)
+   - See [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md)
 
 5. ✅ **RLS Policy Updates** - Update RLS framework for new tables - **COMPLETE**
    - RLS policies defined for governance tables (follow_ups, meetings, meeting_attendees)
@@ -1731,13 +1731,13 @@ For each wireframe file, use this checklist:
 - [Schema Updates - Phase 0.6 Critical Gaps](../../02-architecture/database/schema-updates-phase0-6-critical-gaps.md) - Migration scripts
 
 ### Phase Documentation
-- [Phase 0: Technical Foundation](phase-0-technical-foundation.md) - Foundational technical decisions
-- [Phase 0.5: UI/UX Wireframes](phase-0-5-ui-ux-wireframes.md) - Wireframe specifications (120 wireframes)
-- [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) - Implementation plan with Phase 0.6 integration
+- [Phase 0: Technical Foundation](./phase-0-technical-foundation.md) - Foundational technical decisions
+- [Phase 0.5: UI/UX Wireframes](./phase-0-5-wireframes-catalog.md) - Wireframe specifications (120 wireframes)
+- [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md) - Implementation plan with Phase 0.6 integration
 
 ### Implementation Standards
 - [Wireframe-First Implementation Principle](wireframe-first-implementation-principle.md) - Core implementation directive
-- [Implementation Standards](phase-1-implementation-standards.md) - Task format and Definition of Done
+- [Implementation Standards](../../phases/phase-1-implementation-standards.md) - Task format and Definition of Done
 
 ### Audit Documents
 - [Phase 1 Audit Status Tracker](phase-1-audit-status-tracker.md) - Pre-implementation audit status
@@ -1895,4 +1895,4 @@ For each P0 route (wireframes signed off 2026-01-12), verify:
 4. Security checks must use `mcp_supabase_get_advisors` after migrations
 5. Schema validation queries must use `mcp_supabase_execute_sql`
 
-**Reference:** See [Phase 1 Implementation Plan](Phase-1-Implementation-Plan.md) for detailed MCP requirements on all database tasks.
+**Reference:** See [Phase 1 Implementation Plan](../../phases/Phase-1-Implementation-Plan.md) for detailed MCP requirements on all database tasks.

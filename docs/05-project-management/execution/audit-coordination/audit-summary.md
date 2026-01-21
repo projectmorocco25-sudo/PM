@@ -60,9 +60,9 @@ All issues are either completed or pending team review.
 
 2. ✅ `docs/05-project-management/phase-1-1-mockdata.md` - Created placeholder playbook
 
-3. ✅ `docs/05-project-management/execution/audit-recommendations-coordination.md` - Coordination plan
+3. ✅ `docs/05-project-management/execution/audit-coordination/audit-recommendations-coordination.md` - Coordination plan
 
-4. ✅ `docs/05-project-management/execution/audit-summary.md` - This summary
+4. ✅ `docs/05-project-management/execution/audit-coordination/audit-summary.md` - This summary
 
 ---
 

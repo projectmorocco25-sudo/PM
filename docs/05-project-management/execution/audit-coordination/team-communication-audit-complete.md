@@ -71,10 +71,10 @@ Sami's compliance audit of `phase-1.md` has been coordinated and **8 out of 9 re
   - Ready for team review
 
 ### Coordination Documents
-- `docs/05-project-management/execution/audit-recommendations-coordination.md` - Full coordination plan
-- `docs/05-project-management/execution/audit-summary.md` - Progress summary
-- `docs/05-project-management/execution/coordination-status.md` - Quick status reference
-- `docs/05-project-management/execution/audit-completion-report.md` - Completion report
+- `docs/05-project-management/execution/audit-coordination/audit-recommendations-coordination.md` - Full coordination plan
+- `docs/05-project-management/execution/audit-coordination/audit-summary.md` - Progress summary
+- `docs/05-project-management/execution/audit-coordination/coordination-status.md` - Quick status reference
+- `docs/05-project-management/execution/audit-coordination/audit-completion-report.md` - Completion report
 
 ---
 

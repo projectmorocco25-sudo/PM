@@ -4,6 +4,24 @@
 **Status:** ✅ APPROVED FOR IMPLEMENTATION (January 12, 2026)  
 **Document Version:** 2.0 (Restructured - January 2026)
 
+---
+
+## 🚨 **READ THIS FIRST: COMPLIANCE RULES ARE MANDATORY**
+
+**⚠️ CRITICAL:** Before starting ANY task, you MUST read and follow the compliance rules. Non-compliance will result in immediate task rejection.
+
+**📋 [COMPLIANCE RULES - READ NOW](../standards/compliance-rules.md)** ← **CLICK HERE FIRST**
+
+**Key Points:**
+- ✅ Every task requires compliance verification before starting
+- ✅ Every PR must include a compliance section (see format in compliance rules)
+- ✅ Wireframe binding is mandatory for all frontend tasks
+- ✅ No local mock data - Supabase queries only
+- ✅ Sequential task execution - no skipping tasks
+- ✅ Sami has STOP authority - compliance violations = immediate stop
+
+**If you skip reading the compliance rules, your work will be rejected.**
+
 **Prerequisites:** 
 - Phase 0 (Technical Foundation) ✅ COMPLETE
 - Phase 0.5 (UI/UX Wireframes) ✅ COMPLETE
@@ -32,9 +50,20 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into **5 
 
 ## 🔒 COMPLIANCE ENFORCEMENT (Sami - Implementation Compliance Specialist)
 
-**CRITICAL:** Before starting ANY implementation task, Sami (Implementation Compliance Specialist) must validate compliance.
+**🚨 MANDATORY:** Every developer and AI agent MUST read and follow compliance rules. Non-compliance = immediate task rejection.
 
-**📋 Complete Compliance Rules:** See [Compliance Rules](../standards/compliance-rules.md) for Sami's complete compliance checklist that must be verified before EVERY task.
+**📋 Complete Compliance Rules:** 
+- **🔴 PRIMARY SOURCE:** [Compliance Rules](../standards/compliance-rules.md) ← **READ THIS FIRST** - Complete 9-item pre-task verification checklist that must be verified before EVERY task
+- **Cursor AI Enforcement:** [.cursor/rules/wireframe_db_compliance.md](../../.cursor/rules/wireframe_db_compliance.md) - Auto-loaded technical enforcement rules for AI agents during code generation
+
+**⚠️ COMPLIANCE CHECKLIST (Quick Reference):**
+1. ✅ Read [Compliance Rules](../standards/compliance-rules.md) before starting
+2. ✅ Verify all previous tasks are complete (sequential execution)
+3. ✅ Review wireframe before frontend work
+4. ✅ No local mocks - Supabase queries only
+5. ✅ Add wireframe binding comments to code
+6. ✅ Include compliance section in PR description
+7. ✅ Get Sami's approval before marking task complete
 
 **Key Requirements:**
 - Sequential Task Verification - All previous tasks must be complete
@@ -48,96 +77,13 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into **5 
 
 **Sami's Stop Authority:** If any compliance rule is violated, Sami must **STOP** implementation immediately.
 
-**📋 Implementation Summary Compliance Requirement (MANDATORY):**
+**📋 Implementation Summary Compliance Requirement:** See [Compliance Rules - Implementation Summary Compliance Requirement](../standards/compliance-rules.md#implementation-summary-compliance-requirement-mandatory) for the complete requirement, format template, and mandatory elements.
 
-**After EVERY implementation task completion, the implementation summary MUST include a compliance section documenting:**
+**🔒 HARD GATES: Wireframe + Database Compliance (Non-Negotiable):** See [Compliance Rules - Hard Gates](../standards/compliance-rules.md#hard-gates-non-negotiable) for complete details. These gates apply to **every** Phase 1 frontend page/component. If a gate is not met, the task is **not complete** and the PR must not merge.
 
-1. **Compliance Rules Followed:** List all compliance rules that were verified and followed during implementation
-2. **Verification Evidence:** Document how each compliance rule was verified (e.g., "Wireframe binding verified: JSDoc comment added to component file with wireframe link")
-3. **Compliance Checklist Status:** Confirm all required compliance checklist items were completed
-4. **Any Deviations:** Document any deviations from compliance rules with explicit approval references
-5. **Sami's Approval:** Confirm Sami's compliance review was completed before task completion
+**📋 PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
-**Format for Implementation Summary Compliance Section:**
-```markdown
-## Compliance Verification (Sami - Required)
-
-**Compliance Rules Verified:**
-- ✅ Sequential Task Verification: All previous tasks complete (Task 1.1.1.X checked off)
-- ✅ Wireframe Binding: Wireframe link added to component JSDoc comment
-- ✅ Database Binding: Tables/fields documented, queries verified to use Supabase
-- ✅ Role Coverage: All required role variants implemented (Company, MOH Tier 1, MOH Tier 2)
-- ✅ UI States: Loading, empty, error, success states implemented
-- ✅ No Local Mocks: Verified no local mock data, all data from Supabase queries
-- ✅ Seed Data Gate: Seed migration verified applied before frontend work
-
-**Verification Evidence:**
-- Wireframe binding: `src/app/rmm/companies/page.tsx` line 5-10 (JSDoc comment)
-- Database queries: `src/hooks/use-companies.ts` uses `supabase.from('companies').select()`
-- Role coverage: Screenshots provided for Company, MOH Tier 1, MOH Tier 2 roles
-- Seed data: Migration `seed_1_1_2_rmm` verified via `supabase migration list`
-
-**Sami's Approval:** ✅ Approved - [Date] - [Sami's signature/approval]
-
-**Deviations:** None
-```
-
-**⚠️ CRITICAL:** Implementation summaries without a compliance section are **INCOMPLETE** and will be rejected. The compliance section is **MANDATORY** for every task completion summary.
-
----
-
-## 🔒 HARD GATES: Wireframe + Database Compliance (Non-Negotiable)
-
-These gates apply to **every** Phase 1 frontend page/component. If a gate is not met, the task is **not complete** and the PR must not merge.
-
-### No Hardcoded UI Data
-- Production pages/components must **not** use inline arrays/objects as the source of truth
-- All seed data must be **seeded into the Supabase database** (dev/staging), then queried by the frontend
-- Local mock providers are **not allowed** for application runtime
-- **Seed playbook (required):** See [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md)
-
-### Wireframe Binding
-- Every implemented route/page must declare the exact wireframe task file(s) it implements
-- Wireframe binding must appear in **both** PR description and codebase
-- If there is no wireframe for a page/task: **STOP** and create/approve the wireframe **before** coding
-
-### DB Binding
-- Every page must list the tables/fields it uses and must query real data
-- Phase 0.6 additions must be incorporated where applicable
-
-### Role + States Coverage
-- Company + MOH Tier 1 + MOH Tier 2 must be implemented/verified where the wireframe specifies role variants
-- Required UI states: **loading**, **empty**, **error**, **success**
-
-### Proof Required (PR Description Checklist)
-Every frontend task PR must include:
-1. Wireframe link(s) (exact `task-0.5.x.x` file(s))
-2. Screenshots for each role variant or explicit N/A
-3. Screenshots for loading/empty/error/success states
-4. Data proof: tables/fields used + where queries live + evidence they are queried
-5. Any deviations + explicit approval reference
-6. Layout Integration Proof
-7. Role Coverage Proof
-8. Role Name Consistency Proof
-9. **Compliance Section (MANDATORY):** Implementation summary with compliance verification documenting all compliance rules followed during implementation (see format in "Implementation Summary Compliance Requirement" section above)
-
-**⚠️ CRITICAL:** PRs without a compliance section will be **REJECTED**. The compliance section is **REQUIRED** for PR approval.
-
----
-
-## ⚠️ CRITICAL: Wireframe-First Implementation Principle
-
-**Before starting ANY frontend implementation task, you MUST:**
-
-1. **Review the corresponding wireframe** - Every page, component, and workflow has a wireframe specification
-2. **Understand the wireframe requirements** - Layout, interactions, states, role-based variations
-3. **Reference wireframe annotations** - See wireframe documentation
-4. **Check component mapping** - See component mapping documentation
-5. **Verify wireframe compliance** - Your implementation must match the wireframe specifications
-
-**Wireframes are the PRIMARY design reference** - If there is any conflict or ambiguity, the wireframe takes precedence.
-
-**If a wireframe doesn't exist for a task, STOP and create it first.**
+**⚠️ Wireframe-First Implementation Principle:** See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements. Wireframes are the PRIMARY design reference - If there is any conflict or ambiguity, the wireframe takes precedence.
 
 ---
 
@@ -174,21 +120,32 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All prerequisite phases (Phase 0, 0.5, 0.6) are complete. **NO TASK CAN START UNTIL ALL PREREQUISITES ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_1_1_foundation` applied and verified (see below for verification requirements)
+- [ ] **1. Sequential Task Verification (MANDATORY):** All prerequisite phases (Phase 0, 0.5, 0.6) are complete. **NO TASK CAN START UNTIL ALL PREREQUISITES ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_1_1_foundation` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Prerequisites Incomplete:** Phase 0, 0.5, or 0.6 are not complete. **STOP** and complete prerequisites first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Prerequisites:**
 - Phase 0.5 (Wireframes) completed and approved
@@ -380,7 +337,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.1.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.1.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Phase 1.1.1.FIX Complete:** All route fixes completed, route inventory verified, documentation consolidated - **✅ COMPLETE (2026-01-12)**
   - ✅ Route naming convention documented: [Route Naming Decision](../../02-architecture/frontend/route-naming-decision.md)
   - ✅ Route inventory complete: [Route Inventory](../../02-architecture/frontend/route-inventory.md)
@@ -388,11 +345,19 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
   - ✅ All 30 placeholder pages created with route protection
   - ✅ Frontend documentation consolidated: [Frontend Architecture README](../../02-architecture/frontend/README.md)
   - ✅ All 9 P0 wireframes signed off (2026-01-12)
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_1_2_rmm` applied and verified (see below for verification requirements)
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_1_2_rmm` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -403,6 +368,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
 - **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
 - **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Prerequisites:**
 - ✅ Phase 1.1.1.FIX complete (2026-01-12) - Route consistency established, placeholder pages created, documentation consolidated, wireframes signed off
@@ -440,6 +406,8 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
 
 **⚠️ Backend Completion Gate:** All RMM backend tasks (1.1.2.1-1.1.2.15) and Enforcement backend tasks (1.1.2.31-1.1.2.36) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
+
+**Note:** All phases now have explicit backend completion gates. RMM has 51 backend tasks explicitly listed. VCI, ECS, and CMC phases have explicit gates at each subphase (backend tasks must complete before frontend tasks begin). **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION in all phases.**
 
 ### RMM Backend Tasks
 - [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD
@@ -687,12 +655,21 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.1.1 and 1.1.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.1.1 and 1.1.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.1.2 Complete:** All RMM backend and frontend tasks (1.1.2.1-1.1.2.44) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are part of this subphase).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -701,7 +678,11 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - **Previous Subphase Incomplete:** Subphase 1.1.2 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Backend Not Complete:** RMM backend RPC functions are not implemented. **STOP** and implement backend first.
 - **Frontend Not Complete:** RMM frontend pages are not implemented. **STOP** and implement frontend first.
-- **Seed Data Not Applied:** Required seed migrations are not applied. **STOP** and apply seed migrations first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Integration Testing Tasks
 - [ ] **Task 1.1.3.1:** Create RMM module test suite (unit tests for RPC functions)
@@ -808,26 +789,36 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
 - [ ] **Phase 1.1 Complete (MANDATORY):** All Phase 1.1 tasks are complete and all 4 integration checkpoints validated. **NO VCI TASKS CAN START UNTIL PHASE 1.1 IS COMPLETE.** Starting VCI tasks before Phase 1.1 completion is a **COMPLIANCE VIOLATION**.
-  - ✅ Data Model Validation (Nadia) - RMM schema supports VCI requirements
-  - ✅ RLS Policy Validation (Rafi) - RLS policies allow VCI module access
-  - ✅ API Contract Validation (Maya) - RPC functions provide VCI data
-  - ✅ Seed Data Validation (Hassan) - Seed data covers VCI test scenarios
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Phase 1.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_2_1_vci_aams` applied and verified (see below for verification requirements)
+- [ ] **Integration Checkpoint 1 - Data Model Validation (Nadia):** RMM schema supports VCI requirements. **VERIFIED: [Date] [Nadia's signature]**
+- [ ] **Integration Checkpoint 2 - RLS Policy Validation (Rafi):** RLS policies allow VCI module access to RMM data. **VERIFIED: [Date] [Rafi's signature]**
+- [ ] **Integration Checkpoint 3 - API Contract Validation (Maya):** RPC functions provide data VCI needs. **VERIFIED: [Date] [Maya's signature]**
+- [ ] **Integration Checkpoint 4 - Seed Data Validation (Hassan):** Seed data covers VCI test scenarios (coordinates with Farah for realism validation). **VERIFIED: [Date] [Hassan's signature]**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Phase 1.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_2_1_vci_aams` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Phase 1.1 Incomplete:** Phase 1.1 integration checkpoints are not validated. **STOP** and complete Phase 1.1 first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
 - **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
 - Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_2_1_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_2_1_vci_aams](phase-1-1-mockdata.md#stage-seed_1_2_1_vci_aams-subphase-121) (versioned SQL migrations, idempotent).
@@ -852,6 +843,8 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
   - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
   - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
 - **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Hassan - full ownership of seed data seeding and testing; coordinates with Nadia for integrity verification, Farah for realism validation).
+
+**⚠️ Backend Completion Gate:** All VCI AAMS backend tasks (1.2.1.1-1.2.1.12) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
 ### VCI AAMS Backend Tasks
 - [ ] **Task 1.2.1.1:** Create database migration for VCI AAMS tables (aams_submissions, thresholds)
@@ -973,25 +966,38 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.2.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
-- [ ] **Subphase 1.2.1 Complete:** All VCI AAMS backend and frontend tasks (1.2.1.1-1.2.1.19) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_2_2_vci_msq` applied and verified (see below for verification requirements)
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.2.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **Subphase 1.2.1 Complete:** All VCI AAMS backend and frontend tasks (1.2.1.1-1.2.1.21) are complete and verified.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_2_2_vci_msq` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Previous Subphase Incomplete:** Subphase 1.2.1 tasks are not complete. **STOP** and complete all prerequisite tasks first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
 - Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_2_2_vci_msq` per [Phase 1.1 Playbook - Stage: seed_1_2_2_vci_msq](phase-1-1-mockdata.md#stage-seed_1_2_2_vci_msq-subphase-122) (versioned SQL migrations, idempotent).
+
+**⚠️ Backend Completion Gate:** All VCI MSQ backend tasks (1.2.2.1-1.2.2.9) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
 ### VCI MSQ Backend Tasks
 - [ ] **Task 1.2.2.1:** Create database migration for VCI MSQ tables (msq_submissions)
@@ -1065,25 +1071,38 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.2.1 and 1.2.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.2.1 and 1.2.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.2.2 Complete:** All VCI MSQ backend and frontend tasks (1.2.2.1-1.2.2.13) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_2_3_vci_wsl` applied and verified (see below for verification requirements)
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_2_3_vci_wsl` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Previous Subphase Incomplete:** Subphase 1.2.2 tasks are not complete. **STOP** and complete all prerequisite tasks first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
 - Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_2_3_vci_wsl` per [Phase 1.1 Playbook - Stage: seed_1_2_3_vci_wsl](phase-1-1-mockdata.md#stage-seed_1_2_3_vci_wsl-subphase-123) (versioned SQL migrations, idempotent).
+
+**⚠️ Backend Completion Gate:** All VCI WSL backend tasks (1.2.3.1-1.2.3.12) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
 ### VCI WSL Backend Tasks
 - [ ] **Task 1.2.3.1:** Create database migration for VCI WSL tables (wsl_submissions, breaches, breach_analyses)
@@ -1199,12 +1218,21 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.2.1, 1.2.2, and 1.2.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
-- [ ] **Subphase 1.2.3 Complete:** All VCI WSL/Breaches backend and frontend tasks (1.2.3.1-1.2.3.20) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.2.1, 1.2.2, and 1.2.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **Subphase 1.2.3 Complete:** All VCI WSL/Breaches backend and frontend tasks (1.2.3.1-1.2.3.21) are complete and verified.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are part of this subphase).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -1213,6 +1241,11 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 - **Previous Subphase Incomplete:** Subphase 1.2.3 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Backend Not Complete:** VCI backend RPC functions are not implemented. **STOP** and implement backend first.
 - **Frontend Not Complete:** VCI frontend pages are not implemented. **STOP** and implement frontend first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Seed Data Tasks (Hassan - Full Ownership)
 - [ ] **Task 1.2.4.1:** Expand seed migration - Comprehensive MSQ historical data (Hassan)
@@ -1380,23 +1413,38 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
 - [ ] **Phase 1.2 Complete (MANDATORY):** All Phase 1.2 tasks are complete and all 4 integration checkpoints validated. **NO ECS TASKS CAN START UNTIL PHASE 1.2 IS COMPLETE.** Starting ECS tasks before Phase 1.2 completion is a **COMPLIANCE VIOLATION**.
-  - ✅ Data Model Validation (Nadia) - VCI schema supports ECS requirements
-  - ✅ RLS Policy Validation (Rafi) - RLS policies allow ECS module access
-  - ✅ API Contract Validation (Maya) - Threshold switching contract verified
-  - ✅ Seed Data Validation (Hassan) - Seed data covers ECS test scenarios
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1 and 1.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **Integration Checkpoint 1 - Data Model Validation (Nadia):** VCI schema supports ECS requirements. **VERIFIED: [Date] [Nadia's signature]**
+- [ ] **Integration Checkpoint 2 - RLS Policy Validation (Rafi):** RLS policies allow ECS module access to VCI data. **VERIFIED: [Date] [Rafi's signature]**
+- [ ] **Integration Checkpoint 3 - API Contract Validation (Maya):** Threshold switching contract verified - RPC functions provide data ECS needs. **VERIFIED: [Date] [Maya's signature]**
+- [ ] **Integration Checkpoint 4 - Seed Data Validation (Hassan):** Seed data covers ECS test scenarios (coordinates with Farah for realism validation). **VERIFIED: [Date] [Hassan's signature]**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1 and 1.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are in Subphase 1.3.4).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Phase 1.2 Incomplete:** Phase 1.2 integration checkpoints are not validated. **STOP** and complete Phase 1.2 first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Security & Access Requirements:** RLS/policies prevent required access. **STOP** and implement/update RLS policies before proceeding.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
+
+**⚠️ Backend Completion Gate:** All ECS backend foundation tasks (1.3.1.1-1.3.1.11) must be complete before workflow tasks begin. All ECS workflow backend tasks (1.3.2.1-1.3.2.12) and post-authorization backend tasks (1.3.3.1-1.3.3.8) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
 ### ECS Backend Setup Tasks
 - [ ] **Task 1.3.1.1:** Create database migration for ECS tables (export_requests, export_authorizations, replenishment_schedules)
@@ -1453,12 +1501,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.3.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.3.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.3.1 Complete:** All ECS backend foundation tasks (1.3.1.1-1.3.1.11) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are in Subphase 1.3.4).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -1466,6 +1523,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - **Previous Subphase Incomplete:** Subphase 1.3.1 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Backend Foundation Not Complete:** ECS backend foundation is not implemented. **STOP** and implement backend foundation first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### ECS Workflow Backend Tasks
 - [ ] **Task 1.3.2.1:** Create ECS RPC function - Export request auto-approval queue
@@ -1526,22 +1589,33 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.3.1 and 1.3.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.3.1 and 1.3.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.3.2 Complete:** All ECS workflow backend tasks (1.3.2.1-1.3.2.12) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_3_3_ecs` applied and verified (see below for verification requirements)
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_3_3_ecs` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Previous Subphase Incomplete:** Subphase 1.3.2 tasks are not complete. **STOP** and complete all prerequisite tasks first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
 - Before starting ECS frontend pages, apply the seed migration stage `seed_1_3_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
@@ -1650,12 +1724,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.3.1, 1.3.2, and 1.3.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
-- [ ] **Subphase 1.3.3 Complete:** All ECS post-authorization and frontend tasks (1.3.3.1-1.3.3.17) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.3.1, 1.3.2, and 1.3.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **Subphase 1.3.3 Complete:** All ECS post-authorization and frontend tasks (1.3.3.1-1.3.3.18) are complete and verified.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are part of this subphase).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -1664,6 +1747,11 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - **Previous Subphase Incomplete:** Subphase 1.3.3 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Backend Not Complete:** ECS backend RPC functions are not implemented. **STOP** and implement backend first.
 - **Frontend Not Complete:** ECS frontend pages are not implemented. **STOP** and implement frontend first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Integration Contract Verification
 - [ ] **Task 1.3.4.1:** Verify VCI→ECS integration contract (threshold switching contract, data dependencies)
@@ -1770,23 +1858,38 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
 - [ ] **Phase 1.3 Complete (MANDATORY):** All Phase 1.3 tasks are complete and all 4 integration checkpoints validated. **NO CMC TASKS CAN START UNTIL PHASE 1.3 IS COMPLETE.** Starting CMC tasks before Phase 1.3 completion is a **COMPLIANCE VIOLATION**.
-  - ✅ Data Model Validation (Nadia) - ECS schema supports CMC requirements
-  - ✅ RLS Policy Validation (Rafi) - RLS policies allow CMC module access
-  - ✅ API Contract Validation (Maya) - RPC functions provide CMC data
-  - ✅ Seed Data Validation (Hassan) - Seed data covers CMC test scenarios
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1, 1.2, and 1.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **Integration Checkpoint 1 - Data Model Validation (Nadia):** ECS schema supports CMC requirements. **VERIFIED: [Date] [Nadia's signature]**
+- [ ] **Integration Checkpoint 2 - RLS Policy Validation (Rafi):** RLS policies allow CMC module access to ECS data. **VERIFIED: [Date] [Rafi's signature]**
+- [ ] **Integration Checkpoint 3 - API Contract Validation (Maya):** RPC functions provide data CMC needs. **VERIFIED: [Date] [Maya's signature]**
+- [ ] **Integration Checkpoint 4 - Seed Data Validation (Hassan):** Seed data covers CMC test scenarios (coordinates with Farah for realism validation). **VERIFIED: [Date] [Hassan's signature]**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1, 1.2, and 1.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are in Subphase 1.4.4).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Phase 1.3 Incomplete:** Phase 1.3 integration checkpoints are not validated. **STOP** and complete Phase 1.3 first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Security & Access Requirements:** RLS/policies prevent required access. **STOP** and implement/update RLS policies before proceeding.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
+
+**⚠️ Backend Completion Gate:** All CMC backend setup tasks (1.4.1.1-1.4.1.14) and calculation/disputes backend tasks (1.4.2.1-1.4.2.10) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
 ### CMC Backend Setup Tasks
 - [ ] **Task 1.4.1.1:** Create database migration for CMC tables (compliance_scores, compliance_score_components, disputes, regulatory_reports)
@@ -1855,22 +1958,33 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.4.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.4.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.4.1 Complete:** All CMC scoring engine tasks (1.4.1.1-1.4.1.14) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
-- [ ] **Seed Data Gate Verified:** Seed migration `seed_1_4_2_cmc` applied and verified (see below for verification requirements)
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** Seed migration `seed_1_4_2_cmc` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Previous Subphase Incomplete:** Subphase 1.4.1 tasks are not complete. **STOP** and complete all prerequisite tasks first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first.
-- **Seed Data Requirements:** Seed migration is not idempotent or not applied. **STOP** and fix/apply migration first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
 - Before starting CMC frontend pages, apply the seed migration stage `seed_1_4_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
@@ -1963,19 +2077,33 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.4.1 and 1.4.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.4.1 and 1.4.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.4.2 Complete:** All CMC monthly calculation and disputes tasks (1.4.2.1-1.4.2.16) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are in Subphase 1.4.4).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
 **STOP implementation and resolve before proceeding** if any of the following is true:
 
 - **Previous Subphase Incomplete:** Subphase 1.4.2 tasks are not complete. **STOP** and complete all prerequisite tasks first.
-- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### CMC Reports Backend Tasks
 - [ ] **Task 1.4.3.1:** Create CMC RPC function - Generate regulatory report
@@ -2041,12 +2169,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.4.1, 1.4.2, and 1.4.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
-- [ ] **Subphase 1.4.3 Complete:** All CMC reports and integration tasks (1.4.3.1-1.4.3.8) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.4.1, 1.4.2, and 1.4.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **Subphase 1.4.3 Complete:** All CMC reports and integration tasks (1.4.3.1-1.4.3.10) are complete and verified.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (seed data tasks are part of this subphase).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -2055,6 +2192,11 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - **Previous Subphase Incomplete:** Subphase 1.4.3 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Backend Not Complete:** CMC backend RPC functions are not implemented. **STOP** and implement backend first.
 - **Frontend Not Complete:** CMC frontend pages are not implemented. **STOP** and implement frontend first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### CMC Testing Tasks
 - [ ] **Task 1.4.4.1:** Create CMC module test suite (unit tests for RPC functions)
@@ -2135,11 +2277,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
 - [ ] **Phase 1.4 Complete (MANDATORY):** All Phase 1.4 tasks are complete. **NO HOLISTIC TESTING TASKS CAN START UNTIL PHASE 1.4 IS COMPLETE.** Starting Phase 1.5 tasks before Phase 1.4 completion is a **COMPLIANCE VIOLATION**.
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1, 1.2, 1.3, and 1.4 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **Phase 1.4 Integration Validation:** All Phase 1.4 integration checkpoints validated (Phase 1.4 is final module, no downstream dependencies). **VERIFIED: [Date] [Sami's signature]**
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Phases 1.1, 1.2, 1.3, and 1.4 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase - Testing phase uses existing seeded data from previous phases (RMM, VCI, ECS, CMC seed data already applied).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -2147,6 +2299,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - **Phase 1.4 Incomplete:** Phase 1.4 tasks are not complete. **STOP** and complete Phase 1.4 first.
 - **All Modules Not Complete:** Any module (RMM, VCI, ECS, CMC) is not fully implemented. **STOP** and complete all modules first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Integration Testing Tasks
 - [ ] **Task 1.5.1.1:** Create end-to-end test scenarios - Complete RMM workflow
@@ -2219,12 +2377,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.5.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphase 1.5.1 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.5.1 Complete:** All end-to-end integration testing tasks (1.5.1.1-1.5.1.15) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase - Testing phase uses existing seeded data from previous phases (RMM, VCI, ECS, CMC seed data already applied).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -2232,6 +2399,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - **Previous Subphase Incomplete:** Subphase 1.5.1 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Integration Tests Not Complete:** End-to-end integration tests are not complete. **STOP** and complete integration tests first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Performance Testing Tasks
 - [ ] **Task 1.5.2.1:** Perform load testing - 75 companies concurrent access
@@ -2305,12 +2478,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.5.1 and 1.5.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.5.1 and 1.5.2 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.5.2 Complete:** All performance and security testing tasks (1.5.2.1-1.5.2.15) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase - Testing phase uses existing seeded data from previous phases (RMM, VCI, ECS, CMC seed data already applied).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -2318,6 +2500,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - **Previous Subphase Incomplete:** Subphase 1.5.2 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Performance/Security Tests Not Complete:** Performance and security tests are not complete. **STOP** and complete tests first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Edge Case Testing Tasks
 - [ ] **Task 1.5.3.1:** Test edge cases - Late AAMS submissions
@@ -2390,12 +2578,21 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 **Before starting ANY task in this subphase, the following MUST be verified and documented:**
 
-- [ ] **Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.5.1, 1.5.2, and 1.5.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
+- [ ] **1. Sequential Task Verification (MANDATORY):** All previous tasks from Subphases 1.5.1, 1.5.2, and 1.5.3 are complete and checked off (`[x]`). **NO TASK CAN START UNTIL ALL PREVIOUS TASKS ARE COMPLETE.** Sami verifies this before every task. Starting a task out of sequence is a **COMPLIANCE VIOLATION**.
 - [ ] **Subphase 1.5.3 Complete:** All edge case and error handling testing tasks (1.5.3.1-1.5.3.15) are complete and verified.
-- [ ] **Wireframe DB Compliance Rules Reviewed:** [.cursor/rules/wireframe_db_compliance.md](../.cursor/rules/wireframe_db_compliance.md) - **MUST BE REVIEWED BEFORE STARTING**
-- [ ] **Understanding Confirmed:** NO local mocks ever, Supabase queries only, wireframe first always. **Violation = IMMEDIATE STOP**
+- [ ] **2. Role Name Verification:** Frontend role names match database schema exactly; role constants match `users.role` enum values; no hardcoded role strings (use constants).
+- [ ] **3. Schema Verification:** Database schema verified before role-dependent code; all required tables/fields/RLS policies exist; Phase 0.6 schema additions incorporated where applicable.
+- [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
+- [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
+- [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
+- [ ] **9. Seed Data Gate (If Applicable):** N/A for this subphase (documentation phase).
+- [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](../standards/compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
 - [ ] **Sami's Compliance Checklist:** Will be used for EVERY task in this subphase. **No task proceeds without Sami's approval.**
+- [ ] **Sami's Approval:** Compliance review completed and approved by Sami before task start. **MANDATORY - No task can proceed without this approval.**
 - [ ] **Implementation Summary Compliance Section:** After task completion, implementation summary MUST include compliance section documenting all rules followed (see "Implementation Summary Compliance Requirement" section above). **PRs without compliance section will be REJECTED.**
+- [ ] **PR Description Checklist:** See [Compliance Rules - PR Description Checklist](../standards/compliance-rules.md#pr-description-checklist-required) for the complete 9-item checklist that every frontend task PR must include.
 
 **🚫 STOP CONDITIONS (Do Not Proceed):**
 
@@ -2403,6 +2600,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - **Previous Subphase Incomplete:** Subphase 1.5.3 tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **All Testing Not Complete:** Integration, performance, security, and edge case testing are not complete. **STOP** and complete all testing first.
+- **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
+- **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
+- **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 ### Documentation Tasks
 - [ ] **Task 1.5.4.1:** Create complete system documentation (architecture overview, module documentation)

@@ -2,6 +2,8 @@
 
 ## Rule (for Cursor + all future chats in this repo)
 
+**🚨 CRITICAL:** Before implementing ANY task, you MUST reference the complete compliance rules: [Compliance Rules](../docs/05-project-management/standards/compliance-rules.md)
+
 When implementing **Phase 1** (and any UI work), enforce **wireframe-first + database-first** compliance. This rule is non-negotiable.
 
 ### Wireframes are primary

@@ -130,6 +130,47 @@ Every frontend task PR must include:
 6. **Layout Integration Proof** - Screenshot showing integration into layout
 7. **Role Coverage Proof** - Evidence all roles handled
 8. **Role Name Consistency Proof** - Role names match schema
+9. **Compliance Section (MANDATORY)** - Implementation summary with compliance verification documenting all compliance rules followed during implementation (see "Implementation Summary Compliance Requirement" section below)
+
+**⚠️ CRITICAL:** PRs without a compliance section will be **REJECTED**. The compliance section is **REQUIRED** for PR approval.
+
+---
+
+## Implementation Summary Compliance Requirement (MANDATORY)
+
+**After EVERY implementation task completion, the implementation summary MUST include a compliance section documenting:**
+
+1. **Compliance Rules Followed:** List all compliance rules that were verified and followed during implementation
+2. **Verification Evidence:** Document how each compliance rule was verified (e.g., "Wireframe binding verified: JSDoc comment added to component file with wireframe link")
+3. **Compliance Checklist Status:** Confirm all required compliance checklist items were completed
+4. **Any Deviations:** Document any deviations from compliance rules with explicit approval references
+5. **Sami's Approval:** Confirm Sami's compliance review was completed before task completion
+
+**Format for Implementation Summary Compliance Section:**
+```markdown
+## Compliance Verification (Sami - Required)
+
+**Compliance Rules Verified:**
+- ✅ Sequential Task Verification: All previous tasks complete (Task 1.1.1.X checked off)
+- ✅ Wireframe Binding: Wireframe link added to component JSDoc comment
+- ✅ Database Binding: Tables/fields documented, queries verified to use Supabase
+- ✅ Role Coverage: All required role variants implemented (Company, MOH Tier 1, MOH Tier 2)
+- ✅ UI States: Loading, empty, error, success states implemented
+- ✅ No Local Mocks: Verified no local mock data, all data from Supabase queries
+- ✅ Seed Data Gate: Seed migration verified applied before frontend work
+
+**Verification Evidence:**
+- Wireframe binding: `src/app/rmm/companies/page.tsx` line 5-10 (JSDoc comment)
+- Database queries: `src/hooks/use-companies.ts` uses `supabase.from('companies').select()`
+- Role coverage: Screenshots provided for Company, MOH Tier 1, MOH Tier 2 roles
+- Seed data: Migration `seed_1_1_2_rmm` verified via `supabase migration list`
+
+**Sami's Approval:** ✅ Approved - [Date] - [Sami's signature/approval]
+
+**Deviations:** None
+```
+
+**⚠️ CRITICAL:** Implementation summaries without a compliance section are **INCOMPLETE** and will be rejected. The compliance section is **MANDATORY** for every task completion summary.
 
 ---
 

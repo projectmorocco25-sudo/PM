@@ -14,73 +14,10 @@
 
 The PM platform uses Next.js 13+ App Router for frontend routing, organized by module (RMM, VCI, ECS, CMC) with role-based access control and protected routes.
 
----
-
-## Route Implementation Status
-
-**Last Verified:** 2026-01-12  
-**Detailed Status:** See [route-inventory.md](./route-inventory.md) for complete route status matrix.
-
-### Status Legend
-
-- ✅ **Implemented:** Route exists in codebase, matches docs, works
-- ⚠️ **Placeholder:** Placeholder page created (Phase 1.1.1.FIX.4)
-- 📋 **Planned:** Route documented but not implemented yet
-- 🔄 **In Progress:** Currently being implemented
-
-### Route Status Summary
-
-| Route | Status | Wireframe | Phase | Last Verified |
-|-------|--------|-----------|-------|---------------|
-| `/` | ✅ Implemented | task-0.5.1.1 | 1.1.1 | 2026-01-12 |
-| `/dashboard` | ✅ Implemented | task-0.5.1.18 | 1.1.1 | 2026-01-12 |
-| `/auth/login` | ✅ Implemented | task-0.5.1.11 | 1.1.1 | 2026-01-12 |
-| `/auth/register` | ✅ Implemented | task-0.5.1.12 | 1.1.1 | 2026-01-12 |
-| `/auth/forgot-password` | ✅ Implemented | task-0.5.1.13 | 1.1.1 | 2026-01-12 |
-| `/auth/reset-password` | ✅ Implemented | task-0.5.1.13 | 1.1.1 | 2026-01-12 |
-| `/profile` | ✅ Implemented | task-0.5.1.22 | 1.1.1 | 2026-01-12 |
-| `/communications/inbox` | ✅ Implemented | task-0.5.1.24 | 1.1.1 | 2026-01-12 |
-| `/communications/inbox/[id]` | ✅ Implemented | task-0.5.1.25 | 1.1.1 | 2026-01-12 |
-| `/communications/sent` | ✅ Implemented | task-0.5.1.27 | 1.1.1 | 2026-01-12 |
-| `/communications/compose` | ✅ Implemented | task-0.5.1.26 | 1.1.1 | 2026-01-12 |
-| `/communications/announcements` | ✅ Implemented | task-0.5.1.28 | 1.1.1 | 2026-01-12 |
-| `/history` | ⚠️ Placeholder | task-0.5.1.30 | 1.1.7 | 2026-01-12 |
-| `/notifications` | ⚠️ Placeholder | task-0.5.1.31 | 1.1.1 | 2026-01-12 |
-| `/audit/logs` | ⚠️ Placeholder | task-0.5.1.32 | 1.1.7 | 2026-01-12 |
-| `/audit/reports` | ⚠️ Placeholder | task-0.5.1.34 | 1.1.7 | 2026-01-12 |
-| `/system-config` | ⚠️ Placeholder | task-0.5.1.35 | 1.1.1 | 2026-01-12 |
-| `/support` | ⚠️ Placeholder | task-0.5.1.3 | 1.1.1 | 2026-01-12 |
-| `/support/faq` | ⚠️ Placeholder | task-0.5.1.4 | 1.1.1 | 2026-01-12 |
-| `/support/contact` | ⚠️ Placeholder | task-0.5.1.5 | 1.1.1 | 2026-01-12 |
-| `/support/documentation` | ⚠️ Placeholder | task-0.5.1.6 | 1.1.1 | 2026-01-12 |
-| `/status` | ⚠️ Placeholder | task-0.5.1.10 | 1.1.1 | 2026-01-12 |
-| `/rmm` | ⚠️ Placeholder | task-0.5.2.1 | 1.1.2 | 2026-01-12 |
-| `/rmm/companies` | ⚠️ Placeholder | task-0.5.2.2 | 1.1.2 | 2026-01-12 |
-| `/rmm/products` | ⚠️ Placeholder | task-0.5.2.4 | 1.1.2 | 2026-01-12 |
-| `/rmm/skus` | ⚠️ Placeholder | task-0.5.2.6 | 1.1.2 | 2026-01-12 |
-| `/vci` | ⚠️ Placeholder | task-0.5.3.0 | 1.1.3 | 2026-01-12 |
-| `/vci/submissions/aams` | ⚠️ Placeholder | task-0.5.3.1 | 1.1.3 | 2026-01-12 |
-| `/vci/submissions/msq` | ⚠️ Placeholder | task-0.5.3.7 | 1.1.4 | 2026-01-12 |
-| `/vci/submissions/wsl` | ⚠️ Placeholder | task-0.5.3.11 | 1.1.5 | 2026-01-12 |
-| `/vci/submissions/history` | ⚠️ Placeholder | task-0.5.3.19 | 1.1.7 | 2026-01-12 |
-| `/vci/thresholds` | ⚠️ Placeholder | task-0.5.3.4 | 1.1.3 | 2026-01-12 |
-| `/vci/breaches` | ⚠️ Placeholder | task-0.5.3.14 | 1.1.5 | 2026-01-12 |
-| `/vci/governance` | ⚠️ Placeholder | task-0.5.3.18 | 1.1.5 | 2026-01-12 |
-| `/ecs` | ⚠️ Placeholder | task-0.5.4.0 | 1.2 | 2026-01-12 |
-| `/ecs/export-requests` | ⚠️ Placeholder | task-0.5.4.1 | 1.2 | 2026-01-12 |
-| `/ecs/authorizations` | ⚠️ Placeholder | task-0.5.4.5 | 1.2 | 2026-01-12 |
-| `/cmc` | ⚠️ Placeholder | task-0.5.5.0 | 1.3 | 2026-01-12 |
-| `/cmc/scores` | ⚠️ Placeholder | task-0.5.5.1 | 1.3 | 2026-01-12 |
-| `/cmc/disputes` | ⚠️ Placeholder | task-0.5.5.8 | 1.3 | 2026-01-12 |
-| `/cmc/reports` | ⚠️ Placeholder | task-0.5.5.10 | 1.3 | 2026-01-12 |
-| `/enforcement` | ⚠️ Placeholder | task-0.5.2.0 | 1.1.2 | 2026-01-12 |
-| `/enforcement/actions` | ⚠️ Placeholder | task-0.5.2.1 | 1.1.2 | 2026-01-12 |
-| `/enforcement/pending-approvals` | ⚠️ Placeholder | task-0.5.2.1c | 1.1.2 | 2026-01-12 |
-| `/enforcement/reports` | ⚠️ Placeholder | task-0.5.2.1d | 1.1.2 | 2026-01-12 |
-
-**Note:** Wireframe references marked with task IDs. Wireframes marked as "📋 Pending" in [Phase 0.5 Missing Wireframes](../../05-project-management/phases/phase-0-5-ui-ux-wireframes.md#-critical-missing-wireframes-for-phase-1111fix-routes) need to be created before full implementation.
-
-**For complete route status details, see:** [route-inventory.md](./route-inventory.md)
+**📋 Quick Reference:**
+- **Route implementation status:** See [route-inventory.md](./route-inventory.md) - SINGLE SOURCE OF TRUTH for route status
+- **Wireframe-route mapping:** See [wireframe-route-mapping.md](./wireframe-route-mapping.md) - SINGLE SOURCE OF TRUTH for wireframe-route relationships
+- **Route naming conventions:** See [route-naming-decision.md](./route-naming-decision.md)
 
 ---
 
@@ -832,7 +769,8 @@ export default function GovernancePage() {
 ## Related Documents
 
 ### Primary References
-- [route-inventory.md](./route-inventory.md) - Route implementation status and detailed status matrix (SINGLE SOURCE OF TRUTH for route status)
+- [route-inventory.md](./route-inventory.md) - **SINGLE SOURCE OF TRUTH** for route implementation status and detailed status matrix
+- [wireframe-route-mapping.md](./wireframe-route-mapping.md) - **SINGLE SOURCE OF TRUTH** for wireframe-route relationships
 - [route-naming-decision.md](./route-naming-decision.md) - Route naming conventions and standards
 - [navigation-layout-patterns.md](./navigation-layout-patterns.md) - Navigation structure (sidebar organization, layout patterns)
 

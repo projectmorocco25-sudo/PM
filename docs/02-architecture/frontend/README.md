@@ -22,7 +22,8 @@ This directory contains 10 core documents covering all aspects of frontend devel
 | [form-design-patterns.md](./form-design-patterns.md) | Form patterns and validation | ✅ Form structure, validation, error handling |
 | [state-management-ui-patterns.md](./state-management-ui-patterns.md) | Data fetching and state patterns | ✅ Loading, error, empty, success state handling |
 | [role-based-ui-patterns.md](./role-based-ui-patterns.md) | Role-based access and permissions | ✅ Role-based UI adaptations and visibility rules |
-| [route-inventory.md](./route-inventory.md) | Route implementation status | ✅ Route status tracking and implementation matrix |
+| [route-inventory.md](./route-inventory.md) | Route implementation status | ✅ **SINGLE SOURCE OF TRUTH** for route status tracking and implementation matrix |
+| [wireframe-route-mapping.md](./wireframe-route-mapping.md) | Wireframe-route relationships | ✅ **SINGLE SOURCE OF TRUTH** for wireframe-route mapping |
 | [route-naming-decision.md](./route-naming-decision.md) | Route naming convention decision | ✅ Route naming standards and conventions |
 | [historical-data-routing-proposal.md](./historical-data-routing-proposal.md) | Historical data access patterns | ✅ Historical data routing architecture and patterns |
 
@@ -34,9 +35,10 @@ This directory contains 10 core documents covering all aspects of frontend devel
 
 | Topic | Single Source of Truth | Do NOT Document In |
 |-------|----------------------|-------------------|
-| **Route paths** | [routing-structure.md](./routing-structure.md) | navigation-layout-patterns.md, role-based-ui-patterns.md |
+| **Route paths** | [routing-structure.md](./routing-structure.md) | navigation-layout-patterns.md, role-based-ui-patterns.md, route-inventory.md |
 | **Navigation structure** | [navigation-layout-patterns.md](./navigation-layout-patterns.md) | routing-structure.md, role-based-ui-patterns.md |
-| **Route status** | [route-inventory.md](./route-inventory.md) | routing-structure.md |
+| **Route status** | [route-inventory.md](./route-inventory.md) | routing-structure.md, wireframe-route-mapping.md |
+| **Wireframe-route mapping** | [wireframe-route-mapping.md](./wireframe-route-mapping.md) | route-inventory.md, feature-index.md |
 | **Route naming** | [route-naming-decision.md](./route-naming-decision.md) | routing-structure.md, navigation-layout-patterns.md |
 | **Component specifications** | [ui-component-specifications.md](./ui-component-specifications.md) | design-system.md, form-design-patterns.md |
 | **Design tokens** | [design-system.md](./design-system.md) | ui-component-specifications.md |

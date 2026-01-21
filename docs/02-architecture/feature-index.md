@@ -18,11 +18,13 @@ This index groups features by module and provides quick access to all related ar
 - **Status** - Implementation and completion status
 
 **For detailed information, see referenced documents:**
-- Routes: [route-inventory.md](./frontend/route-inventory.md) | [routing-structure.md](./frontend/routing-structure.md)
-- Wireframes: [wireframe-route-mapping.md](./frontend/wireframe-route-mapping.md) | [Phase 0.5 Wireframes Catalog](../../05-project-management/phases/phase-0-5-wireframes-catalog.md)
-- Database: [data-dictionary.md](./database/data-dictionary.md) | [schema-design.md](./database/schema-design.md)
-- APIs: [rpc-functions.md](./api/rpc-functions.md) | [api-specification.md](./api/api-specification.md)
-- Implementation: [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md)
+- **Route definitions:** [routing-structure.md](./frontend/routing-structure.md) - SINGLE SOURCE OF TRUTH for route paths
+- **Route status:** [route-inventory.md](./frontend/route-inventory.md) - SINGLE SOURCE OF TRUTH for route implementation status
+- **Wireframe-route mapping:** [wireframe-route-mapping.md](./frontend/wireframe-route-mapping.md) - SINGLE SOURCE OF TRUTH for wireframe-route relationships
+- **Wireframes:** [Phase 0.5 Wireframes Catalog](../../05-project-management/phases/phase-0-5-wireframes-catalog.md)
+- **Database:** [data-dictionary.md](./database/data-dictionary.md) | [schema-design.md](./database/schema-design.md)
+- **APIs:** [rpc-functions.md](./api/rpc-functions.md) | [api-specification.md](./api/api-specification.md)
+- **Implementation:** [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md)
 
 ---
 

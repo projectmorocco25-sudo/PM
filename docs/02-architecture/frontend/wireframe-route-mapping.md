@@ -6,7 +6,11 @@
 **Status:** ✅ COMPLETE - Phase 1.1.1.FIX.10 & 1.1.1.FIX.11 (Wireframe verification complete)  
 **Owner:** Emma (UI/UX)
 
-**⚠️ CRITICAL:** This document maps routes to wireframes. Route definitions are in [routing-structure.md](./routing-structure.md). Route status is in [route-inventory.md](./route-inventory.md). Wireframe creation workflow is in [phase-0-5-ui-ux-wireframes.md](../../05-project-management/phases/phase-0-5-ui-ux-wireframes.md).
+**⚠️ CRITICAL:** This document is the **SINGLE SOURCE OF TRUTH** for wireframe-route relationships. Route definitions are in [routing-structure.md](./routing-structure.md). Route implementation status is in [route-inventory.md](./route-inventory.md) - SINGLE SOURCE OF TRUTH for route status. Wireframe creation workflow is in [phase-0-5-ui-ux-wireframes.md](../../05-project-management/phases/phase-0-5-ui-ux-wireframes.md).
+
+**📋 Quick Reference:**
+- **Route definitions:** See [routing-structure.md](./routing-structure.md) - SINGLE SOURCE OF TRUTH for route paths
+- **Route status:** See [route-inventory.md](./route-inventory.md) - SINGLE SOURCE OF TRUTH for route implementation status
 
 ---
 
@@ -41,6 +45,7 @@
 | `/audit/logs/[id]` | task-0.5.1.33 | ✅ Has Wireframe | P1 | 1.1.7 | Audit log detail page |
 | `/audit/reports` | task-0.5.1.34 | ✅ Has Wireframe | P1 | 1.1.7 | Audit reports page |
 | `/system-config` | task-0.5.1.35 | ✅ Signed Off | P0 | 1.1.1 | System configuration (MOH Tier 1 only) - **Signed Off 2026-01-12** |
+| `/about` | task-0.5.1.2 | ✅ Has Wireframe | P1 | 1.1.1 | About page (MOH regulatory mission) |
 | `/support` | task-0.5.1.37 | ✅ Has Wireframe | P1 | 1.1.1 | Support center page |
 | `/support/faq` | task-0.5.1.38 | ✅ Has Wireframe | P1 | 1.1.1 | FAQ page |
 | `/support/contact` | task-0.5.1.39 | ✅ Has Wireframe | P1 | 1.1.1 | Contact support page |
@@ -49,6 +54,7 @@
 | `/rmm` | task-0.5.2.1 | ✅ Signed Off | P0 | 1.1.2 | RMM overview page - **Signed Off 2026-01-12** |
 | `/rmm/companies` | task-0.5.2.2 | ✅ Has Wireframe | P0 | 1.1.2 | Companies list page |
 | `/rmm/companies/[id]` | task-0.5.2.3 | ✅ Has Wireframe | P0 | 1.1.2 | Company detail page |
+| `/rmm/companies/[id]/products` | task-0.5.2.3 | ✅ Has Wireframe | P0 | 1.1.2 | Company products view (Products tab from company detail page) |
 | `/rmm/companies/new` | task-0.5.2.8 | ✅ Has Wireframe | P0 | 1.1.2 | Create company form |
 | `/rmm/companies/[id]/edit` | task-0.5.2.8 | ✅ Has Wireframe | P0 | 1.1.2 | Edit company form (same wireframe as create) |
 | `/rmm/products` | task-0.5.2.4 | ✅ Has Wireframe | P0 | 1.1.2 | Products list page |
@@ -70,8 +76,10 @@
 | `/vci/submissions/wsl/[id]` | task-0.5.3.12 | ✅ Has Wireframe | P0 | 1.1.5 | WSL submission detail page |
 | `/vci/submissions/wsl/new` | task-0.5.3.13 | ✅ Has Wireframe | P0 | 1.1.5 | Create WSL submission form |
 | `/vci/submissions/history` | task-0.5.3.28 | ✅ Has Wireframe | P1 | 1.1.7 | Submission history page |
+| `/vci/submissions/history/trends` | task-0.5.3.21 | ✅ Has Wireframe | P1 | 1.1.7 | Submission trends analysis page (MOH Tier 1 only) |
 | `/vci/thresholds` | task-0.5.3.4 | ✅ Has Wireframe | P0 | 1.1.3 | Threshold management page |
 | `/vci/thresholds/[id]` | task-0.5.3.5 | ✅ Has Wireframe | P0 | 1.1.3 | Threshold detail page |
+| `/vci/thresholds/[id]/revert-review` | task-0.5.3.7 | ✅ Has Wireframe | P0 | 1.1.3 | Threshold reversion review page (MOH Tier 1 only) |
 | `/vci/thresholds/pending-reversions` | task-0.5.3.6 | ✅ Has Wireframe | P0 | 1.1.3 | Pending reversions list |
 | `/vci/breaches` | task-0.5.3.14 | ✅ Has Wireframe | P0 | 1.1.5 | Compliance violations list page |
 | `/vci/breaches/[id]` | task-0.5.3.15 | ✅ Has Wireframe | P0 | 1.1.5 | Compliance violation detail page |
@@ -83,6 +91,7 @@
 | `/ecs/export-requests/new` | task-0.5.4.3 | ✅ Has Wireframe | P0 | 1.2 | Create export request form |
 | `/ecs/authorizations` | task-0.5.4.5 | ✅ Has Wireframe | P0 | 1.2 | Export authorizations list page |
 | `/ecs/authorizations/[id]` | task-0.5.4.6 | ✅ Has Wireframe | P0 | 1.2 | Export authorization detail page |
+| `/ecs/exports/history` | task-0.5.4.9 | ✅ Has Wireframe | P1 | 1.2 | Export history page (historical export authorizations) |
 | `/cmc` | task-0.5.5.0 | ✅ Has Wireframe | P0 | 1.3 | CMC overview page |
 | `/cmc/scores` | task-0.5.5.1 | ✅ Has Wireframe | P0 | 1.3 | Compliance scores list page |
 | `/cmc/scores/[id]` | task-0.5.5.2 | ✅ Has Wireframe | P0 | 1.3 | Compliance score detail page |
@@ -106,10 +115,10 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| ✅ Has Wireframe | 42 | 82.4% |
-| ✅ Signed Off (P0) | 9 | 17.6% |
+| ✅ Has Wireframe | 48 | 87.3% |
+| ✅ Signed Off (P0) | 9 | 16.4% |
 | 📋 Missing Wireframe | 0 | 0% |
-| **Total Routes** | **51** | **100%** |
+| **Total Routes** | **57** | **100%** |
 
 **Note:** 9 P0 wireframes for Phase 1.1.2 have been signed off (2026-01-12). All routes have wireframes.
 
@@ -117,7 +126,7 @@
 
 **Status:** ✅ **ALL WIREFRAMES VERIFIED AND EXIST**
 
-All routes now have corresponding wireframes. All 51 routes (100%) have verified wireframes.
+All routes now have corresponding wireframes. All 57 routes (100%) have verified wireframes.
 
 **Note:** All wireframes have been verified and exist. Some individual wireframe files may show "In Progress" status, but they contain complete wireframe specifications sufficient for implementation reference.
 
@@ -207,5 +216,5 @@ All routes now have corresponding wireframes. All 51 routes (100%) have verified
 ---
 
 **Last Updated:** 2026-01-12  
-**Status:** ✅ **ALL 51 ROUTES HAVE VERIFIED WIREFRAMES (100%)**  
+**Status:** ✅ **ALL 57 ROUTES HAVE VERIFIED WIREFRAMES (100%)**  
 **Next Review:** Periodic review during implementation phases

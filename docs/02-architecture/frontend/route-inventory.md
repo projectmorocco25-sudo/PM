@@ -6,6 +6,13 @@
 **Status:** 🔄 IN PROGRESS - Phase 1.1.1.FIX  
 **Owner:** Emma (UI/UX)
 
+**⚠️ CRITICAL:** This document is the **SINGLE SOURCE OF TRUTH** for route implementation status. Route definitions (paths and structure) are in [routing-structure.md](./routing-structure.md). Wireframe-route relationships are in [wireframe-route-mapping.md](./wireframe-route-mapping.md).
+
+**📋 Quick Reference:**
+- **Route definitions:** See [routing-structure.md](./routing-structure.md) - SINGLE SOURCE OF TRUTH for route paths
+- **Wireframe-route mapping:** See [wireframe-route-mapping.md](./wireframe-route-mapping.md) - SINGLE SOURCE OF TRUTH for wireframe-route relationships
+- **Feature tracking (Routes + DB + API):** See [feature-index.md](../feature-index.md) - Master feature index
+
 ---
 
 ## Route Status Legend
@@ -119,9 +126,9 @@
 ## Next Steps
 
 1. ✅ **Route Decision Made:** Option A (Documentation routes) - See [route-naming-decision.md](./route-naming-decision.md)
-2. ⏳ **Fix Sidebar Routes:** Update sidebar.tsx to match documentation routes
-3. ⏳ **Create Placeholder Pages:** Create placeholder pages for all missing routes
-4. ⏳ **Update Documentation:** Add implementation status to routing-structure.md
+2. ✅ **Documentation Consolidation:** Removed duplicate route status from routing-structure.md - this document is now the SINGLE SOURCE OF TRUTH for route status
+3. ⏳ **Fix Sidebar Routes:** Update sidebar.tsx to match documentation routes
+4. ⏳ **Create Placeholder Pages:** Create placeholder pages for all missing routes
 
 ---
 

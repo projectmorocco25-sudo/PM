@@ -1,0 +1,2 @@
+# This file ensures the functions directory is tracked by Git
+# Edge Functions will be created in subdirectories as needed

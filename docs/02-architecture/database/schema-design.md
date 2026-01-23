@@ -575,6 +575,38 @@ The PM platform uses PostgreSQL (via Supabase) with a modular schema design supp
 
 ---
 
+### approval_history
+**Purpose:** Detailed approval history tracking (comprehensive audit trail for approvals)
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Approval history ID |
+| approval_id | uuid | REFERENCES approvals(id), NOT NULL, ON DELETE CASCADE | Approval ID |
+| submission_id | uuid | NULLABLE | Submission ID (references the submission being approved) |
+| submission_type | text | NOT NULL | Submission type (registry, aams, export_request, etc.) |
+| workflow_stage | text | NOT NULL | Workflow stage (draft, submitted, tier2_verification, tier1_review, approved, etc.) |
+| action_taken | text | NOT NULL | Action taken (verified, approved, rejected, implemented, etc.) |
+| approver_id | uuid | REFERENCES users(id), NOT NULL | User who performed the action |
+| approver_role | text | NOT NULL | Role of approver at time of action (captures role snapshot) |
+| comments | text | NULLABLE | Comments |
+| metadata | jsonb | NULLABLE | Additional metadata about the approval action |
+| created_at | timestamptz | DEFAULT now() | Creation timestamp |
+
+**Indexes:**
+- `idx_approval_history_approval_id` on `approval_id`
+- `idx_approval_history_submission_id` on `submission_id`
+- `idx_approval_history_approver_id` on `approver_id`
+- `idx_approval_history_created_at` on `created_at`
+- `idx_approval_history_workflow_stage` on `workflow_stage`
+
+**Notes:**
+- Provides detailed history tracking separate from `approvals` table
+- `approver_role` captures role at time of action (important for audit trail)
+- `metadata` jsonb field allows for flexible additional data
+- Linked to `approvals` table via `approval_id` with CASCADE delete
+
+---
+
 ## VCI Module Tables
 
 ### aams_submissions

@@ -28,10 +28,11 @@ All project documentation is located in the `/docs` directory. This is the **sin
 **Total Duration:** 12 months
 
 - **Month 1:** Phase 0 - Technical Foundation
-- **Months 2-3:** Phase 1.1 - RMM + VCI Development
-- **Month 4:** Phase 1.2 - ECS Development
-- **Month 5:** Phase 1.3 - CMC Development
-- **Month 6:** Phase 1.4 - Holistic MVP Testing
+- **Month 2:** Phase 1.1 - RMM Development
+- **Month 3:** Phase 1.2 - VCI Development
+- **Month 4:** Phase 1.3 - ECS Development
+- **Month 5:** Phase 1.4 - CMC Development
+- **Month 6:** Phase 1.5 - Holistic MVP Testing
 - **Month 7:** Phase 2 - MOH UAT with Mock Data
 - **Month 8:** Phase 3 - Real Company Pilot (20-30 companies)
 - **Months 9-12:** Phase 4 - Full Production Rollout
@@ -74,7 +75,32 @@ Implementation code and configuration files live outside `/docs`:
 
 ## Team
 
-See `.cursor/rules/pm_agent_team.md` for the AI agent team roster and responsibilities.
+The PM platform is developed by a specialized AI agent team with clear domain expertise and responsibilities.
+
+### Leadership & Strategy
+- **Oliver** - Chief Architect / Strategic Leader: Final technical decisions, strategic architecture, decision log maintenance
+- **Yasmine** - Project Manager / Execution Lead: Strategic planning, timeline management, risk mitigation, milestone delivery
+
+### Domain Experts
+- **Fatima** - MOH Governance & Regulation SME: MOH tier authority, governance rules, approvals/enforcement policy
+- **Dr. Samir** - Pharma Value Chain SME: Pharma domain correctness (WSL/MSQ/AAMS, critical medicines, export realities)
+
+### Technical Specialists
+- **Nadia** - Supabase/Postgres Data Modeler: Schema design, migrations, effective-dating, constraints
+- **Rafi** - RLS/RBAC Specialist: Row-level security policies, role-based access control
+- **Maya** - Workflow/RPC Engineer: Governed-action RPCs, state machines, validation
+- **Salim** - Security & Audit Engineer: Audit hash-chain, MFA/security controls, attachment governance
+- **Leila** - Edge Functions / Jobs Engineer: Scheduled jobs, notification fan-out, integrity checks
+- **Emma** - UI/UX + Next.js Frontend Specialist: Routing, layouts, forms, dashboards
+- **Hassan** - QA/Assurance Engineer: Testing, mock data seeding, test DB isolation
+- **Farah** - Analytics/CMC Specialist: Curated datasets, dashboards, CMC scoring
+
+### Compliance & Quality Gate
+- **Sami** - Implementation Compliance Specialist: Wireframe-first + database-first compliance enforcement
+
+**Working Style:** ENTJ-optimized team with decisive action, strategic focus, results-driven execution, and direct communication. Oliver and Yasmine have final authority.
+
+For complete team roster, responsibilities, and decision-making protocols, see [`.cursor/rules/pm_agent_team.md`](.cursor/rules/pm_agent_team.md).
 
 ## Contact
 

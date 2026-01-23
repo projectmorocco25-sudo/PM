@@ -91,6 +91,46 @@ This data dictionary defines all fields across all database tables, including da
 
 ---
 
+### approvals
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Approval ID | Primary key |
+| submission_id | uuid | Yes | Submission ID | Foreign key to registry_submissions.id (or other submission tables). NULLABLE for flexibility |
+| submission_type | text | No | Submission type | Enum: registry, aams, export_request, etc. |
+| from_status | text | No | Previous status | Status before approval action |
+| to_status | text | No | New status | Status after approval action |
+| approver_id | uuid | No | User who approved | Foreign key to users.id |
+| approval_type | text | No | Approval type | Enum: verify, approve, implement, reject |
+| comments | text | Yes | Comments | Optional comments from approver |
+| created_at | timestamptz | No | Approval timestamp | Auto-set on insert |
+
+---
+
+### approval_history
+
+| Field | Type | Nullable | Description | Business Rules |
+|-------|------|----------|-------------|----------------|
+| id | uuid | No | Approval history ID | Primary key |
+| approval_id | uuid | No | Approval ID | Foreign key to approvals.id ON DELETE CASCADE |
+| submission_id | uuid | Yes | Submission ID | References the submission being approved |
+| submission_type | text | No | Submission type | Enum: registry, aams, export_request, etc. |
+| workflow_stage | text | No | Workflow stage | Enum: draft, submitted, tier2_verification, tier1_review, approved, etc. |
+| action_taken | text | No | Action taken | Enum: verified, approved, rejected, implemented, etc. |
+| approver_id | uuid | No | User who performed action | Foreign key to users.id |
+| approver_role | text | No | Approver role | Role of approver at time of action (captures role snapshot for audit trail) |
+| comments | text | Yes | Comments | Optional comments |
+| metadata | jsonb | Yes | Additional metadata | JSON object with additional metadata about the approval action |
+| created_at | timestamptz | No | Creation timestamp | Auto-set on insert |
+
+**Business Rules:**
+- Provides detailed history tracking separate from `approvals` table
+- `approver_role` captures role at time of action (important for audit trail if user role changes)
+- `metadata` jsonb field allows for flexible additional data
+- Linked to `approvals` table via `approval_id` with CASCADE delete
+
+---
+
 ## RMM Module Tables
 
 ### companies

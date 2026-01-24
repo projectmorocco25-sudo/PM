@@ -1,0 +1,33 @@
+All users (public.users)
+
+auditor
+- auditor@test.moh.gov.ma | company: N/A
+
+company_admin
+- admin@testcompany.com | company: Casablanca Pharma Industries
+- agadir.healthcare@example.org | company: Agadir Healthcare Solutions
+- agadir.medsupply@example.org | company: Agadir MedSupply Group
+
+company_manager
+- agadir.life@example.org | company: Agadir Life Sciences
+- agadir.pharma@example.org | company: Agadir Pharma Industries
+- agadir.pharmaceuticals@example.org | company: Agadir Pharmaceuticals
+- manager@testcompany.com | company: Casablanca Pharma Industries
+
+company_user
+- user@testcompany.com | company: Casablanca Pharma Industries
+
+system_admin
+- admin@test.system | company: N/A
+
+tier1
+- tier1@test.moh.gov.ma | company: N/A
+
+tier2_officer
+- tier2officer@test.moh.gov.ma | company: N/A
+
+tier2_registrar
+- tier2registrar@test.moh.gov.ma | company: N/A
+
+vendor
+- vendor@test.vendor | company: N/A

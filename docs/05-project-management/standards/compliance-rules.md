@@ -34,6 +34,7 @@
 - [ ] Layout/components integrated into routes (if applicable)
 - [ ] Navigation updated (if new routes added)
 - [ ] Module routing structure updated
+- [ ] **Route File Index Updated:** `docs/02-architecture/frontend/route-file-index.md` updated with new routes, file locations, status, task IDs, and wireframe links
 
 ### 5. Role Coverage Verification
 - [ ] All 9 roles are handled (where applicable)

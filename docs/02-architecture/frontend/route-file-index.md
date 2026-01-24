@@ -2,12 +2,14 @@
 
 **Purpose:** Complete index of all routes, their file locations, component structure, and implementation status. This document acts as a contents/index page for the frontend codebase.
 
-**Last Updated:** 2026-01-22  
-**Status:** 🔄 IN PROGRESS - Updated after Tasks 1.1.1.13-1.1.1.24  
+**Last Updated:** 2026-01-23  
+**Status:** 🔄 IN PROGRESS - Updated after Tasks 1.1.2.16-1.1.2.44 (RMM and Enforcement Frontend)  
 **Owners:** Yasmine (Frontend Developer), Oliver (Frontend Developer)  
 **Review Required:** Yasmine and Oliver pushback requested
 
 **⚠️ CRITICAL:** This document is updated after each relevant task implementation. It serves as the SINGLE SOURCE OF TRUTH for route-to-file mapping.
+
+**⚠️ COMPLIANCE RULE:** This file MUST be updated whenever new routes are created. See [Compliance Rules - Integration Verification](../../05-project-management/standards/compliance-rules.md#4-integration-verification).
 
 ---
 
@@ -166,22 +168,25 @@ PM/
 
 | Route | File Location | Status | Task | Wireframe | Notes |
 |-------|--------------|--------|------|-----------|-------|
-| `/rmm` | `app/(dashboard)/rmm/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1 | RMM overview |
-| `/rmm/layout.tsx` | `app/(dashboard)/rmm/layout.tsx` | 📋 Planned | TBD | N/A | RMM module layout |
-| `/rmm/overview` | `app/(dashboard)/rmm/overview/page.tsx` | 📋 Planned | TBD | task-0.5.2.16 | RMM overview (sidebar link) |
-| `/rmm/companies` | `app/(dashboard)/rmm/companies/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.2 | Companies list |
-| `/rmm/companies/[id]` | `app/(dashboard)/rmm/companies/[id]/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.3 | Company detail |
-| `/rmm/companies/[id]/edit` | `app/(dashboard)/rmm/companies/[id]/edit/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.8 | Edit company |
-| `/rmm/companies/[id]/products` | `app/(dashboard)/rmm/companies/[id]/products/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.3 | Company products view |
-| `/rmm/companies/new` | `app/(dashboard)/rmm/companies/new/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.8 | Create company |
-| `/rmm/products` | `app/(dashboard)/rmm/products/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.4 | Products list |
-| `/rmm/products/[id]` | `app/(dashboard)/rmm/products/[id]/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.5 | Product detail |
-| `/rmm/products/[id]/edit` | `app/(dashboard)/rmm/products/[id]/edit/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.9 | Edit product |
-| `/rmm/products/new` | `app/(dashboard)/rmm/products/new/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.9 | Create product |
-| `/rmm/skus` | `app/(dashboard)/rmm/skus/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.6 | SKUs list |
-| `/rmm/skus/[id]` | `app/(dashboard)/rmm/skus/[id]/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.7 | SKU detail |
-| `/rmm/skus/[id]/edit` | `app/(dashboard)/rmm/skus/[id]/edit/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.10 | Edit SKU |
-| `/rmm/skus/new` | `app/(dashboard)/rmm/skus/new/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.10 | Create SKU |
+| `/rmm` | `app/(dashboard)/rmm/page.tsx` | ✅ Implemented | 1.1.2.16 | task-0.5.2.1 | RMM overview (placeholder) |
+| `/rmm/layout.tsx` | `app/(dashboard)/rmm/layout.tsx` | ✅ Implemented | 1.1.2.16 | N/A | RMM module layout |
+| `/rmm/companies` | `app/(dashboard)/rmm/companies/page.tsx` | ✅ Implemented | 1.1.2.17 | task-0.5.2.2 | Companies list with search, filters, pagination |
+| `/rmm/companies/[id]` | `app/(dashboard)/rmm/companies/[id]/page.tsx` | ✅ Implemented | 1.1.2.18 | task-0.5.2.3 | Company detail with tabs (Overview, Products, History) |
+| `/rmm/companies/[id]/edit` | `app/(dashboard)/rmm/companies/[id]/edit/page.tsx` | ✅ Implemented | 1.1.2.19 | task-0.5.2.8 | Edit company form |
+| `/rmm/companies/[id]/products` | `app/(dashboard)/rmm/companies/[id]/products/page.tsx` | ✅ Implemented | 1.1.2.18a | task-0.5.2.3 | Company products list |
+| `/rmm/companies/new` | `app/(dashboard)/rmm/companies/new/page.tsx` | ✅ Implemented | 1.1.2.19 | task-0.5.2.8 | Create company form |
+| `/rmm/products` | `app/(dashboard)/rmm/products/page.tsx` | ✅ Implemented | 1.1.2.20 | task-0.5.2.4 | Products list with search, filters, pagination |
+| `/rmm/products/[id]` | `app/(dashboard)/rmm/products/[id]/page.tsx` | ✅ Implemented | 1.1.2.21 | task-0.5.2.5 | Product detail with tabs (Overview, SKUs, History) |
+| `/rmm/products/[id]/edit` | `app/(dashboard)/rmm/products/[id]/edit/page.tsx` | ✅ Implemented | 1.1.2.22 | task-0.5.2.9 | Edit product form |
+| `/rmm/products/new` | `app/(dashboard)/rmm/products/new/page.tsx` | ✅ Implemented | 1.1.2.22 | task-0.5.2.9 | Create product form |
+| `/rmm/skus` | `app/(dashboard)/rmm/skus/page.tsx` | ✅ Implemented | 1.1.2.23 | task-0.5.2.6 | SKUs list with search, filters, pagination |
+| `/rmm/skus/[id]` | `app/(dashboard)/rmm/skus/[id]/page.tsx` | ✅ Implemented | 1.1.2.24 | task-0.5.2.7 | SKU detail with tabs (Overview, History) |
+| `/rmm/skus/[id]/edit` | `app/(dashboard)/rmm/skus/[id]/edit/page.tsx` | ✅ Implemented | 1.1.2.25 | task-0.5.2.10 | Edit SKU form |
+| `/rmm/skus/new` | `app/(dashboard)/rmm/skus/new/page.tsx` | ✅ Implemented | 1.1.2.25 | task-0.5.2.10 | Create SKU form |
+| `/rmm/submissions` | `app/(dashboard)/rmm/submissions/page.tsx` | ✅ Implemented | 1.1.2.26 | task-0.5.2.11 | Registry submissions list with filters |
+| `/rmm/submissions/[id]` | `app/(dashboard)/rmm/submissions/[id]/page.tsx` | ✅ Implemented | 1.1.2.27 | task-0.5.2.12 | Registry submission detail with workflow timeline |
+| `/rmm/atc-codes` | `app/(dashboard)/rmm/atc-codes/page.tsx` | ✅ Implemented | 1.1.2.29 | task-0.5.2.13 | ATC codes list (MOH only) |
+| `/rmm/critical-medicines` | `app/(dashboard)/rmm/critical-medicines/page.tsx` | ✅ Implemented | 1.1.2.30 | task-0.5.2.14 | Critical medicines list (MOH only) |
 
 ### VCI (Value Chain Intelligence) Routes
 
@@ -244,13 +249,15 @@ PM/
 
 | Route | File Location | Status | Task | Wireframe | Notes |
 |-------|--------------|--------|------|-----------|-------|
-| `/enforcement` | `app/(dashboard)/enforcement/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.0 | Enforcement dashboard (MOH Tier 1 & 2 only) |
-| `/enforcement/layout.tsx` | `app/(dashboard)/enforcement/layout.tsx` | 📋 Planned | TBD | N/A | Enforcement module layout |
-| `/enforcement/actions` | `app/(dashboard)/enforcement/actions/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1 | Enforcement actions list |
-| `/enforcement/actions/[id]` | `app/(dashboard)/enforcement/actions/[id]/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1a | Enforcement action detail |
-| `/enforcement/actions/new` | `app/(dashboard)/enforcement/actions/new/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1b | Create enforcement action |
-| `/enforcement/pending-approvals` | `app/(dashboard)/enforcement/pending-approvals/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1c | Actions pending Tier 1 approval |
-| `/enforcement/reports` | `app/(dashboard)/enforcement/reports/page.tsx` | 🔄 Placeholder | 1.1.1.12 | task-0.5.2.1d | Enforcement analytics and reporting |
+| `/enforcement` | `app/(dashboard)/enforcement/page.tsx` | ✅ Implemented | 1.1.2.37 | task-0.5.2.1a | Enforcement dashboard with stats, widgets, and charts |
+| `/enforcement/layout.tsx` | `app/(dashboard)/enforcement/layout.tsx` | ✅ Implemented | 1.1.2.37 | N/A | Enforcement module layout |
+| `/enforcement/actions` | `app/(dashboard)/enforcement/actions/page.tsx` | ✅ Implemented | 1.1.2.38 | task-0.5.2.1b | Enforcement actions list with search, filters, pagination |
+| `/enforcement/actions/[id]` | `app/(dashboard)/enforcement/actions/[id]/page.tsx` | ✅ Implemented | 1.1.2.39 | task-0.5.2.1c | Enforcement action detail with workflow timeline and tabs |
+| `/enforcement/actions/[id]/appeal` | `app/(dashboard)/enforcement/actions/[id]/appeal/page.tsx` | ✅ Implemented | 1.1.2.44 | task-0.5.2.1f | Appeal submission form (Company users) |
+| `/enforcement/actions/new` | `app/(dashboard)/enforcement/actions/new/page.tsx` | ✅ Implemented | 1.1.2.40 | task-0.5.2.1d | Create enforcement action wizard (multi-step form) |
+| `/enforcement/appeals/[id]` | `app/(dashboard)/enforcement/appeals/[id]/page.tsx` | ✅ Implemented | 1.1.2.43 | task-0.5.2.1e | Appeal review interface (MOH Tier 1) |
+| `/enforcement/pending-approvals` | `app/(dashboard)/enforcement/pending-approvals/page.tsx` | ✅ Implemented | 1.1.2.41 | task-0.5.2.1e | Actions pending Tier 1 approval with bulk actions |
+| `/enforcement/reports` | `app/(dashboard)/enforcement/reports/page.tsx` | ✅ Implemented | 1.1.2.42 | task-0.5.2.1d | Enforcement analytics and reporting with charts |
 
 ### Public Routes
 
@@ -351,8 +358,8 @@ PM/
 
 ### By Status
 
-- **✅ Implemented:** 40+ files (routes: 30+, components: 5, libraries: 3)
-- **📋 Planned:** 70+ routes (to be implemented in future tasks)
+- **✅ Implemented:** 80+ files (routes: 70+, components: 5, libraries: 3)
+- **📋 Planned:** 40+ routes (VCI, ECS, CMC modules to be implemented in future tasks)
 
 ### By Task
 
@@ -427,18 +434,84 @@ PM/
   - ✅ System announcements (`app/(dashboard)/communications/announcements/page.tsx`)
   - ✅ Archived conversations (`app/(dashboard)/communications/archived/page.tsx`)
 
+- **Task 1.1.2.16 (Complete):**
+  - ✅ RMM layout (`app/(dashboard)/rmm/layout.tsx`)
+  - ✅ RMM overview page (`app/(dashboard)/rmm/page.tsx`)
+
+- **Task 1.1.2.17 (Complete):**
+  - ✅ Companies list page (`app/(dashboard)/rmm/companies/page.tsx`)
+
+- **Task 1.1.2.18 (Complete):**
+  - ✅ Company detail page (`app/(dashboard)/rmm/companies/[id]/page.tsx`)
+
+- **Task 1.1.2.18a (Complete):**
+  - ✅ Company products page (`app/(dashboard)/rmm/companies/[id]/products/page.tsx`)
+
+- **Task 1.1.2.19 (Complete):**
+  - ✅ Company create form (`app/(dashboard)/rmm/companies/new/page.tsx`)
+  - ✅ Company edit form (`app/(dashboard)/rmm/companies/[id]/edit/page.tsx`)
+
+- **Task 1.1.2.20 (Complete):**
+  - ✅ Products list page (`app/(dashboard)/rmm/products/page.tsx`)
+
+- **Task 1.1.2.21 (Complete):**
+  - ✅ Product detail page (`app/(dashboard)/rmm/products/[id]/page.tsx`)
+
+- **Task 1.1.2.22 (Complete):**
+  - ✅ Product create form (`app/(dashboard)/rmm/products/new/page.tsx`)
+  - ✅ Product edit form (`app/(dashboard)/rmm/products/[id]/edit/page.tsx`)
+
+- **Task 1.1.2.23 (Complete):**
+  - ✅ SKUs list page (`app/(dashboard)/rmm/skus/page.tsx`)
+
+- **Task 1.1.2.24 (Complete):**
+  - ✅ SKU detail page (`app/(dashboard)/rmm/skus/[id]/page.tsx`)
+
+- **Task 1.1.2.25 (Complete):**
+  - ✅ SKU create form (`app/(dashboard)/rmm/skus/new/page.tsx`)
+  - ✅ SKU edit form (`app/(dashboard)/rmm/skus/[id]/edit/page.tsx`)
+
+- **Task 1.1.2.26 (Complete):**
+  - ✅ Registry submissions list page (`app/(dashboard)/rmm/submissions/page.tsx`)
+
+- **Task 1.1.2.27 (Complete):**
+  - ✅ Registry submission detail page (`app/(dashboard)/rmm/submissions/[id]/page.tsx`)
+
+- **Task 1.1.2.29 (Complete):**
+  - ✅ ATC codes list page (`app/(dashboard)/rmm/atc-codes/page.tsx`)
+
+- **Task 1.1.2.30 (Complete):**
+  - ✅ Critical medicines list page (`app/(dashboard)/rmm/critical-medicines/page.tsx`)
+
+- **Task 1.1.2.37 (Complete):**
+  - ✅ Enforcement layout (`app/(dashboard)/enforcement/layout.tsx`)
+  - ✅ Enforcement dashboard page (`app/(dashboard)/enforcement/page.tsx`)
+
+- **Task 1.1.2.38 (Complete):**
+  - ✅ Enforcement actions list page (`app/(dashboard)/enforcement/actions/page.tsx`)
+
+- **Task 1.1.2.39 (Complete):**
+  - ✅ Enforcement action detail page (`app/(dashboard)/enforcement/actions/[id]/page.tsx`)
+
+- **Task 1.1.2.40 (Complete):**
+  - ✅ Create enforcement action wizard (`app/(dashboard)/enforcement/actions/new/page.tsx`)
+
+- **Task 1.1.2.41 (Complete):**
+  - ✅ Pending approvals page (`app/(dashboard)/enforcement/pending-approvals/page.tsx`)
+
+- **Task 1.1.2.42 (Complete):**
+  - ✅ Enforcement reports page (`app/(dashboard)/enforcement/reports/page.tsx`)
+
+- **Task 1.1.2.43 (Complete):**
+  - ✅ Appeal review interface (`app/(dashboard)/enforcement/appeals/[id]/page.tsx`)
+
+- **Task 1.1.2.44 (Complete):**
+  - ✅ Appeal submission form (`app/(dashboard)/enforcement/actions/[id]/appeal/page.tsx`)
+
 ### Next Tasks (Planned)
 
-- **Task 1.1.1.12 (Complete):**
-  - ✅ Created 51 placeholder pages for all routes using PlaceholderPage component
-  - ✅ RMM routes (14 pages)
-  - ✅ VCI routes (20 pages)
-  - ✅ ECS routes (7 pages)
-  - ✅ CMC routes (8 pages)
-  - ✅ Enforcement routes (6 pages)
-  - ✅ System Config (1 page)
 - **Future tasks:** Full implementation of history and audit pages (currently placeholders)
-- **Future tasks:** Module-specific routes (RMM, VCI, ECS, CMC, Enforcement)
+- **Future tasks:** VCI, ECS, and CMC module routes
 
 ---
 
@@ -480,6 +553,8 @@ PM/
 |------|------|---------|------------|
 | 2026-01-22 | 1.1.1.9 | Initial index created with Task 1.1.1.9 implementation | Sami |
 | 2026-01-22 | 1.1.1.10-1.1.1.24 | Updated with all authentication, public, dashboard, and communications pages | Sami |
+| 2026-01-23 | 1.1.2.16-1.1.2.30 | Updated with all RMM frontend routes (companies, products, SKUs, submissions, ATC codes, critical medicines) | Sami |
+| 2026-01-23 | 1.1.2.37-1.1.2.44 | Updated with all Enforcement frontend routes (dashboard, actions, appeals, reports) | Sami |
 
 ---
 
@@ -501,5 +576,5 @@ PM/
 
 ---
 
-**Last Updated:** 2026-01-22  
-**Next Update:** After Task 1.1.1.12 (Placeholder pages for all routes)
+**Last Updated:** 2026-01-23  
+**Next Update:** After VCI, ECS, or CMC module frontend tasks

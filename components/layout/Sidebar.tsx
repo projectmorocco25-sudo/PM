@@ -147,10 +147,23 @@ export function Sidebar({ mobileOpen: externalMobileOpen, onMobileClose }: Sideb
       labelAbbr: "(RMM)",
       tooltip: "Registry Management (RMM)",
       items: [
-        { href: "/rmm/overview", label: "Overview", icon: BarChart3 },
+        { href: "/rmm", label: "Overview", icon: BarChart3 },
         { href: "/rmm/companies", label: "Companies", icon: Building2 },
         { href: "/rmm/products", label: "Products", icon: Package },
         { href: "/rmm/skus", label: "SKUs", icon: Box },
+        { href: "/rmm/submissions", label: "Submissions", icon: FileText },
+        {
+          href: "/rmm/atc-codes",
+          label: "ATC Codes",
+          icon: FileCheck,
+          roles: [ROLES.TIER1, ROLES.TIER2_OFFICER, ROLES.TIER2_REGISTRAR, ROLES.SYSTEM_ADMIN],
+        },
+        {
+          href: "/rmm/critical-medicines",
+          label: "Critical Medicines",
+          icon: AlertTriangle,
+          roles: [ROLES.TIER1, ROLES.TIER2_OFFICER, ROLES.TIER2_REGISTRAR, ROLES.SYSTEM_ADMIN],
+        },
       ],
     },
     {

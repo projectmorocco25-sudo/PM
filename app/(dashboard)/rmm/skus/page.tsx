@@ -19,7 +19,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -40,6 +40,7 @@ interface SKU {
   dosage_form: string | null;
   pack_size: string | null;
   unit_of_measure: string | null;
+  atc_code: string | null;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -48,11 +49,12 @@ interface SKU {
 interface SKUsResponse {
   skus: SKU[];
   pagination: {
-    total: number;
+    total?: number;
+    total_count?: number;
     page_number: number;
     page_size: number;
     total_pages: number;
-    has_more: boolean;
+    has_more?: boolean;
   };
 }
 
@@ -60,7 +62,7 @@ type SortField = "name" | "sku_code" | "product_name" | "dosage_strength" | "cre
 type SortOrder = "asc" | "desc";
 type StatusFilter = "all" | "active" | "inactive";
 
-export default function SKUsListPage() {
+function SKUsListContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const productIdParam = searchParams.get("product_id");
@@ -82,6 +84,33 @@ export default function SKUsListPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [dateRangePreset, setDateRangePreset] = useState<"last7" | "last30" | "custom" | null>(null);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [dosageFormFilter, setDosageFormFilter] = useState<string | null>(null);
+  const [atcCodeFilter, setAtcCodeFilter] = useState<string | null>(null);
+  const [atcCodes, setAtcCodes] = useState<Array<{ id: string; code: string }>>([]);
+
+  const getDateRange = () => {
+    if (!dateRangePreset) return { from: null as string | null, to: null as string | null };
+    const today = new Date();
+    const to = today.toISOString().slice(0, 10);
+    if (dateRangePreset === "last7") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 7);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "last30") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 30);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "custom" && dateFrom && dateTo) return { from: dateFrom, to: dateTo };
+    return { from: null, to: null };
+  };
+  const { from: pDateFrom, to: pDateTo } = getDateRange();
+
+  const DOSAGE_FORMS = ["Tablet", "Capsule", "Syrup", "Injection", "Cream", "Ointment", "Drops", "Spray"] as const;
 
   // Get current user
   useEffect(() => {
@@ -118,6 +147,27 @@ export default function SKUsListPage() {
     fetchProducts();
   }, [user, permissionsLoading]);
 
+  // Load ATC codes for filter (Phase 4 Task 4.3)
+  useEffect(() => {
+    if (!user || permissionsLoading) return;
+    (async () => {
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase.rpc("rmm_list_atc_codes", {
+          user_id: user.id,
+          page_number: 1,
+          page_size: 500,
+        });
+        if (!error && data && typeof data === "object" && "atc_codes" in data) {
+          const arr = (data as { atc_codes: Array<{ id: string; code: string }> }).atc_codes;
+          setAtcCodes(Array.isArray(arr) ? arr.map((a) => ({ id: a.id, code: (a as any).code })) : []);
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+  }, [user, permissionsLoading]);
+
   // Fetch SKUs
   useEffect(() => {
     if (!user || permissionsLoading) return;
@@ -133,10 +183,13 @@ export default function SKUsListPage() {
           product_id: productFilter || null,
           page_number: pageNumber,
           page_size: pageSize,
-          atc_code_id_filter: null,
+          atc_code_id_filter: atcCodeFilter || null,
           search_term: searchTerm || null,
           sort_by: sortBy,
           sort_order: sortOrder,
+          p_date_from: pDateFrom || null,
+          p_date_to: pDateTo || null,
+          p_dosage_form_filter: dosageFormFilter || null,
         });
 
         if (rpcError) {
@@ -151,8 +204,9 @@ export default function SKUsListPage() {
           setSkus((prev) => [...prev, ...(response.skus || [])]);
         }
         
-        setTotalCount(response.pagination.total);
-        setHasMore(response.pagination.has_more);
+        const p = response.pagination;
+        setTotalCount(p.total ?? p.total_count ?? 0);
+        setHasMore(p.has_more ?? (pageNumber < (p.total_pages ?? 1)));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load SKUs");
       } finally {
@@ -161,13 +215,13 @@ export default function SKUsListPage() {
     }
 
     fetchSKUs();
-  }, [user, permissionsLoading, pageNumber, pageSize, productFilter, searchTerm, sortBy, sortOrder]);
+  }, [user, permissionsLoading, pageNumber, pageSize, productFilter, searchTerm, sortBy, sortOrder, dosageFormFilter, atcCodeFilter, pDateFrom, pDateTo]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setPageNumber(1);
     setSkus([]);
-  }, [productFilter, searchTerm, sortBy, sortOrder]);
+  }, [productFilter, searchTerm, sortBy, sortOrder, dosageFormFilter, atcCodeFilter, dateRangePreset, dateFrom, dateTo]);
 
   // Client-side status filtering
   const filteredSKUs = skus.filter((sku) => {
@@ -194,10 +248,15 @@ export default function SKUsListPage() {
 
   const clearFilters = () => {
     setSearchTerm("");
-    setProductFilter(null);
+    setProductFilter(productIdParam || null);
     setStatusFilter("active");
     setSortBy("name");
     setSortOrder("asc");
+    setDateRangePreset(null);
+    setDateFrom("");
+    setDateTo("");
+    setDosageFormFilter(null);
+    setAtcCodeFilter(null);
     setPageNumber(1);
   };
 
@@ -361,35 +420,84 @@ export default function SKUsListPage() {
             <label className="text-sm font-medium text-text-primary mb-2 block">Status</label>
             <div className="space-y-2">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="status"
-                  checked={statusFilter === "all"}
-                  onChange={() => setStatusFilter("all")}
-                  className="border-border-default"
-                />
+                <input type="radio" name="status" checked={statusFilter === "all"} onChange={() => setStatusFilter("all")} className="border-border-default" />
                 <span className="text-sm text-text-secondary">All</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="status"
-                  checked={statusFilter === "active"}
-                  onChange={() => setStatusFilter("active")}
-                  className="border-border-default"
-                />
+                <input type="radio" name="status" checked={statusFilter === "active"} onChange={() => setStatusFilter("active")} className="border-border-default" />
                 <span className="text-sm text-text-secondary">Active</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="status"
-                  checked={statusFilter === "inactive"}
-                  onChange={() => setStatusFilter("inactive")}
-                  className="border-border-default"
-                />
+                <input type="radio" name="status" checked={statusFilter === "inactive"} onChange={() => setStatusFilter("inactive")} className="border-border-default" />
                 <span className="text-sm text-text-secondary">Inactive</span>
               </label>
+            </div>
+          </div>
+
+          {/* Dosage Form Filter (Phase 4 Task 4.2) */}
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Form</label>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="form" checked={dosageFormFilter === null} onChange={() => setDosageFormFilter(null)} className="border-border-default" />
+                <span className="text-sm text-text-secondary">All</span>
+              </label>
+              {DOSAGE_FORMS.map((f) => (
+                <label key={f} className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="form" checked={dosageFormFilter === f} onChange={() => setDosageFormFilter(f)} className="border-border-default" />
+                  <span className="text-sm text-text-secondary">{f}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* ATC Code Filter (Phase 4 Task 4.3) */}
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">ATC Code</label>
+            <select
+              value={atcCodeFilter || ""}
+              onChange={(e) => setAtcCodeFilter(e.target.value || null)}
+              className="w-full px-3 py-2 border border-border-default rounded-md text-sm"
+            >
+              <option value="">All</option>
+              {atcCodes.map((a) => (
+                <option key={a.id} value={a.id}>{a.code}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Date Range Filter (Phase 4 Task 4.1) */}
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                <span className="text-sm text-text-secondary">All</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 7 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 30 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Custom</span>
+              </label>
+              {dateRangePreset === "custom" && (
+                <div className="pl-5 space-y-2">
+                  <div>
+                    <label className="text-xs text-text-secondary">From</label>
+                    <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary">To</label>
+                    <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -418,7 +526,86 @@ export default function SKUsListPage() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              {/* Same filter content as desktop */}
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Product</label>
+                <select value={productFilter || ""} onChange={(e) => setProductFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All Products</option>
+                  {products.map((p) => (
+                    <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Status</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "all"} onChange={() => setStatusFilter("all")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "active"} onChange={() => setStatusFilter("active")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Active</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "inactive"} onChange={() => setStatusFilter("inactive")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Inactive</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Form</label>
+                <select value={dosageFormFilter || ""} onChange={(e) => setDosageFormFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All</option>
+                  {DOSAGE_FORMS.map((f) => (
+                    <option key={f} value={f}>{f}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">ATC Code</label>
+                <select value={atcCodeFilter || ""} onChange={(e) => setAtcCodeFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All</option>
+                  {atcCodes.map((a) => (
+                    <option key={a.id} value={a.id}>{a.code}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 7 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 30 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Custom</span>
+                  </label>
+                  {dateRangePreset === "custom" && (
+                    <div className="pl-5 space-y-2">
+                      <div>
+                        <label className="text-xs text-text-secondary">From</label>
+                        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-text-secondary">To</label>
+                        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button onClick={clearFilters} className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm">
+                Clear Filters
+              </button>
             </aside>
           </div>
         )}
@@ -429,16 +616,16 @@ export default function SKUsListPage() {
             <div className="p-12 text-center">
               <Box className="w-12 h-12 text-text-secondary mx-auto mb-4" />
               <p className="text-text-primary font-medium mb-2">
-                {searchTerm || productFilter || statusFilter !== "active"
+                {searchTerm || productFilter || statusFilter !== "active" || dosageFormFilter || atcCodeFilter || dateRangePreset
                   ? "No SKUs match your filters"
                   : "No SKUs found"}
               </p>
               <p className="text-text-secondary text-sm mb-4">
-                {searchTerm || productFilter || statusFilter !== "active"
+                {searchTerm || productFilter || statusFilter !== "active" || dosageFormFilter || atcCodeFilter || dateRangePreset
                   ? "Try adjusting your filters"
                   : "Create your first SKU to get started"}
               </p>
-              {searchTerm || productFilter || statusFilter !== "active" ? (
+              {searchTerm || productFilter || statusFilter !== "active" || dosageFormFilter || atcCodeFilter || dateRangePreset ? (
                 <button
                   onClick={clearFilters}
                   className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
@@ -501,6 +688,7 @@ export default function SKUsListPage() {
                       <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Dosage</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Form</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Pack Size</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">ATC Code</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Status</th>
                       <th className="px-4 py-3 text-right text-sm font-semibold text-text-primary">Actions</th>
                     </tr>
@@ -549,6 +737,9 @@ export default function SKUsListPage() {
                           <span className="text-sm text-text-primary">
                             {sku.pack_size ? `${sku.pack_size} ${sku.unit_of_measure || ""}`.trim() : "-"}
                           </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="text-sm font-mono text-text-primary">{sku.atc_code ?? "-"}</span>
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -657,6 +848,10 @@ export default function SKUsListPage() {
                         )}
                       </div>
                       <div>
+                        <span className="text-text-secondary">ATC Code: </span>
+                        <span className="font-mono text-text-primary">{sku.atc_code ?? "-"}</span>
+                      </div>
+                      <div>
                         <span
                           className={cn(
                             "px-2 py-1 text-xs font-medium rounded",
@@ -693,5 +888,13 @@ export default function SKUsListPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SKUsListPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-6 py-12 text-text-secondary">Loading...</div>}>
+      <SKUsListContent />
+    </Suspense>
   );
 }

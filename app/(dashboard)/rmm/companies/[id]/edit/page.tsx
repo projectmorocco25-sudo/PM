@@ -24,6 +24,8 @@ import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
 import { ArrowLeft, Save } from "lucide-react";
+import { useDraftForm } from "@/lib/hooks/use-draft-form";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
 
 interface Company {
   id: string;
@@ -33,9 +35,12 @@ interface Company {
   address: string | null;
   contact_email: string | null;
   contact_phone: string | null;
+  tax_id: string | null;
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  created_by_name?: string | null;
+  updated_by_name?: string | null;
 }
 
 export default function EditCompanyPage() {
@@ -50,14 +55,21 @@ export default function EditCompanyPage() {
   const [name, setName] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [taxId, setTaxId] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [isActive, setIsActive] = useState(true);
   
-  // Loading and error state
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  const DRAFT_KEY = `draft_rmm_company_edit_${companyId}`;
+  const { saveDraft, loadDraft, clearDraft, lastSaved } = useDraftForm(
+    DRAFT_KEY,
+    () => ({ name, registrationNumber, address, taxId, contactEmail, contactPhone, isActive }),
+    { intervalMs: 30_000, enabled: !!companyId }
+  );
 
   // Get current user
   useEffect(() => {
@@ -88,12 +100,24 @@ export default function EditCompanyPage() {
 
         const companyData = data as Company;
         setCompany(companyData);
-        setName(companyData.name);
-        setRegistrationNumber(companyData.registration_number);
-        setAddress(companyData.address || "");
-        setContactEmail(companyData.contact_email || "");
-        setContactPhone(companyData.contact_phone || "");
-        setIsActive(companyData.is_active);
+        const draft = loadDraft() as Record<string, unknown> | null;
+        if (draft && typeof draft === "object") {
+          if (typeof draft.name === "string") setName(draft.name);
+          if (typeof draft.registrationNumber === "string") setRegistrationNumber(draft.registrationNumber);
+          if (typeof draft.address === "string") setAddress(draft.address);
+          if (typeof draft.taxId === "string") setTaxId(draft.taxId);
+          if (typeof draft.contactEmail === "string") setContactEmail(draft.contactEmail);
+          if (typeof draft.contactPhone === "string") setContactPhone(draft.contactPhone);
+          if (typeof draft.isActive === "boolean") setIsActive(draft.isActive);
+        } else {
+          setName(companyData.name);
+          setRegistrationNumber(companyData.registration_number);
+          setAddress(companyData.address || "");
+          setTaxId(companyData.tax_id || "");
+          setContactEmail(companyData.contact_email || "");
+          setContactPhone(companyData.contact_phone || "");
+          setIsActive(companyData.is_active);
+        }
       } catch (err) {
         setErrors({ fetch: err instanceof Error ? err.message : "Failed to load company" });
       } finally {
@@ -102,7 +126,7 @@ export default function EditCompanyPage() {
     }
 
     fetchCompany();
-  }, [user, companyId, permissionsLoading]);
+  }, [user, companyId, permissionsLoading, loadDraft]);
 
   // Check if user can edit
   const canEdit = permissions?.role && [
@@ -155,6 +179,7 @@ export default function EditCompanyPage() {
         address: address.trim() !== (company.address || "") ? address.trim() || null : null,
         contact_email: contactEmail.trim() !== (company.contact_email || "") ? contactEmail.trim() || null : null,
         contact_phone: contactPhone.trim() !== (company.contact_phone || "") ? contactPhone.trim() || null : null,
+        tax_id: taxId.trim() || null,
         create_submission: true,
       });
 
@@ -163,6 +188,7 @@ export default function EditCompanyPage() {
       }
 
       // Navigate to company detail page
+      clearDraft();
       router.push(`/rmm/companies/${companyId}`);
     } catch (err) {
       setErrors({ submit: err instanceof Error ? err.message : "Failed to update company" });
@@ -245,7 +271,29 @@ export default function EditCompanyPage() {
             <h1 className="text-2xl font-semibold text-text-primary">Edit Company</h1>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <Link
+            href={`/rmm/companies/${companyId}`}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
+
+      {lastSaved && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/80 px-4 py-2 text-sm text-blue-800">
+          💾 Draft saved automatically — Last saved: {lastSaved.toLocaleTimeString()}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -334,6 +382,19 @@ export default function EditCompanyPage() {
             />
           </div>
 
+          {/* Tax ID (Phase 6 Task 6.1) */}
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-1">Tax ID</label>
+            <input
+              type="text"
+              value={taxId}
+              onChange={(e) => setTaxId(e.target.value)}
+              placeholder="Enter tax identification number..."
+              className="w-full px-3 py-2 border border-border-default rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+            />
+            <p className="mt-1 text-xs text-text-secondary">Optional: Tax identification number for regulatory purposes</p>
+          </div>
+
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
@@ -370,9 +431,22 @@ export default function EditCompanyPage() {
           <p className="text-xs text-text-secondary">
             ℹ️ At least one contact method (Email OR Phone) is required for regulatory communications
           </p>
+
+          {/* Regulatory Notice (Phase 6 Task 6.5 — Fatima's Requirement) */}
+          <div className="rounded-lg border border-border-default bg-bg-secondary p-4 mt-4">
+            <h3 className="text-sm font-semibold text-text-primary mb-2">Regulatory Notice</h3>
+            <ul className="list-disc list-inside space-y-1 text-xs text-text-secondary">
+              <li>Company registrations are subject to DMP regulations.</li>
+              <li>All company data is retained for 7 years per regulatory requirements (Law No. 09-08).</li>
+              <li>Company information may be used for regulatory enforcement actions per DMP Art. 12.</li>
+            </ul>
+            <div className="mt-3">
+              <RegulatoryFrameworkLink className="text-sm text-primary-600 hover:text-primary-700 hover:underline" />
+            </div>
+          </div>
         </div>
 
-        {/* Metadata (Display Only) */}
+        {/* Metadata (Display Only) — Phase 6 Task 6.2 */}
         <div className="bg-bg-secondary border border-border-default rounded-lg p-6">
           <h2 className="text-lg font-semibold text-text-primary mb-4">Metadata</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -383,10 +457,18 @@ export default function EditCompanyPage() {
               </span>
             </div>
             <div>
+              <span className="text-text-secondary">Created By: </span>
+              <span className="text-text-primary">{company.created_by_name?.trim() || "—"}</span>
+            </div>
+            <div>
               <span className="text-text-secondary">Last Updated: </span>
               <span className="text-text-primary">
                 {new Date(company.updated_at).toLocaleString()}
               </span>
+            </div>
+            <div>
+              <span className="text-text-secondary">Updated By: </span>
+              <span className="text-text-primary">{company.updated_by_name?.trim() || "—"}</span>
             </div>
           </div>
         </div>
@@ -406,6 +488,14 @@ export default function EditCompanyPage() {
           >
             Cancel
           </Link>
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
           <button
             type="submit"
             disabled={submitting}

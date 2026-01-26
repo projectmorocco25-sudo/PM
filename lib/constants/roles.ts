@@ -32,36 +32,29 @@ export type Role = typeof ROLES[keyof typeof ROLES];
 /**
  * Check if role is MOH role
  */
+const MOH_ROLES: Role[] = [ROLES.TIER1, ROLES.TIER2_OFFICER, ROLES.TIER2_REGISTRAR, ROLES.AUDITOR];
+
 export function isMohRole(role: Role | null | undefined): boolean {
   if (!role) return false;
-  return [
-    ROLES.TIER1,
-    ROLES.TIER2_OFFICER,
-    ROLES.TIER2_REGISTRAR,
-    ROLES.AUDITOR,
-  ].includes(role as Role);
+  return MOH_ROLES.includes(role);
 }
+
+const COMPANY_ROLES: Role[] = [ROLES.COMPANY_ADMIN, ROLES.COMPANY_MANAGER, ROLES.COMPANY_USER];
 
 /**
  * Check if role is company role
  */
 export function isCompanyRole(role: Role | null | undefined): boolean {
   if (!role) return false;
-  return [
-    ROLES.COMPANY_ADMIN,
-    ROLES.COMPANY_MANAGER,
-    ROLES.COMPANY_USER,
-  ].includes(role as Role);
+  return COMPANY_ROLES.includes(role);
 }
+
+const ENFORCEMENT_ROLES: Role[] = [ROLES.TIER1, ROLES.TIER2_OFFICER, ROLES.TIER2_REGISTRAR];
 
 /**
  * Check if role has enforcement access (MOH Tier 1 & Tier 2 only)
  */
 export function hasEnforcementAccess(role: Role | null | undefined): boolean {
   if (!role) return false;
-  return [
-    ROLES.TIER1,
-    ROLES.TIER2_OFFICER,
-    ROLES.TIER2_REGISTRAR,
-  ].includes(role as Role);
+  return ENFORCEMENT_ROLES.includes(role);
 }

@@ -34,6 +34,8 @@ export function useUserPermissions(user: User | null) {
       return;
     }
 
+    const userId = user.id;
+
     async function fetchPermissions() {
       try {
         setLoading(true);
@@ -42,7 +44,7 @@ export function useUserPermissions(user: User | null) {
         const supabase = createClient();
         const { data, error: rpcError } = await supabase.rpc(
           "shared_get_user_permissions",
-          { user_id: user.id }
+          { user_id: userId }
         );
 
         if (rpcError) {

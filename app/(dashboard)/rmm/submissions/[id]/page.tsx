@@ -25,8 +25,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
-import { ArrowLeft, FileText, CheckCircle, XCircle, Clock } from "lucide-react";
+import { ArrowLeft, FileText, CheckCircle, XCircle, Clock, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
 
 interface Submission {
   id: string;
@@ -47,6 +48,18 @@ interface Submission {
   company_name: string | null;
   created_at: string;
   updated_at: string;
+  legal_basis_verified?: boolean;
+  legal_authority_verified?: boolean;
+  regulatory_requirements_met?: boolean;
+  compliance_verification_complete?: boolean;
+}
+
+interface DeadlineStage {
+  stage: string;
+  status: string;
+  regulatory_reference: string;
+  days_remaining: number | null;
+  label: string;
 }
 
 interface ApprovalHistoryEntry {
@@ -58,6 +71,7 @@ interface ApprovalHistoryEntry {
   performed_at: string;
   notes: string | null;
   regulatory_basis: string | null;
+  regulatory_requirements_verified?: boolean | null;
 }
 
 export default function RegistrySubmissionDetailPage() {
@@ -70,8 +84,14 @@ export default function RegistrySubmissionDetailPage() {
   // State
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [approvalHistory, setApprovalHistory] = useState<ApprovalHistoryEntry[]>([]);
+  const [deadlineStatus, setDeadlineStatus] = useState<{ stages: DeadlineStage[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [checklistSaving, setChecklistSaving] = useState(false);
+  const [requestInfoOpen, setRequestInfoOpen] = useState(false);
+  const [requestInfoMessage, setRequestInfoMessage] = useState("");
+  const [requestInfoSubmitting, setRequestInfoSubmitting] = useState(false);
+  const [requestInfoError, setRequestInfoError] = useState<string | null>(null);
 
   // Get current user
   useEffect(() => {
@@ -105,13 +125,21 @@ export default function RegistrySubmissionDetailPage() {
 
         setSubmission(submissionData as Submission);
 
-        // Fetch approval history
+        // Fetch approval history (returns { submission_id, history: [...] })
         const { data: historyData, error: historyError } = await supabase.rpc("rmm_get_approval_history", {
           p_submission_id: submissionId,
         });
-
         if (!historyError && historyData) {
-          setApprovalHistory(historyData as ApprovalHistoryEntry[]);
+          const h = historyData as { history?: ApprovalHistoryEntry[] };
+          setApprovalHistory(Array.isArray(h?.history) ? h.history : []);
+        }
+
+        // Fetch deadline status (Phase 2 Task 2.5)
+        const { data: deadlineData, error: deadlineErr } = await supabase.rpc("rmm_get_submission_deadline_status", {
+          p_submission_id: submissionId,
+        });
+        if (!deadlineErr && deadlineData && typeof deadlineData === "object" && "stages" in deadlineData) {
+          setDeadlineStatus(deadlineData as { stages: DeadlineStage[] });
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load submission");
@@ -163,6 +191,44 @@ export default function RegistrySubmissionDetailPage() {
     const status = submission.status;
     if (status === "rejected") return -1;
     return workflowSteps.findIndex((step) => step.key === status);
+  };
+
+  const canUpdateChecklist = permissions?.role && ["tier1", "tier2_officer", "tier2_registrar", "system_admin"].includes(permissions.role as string);
+  const isMOH = !!canUpdateChecklist;
+  const checklistComplete = !!(
+    submission?.legal_basis_verified &&
+    submission?.legal_authority_verified &&
+    submission?.regulatory_requirements_met &&
+    submission?.compliance_verification_complete
+  );
+
+  const updateChecklist = async (field: "legal_basis_verified" | "legal_authority_verified" | "regulatory_requirements_met" | "compliance_verification_complete", value: boolean) => {
+    if (!submissionId || !canUpdateChecklist || checklistSaving) return;
+    const supabase = createClient();
+    setChecklistSaving(true);
+    try {
+      const { data, error: err } = await supabase.rpc("rmm_update_regulatory_checklist", {
+        p_submission_id: submissionId,
+        p_legal_basis_verified: field === "legal_basis_verified" ? value : undefined,
+        p_legal_authority_verified: field === "legal_authority_verified" ? value : undefined,
+        p_regulatory_requirements_met: field === "regulatory_requirements_met" ? value : undefined,
+        p_compliance_verification_complete: field === "compliance_verification_complete" ? value : undefined,
+      });
+      if (err) throw err;
+      if (data && submission) {
+        setSubmission({
+          ...submission,
+          legal_basis_verified: (data as any).legal_basis_verified ?? submission.legal_basis_verified,
+          legal_authority_verified: (data as any).legal_authority_verified ?? submission.legal_authority_verified,
+          regulatory_requirements_met: (data as any).regulatory_requirements_met ?? submission.regulatory_requirements_met,
+          compliance_verification_complete: (data as any).compliance_verification_complete ?? submission.compliance_verification_complete,
+        });
+      }
+    } catch {
+      /* ignore */
+    } finally {
+      setChecklistSaving(false);
+    }
   };
 
   if (permissionsLoading || loading) {
@@ -354,6 +420,9 @@ export default function RegistrySubmissionDetailPage() {
                         Regulatory Basis: {entry.regulatory_basis}
                       </p>
                     )}
+                    <p className="text-xs text-text-secondary mt-1">
+                      Regulatory Requirements: {entry.regulatory_requirements_verified === true ? "✓ Verified" : "—"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -362,11 +431,181 @@ export default function RegistrySubmissionDetailPage() {
         )}
       </div>
 
+      {/* Regulatory Deadline Tracking (Phase 2 Task 2.5.3 - Fatima's Requirement) */}
+      <div className="bg-bg-primary border border-border-default rounded-lg p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-4">Regulatory Deadline Tracking</h2>
+        <p className="text-sm text-text-secondary mb-3">Deadline status per workflow stage (Regulatory: DMP Art. 10).</p>
+        {deadlineStatus?.stages?.length ? (
+          <ul className="space-y-2 text-sm">
+            {deadlineStatus.stages.map((s, i) => (
+              <li key={i} className="flex items-center gap-2">
+                {s.status === "on_time" && <CheckCircle className="w-4 h-4 text-success-600 flex-shrink-0" />}
+                {s.status === "at_risk" && <AlertTriangle className="w-4 h-4 text-warning-600 flex-shrink-0" />}
+                {s.status === "overdue" && <XCircle className="w-4 h-4 text-error-600 flex-shrink-0" />}
+                {(s.status === "pending" || !["on_time", "at_risk", "overdue"].includes(s.status)) && <Clock className="w-4 h-4 text-text-secondary flex-shrink-0" />}
+                <span className="text-text-primary">{s.stage}:</span>
+                <span className={cn(
+                  s.status === "overdue" && "text-error-600",
+                  s.status === "at_risk" && "text-warning-600",
+                  s.status === "on_time" && "text-success-600"
+                )}>
+                  {s.label}
+                </span>
+                <span className="text-text-secondary">({s.regulatory_reference})</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-text-secondary">—</p>
+        )}
+        <div className="mt-4">
+          <RegulatoryFrameworkLink />
+        </div>
+      </div>
+
+      {/* Regulatory Requirement Checklist (Phase 2 Task 2.6 - Fatima's Requirement) */}
+      <div className="bg-bg-primary border border-border-default rounded-lg p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-4">Regulatory Requirement Checklist</h2>
+        <div className="space-y-2 text-sm">
+          <label className={cn("flex items-center gap-2", canUpdateChecklist && "cursor-pointer")}>
+            <input
+              type="checkbox"
+              checked={!!submission?.legal_basis_verified}
+              disabled={!canUpdateChecklist || checklistSaving}
+              onChange={() => canUpdateChecklist && updateChecklist("legal_basis_verified", !submission?.legal_basis_verified)}
+              className="rounded border-border-default"
+            />
+            <span>Legal Basis Verified: DMP Art. 10</span>
+          </label>
+          <label className={cn("flex items-center gap-2", canUpdateChecklist && "cursor-pointer")}>
+            <input
+              type="checkbox"
+              checked={!!submission?.legal_authority_verified}
+              disabled={!canUpdateChecklist || checklistSaving}
+              onChange={() => canUpdateChecklist && updateChecklist("legal_authority_verified", !submission?.legal_authority_verified)}
+              className="rounded border-border-default"
+            />
+            <span>Legal Authority Verified: Tier 1 Approval Authority</span>
+          </label>
+          <label className={cn("flex items-center gap-2", canUpdateChecklist && "cursor-pointer")}>
+            <input
+              type="checkbox"
+              checked={!!submission?.regulatory_requirements_met}
+              disabled={!canUpdateChecklist || checklistSaving}
+              onChange={() => canUpdateChecklist && updateChecklist("regulatory_requirements_met", !submission?.regulatory_requirements_met)}
+              className="rounded border-border-default"
+            />
+            <span>Regulatory Requirements Met</span>
+          </label>
+          <label className={cn("flex items-center gap-2", canUpdateChecklist && "cursor-pointer")}>
+            <input
+              type="checkbox"
+              checked={!!submission?.compliance_verification_complete}
+              disabled={!canUpdateChecklist || checklistSaving}
+              onChange={() => canUpdateChecklist && updateChecklist("compliance_verification_complete", !submission?.compliance_verification_complete)}
+              className="rounded border-border-default"
+            />
+            <span>Compliance Verification Complete</span>
+          </label>
+        </div>
+        <div className="mt-4">
+          <RegulatoryFrameworkLink />
+        </div>
+        {!checklistComplete && (
+          <p className="mt-4 flex items-center gap-2 text-sm text-warning-700">
+            <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+            Approval blocked if regulatory checklist incomplete
+          </p>
+        )}
+      </div>
+
       {/* Rejection Reason */}
       {submission.rejection_reason && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-6">
           <h2 className="text-lg font-semibold text-red-800 mb-2">Rejection Reason</h2>
           <p className="text-red-700">{submission.rejection_reason}</p>
+        </div>
+      )}
+
+      {/* MOH Actions — Phase 6 Task 6.9: Request Info */}
+      {isMOH && (
+        <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border-default">
+          <button
+            type="button"
+            onClick={() => {
+              setRequestInfoMessage("");
+              setRequestInfoError(null);
+              setRequestInfoOpen(true);
+            }}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Request Info
+          </button>
+        </div>
+      )}
+
+      {/* Request Info modal */}
+      {requestInfoOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => !requestInfoSubmitting && setRequestInfoOpen(false)} />
+          <div className="relative bg-bg-primary rounded-lg shadow-xl w-full max-w-md mx-4 p-6 space-y-4">
+            <h2 className="text-lg font-semibold text-text-primary">Request Information</h2>
+            <p className="text-sm text-text-secondary">
+              Request additional information from the submitter. They will be notified.
+            </p>
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-1">Message (required)</label>
+              <textarea
+                value={requestInfoMessage}
+                onChange={(e) => setRequestInfoMessage(e.target.value)}
+                placeholder="Describe what information is needed..."
+                rows={4}
+                className="w-full px-3 py-2 border border-border-default rounded-md text-sm"
+              />
+            </div>
+            {requestInfoError && (
+              <p className="text-sm text-error-600">{requestInfoError}</p>
+            )}
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => !requestInfoSubmitting && setRequestInfoOpen(false)}
+                className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary"
+                disabled={requestInfoSubmitting}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!requestInfoMessage.trim()) {
+                    setRequestInfoError("Please enter a message.");
+                    return;
+                  }
+                  setRequestInfoSubmitting(true);
+                  setRequestInfoError(null);
+                  try {
+                    const supabase = createClient();
+                    const { error: rpcError } = await supabase.rpc("rmm_request_submission_info", {
+                      p_submission_id: submissionId,
+                      p_message: requestInfoMessage.trim(),
+                    });
+                    if (rpcError) throw new Error(rpcError.message);
+                    setRequestInfoOpen(false);
+                    setRequestInfoMessage("");
+                  } catch (e) {
+                    setRequestInfoError(e instanceof Error ? e.message : "Request failed. RPC may not be implemented yet.");
+                  } finally {
+                    setRequestInfoSubmitting(false);
+                  }
+                }}
+                disabled={requestInfoSubmitting}
+                className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 disabled:opacity-50"
+              >
+                {requestInfoSubmitting ? "Sending…" : "Send Request"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

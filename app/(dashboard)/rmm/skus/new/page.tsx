@@ -16,13 +16,14 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES, isCompanyRole } from "@/lib/constants/roles";
 import { ArrowLeft, Save } from "lucide-react";
+import { useDraftForm } from "@/lib/hooks/use-draft-form";
 
 interface Product {
   id: string;
@@ -58,7 +59,7 @@ const UNIT_OF_MEASURE = [
   "other",
 ];
 
-export default function CreateSKUPage() {
+function CreateSKUContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const productIdParam = searchParams.get("product_id");
@@ -80,6 +81,38 @@ export default function CreateSKUPage() {
   // Validation state
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  const DRAFT_KEY = "draft_rmm_sku_new";
+  const { saveDraft, loadDraft, clearDraft, lastSaved } = useDraftForm(
+    DRAFT_KEY,
+    () => ({
+      productId,
+      skuCode,
+      name,
+      dosageStrength,
+      dosageForm,
+      packSize,
+      unitOfMeasure,
+      isMohAuthorizedUnregistered,
+      isActive,
+    }),
+    { intervalMs: 30_000, enabled: true }
+  );
+
+  useEffect(() => {
+    const d = loadDraft() as Record<string, unknown> | null;
+    if (d && typeof d === "object") {
+      if (typeof d.productId === "string") setProductId(d.productId);
+      if (typeof d.skuCode === "string") setSkuCode(d.skuCode);
+      if (typeof d.name === "string") setName(d.name);
+      if (typeof d.dosageStrength === "string") setDosageStrength(d.dosageStrength);
+      if (typeof d.dosageForm === "string") setDosageForm(d.dosageForm);
+      if (typeof d.packSize === "string") setPackSize(d.packSize);
+      if (typeof d.unitOfMeasure === "string") setUnitOfMeasure(d.unitOfMeasure);
+      if (typeof d.isMohAuthorizedUnregistered === "boolean") setIsMohAuthorizedUnregistered(d.isMohAuthorizedUnregistered);
+      if (typeof d.isActive === "boolean") setIsActive(d.isActive);
+    }
+  }, [loadDraft]);
 
   // Get current user
   useEffect(() => {
@@ -192,7 +225,7 @@ export default function CreateSKUPage() {
         throw new Error(rpcError.message);
       }
 
-      // Navigate to SKU detail page
+      clearDraft();
       router.push(`/rmm/skus/${(data as any).id}`);
     } catch (err) {
       setErrors({ submit: err instanceof Error ? err.message : "Failed to create SKU" });
@@ -247,7 +280,29 @@ export default function CreateSKUPage() {
             <h1 className="text-2xl font-semibold text-text-primary">Create SKU</h1>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <Link
+            href="/rmm/skus"
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
+
+      {lastSaved && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/80 px-4 py-2 text-sm text-blue-800">
+          💾 Draft saved automatically — Last saved: {lastSaved.toLocaleTimeString()}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -472,6 +527,14 @@ export default function CreateSKUPage() {
             Cancel
           </Link>
           <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <button
             type="submit"
             disabled={submitting}
             className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
@@ -482,5 +545,13 @@ export default function CreateSKUPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function CreateSKUPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-6 py-12 text-text-secondary">Loading...</div>}>
+      <CreateSKUContent />
+    </Suspense>
   );
 }

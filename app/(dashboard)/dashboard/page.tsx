@@ -9,13 +9,25 @@
  */
 'use client';
 
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
 import { useUserPermissions } from '@/lib/hooks/use-user-permissions';
-import { USER_ROLES } from '@/lib/constants/roles';
+import { ROLES } from '@/lib/constants/roles';
 
 export default function DashboardPage() {
-  const { role, isLoading } = useUserPermissions();
+  const [user, setUser] = useState<User | null>(null);
+  const { permissions, loading } = useUserPermissions(user);
+  const role = permissions?.role ?? null;
 
-  if (isLoading) {
+  useEffect(() => {
+    (async () => {
+      const { data: { user: u } } = await createClient().auth.getUser();
+      setUser(u);
+    })();
+  }, []);
+
+  if (loading) {
     return (
       <div className="container mx-auto py-8">
         <div className="text-text-secondary">Loading dashboard...</div>
@@ -29,10 +41,10 @@ export default function DashboardPage() {
 
   let dashboardContent;
   switch (role) {
-    case USER_ROLES.COMPANY_ADMIN:
-    case USER_ROLES.COMPANY_MANAGER:
-    case USER_ROLES.COMPANY_USER:
-    case USER_ROLES.VENDOR:
+    case ROLES.COMPANY_ADMIN:
+    case ROLES.COMPANY_MANAGER:
+    case ROLES.COMPANY_USER:
+    case ROLES.VENDOR:
       dashboardContent = (
         <div className="container mx-auto py-8">
           <h1 className="mb-4 text-3xl font-bold text-text-primary">Company Dashboard</h1>
@@ -47,7 +59,7 @@ export default function DashboardPage() {
         </div>
       );
       break;
-    case USER_ROLES.MOH_TIER1:
+    case ROLES.TIER1:
       dashboardContent = (
         <div className="container mx-auto py-8">
           <h1 className="mb-4 text-3xl font-bold text-text-primary">MOH Tier 1 Dashboard</h1>
@@ -62,8 +74,8 @@ export default function DashboardPage() {
         </div>
       );
       break;
-    case USER_ROLES.MOH_TIER2_OFFICER:
-    case USER_ROLES.MOH_TIER2_REGISTRAR:
+    case ROLES.TIER2_OFFICER:
+    case ROLES.TIER2_REGISTRAR:
       dashboardContent = (
         <div className="container mx-auto py-8">
           <h1 className="mb-4 text-3xl font-bold text-text-primary">MOH Tier 2 Dashboard</h1>
@@ -78,7 +90,7 @@ export default function DashboardPage() {
         </div>
       );
       break;
-    case USER_ROLES.MOH_AUDITOR:
+    case ROLES.AUDITOR:
       dashboardContent = (
         <div className="container mx-auto py-8">
           <h1 className="mb-4 text-3xl font-bold text-text-primary">MOH Auditor Dashboard</h1>
@@ -92,7 +104,7 @@ export default function DashboardPage() {
         </div>
       );
       break;
-    case USER_ROLES.SYSTEM_ADMIN:
+    case ROLES.SYSTEM_ADMIN:
       dashboardContent = (
         <div className="container mx-auto py-8">
           <h1 className="mb-4 text-3xl font-bold text-text-primary">System Admin Dashboard</h1>

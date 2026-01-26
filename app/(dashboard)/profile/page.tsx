@@ -6,11 +6,12 @@
  */
 'use client';
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUserPermissions } from '@/lib/hooks/use-user-permissions';
 import { createClient } from '@/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
 import { Eye, EyeOff, Loader2, Upload, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -28,12 +29,24 @@ const passwordRequirements: PasswordRequirement[] = [
 ];
 
 export default function ProfilePage() {
-  const { user, isLoading: isLoadingPermissions } = useUserPermissions();
+  const [user, setUser] = useState<User | null>(null);
+  const { permissions, loading } = useUserPermissions(user);
   const supabase = createClient();
 
   // User Information State
-  const [fullName, setFullName] = useState(user?.email?.split('@')[0] || '');
+  const [fullName, setFullName] = useState('');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data: { user: u } } = await createClient().auth.getUser();
+      setUser(u);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (user?.email && !fullName) setFullName(user.email.split('@')[0]);
+  }, [user, fullName]);
 
   // Password Change State
   const [currentPassword, setCurrentPassword] = useState('');
@@ -45,8 +58,8 @@ export default function ProfilePage() {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
   // Preferences State
-  const [language, setLanguage] = useState(user?.language || 'en');
-  const [timezone, setTimezone] = useState(user?.timezone || 'UTC+01:00');
+  const [language, setLanguage] = useState('en');
+  const [timezone, setTimezone] = useState('UTC+01:00');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [submissionStatusUpdates, setSubmissionStatusUpdates] = useState(true);
   const [complianceAlerts, setComplianceAlerts] = useState(true);
@@ -138,13 +151,15 @@ export default function ProfilePage() {
     }
   };
 
-  if (isLoadingPermissions) {
+  if (loading || !user) {
     return (
       <div className="container mx-auto px-6 py-12">
         <div className="text-text-secondary">Loading profile...</div>
       </div>
     );
   }
+
+  const avatarUrl = (user.user_metadata as { avatar_url?: string })?.avatar_url;
 
   return (
     <div className="container mx-auto max-w-4xl px-6 py-12">
@@ -165,10 +180,10 @@ export default function ProfilePage() {
         <div className="mb-6 flex items-center gap-6">
           <div className="relative">
             <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary-500 text-2xl font-semibold text-white">
-              {user?.avatar_url ? (
-                <Image src={user.avatar_url} alt="Avatar" width={96} height={96} className="rounded-full object-cover" />
+              {avatarUrl ? (
+                <Image src={avatarUrl} alt="Avatar" width={96} height={96} className="rounded-full object-cover" />
               ) : (
-                user?.email?.[0]?.toUpperCase() || 'U'
+                user.email?.[0]?.toUpperCase() || 'U'
               )}
             </div>
             <button className="absolute bottom-0 right-0 rounded-full bg-primary-500 p-2 text-white hover:bg-primary-600">

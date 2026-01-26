@@ -25,6 +25,7 @@ import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES, isCompanyRole } from "@/lib/constants/roles";
 import { Search, Filter, X, Eye, FileText, ChevronUp, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
 
 interface Submission {
   id: string;
@@ -83,6 +84,28 @@ export default function RegistrySubmissionsListPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [dateRangePreset, setDateRangePreset] = useState<"last7" | "last30" | "custom" | null>(null);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+
+  const getDateRange = () => {
+    if (!dateRangePreset) return { from: null as string | null, to: null as string | null };
+    const today = new Date();
+    const to = today.toISOString().slice(0, 10);
+    if (dateRangePreset === "last7") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 7);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "last30") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 30);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "custom" && dateFrom && dateTo) return { from: dateFrom, to: dateTo };
+    return { from: null, to: null };
+  };
+  const { from: pDateFrom, to: pDateTo } = getDateRange();
 
   // Get current user
   useEffect(() => {
@@ -111,10 +134,12 @@ export default function RegistrySubmissionsListPage() {
           p_status: statusFilter,
           p_submission_type: submissionTypeFilter,
           p_entity_type: entityTypeFilter,
-          p_company_id: null, // Handled by RPC function based on user role
+          p_company_id: null,
           p_search: searchTerm || null,
           p_sort_by: sortBy,
           p_sort_order: sortOrder,
+          p_date_from: pDateFrom || null,
+          p_date_to: pDateTo || null,
         });
 
         if (rpcError) {
@@ -139,13 +164,13 @@ export default function RegistrySubmissionsListPage() {
     }
 
     fetchSubmissions();
-  }, [user, permissionsLoading, pageNumber, pageSize, statusFilter, entityTypeFilter, submissionTypeFilter, searchTerm, sortBy, sortOrder]);
+  }, [user, permissionsLoading, pageNumber, pageSize, statusFilter, entityTypeFilter, submissionTypeFilter, searchTerm, sortBy, sortOrder, pDateFrom, pDateTo]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setPageNumber(1);
     setSubmissions([]);
-  }, [statusFilter, entityTypeFilter, submissionTypeFilter, searchTerm, sortBy, sortOrder]);
+  }, [statusFilter, entityTypeFilter, submissionTypeFilter, searchTerm, sortBy, sortOrder, dateRangePreset, dateFrom, dateTo]);
 
   const handleSort = (field: SortField) => {
     if (sortBy === field) {
@@ -169,6 +194,9 @@ export default function RegistrySubmissionsListPage() {
     setSubmissionTypeFilter(null);
     setSortBy("created_at");
     setSortOrder("desc");
+    setDateRangePreset(null);
+    setDateFrom("");
+    setDateTo("");
     setPageNumber(1);
   };
 
@@ -297,12 +325,7 @@ export default function RegistrySubmissionsListPage() {
             <p className="text-xs text-blue-700">
               Regulatory: DMP Regulation Article 10 - Registry Submission Requirements
             </p>
-            <Link
-              href="#"
-              className="text-xs text-blue-600 hover:text-blue-800 hover:underline mt-1 inline-block"
-            >
-              [View Regulatory Framework]
-            </Link>
+            <RegulatoryFrameworkLink className="text-xs text-blue-600 hover:text-blue-800 hover:underline mt-1 inline-flex items-center gap-1" />
           </div>
         </div>
       </div>
@@ -371,6 +394,41 @@ export default function RegistrySubmissionsListPage() {
             </select>
           </div>
 
+          {/* Date Range Filter (Phase 4 Task 4.1) */}
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                <span className="text-sm text-text-secondary">All</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 7 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 30 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Custom</span>
+              </label>
+              {dateRangePreset === "custom" && (
+                <div className="pl-5 space-y-2">
+                  <div>
+                    <label className="text-xs text-text-secondary">From</label>
+                    <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary">To</label>
+                    <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           <button
             onClick={clearFilters}
             className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm"
@@ -396,7 +454,76 @@ export default function RegistrySubmissionsListPage() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              {/* Same filter content as desktop */}
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Status</label>
+                <select value={statusFilter || ""} onChange={(e) => setStatusFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All Status</option>
+                  <option value="draft">Draft</option>
+                  <option value="submitted">Submitted</option>
+                  <option value="tier2_verified">Tier 2 Verified</option>
+                  <option value="tier2_peer_reviewed">Tier 2 Peer Reviewed</option>
+                  <option value="tier1_approved">Tier 1 Approved</option>
+                  <option value="completed">Completed</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Entity Type</label>
+                <select value={entityTypeFilter || ""} onChange={(e) => setEntityTypeFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All Types</option>
+                  <option value="company">Company</option>
+                  <option value="product">Product</option>
+                  <option value="sku">SKU</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Submission Type</label>
+                <select value={submissionTypeFilter || ""} onChange={(e) => setSubmissionTypeFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All Types</option>
+                  <option value="company_create">Company Create</option>
+                  <option value="company_update">Company Update</option>
+                  <option value="product_create">Product Create</option>
+                  <option value="product_update">Product Update</option>
+                  <option value="sku_create">SKU Create</option>
+                  <option value="sku_update">SKU Update</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="dateRange-m" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="dateRange-m" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 7 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="dateRange-m" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 30 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="dateRange-m" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Custom</span>
+                  </label>
+                  {dateRangePreset === "custom" && (
+                    <div className="pl-5 space-y-2">
+                      <div>
+                        <label className="text-xs text-text-secondary">From</label>
+                        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-text-secondary">To</label>
+                        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button onClick={clearFilters} className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm">
+                Clear Filters
+              </button>
             </aside>
           </div>
         )}
@@ -407,23 +534,23 @@ export default function RegistrySubmissionsListPage() {
             <div className="p-12 text-center">
               <FileText className="w-12 h-12 text-text-secondary mx-auto mb-4" />
               <p className="text-text-primary font-medium mb-2">
-                {searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter
+                {searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter || dateRangePreset
                   ? "No submissions match your filters"
                   : "No submissions found"}
               </p>
               <p className="text-text-secondary text-sm mb-4">
-                {searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter
+                {searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter || dateRangePreset
                   ? "Try adjusting your filters"
                   : "Submissions will appear here once created"}
               </p>
-              {searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter && (
+              {(searchTerm || statusFilter || entityTypeFilter || submissionTypeFilter || dateRangePreset) ? (
                 <button
                   onClick={clearFilters}
                   className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
                 >
                   Clear Filters
                 </button>
-              )}
+              ) : null}
             </div>
           ) : (
             <>
@@ -456,6 +583,7 @@ export default function RegistrySubmissionsListPage() {
                           )}
                         </button>
                       </th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Deadline</th>
                       <th className="px-4 py-3 text-right text-sm font-semibold text-text-primary">Actions</th>
                     </tr>
                   </thead>
@@ -499,6 +627,10 @@ export default function RegistrySubmissionsListPage() {
                             {submission.submitted_by_name || "Unknown"}
                           </div>
                         </td>
+                        <td className="px-4 py-3">
+                          <span className="text-sm text-text-secondary">—</span>
+                          <div className="text-xs text-text-secondary">Regulatory: DMP Art. 10</div>
+                        </td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                             <Link
@@ -541,7 +673,7 @@ export default function RegistrySubmissionsListPage() {
                         <Eye className="w-4 h-4" />
                       </Link>
                     </div>
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
                       <span
                         className={cn(
                           "px-2 py-1 text-xs font-medium rounded",
@@ -553,6 +685,7 @@ export default function RegistrySubmissionsListPage() {
                       <span className="text-xs text-text-secondary">
                         {new Date(submission.created_at).toLocaleDateString()}
                       </span>
+                      <span className="text-xs text-text-secondary">Deadline: —</span>
                     </div>
                   </div>
                 ))}

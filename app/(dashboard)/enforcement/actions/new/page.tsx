@@ -27,6 +27,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
 import { ArrowLeft, Save, ChevronRight, ChevronLeft } from "lucide-react";
+import { cn } from "@/lib/utils/cn";
 
 interface Company {
   id: string;

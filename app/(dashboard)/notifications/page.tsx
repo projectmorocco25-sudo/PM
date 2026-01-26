@@ -6,16 +6,26 @@
  */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { formatDistanceToNowStrict } from 'date-fns';
+import { createClient } from '@/lib/supabase/client';
 import { useNotifications } from '@/lib/hooks/use-notifications';
+import type { User } from '@supabase/supabase-js';
 import { BellOff, CheckCircle, AlertTriangle, MessageSquare, FileText, Info, Settings, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 export default function NotificationsPage() {
-  const { notifications, isLoading, error, markAsRead, markAllAsRead } = useNotifications();
+  const [user, setUser] = useState<User | null>(null);
+  const { notifications, loading, error, markAsRead, markAllAsRead } = useNotifications(user, 50);
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all');
+
+  useEffect(() => {
+    (async () => {
+      const { data: { user: u } } = await createClient().auth.getUser();
+      setUser(u);
+    })();
+  }, []);
 
   const filteredNotifications = notifications.filter((notification) => {
     if (filter === 'unread') return !notification.is_read;
@@ -129,10 +139,10 @@ export default function NotificationsPage() {
       </div>
 
       {/* Notifications List */}
-      {isLoading ? (
+      {loading ? (
         <div className="text-center text-text-secondary">Loading notifications...</div>
       ) : error ? (
-        <div className="text-center text-error-500">Error: {error}</div>
+        <div className="text-center text-error-500">Error: {error.message}</div>
       ) : filteredNotifications.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border border-default bg-white p-12 text-center">
           <BellOff className="mb-4 h-12 w-12 text-text-tertiary" />

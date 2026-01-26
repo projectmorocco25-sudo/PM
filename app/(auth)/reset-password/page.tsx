@@ -9,7 +9,7 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Eye, EyeOff, Loader2, Check, X } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils/cn';
@@ -36,7 +36,6 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
 
   useEffect(() => {

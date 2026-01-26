@@ -23,6 +23,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
 import { ArrowLeft, Save } from "lucide-react";
+import { useDraftForm } from "@/lib/hooks/use-draft-form";
 
 interface SKU {
   id: string;
@@ -30,6 +31,7 @@ interface SKU {
   name: string;
   product_id: string;
   product_name: string | null;
+  company_id?: string | null;
   dosage_strength: string | null;
   dosage_form: string | null;
   pack_size: string | null;
@@ -38,6 +40,8 @@ interface SKU {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  created_by_name?: string | null;
+  updated_by_name?: string | null;
 }
 
 const DOSAGE_FORMS = [
@@ -90,6 +94,21 @@ export default function EditSKUPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
+  const DRAFT_KEY = `draft_rmm_sku_edit_${skuId}`;
+  const { saveDraft, loadDraft, clearDraft, lastSaved } = useDraftForm(
+    DRAFT_KEY,
+    () => ({
+      skuCode,
+      name,
+      dosageStrength,
+      dosageForm,
+      packSize,
+      unitOfMeasure,
+      isMohAuthorizedUnregistered,
+    }),
+    { intervalMs: 30_000, enabled: !!skuId }
+  );
+
   // Get current user
   useEffect(() => {
     async function getUser() {
@@ -119,13 +138,24 @@ export default function EditSKUPage() {
 
         const skuData = data as SKU;
         setSku(skuData);
-        setSkuCode(skuData.sku_code);
-        setName(skuData.name);
-        setDosageStrength(skuData.dosage_strength || "");
-        setDosageForm(skuData.dosage_form || "");
-        setPackSize(skuData.pack_size || "");
-        setUnitOfMeasure(skuData.unit_of_measure || "");
-        setIsMohAuthorizedUnregistered(skuData.is_moh_authorized_unregistered);
+        const draft = loadDraft() as Record<string, unknown> | null;
+        if (draft && typeof draft === "object") {
+          if (typeof draft.skuCode === "string") setSkuCode(draft.skuCode);
+          if (typeof draft.name === "string") setName(draft.name);
+          if (typeof draft.dosageStrength === "string") setDosageStrength(draft.dosageStrength);
+          if (typeof draft.dosageForm === "string") setDosageForm(draft.dosageForm);
+          if (typeof draft.packSize === "string") setPackSize(draft.packSize);
+          if (typeof draft.unitOfMeasure === "string") setUnitOfMeasure(draft.unitOfMeasure);
+          if (typeof draft.isMohAuthorizedUnregistered === "boolean") setIsMohAuthorizedUnregistered(draft.isMohAuthorizedUnregistered);
+        } else {
+          setSkuCode(skuData.sku_code);
+          setName(skuData.name);
+          setDosageStrength(skuData.dosage_strength || "");
+          setDosageForm(skuData.dosage_form || "");
+          setPackSize(skuData.pack_size || "");
+          setUnitOfMeasure(skuData.unit_of_measure || "");
+          setIsMohAuthorizedUnregistered(skuData.is_moh_authorized_unregistered);
+        }
       } catch (err) {
         setErrors({ fetch: err instanceof Error ? err.message : "Failed to load SKU" });
       } finally {
@@ -134,7 +164,7 @@ export default function EditSKUPage() {
     }
 
     fetchSKU();
-  }, [user, skuId, permissionsLoading]);
+  }, [user, skuId, permissionsLoading, loadDraft]);
 
   // Check if user can edit
   const canEdit = permissions?.role && [
@@ -212,7 +242,7 @@ export default function EditSKUPage() {
         throw new Error(rpcError.message);
       }
 
-      // Navigate to SKU detail page
+      clearDraft();
       router.push(`/rmm/skus/${skuId}`);
     } catch (err) {
       setErrors({ submit: err instanceof Error ? err.message : "Failed to update SKU" });
@@ -295,7 +325,29 @@ export default function EditSKUPage() {
             <h1 className="text-2xl font-semibold text-text-primary">Edit SKU</h1>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <Link
+            href={`/rmm/skus/${skuId}`}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
+
+      {lastSaved && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/80 px-4 py-2 text-sm text-blue-800">
+          💾 Draft saved automatically — Last saved: {lastSaved.toLocaleTimeString()}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -457,7 +509,7 @@ export default function EditSKUPage() {
           )}
         </div>
 
-        {/* Metadata (Display Only) */}
+        {/* Metadata (Display Only) — Phase 6 Task 6.2 */}
         <div className="bg-bg-secondary border border-border-default rounded-lg p-6">
           <h2 className="text-lg font-semibold text-text-primary mb-4">Metadata</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -468,10 +520,18 @@ export default function EditSKUPage() {
               </span>
             </div>
             <div>
+              <span className="text-text-secondary">Created By: </span>
+              <span className="text-text-primary">{sku.created_by_name?.trim() || "—"}</span>
+            </div>
+            <div>
               <span className="text-text-secondary">Last Updated: </span>
               <span className="text-text-primary">
                 {new Date(sku.updated_at).toLocaleString()}
               </span>
+            </div>
+            <div>
+              <span className="text-text-secondary">Updated By: </span>
+              <span className="text-text-primary">{sku.updated_by_name?.trim() || "—"}</span>
             </div>
           </div>
         </div>
@@ -491,6 +551,14 @@ export default function EditSKUPage() {
           >
             Cancel
           </Link>
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
           <button
             type="submit"
             disabled={submitting}

@@ -50,7 +50,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { useModuleActivation } from "@/lib/hooks/use-module-activation";
-import { ROLES, hasEnforcementAccess } from "@/lib/constants/roles";
+import { ROLES, hasEnforcementAccess, type Role } from "@/lib/constants/roles";
 import { MODULE_NAMES, MODULES, type Module } from "@/lib/constants/modules";
 import { cn } from "@/lib/utils/cn";
 
@@ -120,7 +120,7 @@ export function Sidebar({ mobileOpen: externalMobileOpen, onMobileClose }: Sideb
     }
   }, [pathname]);
 
-  const userRole = permissions?.role;
+  const userRole = permissions?.role as Role | null | undefined;
 
   // Check if user has access to enforcement
   const hasEnforcement = hasEnforcementAccess(userRole);

@@ -38,16 +38,18 @@ interface Product {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  sku_count?: number;
 }
 
 interface ProductsResponse {
   products: Product[];
   pagination: {
-    total: number;
+    total?: number;
+    total_count?: number;
     page_number: number;
     page_size: number;
     total_pages: number;
-    has_more: boolean;
+    has_more?: boolean;
   };
 }
 
@@ -77,6 +79,28 @@ export default function ProductsListPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [dateRangePreset, setDateRangePreset] = useState<"last7" | "last30" | "custom" | null>(null);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+
+  const getDateRange = () => {
+    if (!dateRangePreset) return { from: null as string | null, to: null as string | null };
+    const today = new Date();
+    const to = today.toISOString().slice(0, 10);
+    if (dateRangePreset === "last7") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 7);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "last30") {
+      const d = new Date(today);
+      d.setDate(d.getDate() - 30);
+      return { from: d.toISOString().slice(0, 10), to };
+    }
+    if (dateRangePreset === "custom" && dateFrom && dateTo) return { from: dateFrom, to: dateTo };
+    return { from: null, to: null };
+  };
+  const { from: pDateFrom, to: pDateTo } = getDateRange();
 
   // Get current user
   useEffect(() => {
@@ -133,6 +157,8 @@ export default function ProductsListPage() {
           search_term: searchTerm || null,
           sort_by: sortBy,
           sort_order: sortOrder,
+          p_date_from: pDateFrom || null,
+          p_date_to: pDateTo || null,
         });
 
         if (rpcError) {
@@ -147,8 +173,9 @@ export default function ProductsListPage() {
           setProducts((prev) => [...prev, ...(response.products || [])]);
         }
         
-        setTotalCount(response.pagination.total);
-        setHasMore(response.pagination.has_more);
+        const p = response.pagination;
+        setTotalCount(p.total ?? p.total_count ?? 0);
+        setHasMore(p.has_more ?? (pageNumber < (p.total_pages ?? 1)));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load products");
       } finally {
@@ -157,13 +184,13 @@ export default function ProductsListPage() {
     }
 
     fetchProducts();
-  }, [user, permissionsLoading, pageNumber, pageSize, companyFilter, searchTerm, criticalFilter, sortBy, sortOrder]);
+  }, [user, permissionsLoading, pageNumber, pageSize, companyFilter, searchTerm, criticalFilter, sortBy, sortOrder, pDateFrom, pDateTo]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setPageNumber(1);
     setProducts([]);
-  }, [companyFilter, searchTerm, criticalFilter, sortBy, sortOrder]);
+  }, [companyFilter, searchTerm, criticalFilter, sortBy, sortOrder, dateRangePreset, dateFrom, dateTo]);
 
   // Client-side status filtering
   const filteredProducts = products.filter((product) => {
@@ -195,6 +222,9 @@ export default function ProductsListPage() {
     setCriticalFilter("all");
     setSortBy("name");
     setSortOrder("asc");
+    setDateRangePreset(null);
+    setDateFrom("");
+    setDateTo("");
     setPageNumber(1);
   };
 
@@ -429,6 +459,41 @@ export default function ProductsListPage() {
             </div>
           </div>
 
+          {/* Date Range Filter (Phase 4 Task 4.1) */}
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                <span className="text-sm text-text-secondary">All</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 7 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Last 30 days</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="dateRange" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                <span className="text-sm text-text-secondary">Custom</span>
+              </label>
+              {dateRangePreset === "custom" && (
+                <div className="pl-5 space-y-2">
+                  <div>
+                    <label className="text-xs text-text-secondary">From</label>
+                    <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary">To</label>
+                    <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           <button
             onClick={clearFilters}
             className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm"
@@ -454,7 +519,94 @@ export default function ProductsListPage() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              {/* Same filter content as desktop */}
+              {!isCompanyRole(permissions?.role as any) && (
+                <div>
+                  <label className="text-sm font-medium text-text-primary mb-2 block">Company</label>
+                  <select
+                    value={companyFilter ?? ""}
+                    onChange={(e) => setCompanyFilter(e.target.value || null)}
+                    className="w-full rounded border border-border-default px-2 py-1.5 text-sm"
+                  >
+                    <option value="">All</option>
+                    {companies.map((c) => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Status</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "all"} onChange={() => setStatusFilter("all")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "active"} onChange={() => setStatusFilter("active")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Active</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="status-m" checked={statusFilter === "inactive"} onChange={() => setStatusFilter("inactive")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Inactive</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Critical</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="critical-m" checked={criticalFilter === "all"} onChange={() => setCriticalFilter("all")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="critical-m" checked={criticalFilter === "yes"} onChange={() => setCriticalFilter("yes")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Yes</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="critical-m" checked={criticalFilter === "no"} onChange={() => setCriticalFilter("no")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">No</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Date</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === null} onChange={() => setDateRangePreset(null)} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "last7"} onChange={() => setDateRangePreset("last7")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 7 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "last30"} onChange={() => setDateRangePreset("last30")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Last 30 days</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="date-m" checked={dateRangePreset === "custom"} onChange={() => setDateRangePreset("custom")} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">Custom</span>
+                  </label>
+                  {dateRangePreset === "custom" && (
+                    <div className="pl-5 space-y-2">
+                      <div>
+                        <label className="text-xs text-text-secondary">From</label>
+                        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-text-secondary">To</label>
+                        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="mt-0.5 w-full rounded border border-border-default px-2 py-1 text-sm" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={clearFilters}
+                className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm"
+              >
+                Clear Filters
+              </button>
             </aside>
           </div>
         )}
@@ -465,16 +617,16 @@ export default function ProductsListPage() {
             <div className="p-12 text-center">
               <Package className="w-12 h-12 text-text-secondary mx-auto mb-4" />
               <p className="text-text-primary font-medium mb-2">
-                {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all"
+                {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all" || dateRangePreset
                   ? "No products match your filters"
                   : "No products found"}
               </p>
               <p className="text-text-secondary text-sm mb-4">
-                {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all"
+                {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all" || dateRangePreset
                   ? "Try adjusting your filters"
                   : "Create your first product to get started"}
               </p>
-              {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all" ? (
+              {searchTerm || companyFilter || statusFilter !== "active" || criticalFilter !== "all" || dateRangePreset ? (
                 <button
                   onClick={clearFilters}
                   className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
@@ -534,6 +686,7 @@ export default function ProductsListPage() {
                           )}
                         </button>
                       </th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">SKU Count</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-text-primary">Status</th>
                       <th className="px-4 py-3 text-right text-sm font-semibold text-text-primary">Actions</th>
                     </tr>
@@ -580,6 +733,9 @@ export default function ProductsListPage() {
                           ) : (
                             <span className="text-text-secondary text-sm">-</span>
                           )}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-text-primary">
+                          {product.sku_count ?? 0}
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -678,6 +834,10 @@ export default function ProductsListPage() {
                           <span className="font-mono text-text-primary">{product.atc_code}</span>
                         </div>
                       )}
+                      <div>
+                        <span className="text-text-secondary">SKU Count: </span>
+                        <span className="text-text-primary">{product.sku_count ?? 0}</span>
+                      </div>
                       <div>
                         <span
                           className={cn(

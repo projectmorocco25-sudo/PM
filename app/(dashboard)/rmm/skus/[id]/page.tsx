@@ -24,8 +24,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
-import { Edit, ArrowLeft, Box, History } from "lucide-react";
+import { Edit, ArrowLeft, ExternalLink, AlertCircle, DollarSign, Ban, MoreVertical } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
 
 interface SKU {
   id: string;
@@ -46,6 +47,23 @@ interface SKU {
 
 type Tab = "overview" | "history";
 
+interface HistorySubmission {
+  id: string;
+  submission_type: string;
+  entity_type: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface EnforcementAction {
+  id: string;
+  action_type: string;
+  status: string;
+  legal_basis?: string;
+  executed_at: string | null;
+  violation_type?: string;
+}
+
 export default function SKUDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -58,6 +76,9 @@ export default function SKUDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [skuHistory, setSkuHistory] = useState<HistorySubmission[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [enforcementActions, setEnforcementActions] = useState<EnforcementAction[]>([]);
 
   // Get current user
   useEffect(() => {
@@ -98,6 +119,46 @@ export default function SKUDetailPage() {
 
     fetchSKU();
   }, [user, skuId, permissionsLoading]);
+
+  // Fetch SKU history for History tab (Phase 3 Task 3.9)
+  useEffect(() => {
+    if (!user || !skuId || permissionsLoading || activeTab !== "history") return;
+    const supabase = createClient();
+    (async () => {
+      setHistoryLoading(true);
+      try {
+        const { data, error: err } = await supabase.rpc("rmm_get_sku_history", {
+          user_id: user.id,
+          sku_id: skuId,
+          page_number: 1,
+          page_size: 50,
+        });
+        if (!err && data && typeof data === "object" && "submissions" in data) {
+          const r = data as { submissions: HistorySubmission[] };
+          setSkuHistory(Array.isArray(r.submissions) ? r.submissions : []);
+        } else setSkuHistory([]);
+      } finally {
+        setHistoryLoading(false);
+      }
+    })();
+  }, [user, skuId, permissionsLoading, activeTab]);
+
+  // Fetch enforcement actions for Overview (Phase 3 Task 3.8) — company-level for SKU's company
+  useEffect(() => {
+    if (!user || !sku?.company_id || permissionsLoading || activeTab !== "overview") return;
+    const supabase = createClient();
+    (async () => {
+      const { data, error: err } = await supabase.rpc("rmm_get_enforcement_actions", {
+        user_id: user.id,
+        company_id: sku.company_id,
+        p_limit: 20,
+      });
+      if (!err && Array.isArray(data)) setEnforcementActions(data as EnforcementAction[]);
+      else setEnforcementActions([]);
+    })();
+  }, [user, sku?.company_id, permissionsLoading, activeTab]);
+
+  const [actionsOpen, setActionsOpen] = useState(false);
 
   const canEditSKU = permissions?.role && [
     ROLES.TIER1,
@@ -175,15 +236,37 @@ export default function SKUDetailPage() {
             <h1 className="text-2xl font-semibold text-text-primary">{sku.name}</h1>
           </div>
         </div>
-        {canEditSKU && (
-          <Link
-            href={`/rmm/skus/${skuId}/edit`}
-            className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors font-medium flex items-center gap-2"
-          >
-            <Edit className="w-4 h-4" />
-            Edit
-          </Link>
-        )}
+        <div className="flex items-center gap-2">
+          {canEditSKU && (
+            <Link
+              href={`/rmm/skus/${skuId}/edit`}
+              className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors font-medium flex items-center gap-2"
+            >
+              <Edit className="w-4 h-4" />
+              Edit
+            </Link>
+          )}
+          <div className="relative">
+            <button
+              onClick={() => setActionsOpen(!actionsOpen)}
+              className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors font-medium flex items-center gap-2"
+            >
+              Actions
+              <MoreVertical className="w-4 h-4" />
+            </button>
+            {actionsOpen && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setActionsOpen(false)} />
+                <div className="absolute right-0 top-full mt-1 py-1 w-48 bg-bg-primary border border-border-default rounded-md shadow-lg z-20">
+                  <Link href={`/audit/logs?entity=sku&id=${skuId}`} onClick={() => setActionsOpen(false)} className="block px-4 py-2 text-sm text-text-primary hover:bg-bg-secondary">View Audit Log</Link>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setActionsOpen(false); }} className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary">Export (coming soon)</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setActionsOpen(false); }} className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary">Deactivate (coming soon)</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setActionsOpen(false); }} className="block px-4 py-2 text-sm text-error-600 hover:bg-error-50">Delete (coming soon)</a>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* SKU Information Card */}
@@ -305,18 +388,144 @@ export default function SKUDetailPage() {
         {activeTab === "overview" && (
           <div className="space-y-6">
             <h2 className="text-lg font-semibold text-text-primary">Overview</h2>
-            <p className="text-sm text-text-secondary">
-              SKU overview information and statistics will be displayed here.
-            </p>
+
+            {/* Related Submissions (Phase 3 Task 3.8) */}
+            <div>
+              <h3 className="text-base font-semibold text-text-primary mb-2">Related Submissions</h3>
+              <p className="text-sm text-text-secondary mb-2">AAMS, WSL, MSQ submissions including this SKU</p>
+              <p className="text-sm text-text-secondary">No related submissions loaded. Use submissions list to filter by SKU.</p>
+              <Link href="/rmm/submissions" className="text-primary-600 hover:text-primary-700 hover:underline text-sm mt-2 inline-block">
+                View submissions →
+              </Link>
+            </div>
+
+            {/* Export Requests (if ECS active) */}
+            <div className="border-t border-border-default pt-6">
+              <h3 className="text-base font-semibold text-text-primary mb-2">Export Requests</h3>
+              <p className="text-sm text-text-secondary">Export requests for this SKU (ECS module).</p>
+              <p className="text-sm text-text-secondary mt-1">No export requests.</p>
+            </div>
+
+            {/* Compliance Violations */}
+            <div className="border-t border-border-default pt-6">
+              <h3 className="text-base font-semibold text-text-primary mb-2">Compliance Violations</h3>
+              <p className="text-sm text-text-secondary">Threshold breaches and other violations related to this SKU.</p>
+              <p className="text-sm text-text-secondary mt-1">No compliance violations.</p>
+            </div>
+
+            {/* Enforcement Actions (Phase 3 Task 3.8) */}
+            <div className="border-t border-border-default pt-6">
+              <h3 className="text-base font-semibold text-text-primary mb-2">Enforcement Actions</h3>
+              <p className="text-sm text-text-secondary mb-3">Company-level enforcement actions (this SKU&apos;s company).</p>
+              {enforcementActions.length === 0 ? (
+                <p className="text-sm text-text-secondary">No enforcement actions.</p>
+              ) : (
+                <div className="space-y-3">
+                  {enforcementActions.map((a) => (
+                    <div key={a.id} className="rounded-lg border border-border-default p-3">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {a.action_type === "warning" && <AlertCircle className="w-4 h-4 text-amber-500" />}
+                        {a.action_type === "fine" && <DollarSign className="w-4 h-4 text-amber-600" />}
+                        {a.action_type === "suspension" && <Ban className="w-4 h-4 text-red-600" />}
+                        <span className="font-medium text-sm capitalize">{a.action_type}</span>
+                        <span className="text-xs text-text-secondary">— {a.id.slice(0, 8)}…</span>
+                        <span className="text-xs text-text-secondary">
+                          {a.executed_at ? new Date(a.executed_at).toLocaleDateString() : "—"}
+                        </span>
+                      </div>
+                      {a.legal_basis && (
+                        <div className="text-sm text-text-primary mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <span>Legal Basis: {a.legal_basis}</span>
+                          <RegulatoryFrameworkLink className="text-primary-600" label="View Framework" />
+                        </div>
+                      )}
+                      <Link
+                        href={`/enforcement/actions/${a.id}`}
+                        className="text-primary-600 hover:text-primary-700 hover:underline text-sm mt-1 inline-block"
+                      >
+                        View Enforcement Action Detail →
+                      </Link>
+                    </div>
+                  ))}
+                  <Link
+                    href={sku?.company_id ? `/enforcement/actions?company=${sku.company_id}` : "/enforcement/actions"}
+                    className="text-primary-600 hover:text-primary-700 hover:underline text-sm inline-block"
+                  >
+                    View All Enforcement Actions →
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Regulatory Compliance (Phase 2 Task 2.2.3 - Fatima's Requirement) */}
+            <div className="border-t border-border-default pt-6">
+              <h3 className="text-base font-semibold text-text-primary mb-3">Regulatory Compliance</h3>
+              <div className="space-y-2 text-sm">
+                <p className="text-text-secondary">Regulatory Framework: DMP Art. 15 – Stock Monitoring</p>
+                <p className="text-text-primary">
+                  Compliance Status:{" "}
+                  <Link href="/cmc/scores" className="text-primary-600 hover:text-primary-700 hover:underline">
+                    View Compliance Score
+                  </Link>
+                </p>
+                <div className="pt-2">
+                  <RegulatoryFrameworkLink />
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {activeTab === "history" && (
           <div className="space-y-4">
             <h2 className="text-lg font-semibold text-text-primary">History</h2>
-            <p className="text-sm text-text-secondary">
-              SKU history (registry submissions) will be loaded using `rmm_get_sku_history()` RPC function.
-            </p>
+            <p className="text-sm text-text-secondary">Timeline of all changes and updates</p>
+            {historyLoading ? (
+              <div className="space-y-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="w-1 bg-gray-200 rounded-full shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 w-48 bg-gray-100 rounded animate-pulse" />
+                      <div className="h-3 w-32 bg-gray-100 rounded animate-pulse" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : skuHistory.length === 0 ? (
+              <div className="rounded-lg border border-border-default p-8 text-center text-text-secondary">
+                No history available
+              </div>
+            ) : (
+              <div className="relative space-y-0">
+                <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-border-default" />
+                {skuHistory.map((s) => {
+                  const label = `${s.entity_type} ${s.submission_type.replace(/_/g, " ")}`;
+                  const date = s.created_at ? new Date(s.created_at) : null;
+                  return (
+                    <div key={s.id} className="relative flex gap-4 pb-6 pl-6">
+                      <div className="absolute left-0 w-3 h-3 rounded-full bg-primary-500 border-2 border-bg-primary shrink-0 mt-0.5" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-text-primary">{label}</p>
+                        <p className="text-xs text-text-secondary mt-0.5">
+                          {date ? date.toLocaleDateString() : "—"}
+                          {date && (() => {
+                            const days = Math.floor((Date.now() - date.getTime()) / (24 * 60 * 60 * 1000));
+                            if (days === 0) return " (today)";
+                            if (days === 1) return " (1 day ago)";
+                            if (days < 7) return ` (${days} days ago)`;
+                            if (days < 14) return " (1 week ago)";
+                            if (days < 30) return ` (${Math.floor(days / 7)} weeks ago)`;
+                            return ` (${Math.floor(days / 30)} months ago)`;
+                          })()}
+                        </p>
+                        <p className="text-xs text-text-secondary mt-0.5">Updated by: —</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>

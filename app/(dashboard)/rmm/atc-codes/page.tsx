@@ -22,8 +22,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
-import { Search, X, FlaskConical, ChevronUp, ChevronDown } from "lucide-react";
+import { Search, X, FlaskConical, ChevronUp, ChevronDown, Filter } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
 
 interface ATCCode {
   id: string;
@@ -39,11 +40,12 @@ interface ATCCode {
 interface ATCCodesResponse {
   atc_codes: ATCCode[];
   pagination: {
-    total: number;
+    total?: number;
+    total_count?: number;
     page_number: number;
     page_size: number;
     total_pages: number;
-    has_more: boolean;
+    has_more?: boolean;
   };
 }
 
@@ -66,6 +68,28 @@ export default function ATCCodesListPage() {
   const [pageSize] = useState(50);
   const [totalCount, setTotalCount] = useState(0);
   const [hasMore, setHasMore] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [levelFilter, setLevelFilter] = useState<number | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [infoBannerDismissed, setInfoBannerDismissed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("atc_info_banner_dismissed") === "1";
+  });
+
+  const ATC_CATEGORIES = ["A", "B", "C", "D", "E", "G", "H", "J", "L", "M", "N", "P", "R", "S", "V"] as const;
+
+  const LEVEL_BADGE_COLORS: Record<number, string> = {
+    1: "bg-[#3b82f6] text-white",
+    2: "bg-[#10b981] text-white",
+    3: "bg-[#fbbf24] text-gray-900",
+    4: "bg-[#a855f7] text-white",
+  };
+  const LEVEL_LABELS: Record<number, string> = {
+    1: "Level 1 (Anatomical)",
+    2: "Level 2 (Therapeutic)",
+    3: "Level 3 (Pharmacological)",
+    4: "Level 4 (Chemical)",
+  };
 
   // Get current user
   useEffect(() => {
@@ -117,8 +141,9 @@ export default function ATCCodesListPage() {
           setAtcCodes((prev) => [...prev, ...(response.atc_codes || [])]);
         }
         
-        setTotalCount(response.pagination.total);
-        setHasMore(response.pagination.has_more);
+        const p = response.pagination;
+        setTotalCount(p.total ?? p.total_count ?? 0);
+        setHasMore(p.has_more ?? (pageNumber < (p.total_pages ?? 1)));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load ATC codes");
       } finally {
@@ -127,13 +152,13 @@ export default function ATCCodesListPage() {
     }
 
     fetchATCCodes();
-  }, [user, permissionsLoading, pageNumber, pageSize, searchTerm, sortBy, sortOrder]);
+  }, [user, permissionsLoading, pageNumber, pageSize, searchTerm, sortBy, sortOrder, levelFilter, categoryFilter]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setPageNumber(1);
     setAtcCodes([]);
-  }, [searchTerm, sortBy, sortOrder]);
+  }, [searchTerm, sortBy, sortOrder, levelFilter, categoryFilter]);
 
   const handleSort = (field: SortField) => {
     if (sortBy === field) {
@@ -148,6 +173,15 @@ export default function ATCCodesListPage() {
     if (hasMore && !loading) {
       setPageNumber((prev) => prev + 1);
     }
+  };
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setLevelFilter(null);
+    setCategoryFilter(null);
+    setSortBy("code");
+    setSortOrder("asc");
+    setPageNumber(1);
   };
 
   if (permissionsLoading || loading && atcCodes.length === 0) {
@@ -249,18 +283,126 @@ export default function ATCCodesListPage() {
             </button>
           )}
         </div>
+        <button
+          onClick={() => setFiltersOpen(!filtersOpen)}
+          className={cn(
+            "px-4 py-2 border border-border-default rounded-md flex items-center gap-2",
+            "hover:bg-bg-secondary transition-colors",
+            filtersOpen && "bg-bg-secondary"
+          )}
+        >
+          <Filter className="w-5 h-5" />
+          Filters
+        </button>
       </div>
 
-      {/* ATC Codes Table */}
-      <div className="bg-bg-primary border border-border-default rounded-lg overflow-hidden">
-        {atcCodes.length === 0 && !loading ? (
-          <div className="p-12 text-center">
-            <FlaskConical className="w-12 h-12 text-text-secondary mx-auto mb-4" />
-            <p className="text-text-primary font-medium mb-2">No ATC codes found</p>
-            <p className="text-text-secondary text-sm">
-              {searchTerm ? "Try adjusting your search" : "ATC codes will appear here"}
-            </p>
+      {/* Filters Sidebar and Table */}
+      <div className="flex gap-6">
+        <aside
+          className={cn(
+            "w-60 bg-bg-primary border border-border-default rounded-lg p-4 space-y-4",
+            "hidden md:block",
+            !filtersOpen && "md:hidden"
+          )}
+        >
+          <h2 className="font-semibold text-text-primary">Filters</h2>
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Level</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="level" checked={levelFilter === null} onChange={() => setLevelFilter(null)} className="border-border-default" />
+                <span className="text-sm text-text-secondary">All</span>
+              </label>
+              {[1, 2, 3, 4].map((l) => (
+                <label key={l} className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="level" checked={levelFilter === l} onChange={() => setLevelFilter(l)} className="border-border-default" />
+                  <span className="text-sm text-text-secondary">Level {l}</span>
+                </label>
+              ))}
+            </div>
           </div>
+          <div>
+            <label className="text-sm font-medium text-text-primary mb-2 block">Category</label>
+            <select
+              value={categoryFilter ?? ""}
+              onChange={(e) => setCategoryFilter(e.target.value || null)}
+              className="w-full px-3 py-2 border border-border-default rounded-md text-sm"
+            >
+              <option value="">All</option>
+              {ATC_CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            onClick={clearFilters}
+            className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm"
+          >
+            Clear Filters
+          </button>
+        </aside>
+
+        {filtersOpen && (
+          <div className="md:hidden fixed inset-0 z-50">
+            <div className="absolute inset-0 bg-black/50" onClick={() => setFiltersOpen(false)} />
+            <aside className="absolute left-0 top-0 bottom-0 w-60 bg-bg-primary border-r border-border-default p-4 space-y-4 overflow-y-auto">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold text-text-primary">Filters</h2>
+                <button onClick={() => setFiltersOpen(false)} className="text-text-secondary hover:text-text-primary">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Level</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="level-m" checked={levelFilter === null} onChange={() => setLevelFilter(null)} className="border-border-default" />
+                    <span className="text-sm text-text-secondary">All</span>
+                  </label>
+                  {[1, 2, 3, 4].map((l) => (
+                    <label key={l} className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" name="level-m" checked={levelFilter === l} onChange={() => setLevelFilter(l)} className="border-border-default" />
+                      <span className="text-sm text-text-secondary">Level {l}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-text-primary mb-2 block">Category</label>
+                <select value={categoryFilter ?? ""} onChange={(e) => setCategoryFilter(e.target.value || null)} className="w-full px-3 py-2 border border-border-default rounded-md text-sm">
+                  <option value="">All</option>
+                  {ATC_CATEGORIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <button onClick={clearFilters} className="w-full px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors text-sm">
+                Clear Filters
+              </button>
+            </aside>
+          </div>
+        )}
+
+        {/* ATC Codes Table */}
+        <div className="flex-1 bg-bg-primary border border-border-default rounded-lg overflow-hidden">
+          {atcCodes.length === 0 && !loading ? (
+            <div className="p-12 text-center">
+              <FlaskConical className="w-12 h-12 text-text-secondary mx-auto mb-4" />
+              <p className="text-text-primary font-medium mb-2">
+                {searchTerm || levelFilter || categoryFilter ? "No ATC codes match your filters" : "No ATC codes found"}
+              </p>
+              <p className="text-text-secondary text-sm mb-4">
+                {searchTerm || levelFilter || categoryFilter ? "Try adjusting your search or filters" : "ATC codes will appear here"}
+              </p>
+              {(searchTerm || levelFilter || categoryFilter) && (
+                <button
+                  onClick={clearFilters}
+                  className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
         ) : (
           <>
             {/* Desktop Table */}
@@ -304,7 +446,14 @@ export default function ATCCodesListPage() {
                         <span className="text-text-primary">{atc.description}</span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-sm text-text-secondary">Level {atc.level}</span>
+                        <span
+                          className={cn(
+                            "px-2 py-1 text-xs font-medium rounded",
+                            LEVEL_BADGE_COLORS[atc.level as 1 | 2 | 3 | 4] ?? "bg-gray-100 text-gray-700"
+                          )}
+                        >
+                          {LEVEL_LABELS[atc.level as 1 | 2 | 3 | 4] ?? `Level ${atc.level}`}
+                        </span>
                       </td>
                       <td className="px-4 py-3">
                         <span
@@ -331,7 +480,14 @@ export default function ATCCodesListPage() {
                   <div className="font-mono text-sm text-text-primary font-medium mb-1">{atc.code}</div>
                   <div className="text-text-primary mb-2">{atc.description}</div>
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="text-text-secondary">Level {atc.level}</span>
+                    <span
+                      className={cn(
+                        "px-2 py-1 text-xs font-medium rounded",
+                        LEVEL_BADGE_COLORS[atc.level as 1 | 2 | 3 | 4] ?? "bg-gray-100 text-gray-700"
+                      )}
+                    >
+                      {LEVEL_LABELS[atc.level as 1 | 2 | 3 | 4] ?? `Level ${atc.level}`}
+                    </span>
                     <span
                       className={cn(
                         "px-2 py-1 text-xs font-medium rounded",
@@ -364,6 +520,40 @@ export default function ATCCodesListPage() {
             </div>
           </>
         )}
+        </div>
+      </div>
+
+      {/* Info banner (Phase 6 Task 6.3) — dismissible */}
+      {!infoBannerDismissed && (
+        <div className="rounded-lg border border-blue-200 px-4 py-3 text-sm text-blue-800 flex items-start gap-2" style={{ backgroundColor: "#eff6ff" }}>
+          <span className="flex-shrink-0">ℹ️</span>
+          <div className="flex-1">
+            <p><strong>ATC codes</strong> are MOH-controlled and read-only. These codes are used for product classification.</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setInfoBannerDismissed(true);
+              try { localStorage.setItem("atc_info_banner_dismissed", "1"); } catch { /* ignore */ }
+            }}
+            className="flex-shrink-0 p-1 rounded hover:bg-blue-200/50 text-blue-800"
+            aria-label="Dismiss banner"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Regulatory Context (wireframe) */}
+      <div className="rounded-lg border border-border-default bg-bg-secondary p-4">
+        <h3 className="font-semibold text-text-primary mb-2">Regulatory Context</h3>
+        <ul className="list-disc list-inside space-y-1 text-sm text-text-secondary">
+          <li>ATC codes are used for regulatory product classification per DMP Art.15.</li>
+          <li>All ATC code data is retained for regulatory audit (7-year minimum per Law No. 09-08).</li>
+        </ul>
+        <div className="mt-3">
+          <RegulatoryFrameworkLink />
+        </div>
       </div>
     </div>
   );

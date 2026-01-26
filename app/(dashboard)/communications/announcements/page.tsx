@@ -11,9 +11,10 @@ import Link from 'next/link';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useUserPermissions } from '@/lib/hooks/use-user-permissions';
 import { createClient } from '@/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
 import { Plus, Check, CheckCheck, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
-import { USER_ROLES } from '@/lib/constants/roles';
+import { ROLES } from '@/lib/constants/roles';
 
 interface Announcement {
   id: string;
@@ -27,17 +28,26 @@ interface Announcement {
 }
 
 export default function AnnouncementsPage() {
-  const { role, isLoading: isLoadingPermissions } = useUserPermissions();
+  const [user, setUser] = useState<User | null>(null);
+  const { permissions, loading: permissionsLoading } = useUserPermissions(user);
+  const role = permissions?.role ?? null;
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const supabase = createClient();
 
-  const isTier1 = role === USER_ROLES.MOH_TIER1;
+  const isTier1 = role === ROLES.TIER1;
 
   useEffect(() => {
-    if (!isLoadingPermissions) {
+    (async () => {
+      const { data: { user: u } } = await createClient().auth.getUser();
+      setUser(u);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!permissionsLoading) {
       const fetchAnnouncements = async () => {
         setIsLoading(true);
         setError(null);
@@ -61,9 +71,9 @@ export default function AnnouncementsPage() {
 
       fetchAnnouncements();
     }
-  }, [supabase, isLoadingPermissions]);
+  }, [supabase, permissionsLoading]);
 
-  if (isLoadingPermissions || isLoading) {
+  if (permissionsLoading || isLoading) {
     return (
       <div className="container mx-auto px-6 py-12">
         <div className="text-center text-text-secondary">Loading announcements...</div>

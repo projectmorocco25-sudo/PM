@@ -23,13 +23,16 @@ import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
 import { ArrowLeft, Save } from "lucide-react";
+import { useDraftForm } from "@/lib/hooks/use-draft-form";
+import { RegulatoryFrameworkLink } from "@/components/RegulatoryFrameworkLink";
+
+const DRAFT_KEY = "draft_rmm_company_new";
 
 export default function CreateCompanyPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const { permissions, loading: permissionsLoading } = useUserPermissions(user);
   
-  // Form state
   const [name, setName] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
   const [companyType, setCompanyType] = useState<"ipc" | "wholesaler" | "">("");
@@ -38,10 +41,31 @@ export default function CreateCompanyPage() {
   const [contactPhone, setContactPhone] = useState("");
   const [isActive, setIsActive] = useState(true);
   
-  // Validation state
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [registrationNumberExists, setRegistrationNumberExists] = useState(false);
+
+  const [taxId, setTaxId] = useState("");
+
+  const { saveDraft, loadDraft, clearDraft, lastSaved } = useDraftForm(
+    DRAFT_KEY,
+    () => ({ name, registrationNumber, companyType, address, taxId, contactEmail, contactPhone, isActive }),
+    { intervalMs: 30_000, enabled: true }
+  );
+
+  useEffect(() => {
+    const d = loadDraft() as Record<string, unknown> | null;
+    if (d && typeof d === "object") {
+      if (typeof d.name === "string") setName(d.name);
+      if (typeof d.registrationNumber === "string") setRegistrationNumber(d.registrationNumber);
+      if (d.companyType === "ipc" || d.companyType === "wholesaler") setCompanyType(d.companyType);
+      if (typeof d.address === "string") setAddress(d.address);
+      if (typeof d.taxId === "string") setTaxId(d.taxId);
+      if (typeof d.contactEmail === "string") setContactEmail(d.contactEmail);
+      if (typeof d.contactPhone === "string") setContactPhone(d.contactPhone);
+      if (typeof d.isActive === "boolean") setIsActive(d.isActive);
+    }
+  }, [loadDraft]);
 
   // Get current user
   useEffect(() => {
@@ -139,13 +163,14 @@ export default function CreateCompanyPage() {
         address: address.trim() || null,
         contact_email: contactEmail.trim() || null,
         contact_phone: contactPhone.trim() || null,
+        tax_id: taxId.trim() || null,
       });
 
       if (rpcError) {
         throw new Error(rpcError.message);
       }
 
-      // Navigate to company detail page
+      clearDraft();
       router.push(`/rmm/companies/${(data as any).id}`);
     } catch (err) {
       setErrors({ submit: err instanceof Error ? err.message : "Failed to create company" });
@@ -200,7 +225,30 @@ export default function CreateCompanyPage() {
             <h1 className="text-2xl font-semibold text-text-primary">Create Company</h1>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <Link
+            href="/rmm/companies"
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
+
+      {/* Draft indicator */}
+      {lastSaved && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/80 px-4 py-2 text-sm text-blue-800">
+          💾 Draft saved automatically — Last saved: {lastSaved.toLocaleTimeString()}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -318,6 +366,19 @@ export default function CreateCompanyPage() {
             />
           </div>
 
+          {/* Tax ID (Phase 6 Task 6.1) */}
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-1">Tax ID</label>
+            <input
+              type="text"
+              value={taxId}
+              onChange={(e) => setTaxId(e.target.value)}
+              placeholder="Enter tax identification number..."
+              className="w-full px-3 py-2 border border-border-default rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+            />
+            <p className="mt-1 text-xs text-text-secondary">Optional: Tax identification number for regulatory purposes</p>
+          </div>
+
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
@@ -354,6 +415,19 @@ export default function CreateCompanyPage() {
           <p className="text-xs text-text-secondary">
             ℹ️ At least one contact method (Email OR Phone) is required for regulatory communications
           </p>
+
+          {/* Regulatory Notice (Phase 6 Task 6.5 — Fatima's Requirement) */}
+          <div className="rounded-lg border border-border-default bg-bg-secondary p-4 mt-4">
+            <h3 className="text-sm font-semibold text-text-primary mb-2">Regulatory Notice</h3>
+            <ul className="list-disc list-inside space-y-1 text-xs text-text-secondary">
+              <li>Company registrations are subject to DMP regulations.</li>
+              <li>All company data is retained for 7 years per regulatory requirements (Law No. 09-08).</li>
+              <li>Company information may be used for regulatory enforcement actions per DMP Art. 12.</li>
+            </ul>
+            <div className="mt-3">
+              <RegulatoryFrameworkLink className="text-sm text-primary-600 hover:text-primary-700 hover:underline" />
+            </div>
+          </div>
         </div>
 
         {/* Error Message */}
@@ -371,6 +445,14 @@ export default function CreateCompanyPage() {
           >
             Cancel
           </Link>
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
           <button
             type="submit"
             disabled={submitting}

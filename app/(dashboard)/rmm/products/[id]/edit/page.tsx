@@ -23,6 +23,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useUserPermissions } from "@/lib/hooks/use-user-permissions";
 import { ROLES } from "@/lib/constants/roles";
 import { ArrowLeft, Save } from "lucide-react";
+import { useDraftForm } from "@/lib/hooks/use-draft-form";
 
 interface Product {
   id: string;
@@ -35,6 +36,8 @@ interface Product {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  created_by_name?: string | null;
+  updated_by_name?: string | null;
 }
 
 interface ATCCode {
@@ -61,6 +64,13 @@ export default function EditProductPage() {
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  const DRAFT_KEY = `draft_rmm_product_edit_${productId}`;
+  const { saveDraft, loadDraft, clearDraft, lastSaved } = useDraftForm(
+    DRAFT_KEY,
+    () => ({ name, description, isCriticalMedicine }),
+    { intervalMs: 30_000, enabled: !!productId }
+  );
 
   // Get current user
   useEffect(() => {
@@ -116,10 +126,16 @@ export default function EditProductPage() {
 
         const productData = data as Product;
         setProduct(productData);
-        setName(productData.name);
-        setDescription(productData.description || "");
-        setAtcCode(productData.atc_code || "");
-        setIsCriticalMedicine(productData.is_critical_medicine);
+        const draft = loadDraft() as Record<string, unknown> | null;
+        if (draft && typeof draft === "object") {
+          if (typeof draft.name === "string") setName(draft.name);
+          if (typeof draft.description === "string") setDescription(draft.description);
+          if (typeof draft.isCriticalMedicine === "boolean") setIsCriticalMedicine(draft.isCriticalMedicine);
+        } else {
+          setName(productData.name);
+          setDescription(productData.description || "");
+          setIsCriticalMedicine(productData.is_critical_medicine);
+        }
       } catch (err) {
         setErrors({ fetch: err instanceof Error ? err.message : "Failed to load product" });
       } finally {
@@ -128,7 +144,7 @@ export default function EditProductPage() {
     }
 
     fetchProduct();
-  }, [user, productId, permissionsLoading]);
+  }, [user, productId, permissionsLoading, loadDraft]);
 
   // Check if user can edit
   const canEdit = permissions?.role && [
@@ -182,7 +198,7 @@ export default function EditProductPage() {
         throw new Error(rpcError.message);
       }
 
-      // Navigate to product detail page
+      clearDraft();
       router.push(`/rmm/products/${productId}`);
     } catch (err) {
       setErrors({ submit: err instanceof Error ? err.message : "Failed to update product" });
@@ -265,7 +281,29 @@ export default function EditProductPage() {
             <h1 className="text-2xl font-semibold text-text-primary">Edit Product</h1>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
+          <Link
+            href={`/rmm/products/${productId}`}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
+
+      {lastSaved && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/80 px-4 py-2 text-sm text-blue-800">
+          💾 Draft saved automatically — Last saved: {lastSaved.toLocaleTimeString()}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -346,7 +384,7 @@ export default function EditProductPage() {
           </div>
         )}
 
-        {/* Metadata (Display Only) */}
+        {/* Metadata (Display Only) — Phase 6 Task 6.2 */}
         <div className="bg-bg-secondary border border-border-default rounded-lg p-6">
           <h2 className="text-lg font-semibold text-text-primary mb-4">Metadata</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -357,10 +395,18 @@ export default function EditProductPage() {
               </span>
             </div>
             <div>
+              <span className="text-text-secondary">Created By: </span>
+              <span className="text-text-primary">{product.created_by_name?.trim() || "—"}</span>
+            </div>
+            <div>
               <span className="text-text-secondary">Last Updated: </span>
               <span className="text-text-primary">
                 {new Date(product.updated_at).toLocaleString()}
               </span>
+            </div>
+            <div>
+              <span className="text-text-secondary">Updated By: </span>
+              <span className="text-text-primary">{product.updated_by_name?.trim() || "—"}</span>
             </div>
           </div>
         </div>
@@ -380,6 +426,14 @@ export default function EditProductPage() {
           >
             Cancel
           </Link>
+          <button
+            type="button"
+            onClick={() => saveDraft()}
+            className="px-4 py-2 border border-border-default rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Draft
+          </button>
           <button
             type="submit"
             disabled={submitting}

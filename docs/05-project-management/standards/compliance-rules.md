@@ -43,6 +43,7 @@
   - Other roles as defined
 
 ### 6. Wireframe Compliance
+- [ ] Wireframe **read in full** (no line limit when reading; do not truncate). Responsive, interactions, states, and accessibility often appear later in the file.
 - [ ] Wireframe reviewed before starting
 - [ ] Wireframe task ID(s) identified
 - [ ] Wireframe requirements understood (layout, interactions, states, role-based variations)

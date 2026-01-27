@@ -4,7 +4,7 @@
 
 **BEFORE writing ANY code for a task with a wireframe link, you MUST:**
 
-1. [ ] Read the ENTIRE wireframe file (not just first 100 lines)
+1. [ ] Read the ENTIRE wireframe file **in full** — **do NOT use a line `limit`** on the Read tool for wireframe/spec markdown. Truncated reads (e.g. first 80 or 100 lines) miss responsive behavior, interactions, states, role variations, edge cases, and accessibility.
 2. [ ] Extract ALL specifications (layout, components, interactions, states)
 3. [ ] Check wireframe annotations section
 4. [ ] Identify ALL role-based variations
@@ -16,7 +16,7 @@
 ## MANDATORY PRE-IMPLEMENTATION CHECKLIST
 
 ### Step 1: Read Wireframe (REQUIRED)
-- [ ] Read complete wireframe file from start to end
+- [ ] Read complete wireframe file from start to end — **no line limit**. When using Read, do NOT pass `limit` for wireframe/spec markdown under `docs/04-design/...` or task-referenced specs. Use full-file reads or full chunks; use all chunks before implementing.
 - [ ] Note all component specifications
 - [ ] Note all layout requirements
 - [ ] Note all interaction requirements
@@ -82,7 +82,7 @@
 ## COMPLIANCE GATE
 
 **STOP conditions (DO NOT PROCEED):**
-- ❌ If wireframe not read completely (including responsive behavior and accessibility sections)
+- ❌ If wireframe not read completely (including responsive behavior and accessibility sections). **Do NOT use a line limit on Read** for wireframe/spec files — read each file in full.
 - ❌ If wireframe requirements unclear
 - ❌ If wireframe file doesn't exist (STOP and request wireframe)
 - ❌ If implementation deviates from wireframe (document deviation and get approval)

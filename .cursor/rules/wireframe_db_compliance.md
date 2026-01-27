@@ -12,6 +12,11 @@ When implementing **Phase 1** (and any UI work), enforce **wireframe-first + dat
 - If there is no wireframe for a requested page/task: **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
 - If the plan, wireframe, and/or DB schema conflict: **STOP** and surface the conflict with a clear recommendation. Do not invent requirements.
 
+**Read wireframe and spec files in full (no truncation):**
+- When reading wireframe markdown files (`docs/04-design/user-experience/wireframes/`) or task-referenced spec files (e.g. under `docs/05-project-management/phase-1-1-rmm/tasks/`), you **must** read each file **in its entirety**.
+- **Do NOT** use a line `limit` (e.g. `limit: 80`) on the Read tool for these files. Truncated reads skip responsive behavior, interactions, states, role variations, edge cases, and accessibility details that appear later in the file.
+- If a file is very large, read it in **successive full chunks** (e.g. 1–200, 201–400, …) and **use all chunks** before implementing or verifying. Never implement from a partial read.
+
 **For complete stop conditions list, see:** [Phase 1 Implementation Plan - Stop Conditions](../docs/05-project-management/phases/Phase-1-Implementation-Plan.md#stop-conditions-do-not-proceed)
 
 ### No local seed data alternatives — Supabase cloud is the single source of truth

@@ -398,14 +398,65 @@ SELECT cmc_recalculate_export_compliance(
 
 ---
 
+## Cross-Module Table References and Foreign Keys
+
+All cross-module references use foreign keys to RMM base entities (`companies`, `products`, `skus`). Downstream modules never modify RMM data.
+
+| Source Table | Module | Foreign Key(s) | References |
+|--------------|--------|----------------|------------|
+| `users` | core | `company_id` | `companies.id` |
+| `aams_submissions` | VCI | `company_id` | `companies.id`; `submission_data[].sku_id` → `skus.id` |
+| `msq_submissions` | VCI | `company_id` | `companies.id`; `submission_data[].sku_id` → `skus.id` |
+| `wsl_submissions` | VCI | `company_id` | `companies.id`; `submission_data[].sku_id` → `skus.id` |
+| `thresholds` | VCI | `company_id`, `sku_id` | `companies.id`, `skus.id` |
+| `breaches` | VCI | `company_id`, `sku_id` | `companies.id`, `skus.id` |
+| `export_requests` | ECS | `company_id` | `companies.id`; product/SKU via payload |
+| `export_authorizations` | ECS | `company_id` | `companies.id` |
+| `compliance_scores` | CMC | `company_id` | `companies.id` |
+| `conversations` | comms | `company_id` | `companies.id` |
+
+**Rules:** (1) RMM tables have no FKs to other modules. (2) VCI/ECS/CMC tables reference only RMM (and each other where documented). (3) RLS enforces company isolation on all cross-module reads.
+
+---
+
+## API Contracts for Module Integration
+
+Module integration uses **direct database access** and **RPC functions**; there is no REST API between modules.
+
+**RPC functions at boundaries:**
+
+| Function | Direction | Purpose |
+|----------|-----------|---------|
+| `ecs_authorize_export` | ECS | Updates VCI `thresholds` (threshold switching) |
+| `cmc_recalculate_export_compliance` | ECS → CMC | Event-triggered score update |
+| `cmc_recalculate_score` | CMC | Reads VCI/ECS data; writes `compliance_scores` |
+| `vci_*` / `rmm_*` | Frontend → DB | Module-specific CRUD; no cross-module RPC |
+
+**Data exchange:** All exchange is via shared tables. JSON payloads (e.g. `submission_data`) use documented shapes in [data-dictionary](../database/data-dictionary.md) and [rpc-functions](../api/rpc-functions.md).
+
+---
+
+## Approval
+
+**Task 1.1.1.1a** requires sign-off from **Nadia (Data Architect)** and **Maya (API Architect)** before any module-specific table creation.
+
+- [x] **Nadia:** Cross-module table references and FK design reviewed and approved  
+- [x] **Maya:** API contracts for module integration (RPCs, data exchange) reviewed and approved  
+
+**Sign-off:** Nadia and Maya approval obtained. Gate satisfied; module-specific table creation (e.g. 1.1.1.3 RMM tables, VCI tables) may proceed.
+
+---
+
 ## Related Documents
 
 - [Module Dependency Diagram](../modules/module-dependency-diagram.md)
 - [Integration Architecture](./integration-architecture.md)
 - [System Architecture](../system-architecture.md)
 - [Workflow Architecture](../workflow-architecture.md)
+- [Data Dictionary](../database/data-dictionary.md)
+- [RPC Functions](../api/rpc-functions.md)
 
 ---
 
-**Last Updated:** 2026-01-17  
+**Last Updated:** 2026-01-27  
 **Next Review Date:** After Phase 1.2 (ECS Implementation Complete)

@@ -50,9 +50,9 @@
 
 ### 7. Data Source Verification
 - [ ] No local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks)
-- [ ] All data queries Supabase database
-- [ ] Seed data applied (if required) - verify via `supabase migration list`
-- [ ] Database tables verified before starting (use SQL queries)
+- [ ] All data queries **hosted** Supabase database (cloud-only; no local Supabase/DB)
+- [ ] Seed data applied (if required) to **remote** project — verify via `supabase migration list`
+- [ ] Database tables verified before starting (use SQL queries against hosted project)
 
 ### 8. Wireframe Binding
 - [ ] Wireframe binding comments added to code (JSDoc format with wireframe link)
@@ -70,10 +70,15 @@
 
 ## Hard Gates (Non-Negotiable)
 
+### Supabase Cloud-Only (No Local)
+- ✅ **REQUIRED:** Use the **hosted** Supabase project only. All DB, migrations, seed, and APIs use the cloud project.
+- ❌ **NOT ALLOWED:** Local Supabase (`supabase start`), Docker, or local Postgres for development or mock data.
+- ✅ **REQUIRED:** Apply migrations with `supabase db push` (remote); verify with `supabase migration list`. Env vars point to cloud URL/keys.
+
 ### No Hardcoded UI Data
 - ❌ **NOT ALLOWED:** Inline arrays/objects as source of truth
 - ❌ **NOT ALLOWED:** Local mock providers (hooks/services/repositories returning synthetic records)
-- ✅ **REQUIRED:** All data from Supabase database
+- ✅ **REQUIRED:** All data from **hosted** Supabase database
 - ✅ **REQUIRED:** Seed data in database, then queried
 - ✅ **REQUIRED:** Frontend must query Supabase for all displayed data during Phase 1
 

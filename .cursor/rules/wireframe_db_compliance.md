@@ -14,9 +14,9 @@ When implementing **Phase 1** (and any UI work), enforce **wireframe-first + dat
 
 **For complete stop conditions list, see:** [Phase 1 Implementation Plan - Stop Conditions](../docs/05-project-management/phases/Phase-1-Implementation-Plan.md#stop-conditions-do-not-proceed)
 
-### No local seed data alternatives — Supabase is the single source of truth
+### No local seed data alternatives — Supabase cloud is the single source of truth
 
-**CRITICAL:** All data (including seed/test data) must originate from Supabase. Local runtime mocks or synthetic data generation is strictly forbidden.
+**CRITICAL:** All data (including seed/test data) must originate from the **hosted Supabase project**. Local runtime mocks, synthetic data generation, or a local Supabase/DB are strictly forbidden. We use **Supabase cloud only** (no Docker, no `supabase start`, no local database).
 
 **Prohibited:**
 - ❌ Inline arrays/objects as data sources in components (`const mockData = [...]`)
@@ -36,8 +36,8 @@ When implementing **Phase 1** (and any UI work), enforce **wireframe-first + dat
 
 **The only acceptable way to create seed/test data:**
 
-- All Phase 1 seed data must be seeded into Supabase via **versioned SQL migrations** stored in `supabase/migrations/` directory.
-- Seed migrations must be applied using standard Supabase CLI (`supabase migration apply`) or automatically in local development via `supabase start`.
+- All Phase 1 seed data must be seeded into the **hosted Supabase project** via **versioned SQL migrations** stored in `supabase/migrations/` directory.
+- Seed migrations must be applied using Supabase CLI against the **linked remote project**: `supabase db push` (or `supabase migration up` when using remote). **Do not** use local Supabase or `supabase start`.
 - Seed migrations must be **idempotent** (deterministic IDs + UPSERT/`ON CONFLICT`) so they can be safely re-run.
 - Seed migrations should be staged by subphase (e.g., `seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci`, etc.).
 - Migration files should follow naming convention: `YYYYMMDDHHMMSS_seed_description.sql`
@@ -48,8 +48,9 @@ When implementing **Phase 1** (and any UI work), enforce **wireframe-first + dat
 - ❌ Local runtime mocks (see "No local seed data alternatives" section above)
 - ❌ Frontend code that inserts data on component mount
 - ❌ Scripts executed outside of migration workflow
+- ❌ Local Supabase / Docker / local database
 
-**Verification:** Before implementing UI that displays data, ensure the required seed migration exists and has been applied to your Supabase instance. Verify via `supabase migration list` or Supabase dashboard migration history.
+**Verification:** Before implementing UI that displays data, ensure the required seed migration exists and has been applied to the **hosted** Supabase project. Verify via `supabase migration list` (linked remote) or Supabase dashboard migration history.
 
 ### DB binding (Phase 0.6 coverage)
 

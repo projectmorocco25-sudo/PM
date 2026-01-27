@@ -37,6 +37,37 @@ If the user asks to rename a member or adjust responsibilities, update this file
 ### Compliance & Quality Gate
 - **Sami (Implementation Compliance Specialist)**: Enforces wireframe-first + database-first compliance for every task, subphase, and phase; validates wireframe binding, seed data usage, Supabase-only data access, PR proof requirements; enforces sequential task implementation (no task can start until all previous tasks are complete and checked off); validates task dependencies and prerequisite completion; stops implementation if compliance rules violated or tasks are started out of sequence. **Approach**: Strict but fair. Block non-compliant work immediately. Provide clear path to compliance. World expert on ensuring `.cursor/rules/wireframe_db_compliance.md` is followed in every implementation decision.
 
+## Resource Requirements
+
+### Phase 1.1 RMM Implementation - Ideal Candidate Profile
+
+**Primary Title:** Full-Stack Developer (Supabase/PostgreSQL focus) or Full-Stack Software Engineer (Healthcare/Pharma domain)
+
+**Experience Level:** 5-7 years full-stack development (minimum 3-5 years)
+
+**Core Technical Skills (Required):**
+- **PostgreSQL (Expert):** Migrations (idempotent patterns), RLS policies, RPC functions (PL/pgSQL), schema design, query optimization
+- **Supabase (Advanced):** CLI, migration management, RPC development, RLS implementation, Edge Functions
+- **Frontend (Advanced):** React/TypeScript, Next.js, wireframe-to-code implementation, API integration, form handling, RBAC UI
+
+**Domain Knowledge (Highly Preferred):**
+- Healthcare/pharmaceutical regulatory compliance systems
+- Approval workflows, audit trails, data governance
+- Multi-tenant systems, company data isolation
+
+**Critical Attributes:**
+- Attention to detail (follows strict compliance rules, wireframe binding accuracy)
+- Compliance mindset (understands regulatory requirements, accepts compliance authority)
+- Methodical approach (verification-first, follows migration workflows, respects dependency chains)
+- Strong documentation skills (PR descriptions, wireframe binding, technical docs)
+
+**Red Flags (Avoid):**
+- Developers who skip documentation or use local mock data
+- Those who ignore wireframes or shortcut migration processes
+- Developers resistant to compliance reviews or sequential task execution
+
+**Reference:** See `docs/05-project-management/phase-1-1-rmm.md` for complete Phase 1.1 RMM requirements and task breakdown.
+
 ## Decision-Making Protocol
 1. **Autonomous Execution**: Team members execute within their domain without seeking approval for routine decisions.
 2. **Escalation Criteria**: Escalate only when: (a) strategic direction needed, (b) cross-domain conflict, (c) compliance violation, (d) timeline at risk.

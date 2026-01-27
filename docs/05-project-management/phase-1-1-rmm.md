@@ -14,8 +14,27 @@
 - ✅ Migration workflows: create → apply → verify
 - ✅ All tasks reference [feature-index.md](../02-architecture/feature-index.md) for traceability
 - ✅ Sami's approval required before ANY task
+- ✅ **Supabase cloud-only** — use the hosted project only; no local Supabase, Docker, or local DB (see below)
 
 **Prerequisites:** Phase 0 ✅ | Phase 0.5 ✅ | Phase 0.6 ✅
+
+---
+
+## 🟢 Supabase: Cloud-Only (No Local)
+
+**This phase uses the hosted Supabase project only.** Local Supabase (Docker, `supabase start`, etc.) is **not** used. **All task templates and task files in `phase-1-1-rmm/` enforce Supabase cloud-only; never use local.**
+
+| Do | Don't |
+|----|-------|
+| Use **hosted** project URL and keys in `.env.local` | Use `supabase start` or any local Supabase stack |
+| Apply migrations with `supabase db push` (remote) | Use Docker or local Postgres |
+| Verify with `supabase migration list` (remote) | Use `supabase status` (requires local Docker) |
+| Run seed/mock data **in the cloud** via migrations | Create local mock data or local seed DB |
+| Deploy Edge Functions to cloud; optionally `supabase functions serve --env-file .env` against **cloud** | Require `supabase start` for Edge Functions dev |
+
+- **Database:** All tables, migrations, and seed data live in the **hosted** Supabase project.
+- **CLI:** Use `supabase link`, `supabase db push`, `supabase migration list`, `supabase functions deploy`. Do **not** run `supabase start` or `supabase stop`.
+- **App & env:** Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (and `SUPABASE_SERVICE_ROLE_KEY` where needed) to the **cloud** project. See `supabase/README.md` and root `.env.example`.
 
 ---
 
@@ -43,7 +62,7 @@ Before Phase 1.2 (VCI) can begin, validate:
 ## Task Organization
 
 **📁 Task Definitions:** All detailed task definitions are in `phase-1-1-rmm/tasks/` directory  
-**📋 Task Templates:** See `standards/task-templates/` for reusable task structures  
+**📋 Task Templates:** See `standards/task-templates/` for reusable task structures (all enforce **Supabase cloud-only, never local**)  
 **🔗 Task Registry:** This file serves as the index/registry of all tasks
 
 ---
@@ -150,6 +169,7 @@ Before Phase 1.2 (VCI) can begin, validate:
 - [ ] **Task 1.1.1.6:** Create audit logging trigger function
   - 📋 **Details:** [tasks/backend/1.1.1.6-audit-logging-trigger.md](./phase-1-1-rmm/tasks/backend/1.1.1.6-audit-logging-trigger.md#implementation-task)
   - ⚠️ **CRITICAL:** Must come AFTER all RLS policies
+  - ⚠️ **DEPENDS ON:** 1.1.1.4, 1.1.1.5, 1.1.1.8, 1.1.1.8a (all RLS policies complete)
 - [ ] **Task 1.1.1.6-verify:** Verify compliance of audit logging trigger function
   - 📋 **Details:** [tasks/backend/1.1.1.6-audit-logging-trigger.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.1.6-audit-logging-trigger.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.6 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
@@ -241,8 +261,8 @@ Before Phase 1.2 (VCI) can begin, validate:
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.11 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.1.12a:** Verify wireframes for placeholder pages
-  - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-wireframes)
+- [ ] **Task 1.1.1.12a:** Verify routes for placeholder pages
+  - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-routes](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-routes)
 - [ ] **Task 1.1.1.12b:** Verify database schema for placeholder pages
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112b-verify-database-schema)
 - [ ] **Task 1.1.1.12c:** Verify API contracts for placeholder pages
@@ -589,22 +609,24 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### RMM Overview
 
-- [ ] **Task 1.1.2.16a:** Verify wireframes for RMM overview page
-  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216a-verify-wireframes)
+- [ ] **Task 1.1.2.16.1a:** Verify wireframes for RMM overview page
+  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161a-verify-wireframes)
 
-- [ ] **Task 1.1.2.16b:** Verify database schema for RMM overview page
-  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216b-verify-database-schema)
+- [ ] **Task 1.1.2.16.1b:** Verify database schema for RMM overview page
+  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161b-verify-database-schema)
 
-- [ ] **Task 1.1.2.16c:** Verify API contracts for RMM overview page
-  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-11216c-verify-api-contracts)
+- [ ] **Task 1.1.2.16.1c:** Verify API contracts for RMM overview page
+  - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161c-verify-api-contracts)
 
 - [ ] **Task 1.1.2.16.1:** Implement RMM overview page
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#implementation-task)
-  - ⚠️ **DEPENDS ON:** 1.1.2.16a, 1.1.2.16b, 1.1.2.16c, 1.1.2.16
+  - ⚠️ **DEPENDS ON:** 1.1.2.16.1a, 1.1.2.16.1b, 1.1.2.16.1c, 1.1.2.16
 
 - [ ] **Task 1.1.2.16.1-verify:** Verify compliance of RMM overview page implementation
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.16.1 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+
+**Note:** Overview verify tasks use 1.1.2.16.1a/b/c (distinct from layout 1.1.2.16a/b/c).
 
 #### Company Management
 

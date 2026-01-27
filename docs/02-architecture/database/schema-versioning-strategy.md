@@ -295,6 +295,18 @@ ORDER BY version DESC;
 --   - Task: 1.1.1.7 (RMM tables must be created first)
 ```
 
+### Migration Tracking and Audit System
+
+**System:** Supabase migration tracking + Git history.
+
+| Component | Purpose |
+|-----------|---------|
+| `supabase_migrations.schema_migrations` | Records applied migration `version`, `name`, `statements`, `inserted_at` |
+| `supabase migration list` | Shows applied vs pending migrations (local or linked project) |
+| Git history | Audit trail for who created/changed migrations; use conventional commits and PRs |
+
+**Audit:** Use `supabase migration list` and `SELECT * FROM supabase_migrations.schema_migrations ORDER BY version` to verify what is applied. For production, ensure migrations are applied via controlled CI/CD or manual process with sign-off.
+
 ---
 
 ## Migration Best Practices
@@ -524,5 +536,5 @@ SET
 
 ---
 
-**Last Updated:** 2026-01-17  
+**Last Updated:** 2026-01-27  
 **Next Review Date:** After Phase 1.1 Complete

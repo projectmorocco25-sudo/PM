@@ -5,6 +5,8 @@
 **Template Version:** 1.0  
 **Last Updated:** 2026-01-26
 
+**🟢 Supabase cloud-only (never local):** All data must come from the **hosted** Supabase project only. **Never** use local mocks, local Supabase, `supabase start`, Docker, or a local database. All queries use the cloud project (`.env.local` → hosted URL/keys).
+
 ---
 
 ## Task Structure
@@ -79,7 +81,7 @@ All frontend tasks follow this structure:
 - 💾 **Schema Reference:** [data-dictionary.md](../../../02-architecture/database/data-dictionary.md)
 
 **✅ Verification Steps:**
-1. Confirm all required tables/fields exist in data-dictionary.md
+1. Confirm all required tables/fields exist in data-dictionary.md (**hosted** project schema; no local DB).
 2. Verify RLS policies are implemented
 3. Check foreign key constraints and indexes
 4. Validate data types match schema specifications
@@ -139,7 +141,7 @@ All frontend tasks follow this structure:
 
 **✅ Acceptance Criteria:**
 - [ ] Implementation matches wireframe specifications
-- [ ] All database queries use Supabase (no local mocks)
+- [ ] All database queries use **hosted** Supabase only (cloud-only; no local mocks, no local Supabase/Docker/DB)
 - [ ] Wireframe binding comments added to code
 - [ ] All user roles handled correctly
 - [ ] RLS policies enforced
@@ -163,7 +165,7 @@ All frontend tasks follow this structure:
 
 **💾 Database Compliance Check:**
 - Verify implementation uses database schema verified in Task X.Y.Z.b
-- Verify all database queries use Supabase (no local mocks)
+- Verify all database queries use **hosted** Supabase only (no local mocks, no local Supabase/Docker/DB)
 - Verify RLS policies are respected
 
 **🔌 API Compliance Check:**
@@ -181,7 +183,7 @@ All frontend tasks follow this structure:
 
 **✅ Acceptance Criteria:**
 - [ ] Implementation matches wireframe specifications
-- [ ] Implementation uses verified database schema (no local mocks, RLS respected)
+- [ ] Implementation uses verified database schema (**hosted** Supabase only; no local mocks, RLS respected)
 - [ ] Implementation uses verified API contracts
 - [ ] Wireframe binding comments present in code
 - [ ] PR description includes wireframe links and compliance section
@@ -190,7 +192,7 @@ All frontend tasks follow this structure:
 
 **🚫 Stop Conditions:**
 - Implementation does not match wireframe specifications → **STOP** and fix
-- Local mock data found → **STOP** and remove, use Supabase queries
+- Local mock data or local Supabase/Docker/DB used → **STOP** and remove; use **hosted** Supabase queries only
 - API calls don't match verified contracts → **STOP** and fix
 - Wireframe binding comments missing → **STOP** and add
 - RLS policies not respected → **STOP** and fix

@@ -52,12 +52,33 @@ When creating a new phase file:
 - ✅ Every task requires compliance verification before starting
 - ✅ Every PR must include a compliance section (see format in compliance rules)
 - ✅ Wireframe binding is mandatory for all frontend tasks
-- ✅ No local mock data - Supabase queries only
+- ✅ **Supabase cloud-only** — use the **hosted** project only; no local Supabase, Docker, or local DB (see below)
+- ✅ No local mock data - **hosted** Supabase queries only
 - ✅ Sequential task execution - no skipping tasks
 - ✅ Sami has STOP authority - compliance violations = immediate stop
 - ✅ **Verification tasks (wireframe, database, API) must be completed BEFORE implementation tasks**
 
 **If you skip reading the compliance rules, your work will be rejected.**
+
+---
+
+## 🟢 Supabase: Cloud-Only (No Local)
+
+**This phase uses the hosted Supabase project only.** Local Supabase (Docker, `supabase start`, etc.) is **not** used.
+
+| Do | Don't |
+|----|-------|
+| Use **hosted** project URL and keys in `.env.local` | Use `supabase start` or any local Supabase stack |
+| Apply migrations with `supabase db push` (remote) | Use Docker or local Postgres |
+| Verify with `supabase migration list` (remote) | Use `supabase status` (requires local Docker) |
+| Run seed/mock data **in the cloud** via migrations | Create local mock data or local seed DB |
+| Deploy Edge Functions to cloud; optionally `supabase functions serve --env-file .env` against **cloud** | Require `supabase start` for Edge Functions dev |
+
+- **Database:** All tables, migrations, and seed data live in the **hosted** Supabase project.
+- **CLI:** Use `supabase link`, `supabase db push`, `supabase migration list`, `supabase functions deploy`. Do **not** run `supabase start` or `supabase stop`.
+- **App & env:** Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (and `SUPABASE_SERVICE_ROLE_KEY` where needed) to the **cloud** project.
+
+---
 
 **Prerequisites:** 
 - [List prerequisite phases/tasks that must be complete]
@@ -119,7 +140,7 @@ phase-[X.Y]/
 2. ✅ Verify all previous tasks are complete (sequential execution)
 3. ✅ Complete verification tasks (wireframe, database, API) BEFORE implementation
 4. ✅ Review wireframe before frontend work
-5. ✅ No local mocks - Supabase queries only
+5. ✅ **Supabase cloud-only** - No local mocks; **hosted** Supabase queries only
 6. ✅ Add wireframe binding comments to code
 7. ✅ Include compliance section in PR description
 8. ✅ Get Sami's approval before marking task complete
@@ -132,7 +153,7 @@ phase-[X.Y]/
 - Integration Verification - Layout/components must be integrated into routes
 - Role Coverage Verification - All 9 roles must be handled
 - Wireframe compliance - Review wireframe before starting
-- No local mock data - Query Supabase only
+- **Supabase cloud-only** - No local mock data; query **hosted** Supabase only
 - Wireframe binding - Add binding comments to code
 - **Migration Workflow** - Apply and verify migrations after creation
 
@@ -165,7 +186,7 @@ phase-[X.Y]/
 - [ ] **4. Integration Verification:** Layout/components integrated into routes (if applicable); navigation updated (if new routes added); module routing structure updated.
 - [ ] **5. Role Coverage Verification:** All 9 roles are handled where applicable (Company Admin, Company Manager, Company User, MOH Tier 1, MOH Tier 2 Officer, MOH Tier 2 Registrar, MOH Auditor, System Admin, Vendor); role variants match wireframe specifications.
 - [ ] **6. Wireframe Compliance:** Wireframe reviewed before starting; wireframe task ID(s) identified; wireframe requirements understood (layout, interactions, states, role-based variations); wireframe annotations reviewed.
-- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries Supabase database; seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
+- [ ] **7. Data Source Verification:** NO local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks); all data queries **hosted** Supabase database (cloud-only; no local Supabase/Docker/DB); seed data applied if required (verify via `supabase migration list`); database tables verified before starting (use SQL queries).
 - [ ] **8. Wireframe Binding:** Wireframe binding comments will be added to code (JSDoc format with wireframe link); wireframe task ID(s) documented in code comments; PR description will include wireframe link(s); wireframe binding in both PR description AND codebase.
 - [ ] **9. Seed Data Gate (If Applicable):** Seed migration `[seed-name]` applied and verified (see below for verification requirements); seed data acceptance criteria verified; RLS validation completed if required; seed data covers wireframe scenarios.
 - [ ] **Wireframe-First Implementation Principle:** Wireframes are the PRIMARY design reference. If a wireframe doesn't exist, **STOP** and create it first. See [Compliance Rules - Wireframe-First Implementation Principle](./compliance-rules.md#wireframe-first-implementation-principle) for complete requirements.
@@ -180,7 +201,7 @@ phase-[X.Y]/
 
 - **Prerequisites Incomplete:** Prerequisite phases/tasks are not complete. **STOP** and complete prerequisites first.
 - **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
-- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
+- **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround. Use **hosted** Supabase only; never local DB.
 - **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
 - **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns) or not applied. **STOP** and fix/apply migration first.
 - **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.

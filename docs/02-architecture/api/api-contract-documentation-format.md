@@ -430,6 +430,32 @@ While PM platform uses Supabase RPC functions (not REST API), we document them i
 
 ---
 
+## API Documentation Generation System
+
+**Source of truth:** `docs/02-architecture/api/rpc-functions.md` — all RPC functions are documented there using the format above. SQL migration headers and this template provide the contract shape.
+
+**Generation approach:**
+- **Manual:** Maintain `rpc-functions.md` when adding or changing RPCs. Use the template in this document.
+- **Optional tooling:** Supabase exposes PostgREST; OpenAPI can be generated via `supabase gen types` or third‑party tools. RPC-specific docs remain in `rpc-functions.md`.
+- **CI validation:** Add a CI step (e.g. check that `rpc-functions.md` exists, or that new RPCs in migrations are mentioned in `rpc-functions.md`) to keep docs in sync.
+
+### API Contract Documentation Template
+
+Use the **Standard Format for API Documentation** and **Function Header Template** in this document when adding entries to `rpc-functions.md` or SQL comments.
+
+---
+
+## Automated API Documentation Generation
+
+**Configured checks:**
+1. **Presence:** CI verifies `docs/02-architecture/api/rpc-functions.md` exists (or equivalent path).
+2. **Linking:** New RPC migrations reference `rpc-functions.md` in the task docs.
+3. **Optional:** Script or CI job that parses migration files for `CREATE OR REPLACE FUNCTION` and warns if a function has no matching `### function_name` section in `rpc-functions.md`.
+
+**Implementation:** Add these checks to the project’s CI pipeline (e.g. GitHub Actions). No separate doc-generation server is required; the single source of truth is Markdown.
+
+---
+
 ## Documentation Maintenance
 
 ### Documentation Updates
@@ -468,5 +494,5 @@ While PM platform uses Supabase RPC functions (not REST API), we document them i
 
 ---
 
-**Last Updated:** 2026-01-17  
+**Last Updated:** 2026-01-27  
 **Next Review Date:** After Phase 1.1 Complete

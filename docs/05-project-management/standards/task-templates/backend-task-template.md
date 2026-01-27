@@ -5,6 +5,8 @@
 **Template Version:** 1.0  
 **Last Updated:** 2026-01-26
 
+**🟢 Supabase cloud-only (never local):** All backend work (RPC, RLS, migrations) uses the **hosted** Supabase project only. **Never** use local Supabase, `supabase start`, Docker, or a local database. Verify schema and run migrations against the linked remote project.
+
 ---
 
 ## Task Structure
@@ -52,7 +54,7 @@ Backend tasks follow a simplified structure (no wireframe verification):
 - 💾 **Schema Reference:** [data-dictionary.md](../../../02-architecture/database/data-dictionary.md)
 
 **✅ Verification Steps:**
-1. Confirm all required tables/fields exist in data-dictionary.md
+1. Confirm all required tables/fields exist in data-dictionary.md (**hosted** project schema only; no local DB).
 2. Verify RLS policies are implemented for new tables
 3. Check foreign key constraints and indexes
 4. Validate data types match schema specifications
@@ -108,10 +110,11 @@ Backend tasks follow a simplified structure (no wireframe verification):
 - Ensure all specifications from verification tasks are met
 - Follow database migration strategy guidelines
 - Follow RPC function documentation standards
+- **Hosted Supabase only:** All DB operations target the **hosted** project; never local Supabase/Docker/DB.
 
 **✅ Acceptance Criteria:**
 - [ ] Implementation matches feature requirements
-- [ ] All database operations use proper migrations (if applicable)
+- [ ] All database operations use **hosted** Supabase only (no local)
 - [ ] RLS policies implemented correctly (if applicable)
 - [ ] RPC functions documented in rpc-functions.md (if applicable)
 - [ ] Error handling implemented
@@ -154,6 +157,7 @@ Backend tasks follow a simplified structure (no wireframe verification):
 - Database schema doesn't match verified requirements → **STOP** and fix
 - API contracts don't match verified requirements → **STOP** and fix
 - RLS policies not correctly implemented → **STOP** and fix
+- Local Supabase, Docker, or local DB used → **STOP**; use **hosted** Supabase only
 
 ---
 

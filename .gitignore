@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Env and secrets
+.env
+.env.local
+.env.*.local
+.env.keys
+
+# Build and runtime
+.next/
+out/
+dist/
+.turbo/
+
+# Supabase
+supabase/.temp
+supabase/.branches
+
+# IDE and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs and debug
+*.log
+npm-debug.log*
+.pnpm-debug.log*

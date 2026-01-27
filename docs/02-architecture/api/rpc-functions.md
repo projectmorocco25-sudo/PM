@@ -896,6 +896,59 @@ SELECT log_historical_data_access(
 
 ---
 
+## Phase 1.1 Implementation (Tasks 1.1.1.2b–1.1.1.2e)
+
+**Migrations:** `20260127150900_rpc_shared_functions`, `20260127151000_rpc_communications_functions`, `20260127151100_rpc_system_status_function`, `20260127151200_rpc_authentication_function`.
+
+### Shared (1.1.1.2b)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `shared_get_user_permissions` | `(user_id uuid)` | `{ role, company_id, permissions[] }` |
+| `shared_get_notifications` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data: [...] }` |
+| `shared_mark_notification_read` | `(p_notification_id uuid)` | `{ success }` |
+| `shared_update_user_profile` | `(p_full_name, p_avatar_url, p_timezone, p_language text)` | `{ success, user? }` |
+| `shared_update_user_preferences` | `(p_preferences jsonb)` | `{ success }` |
+| `shared_get_audit_logs` | `(p_table_name, p_user_id, p_start_date, p_end_date, p_limit, p_offset)` | `{ data, total }` |
+| `shared_get_audit_log_detail` | `(p_id uuid)` | single audit log or `{ error }` |
+| `shared_generate_audit_report` | same as `shared_get_audit_logs` | `{ data, total, generated_at }` |
+
+All **SECURITY INVOKER**; RLS applies.
+
+### Communications (1.1.1.2c)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `communications_list_conversations` | `(p_archived boolean DEFAULT false)` | `{ data: [...] }` |
+| `communications_get_conversation` | `(p_conversation_id uuid)` | `{ conversation, messages }` |
+| `communications_send_message` | `(p_conversation_id uuid, p_content text, p_recipient_id uuid DEFAULT NULL)` | `{ success, id? }` |
+| `communications_create_conversation` | `(p_subject, p_type text, p_company_id, p_recipient_id uuid, p_initial_content text)` | `{ success, id, message_id? }` |
+| `communications_list_sent` | `()` | `{ data: [...] }` |
+| `communications_create_announcement` | `(p_subject, p_content text, p_expires_at timestamptz DEFAULT NULL)` | `{ success, id, message_id? }` |
+| `communications_list_announcements` | `()` | `{ data: [...] }` |
+| `communications_archive_conversation` | `(p_conversation_id uuid)` | `{ success }` |
+| `communications_list_archived` | `()` | `{ data: [...] }` |
+
+All **SECURITY INVOKER**; RLS applies.
+
+### System (1.1.1.2d)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `system_get_status` | `()` | `{ modules: [...], at }` |
+
+**SECURITY INVOKER**; RLS on `system_config` (MOH Tier 1 / system_admin).
+
+### Authentication (1.1.1.2e)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_create_user` | `(p_id uuid, p_email text, p_full_name text, p_company_id uuid, p_role text)` | `{ success, user? }` |
+
+**SECURITY DEFINER**. Self-create only (`p_id = auth.uid()`). Upsert on conflict.
+
+---
+
 **Last Updated:** 2025-12-31  
 **Next Review Date:** [To be scheduled]  
 **Owner:** Maya

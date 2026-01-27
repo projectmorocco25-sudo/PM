@@ -92,6 +92,13 @@ Phase 1 delivers the complete MVP with seeded Supabase data, organized into **5 
 **Duration:** 4 weeks  
 **Objective:** Build Registry Management Module (RMM) as the foundation module with comprehensive seeded Supabase data
 
+**📋 Detailed Phase Registry:** [phase-1-1-rmm.md](./phase-1-1-rmm.md) ← **See detailed task registry with links to all individual task files**
+
+**Task Organization:**
+- **📁 Task Definitions:** All detailed task definitions are in `phase-1-1-rmm/tasks/` directory
+- **📋 Task Templates:** See `standards/task-templates/` for reusable task structures
+- **🔗 Task Registry:** [phase-1-1-rmm.md](./phase-1-1-rmm.md) serves as the index/registry of all Phase 1.1 tasks
+
 **Success Criteria:**
 - ✅ All RMM workflows functional (CRUD, approval chains, two-person rule)
 - ✅ Seed data successfully populated (75 companies)
@@ -108,9 +115,13 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 
 **Gate:** Phase 1.2 cannot start until all 4 validations pass.
 
+**Note:** The detailed task breakdown for Phase 1.1 is maintained in [phase-1-1-rmm.md](./phase-1-1-rmm.md) using a modular task registry architecture. Each task has its own detailed file in `phase-1-1-rmm/tasks/` with verification steps, implementation details, and compliance checks.
+
 ---
 
 ## Subphase 1.1.1: Foundation & Infrastructure Setup (Week 1)
+
+**📋 Detailed Task Registry:** For complete task details with links to individual task files, see [phase-1-1-rmm.md - Subphase 1.1.1](./phase-1-1-rmm.md#subphase-111-foundation--infrastructure-setup-week-1)
 
 **Status:** ⏳ **AWAITING IMPLEMENTATION** - No tasks have been started. All implementation tasks (1.1.1.1-1.1.1.24) are pending.
 
@@ -154,7 +165,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - Development environment configured
 
 **Seed Data Gate (Required):**
-- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Playbook - Stage: seed_1_1_1_foundation](phase-1-1-mockdata.md#stage-seed_1_1_1_foundation-subphase-111) (versioned SQL migrations, idempotent).
+- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Playbook - Stage: seed_1_1_1_foundation](planning/seed-data-playbook.md#stage-seed_1_1_1_foundation-subphase-111) (versioned SQL migrations, idempotent).
 
 ### Backend Setup Tasks
 - [ ] **Task 1.1.1.1:** Initialize Supabase project structure (migrations, functions, storage buckets)
@@ -359,7 +370,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - **Wireframe Requirements:** No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
 - **Database & Schema Requirements:** Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.
 - **Security & Access Requirements:** RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
-- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
+- **Seed Data Requirements:** Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns).
 - **Sequential Execution:** Previous tasks are not complete. **STOP** and complete all prerequisite tasks first.
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
@@ -375,7 +386,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 **⚠️ CRITICAL:** All implementation tasks in Subphase 1.1.1 (Tasks 1.1.1.1 through 1.1.1.24) are **AWAITING IMPLEMENTATION** and have not been started.
 
 **Seed Data Gate (Required):**
-- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112) (versioned SQL migrations, idempotent).
+- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Playbook - Stage: seed_1_1_2_rmm](planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook):**
 - **Goal:** Make RMM pages (companies/products/SKUs/registry submissions) testable.
@@ -394,10 +405,10 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
   - Company detail tabs have meaningful content for "active" company and empty state for "empty" company.
   - SKU list/detail show pharma attributes, not blanks.
   - Registry submissions exist across statuses required by the wireframes.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Hassan - full ownership of seed data seeding and testing; coordinates with Nadia for integrity verification, Farah for realism validation).
-- **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Hassan - full ownership of seed data seeding and testing; coordinates with Nadia for integrity verification, Farah for realism validation).
+- **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for complete details.
 
 **⚠️ Backend Completion Gate:** All RMM backend tasks (1.1.2.1-1.1.2.15) and Enforcement backend tasks (1.1.2.31-1.1.2.36) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
@@ -643,6 +654,8 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 
 ## Subphase 1.1.3: RMM Integration Testing & Seed Data (Week 4)
 
+**📋 Detailed Task Registry:** For complete task details with links to individual task files, see [phase-1-1-rmm.md - Subphase 1.1.3](./phase-1-1-rmm.md#subphase-113-rmm-integration-testing--seed-data-week-4)
+
 **🔒 COMPLIANCE VALIDATION (Sami - Required Before ANY Task):**
 
 **⚠️ STOP AUTHORITY:** Sami (Implementation Compliance Specialist) has **MANDATORY STOP AUTHORITY**. If ANY compliance rule is violated, implementation **MUST STOP IMMEDIATELY**. No exceptions.
@@ -702,11 +715,11 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 ### Seed Data Tasks (Hassan - Full Ownership)
 - [ ] **Task 1.1.3.6:** Create comprehensive RMM seed data (75 companies, products, SKUs) (Hassan)
   - 💾 **Database:** `companies`, `products`, `skus`, `atc_codes`, `critical_medicines` ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.1.3.7:** Execute RMM seed data population (Hassan)
   - 💾 **Database:** All RMM tables ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
-  - 🔌 **API:** Seed migration execution ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed migration execution ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.1.3.8:** Validate seed data (Hassan - full ownership; coordinates with Nadia for integrity, Farah for realism)
   - 💾 **Database:** All RMM tables ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
@@ -716,7 +729,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - [ ] **Task 1.1.3.9:** Create RMM module user documentation
   - 💾 **Database:** All RMM tables ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
   - 🔌 **API:** All RMM RPC functions ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
-  - 📐 **Wireframe:** All RMM wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All RMM wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.1.3.10:** Phase 1.1 internal review and sign-off
   - 💾 **Database:** All RMM tables ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
@@ -815,7 +828,7 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
-- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_2_1_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_2_1_vci_aams](phase-1-1-mockdata.md#stage-seed_1_2_1_vci_aams-subphase-121) (versioned SQL migrations, idempotent).
+- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_2_1_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_2_1_vci_aams](planning/seed-data-playbook.md#stage-seed_1_2_1_vci_aams-subphase-121) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook):**
 - **Goal:** Make VCI AAMS wireframes testable (including threshold and duration types).
@@ -834,9 +847,9 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
   - AAMS lists have multi-year records and at least one late/grace-period scenario.
   - Thresholds include examples of: permanent, temporary_auto_revert (with upcoming revert date), temporary_manual_review (pending review workflow)
   - MOH and company role views match wireframes for visibility timing.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Hassan - full ownership of seed data seeding and testing; coordinates with Nadia for integrity verification, Farah for realism validation).
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Hassan - full ownership of seed data seeding and testing; coordinates with Nadia for integrity verification, Farah for realism validation).
 
 **⚠️ Backend Completion Gate:** All VCI AAMS backend tasks (1.2.1.1-1.2.1.12) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
@@ -989,7 +1002,7 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
-- Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_2_2_vci_msq` per [Phase 1.1 Playbook - Stage: seed_1_2_2_vci_msq](phase-1-1-mockdata.md#stage-seed_1_2_2_vci_msq-subphase-122) (versioned SQL migrations, idempotent).
+- Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_2_2_vci_msq` per [Phase 1.1 Playbook - Stage: seed_1_2_2_vci_msq](planning/seed-data-playbook.md#stage-seed_1_2_2_vci_msq-subphase-122) (versioned SQL migrations, idempotent).
 
 **⚠️ Backend Completion Gate:** All VCI MSQ backend tasks (1.2.2.1-1.2.2.9) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
@@ -1094,7 +1107,7 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
-- Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_2_3_vci_wsl` per [Phase 1.1 Playbook - Stage: seed_1_2_3_vci_wsl](phase-1-1-mockdata.md#stage-seed_1_2_3_vci_wsl-subphase-123) (versioned SQL migrations, idempotent).
+- Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_2_3_vci_wsl` per [Phase 1.1 Playbook - Stage: seed_1_2_3_vci_wsl](planning/seed-data-playbook.md#stage-seed_1_2_3_vci_wsl-subphase-123) (versioned SQL migrations, idempotent).
 
 **⚠️ Backend Completion Gate:** All VCI WSL backend tasks (1.2.3.1-1.2.3.12) must be complete before frontend tasks begin. **Frontend tasks starting before backend completion is a COMPLIANCE VIOLATION.**
 
@@ -1149,13 +1162,13 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 
 ### VCI WSL Frontend Tasks
 - [ ] **Task 1.2.3.13:** Implement WSL submissions list page
-  - 📐 **Wireframe:** [task-0.5.3.13](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md)
+  - 📐 **Wireframe:** [task-0.5.3.19](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.19-wsl-submissions-list.md)
   - 🛣️ **Route:** `/vci/submissions/wsl` ([routing-structure.md](../../02-architecture/frontend/routing-structure.md#vci-routes))
   - 💾 **Database:** `wsl_submissions`, `breaches` ([feature-index.md](../../02-architecture/feature-index.md#wsl-weekly-stock-levels))
   - 🔌 **API:** `vci_list_wsl_submissions()`, `vci_get_wsl_submission()` ([feature-index.md](../../02-architecture/feature-index.md#wsl-weekly-stock-levels))
 
 - [ ] **Task 1.2.3.14:** Implement WSL submission form
-  - 📐 **Wireframe:** [task-0.5.3.12](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md)
+  - 📐 **Wireframe:** [task-0.5.3.20](../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.20-wsl-submission-form.md)
   - 🛣️ **Route:** `/vci/submissions/wsl/new` ([routing-structure.md](../../02-architecture/frontend/routing-structure.md#vci-routes))
   - 💾 **Database:** `wsl_submissions`, `breaches` ([feature-index.md](../../02-architecture/feature-index.md#wsl-weekly-stock-levels))
   - 🔌 **API:** `vci_submit_wsl()` ([feature-index.md](../../02-architecture/feature-index.md#wsl-weekly-stock-levels))
@@ -1244,19 +1257,19 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 ### Seed Data Tasks (Hassan - Full Ownership)
 - [ ] **Task 1.2.4.1:** Expand seed migration - Comprehensive MSQ historical data (Hassan)
   - 💾 **Database:** `msq_submissions` ([feature-index.md](../../02-architecture/feature-index.md#msq-monthly-sales-quantities))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.2.4.2:** Expand seed migration - Comprehensive WSL historical data (Hassan)
   - 💾 **Database:** `wsl_submissions` ([feature-index.md](../../02-architecture/feature-index.md#wsl-weekly-stock-levels))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.2.4.3:** Create seed migration - Breach records (Hassan)
   - 💾 **Database:** `breaches`, `breach_analyses` ([feature-index.md](../../02-architecture/feature-index.md#compliance-violations-breaches))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.2.4.4:** Expand seed migration - Comprehensive AAMS historical data (Hassan)
   - 💾 **Database:** `aams_submissions` ([feature-index.md](../../02-architecture/feature-index.md#aams-annual-average-monthly-sales))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.2.4.5:** Validate all seed migrations (Hassan - full ownership; coordinates with Nadia for integrity, Farah for realism)
   - 💾 **Database:** All VCI tables (aams_submissions, msq_submissions, wsl_submissions, breaches) ([feature-index.md](../../02-architecture/feature-index.md#vci-module-features))
@@ -1339,7 +1352,7 @@ Before Phase 1.3 (ECS) can begin, the following must be validated:
 - [ ] **Task 1.2.4.20:** Create VCI module user documentation
   - 💾 **Database:** All VCI tables ([feature-index.md](../../02-architecture/feature-index.md#vci-module-features))
   - 🔌 **API:** All VCI RPC functions ([feature-index.md](../../02-architecture/feature-index.md#vci-module-features))
-  - 📐 **Wireframe:** All VCI wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All VCI wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.2.4.21:** Phase 1.2 internal review and sign-off
   - 💾 **Database:** All VCI tables ([feature-index.md](../../02-architecture/feature-index.md#vci-module-features))
@@ -1612,7 +1625,7 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
-- Before starting ECS frontend pages, apply the seed migration stage `seed_1_3_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting ECS frontend pages, apply the seed migration stage `seed_1_3_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 
 ### ECS Post-Authorization Backend Tasks
 - [ ] **Task 1.3.3.1:** Create ECS RPC function - Export completion report
@@ -1775,24 +1788,24 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 
 - [ ] **Task 1.3.4.7:** Create seed data generation script - Export requests (Hassan)
   - 💾 **Database:** `export_requests` ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.3.4.8:** Create seed data generation script - Export authorizations (Hassan)
   - 💾 **Database:** `export_authorizations` ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.3.4.9:** Create seed data generation script - Replenishment schedules (Hassan)
   - 💾 **Database:** `replenishment_schedules` ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.3.4.10:** Execute ECS seed data population (Hassan)
   - 💾 **Database:** All ECS tables ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
-  - 🔌 **API:** Seed migration execution ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed migration execution ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.3.4.11:** Create ECS module user documentation
   - 💾 **Database:** All ECS tables ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
   - 🔌 **API:** All ECS RPC functions ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
-  - 📐 **Wireframe:** All ECS wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All ECS wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.3.4.12:** Phase 1.3 internal review and sign-off
   - 💾 **Database:** All ECS tables ([feature-index.md](../../02-architecture/feature-index.md#ecs-module-features))
@@ -1981,7 +1994,7 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - **Role Name Mismatch:** Frontend role names don't match database schema. **STOP** and fix role names to match schema exactly.
 
 **Seed Data Gate (Required):**
-- Before starting CMC frontend pages, apply the seed migration stage `seed_1_4_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting CMC frontend pages, apply the seed migration stage `seed_1_4_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 
 ### CMC Calculation Backend Tasks
 - [ ] **Task 1.4.2.1:** Create CMC RPC function - Monthly score calculation
@@ -2212,19 +2225,19 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 ### Seed Data Tasks (Hassan - Full Ownership)
 - [ ] **Task 1.4.4.5:** Create seed data generation script - Compliance scores (Hassan)
   - 💾 **Database:** `compliance_scores`, `compliance_score_components` ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.4.4.6:** Create seed data generation script - Disputes (Hassan)
   - 💾 **Database:** `disputes`, `dispute_evidence` ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.4.4.7:** Create seed data generation script - Regulatory reports (Hassan)
   - 💾 **Database:** `regulatory_reports` ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.4.4.8:** Execute CMC seed data population (Hassan)
   - 💾 **Database:** All CMC tables ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
-  - 🔌 **API:** Seed migration execution ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed migration execution ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 
 - [ ] **Task 1.4.4.9:** Validate seed data (Hassan - full ownership; coordinates with Nadia for integrity, Farah for realism)
   - 💾 **Database:** All CMC tables ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
@@ -2234,7 +2247,7 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - [ ] **Task 1.4.4.10:** Create CMC module user documentation
   - 💾 **Database:** All CMC tables ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
   - 🔌 **API:** All CMC RPC functions ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
-  - 📐 **Wireframe:** All CMC wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All CMC wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.4.4.11:** Phase 1.4 internal review and sign-off
   - 💾 **Database:** All CMC tables ([feature-index.md](../../02-architecture/feature-index.md#cmc-module-features))
@@ -2605,12 +2618,12 @@ Before Phase 1.4 (CMC) can begin, the following must be validated:
 - [ ] **Task 1.5.4.1:** Create complete system documentation (architecture overview, module documentation)
   - 💾 **Database:** All module tables ([feature-index.md](../../02-architecture/feature-index.md))
   - 🔌 **API:** All RPC functions ([feature-index.md](../../02-architecture/feature-index.md))
-  - 📐 **Wireframe:** All wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.5.4.2:** Create user manuals (company user guide, MOH user guide, role-specific guides)
   - 💾 **Database:** All module tables ([feature-index.md](../../02-architecture/feature-index.md))
   - 🔌 **API:** All RPC functions ([feature-index.md](../../02-architecture/feature-index.md))
-  - 📐 **Wireframe:** All user-facing wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All user-facing wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 
 - [ ] **Task 1.5.4.3:** Create API documentation (complete RPC function documentation, request/response schemas)
   - 💾 **Database:** All module tables ([feature-index.md](../../02-architecture/feature-index.md))

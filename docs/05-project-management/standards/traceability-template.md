@@ -110,14 +110,14 @@ All implementation tasks in Phase 1+ should include traceability links to ensure
 ```markdown
 - [ ] **Task X.X.X.X:** [Seed data description]
   - 💾 **Database:** `table_name` ([feature-index.md](../../02-architecture/feature-index.md#feature-name))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 ```
 
 **Example:**
 ```markdown
 - [ ] **Task 1.1.3.6:** Create comprehensive RMM seed data (75 companies, products, SKUs)
   - 💾 **Database:** `companies`, `products`, `skus`, `atc_codes`, `critical_medicines` ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
-  - 🔌 **API:** Seed data generation scripts ([phase-1-1-mockdata.md](phase-1-1-mockdata.md))
+  - 🔌 **API:** Seed data generation scripts ([planning/seed-data-playbook.md](planning/seed-data-playbook.md))
 ```
 
 **Guidelines:**
@@ -136,7 +136,7 @@ All implementation tasks in Phase 1+ should include traceability links to ensure
 - [ ] **Task X.X.X.X:** [Documentation description]
   - 💾 **Database:** All [module] tables ([feature-index.md](../../02-architecture/feature-index.md#module-features))
   - 🔌 **API:** All [module] RPC functions ([feature-index.md](../../02-architecture/feature-index.md#module-features))
-  - 📐 **Wireframe:** All [module] wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All [module] wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 ```
 
 **Example:**
@@ -144,7 +144,7 @@ All implementation tasks in Phase 1+ should include traceability links to ensure
 - [ ] **Task 1.1.3.9:** Create RMM module user documentation
   - 💾 **Database:** All RMM tables ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
   - 🔌 **API:** All RMM RPC functions ([feature-index.md](../../02-architecture/feature-index.md#rmm-module-features))
-  - 📐 **Wireframe:** All RMM wireframes ([phase-0-5-wireframes-catalog.md](../Archive for now/phase-0-5-wireframes-catalog.md))
+  - 📐 **Wireframe:** All RMM wireframes ([phase-0-5-wireframes-catalog.md](../Archive/phase-0-5-wireframes-catalog.md))
 ```
 
 **Guidelines:**
@@ -281,7 +281,7 @@ All implementation tasks in Phase 1+ should include traceability links to ensure
 - `database-transaction-management-strategy.md` - Transaction management
 
 ### Seed Data Documents
-- `phase-1-1-mockdata.md` - Seed data playbook and strategy
+- `planning/seed-data-playbook.md` - Seed data playbook and strategy
 
 ---
 

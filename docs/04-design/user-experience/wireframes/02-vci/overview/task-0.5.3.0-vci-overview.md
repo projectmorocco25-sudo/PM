@@ -265,7 +265,7 @@
 
 - [AAMS Submissions List Wireframe](../aams/task-0.5.3.1-aams-submissions-list.md)
 - [MSQ Submissions List Wireframe](../msq/task-0.5.3.9-msq-submissions-list.md)
-- [WSL Submissions List Wireframe](../wsl/task-0.5.3.11-wsl-submissions-list.md)
+- [WSL Submissions List Wireframe](../wsl/task-0.5.3.19-wsl-submissions-list.md)
 - [Threshold Management Wireframe](../aams/task-0.5.3.4-threshold-management.md)
 - [Compliance Violations List Wireframe](../breaches/task-0.5.3.14-compliance-violations-list.md)
 - [Governance Dashboard Wireframe](./task-0.5.3.18-governance-dashboard.md)

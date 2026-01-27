@@ -1,7 +1,7 @@
 # Seed Data Playbook Review - Realism Validation
 
 **Reviewer:** Farah (Business Analyst / Domain Expert)  
-**Document:** `docs/05-project-management/phase-1-1-mockdata.md`  
+**Document:** `docs/05-project-management/planning/seed-data-playbook.md`  
 **Review Date:** _______________  
 **Status:** ⏳ In Progress / ✅ Complete
 

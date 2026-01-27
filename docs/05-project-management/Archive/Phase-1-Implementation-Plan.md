@@ -59,7 +59,7 @@ These gates apply to **every** Phase 1 frontend page/component. If a gate is not
 - Production pages/components must **not** use inline arrays/objects as the source of truth for cards/tables/lists.
 - All seed data used during Phase 1 must be **seeded into the Supabase database** (dev/staging), then queried by the frontend.
 - Local mock providers (hooks/services/repositories returning synthetic records) are **not allowed** for application runtime.
- - **Seed playbook (required):** See [Phase 1.1 Seeded Supabase “Mock Data” Playbook](phase-1-1-mockdata.md).
+ - **Seed playbook (required):** See [Phase 1.1 Seeded Supabase “Mock Data” Playbook](planning/seed-data-playbook.md).
 
 #### Phase 1 Seed Data Clarification (Required)
 
@@ -137,7 +137,7 @@ export default function DashboardPage() {
 - RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
 
 **Seed Data Requirements:**
-- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
+- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns).
 - Seed data depends on manual dashboard edits (must use versioned migrations only). **STOP** and convert to versioned migration.
 
 **Conflicts & Ambiguities:**
@@ -145,7 +145,7 @@ export default function DashboardPage() {
 
 **Cross-References:**
 - See [Cursor Rule - Wireframe Compliance](.cursor/rules/wireframe_db_compliance.md) for enforcement details
-- See [Playbook - Stop Conditions](phase-1-1-mockdata.md#stop-conditions-do-not-proceed) for seed data-specific stop conditions
+- See [Playbook - Stop Conditions](planning/seed-data-playbook.md#stop-conditions-do-not-proceed) for seed data-specific stop conditions
 
 ### Repo Enforcement (Required for All Phase 1 Frontend Tasks)
 
@@ -287,14 +287,14 @@ All database setup, migrations, schema verification, and management operations t
 
 1. **All migrations** must be versioned SQL files in `supabase/migrations/` directory
 2. **All migrations** must be idempotent (safe to re-run) when possible
-   - **Seed migrations:** Must use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+   - **Seed migrations:** Must use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns)
    - **Example pattern:** Use `INSERT ... ON CONFLICT DO UPDATE` with deterministic UUIDs or unique keys
-   - See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements
+   - See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements
 3. **Migration tracking** should verify via `supabase migration list` or dashboard
 4. **Schema validation** should use standard SQL queries via Supabase dashboard or CLI
 5. **Security checks** should follow standard PostgreSQL security best practices (RLS policies, indexes, constraints)
 
-**Reference:** Follow standard Supabase migration practices as documented in [Supabase Migration Guide](https://supabase.com/docs/guides/cli/local-development#database-migrations). For seed migration idempotency patterns and examples, see [Phase 1.1 Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns).
+**Reference:** Follow standard Supabase migration practices as documented in [Supabase Migration Guide](https://supabase.com/docs/guides/cli/local-development#database-migrations). For seed migration idempotency patterns and examples, see [Phase 1.1 Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns).
 
 ---
 
@@ -351,7 +351,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
 - Development environment configured
 
 **Seed Data Gate (Required):**
-- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Playbook - Stage: seed_1_1_1_foundation](phase-1-1-mockdata.md#stage-seed_1_1_1_foundation-subphase-111) (versioned SQL migrations, idempotent).
+- Before starting Phase 1.1 Core Foundation UI work, apply the seed migration stage `seed_1_1_1_foundation` per [Phase 1.1 Playbook - Stage: seed_1_1_1_foundation](planning/seed-data-playbook.md#stage-seed_1_1_1_foundation-subphase-111) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook):**
 - **Goal:** Make Core Foundation wireframes testable using DB data.
@@ -369,13 +369,13 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
   - `pack_company_empty` - one company intentionally empty (to validate empty states)
 - **Acceptance criteria:**
   - Company/MOH roles can sign-in and see the correct scoped data (RLS validated).
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
   - Header/avatar/notification badge has real data.
   - Comms inbox shows lifecycle states; sent/delivered/read evidence exists where wireframes require it.
   - Both populated and empty states are reproducible for at least one key page per role.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Stage: seed_1_1_1_foundation](phase-1-1-mockdata.md#stage-seed_1_1_1_foundation-subphase-111), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_1_foundation](planning/seed-data-playbook.md#stage-seed_1_1_1_foundation-subphase-111), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for complete details.
 
 **Execution Notes:**
 - **🔒 Sequential Task Execution (Sami Enforcement):** Tasks MUST be executed sequentially - no task can start until all previous tasks are complete and checked off (`[x]`). Sami (Implementation Compliance Specialist) verifies sequential execution before every task. Do not skip tasks or start tasks in parallel.
@@ -1118,7 +1118,7 @@ Phase 1.1.1.FIX is complete when:
 - ✅ Phase 0.6 (Database Schema Audit & Alignment) completed - Database review ready for P0 routes
 
 **Seed Data Gate (Required):**
-- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112) (versioned SQL migrations, idempotent).
+- Before starting RMM frontend pages, apply the seed migration stage `seed_1_1_2_rmm` per [Phase 1.1 Playbook - Stage: seed_1_1_2_rmm](planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook):**
 - **Goal:** Make RMM pages (companies/products/SKUs/registry submissions) testable.
@@ -1137,10 +1137,10 @@ Phase 1.1.1.FIX is complete when:
   - Company detail tabs have meaningful content for "active" company and empty state for "empty" company.
   - SKU list/detail show pharma attributes, not blanks.
   - Registry submissions exist across statuses required by the wireframes.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](phase-1-1-mockdata.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_2_rmm](planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for complete details.
 
 ### RMM Backend Tasks
 - [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD (rmm_create_company, rmm_update_company, rmm_get_company, rmm_list_companies)
@@ -1305,7 +1305,7 @@ Phase 1.1.1.FIX is complete when:
 - [ ] Sami's compliance checklist will be used for every task in this subphase
 
 **Seed Data Gate (Required):**
-- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_1_3_vci_aams](phase-1-1-mockdata.md#stage-seed_1_1_3_vci_aams-subphase-113) (versioned SQL migrations, idempotent).
+- Before starting VCI AAMS frontend pages, apply the seed migration stage `seed_1_1_3_vci_aams` per [Phase 1.1 Playbook - Stage: seed_1_1_3_vci_aams](planning/seed-data-playbook.md#stage-seed_1_1_3_vci_aams-subphase-113) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook):**
 - **Goal:** Make VCI AAMS wireframes testable (including threshold and duration types).
@@ -1327,10 +1327,10 @@ Phase 1.1.1.FIX is complete when:
     - temporary_auto_revert (with upcoming revert date)
     - temporary_manual_review (pending review workflow)
   - MOH and company role views match wireframes for visibility timing.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Stage: seed_1_1_3_vci_aams](phase-1-1-mockdata.md#stage-seed_1_1_3_vci_aams-subphase-113), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for complete details.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Stage: seed_1_1_3_vci_aams](planning/seed-data-playbook.md#stage-seed_1_1_3_vci_aams-subphase-113), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for complete details.
 
 ### VCI AAMS Backend Tasks
 - [ ] **Task 1.1.3.1:** Create VCI RPC function - AAMS submission (vci_submit_aams)
@@ -1374,7 +1374,7 @@ Phase 1.1.1.FIX is complete when:
 - [ ] Sami's compliance checklist will be used for every task in this subphase
 
 **Seed Data Gate (Required):**
-- Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_1_4_vci_msq` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting VCI MSQ frontend pages, apply the seed migration stage `seed_1_1_4_vci_msq` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 - **Note:** This creates minimal viable seed data for MSQ wireframe testing. Comprehensive historical data will be added in Subphase 1.1.6.
 - **Dependency:** MSQ validation (Task 1.1.4.3) requires AAMS seed data from `seed_1_1_3_vci_aams` to be present.
 
@@ -1395,10 +1395,10 @@ Phase 1.1.1.FIX is complete when:
   - Grace period scenarios exist (7-day correction window).
   - MSQ vs AAMS validation scenarios exist (20% threshold comparison test cases).
   - MOH and company role views match wireframes for visibility timing.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](planning/seed-data-playbook.md), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
 
 ### VCI MSQ Backend Tasks
 - [ ] **Task 1.1.4.1:** Create VCI RPC function - MSQ submission (vci_submit_msq)
@@ -1430,7 +1430,7 @@ Phase 1.1.1.FIX is complete when:
 - [ ] Sami's compliance checklist will be used for every task in this subphase
 
 **Seed Data Gate (Required):**
-- Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_1_5_vci_wsl` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting VCI WSL/Breaches frontend pages, apply the seed migration stage `seed_1_1_5_vci_wsl` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 - **Note:** This creates minimal viable seed data for WSL/Breaches wireframe testing. Comprehensive historical data and breach scenarios will be added in Subphase 1.1.6.
 
 **Seed Stage Acceptance Criteria (from Playbook pattern):**
@@ -1453,10 +1453,10 @@ Phase 1.1.1.FIX is complete when:
   - Breach workflow states exist (detected, analyzed, action_suggested, action_approved, resolved).
   - Breach analysis scenarios exist (Tier 2 analysis records, batch analysis examples).
   - MOH Tier 1/2 and company role views match wireframes for visibility timing.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](planning/seed-data-playbook.md), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
 
 ### VCI WSL Backend Tasks
 - [ ] **Task 1.1.5.1:** Create VCI RPC function - WSL submission (vci_submit_wsl)
@@ -1541,7 +1541,7 @@ Phase 1.1.1.FIX is complete when:
 
 **Prerequisites:**
 - Subphases 1.1.3, 1.1.4, and 1.1.5 complete (all VCI modules implemented)
-- Initial seed migrations (`seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci_aams`, `seed_1_1_4_vci_msq`, `seed_1_1_5_vci_wsl`) have already been applied in earlier subphases per the [Phase 1.1 Seeded Supabase "Mock Data" Playbook](phase-1-1-mockdata.md). This subphase focuses on validation and extending seed coverage with comprehensive historical data (2-3 years) and additional scenario packs.
+- Initial seed migrations (`seed_1_1_1_foundation`, `seed_1_1_2_rmm`, `seed_1_1_3_vci_aams`, `seed_1_1_4_vci_msq`, `seed_1_1_5_vci_wsl`) have already been applied in earlier subphases per the [Phase 1.1 Seeded Supabase "Mock Data" Playbook](planning/seed-data-playbook.md). This subphase focuses on validation and extending seed coverage with comprehensive historical data (2-3 years) and additional scenario packs.
 
 ### Additional Seed Migration Stages (Versioned SQL Migrations)
 
@@ -1550,8 +1550,8 @@ Phase 1.1.1.FIX is complete when:
   - **Application Method:** `supabase migration apply`
   - **Goal:** Expand existing MSQ seed data to 2-3 years historical monthly MSQ data per company
   - **Tables:** `msq_submissions` (submission_data as array of {sku_id, quantity} objects)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook idempotency patterns](phase-1-1-mockdata.md#idempotency-patterns)
-  - **Reference:** See [Playbook - Seed Strategy: Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) for scenario pack requirements
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook idempotency patterns](planning/seed-data-playbook.md#idempotency-patterns)
+  - **Reference:** See [Playbook - Seed Strategy: Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) for scenario pack requirements
   - **Estimated Time:** 3-4 hours
 
 - [ ] **Task 1.1.6.2:** Expand seed migration `seed_1_1_5_vci_wsl` - Comprehensive WSL historical data
@@ -1559,7 +1559,7 @@ Phase 1.1.1.FIX is complete when:
   - **Application Method:** `supabase migration apply`
   - **Goal:** Expand existing WSL seed data to 2-3 years historical weekly WSL data per company, add comprehensive breach scenarios
   - **Tables:** `wsl_submissions` (submission_data as array of {sku_id, quantity, breach_reason?, replenishment_date?} objects)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns)
   - **Estimated Time:** 3-4 hours
 
 - [ ] **Task 1.1.6.3:** Create and apply seed migration `seed_1_1_6_vci_breaches` - Breach records
@@ -1567,7 +1567,7 @@ Phase 1.1.1.FIX is complete when:
   - **Application Method:** `supabase migration apply`
   - **Goal:** Historical breach records with analyses, various breach scenarios
   - **Tables:** `breaches`, `breach_analyses`
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns)
   - **Estimated Time:** 2-3 hours
 
 - [ ] **Task 1.1.6.4:** Create and apply seed migration `seed_1_1_7_rmm_comprehensive` - Comprehensive RMM seed data
@@ -1576,7 +1576,7 @@ Phase 1.1.1.FIX is complete when:
   - **Goal:** Expand RMM seed data to 75 companies (15 IPCs + 60 Wholesalers), 2-5 products per company, 3-10 SKUs per product with realistic pharmaceutical attributes
   - **Tables:** `companies`, `products`, `skus` (ensure dosage_strength, dosage_form, pack_size, unit_of_measure are populated with realistic values), `atc_codes`, `critical_medicines`, `registry_submissions`
   - **Pharmaceutical Attributes:** Generate realistic data (dosage_strength: "500mg", "10mg/ml", etc.; dosage_form: "Tablet", "Capsule", "Syrup", etc.; pack_size: "30 tablets", "100ml", etc.; unit_of_measure: "tablets", "ml", etc.)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns)
   - **Estimated Time:** 4-6 hours
 
 - [ ] **Task 1.1.6.5:** Create and apply seed migration `seed_1_1_8_vci_aams_comprehensive` - Comprehensive AAMS historical data
@@ -1584,14 +1584,14 @@ Phase 1.1.1.FIX is complete when:
   - **Application Method:** `supabase migration apply`
   - **Goal:** Expand AAMS seed data to 2-3 years historical data per company
   - **Tables:** `aams_submissions`, `thresholds` (calculated thresholds for all SKUs)
-  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns)
+  - **Idempotency:** Use deterministic IDs and UPSERT patterns per [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns)
   - **Estimated Time:** 2-3 hours
 
 ### Seed Data Validation Tasks
 
 - [ ] **Task 1.1.6.6:** Validate all seed migrations using SQL verification queries
   - **Verification Method:** Execute SQL queries via Supabase dashboard SQL editor or `supabase db execute`
-  - **Verification Checklist:** Per [Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration)
+  - **Verification Checklist:** Per [Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration)
     - Foreign key integrity (no orphan rows)
     - Unique constraints respected
     - Required Phase 0.6 fields populated where needed
@@ -1890,7 +1890,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - [ ] Sami's compliance checklist will be used for every task in this subphase
 
 **Seed Data Gate (Required):**
-- Before starting ECS frontend pages, apply the seed migration stage `seed_1_2_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting ECS frontend pages, apply the seed migration stage `seed_1_2_3_ecs` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook pattern):**
 - **Goal:** Make ECS pages (export requests, authorizations, replenishment) testable.
@@ -1910,10 +1910,10 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
   - Export request detail pages have meaningful content across workflow states.
   - Export authorizations include active and expired examples.
   - Replenishment schedules include delay scenarios for escalation testing.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](planning/seed-data-playbook.md), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
 
 ### ECS Post-Authorization Backend Tasks
 - [ ] **Task 1.2.3.1:** Create ECS RPC function - Export completion report (ecs_report_export_completion)
@@ -2030,7 +2030,7 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
 - [ ] Sami's compliance checklist will be used for every task in this subphase
 
 **Seed Data Gate (Required):**
-- Before starting CMC frontend pages, apply the seed migration stage `seed_1_3_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
+- Before starting CMC frontend pages, apply the seed migration stage `seed_1_3_2_cmc` per [Phase 1.1 Playbook - Seed Strategy](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic) (versioned SQL migrations, idempotent).
 
 **Seed Stage Acceptance Criteria (from Playbook pattern):**
 - **Goal:** Make CMC pages (compliance scores, disputes, reports) testable.
@@ -2052,10 +2052,10 @@ Seed data must be reviewed by **Farah (Analytics/CMC Specialist)** before declar
   - Score detail pages show meaningful component breakdowns.
   - Disputes exist across workflow states required by wireframes.
   - Reports include examples of monthly, quarterly, and annual reports.
-  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](phase-1-1-mockdata.md) for requirements.
-  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for SQL examples and requirements.
-- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](phase-1-1-mockdata.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
-- **Reference:** See [Playbook - Seed Strategy](phase-1-1-mockdata.md), [Playbook - Scenario Packs](phase-1-1-mockdata.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](phase-1-1-mockdata.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
+  - **RLS validation required:** Seed data must be validated under real roles (Company, MOH Tier 1, MOH Tier 2). Seeded data that users can't see under RLS policies is invalid. Test each role's data visibility matches wireframe requirements. See [Playbook - RLS Realism](planning/seed-data-playbook.md) for requirements.
+  - Scenario packs use deterministic IDs for idempotency (safe to re-run migrations). See [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for SQL examples and requirements.
+- **Verification Required:** After applying seed migration, complete verification checklist per [Phase 1.1 Playbook - Verification Checklist](planning/seed-data-playbook.md#verification-checklist-must-be-executed-after-each-seed-migration) (Nadia - integrity verification, Farah - realism + coverage verification, Hassan - test DB isolation).
+- **Reference:** See [Playbook - Seed Strategy](planning/seed-data-playbook.md), [Playbook - Scenario Packs](planning/seed-data-playbook.md#seed-strategy-scenario-packs-deterministic), and [Playbook - Idempotency Patterns](planning/seed-data-playbook.md#idempotency-patterns) for seed migration conventions and idempotency patterns.
 
 ### CMC Calculation Backend Tasks
 - [ ] **Task 1.3.2.1:** Create CMC RPC function - Monthly score calculation (cmc_calculate_monthly_scores)

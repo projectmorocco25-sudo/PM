@@ -206,7 +206,7 @@ Every frontend task PR must include:
 - RLS/policies prevent required access for the wireframed role. **STOP** and implement/update RLS policies before proceeding.
 
 ### Seed Data Requirements
-- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](../Archive for now/phase-1-1-mockdata.md#idempotency-patterns).
+- Seed migration is not idempotent (must use deterministic IDs + UPSERT patterns). **STOP** and fix migration per [Playbook - Idempotency Patterns](../planning/seed-data-playbook.md#idempotency-patterns).
 - Seed data depends on manual dashboard edits (must use versioned migrations only). **STOP** and convert to versioned migration.
 
 ### Conflicts & Ambiguities

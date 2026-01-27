@@ -148,7 +148,7 @@ Implementation code and configuration files live outside `/docs`:
 - [Project Brief](00-overview/Project%20Brief%20–%20PM.md)
 - [Project Plan](05-project-management/project-plan.md)
 - [System Architecture](02-architecture/system-architecture.md)
-- [Phase 1 Implementation Plan](05-project-management/phases/Phase-1-Implementation-Plan.md)
+- [Phase 1 Implementation Plan](05-project-management/phase-1.md)
 - [Glossary](10-references/glossary.md)
 - [Acronyms](10-references/acronyms.md)
 

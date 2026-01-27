@@ -21,7 +21,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations**. **8 re
 
 1. ✅ **Issue 1: Seed Data Playbook File**
    - **Status:** COMPLETED
-   - **Action:** Created complete playbook at `docs/05-project-management/phase-1-1-mockdata.md`
+   - **Action:** Created complete playbook at `docs/05-project-management/planning/seed-data-playbook.md`
    - **Content:** 550+ lines with detailed specifications, SQL examples, RLS validation procedures, all 7 seed stages
    - **Ready for:** Team review (Nadia, Farah, Rafi, Sami)
 
@@ -70,7 +70,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations**. **8 re
 ## ⏳ Pending Team Review (1/9)
 
 ### 1. Seed Data Playbook Review
-**File:** `docs/05-project-management/phase-1-1-mockdata.md`
+**File:** `docs/05-project-management/planning/seed-data-playbook.md`
 
 **Reviewers:**
 - [ ] **Nadia:** Database integrity (UPSERT patterns, foreign keys, constraints, deterministic UUID allocation)
@@ -87,7 +87,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations**. **8 re
 ## Files Created/Modified
 
 ### Created Files
-1. ✅ `docs/05-project-management/phase-1-1-mockdata.md` - Complete seed data playbook (550+ lines)
+1. ✅ `docs/05-project-management/planning/seed-data-playbook.md` - Complete seed data playbook (550+ lines)
 2. ✅ `docs/05-project-management/execution/audit-coordination/audit-recommendations-coordination.md` - Coordination plan
 3. ✅ `docs/05-project-management/execution/audit-coordination/audit-summary.md` - Progress summary
 4. ✅ `docs/05-project-management/execution/audit-coordination/coordination-status.md` - Quick status reference
@@ -208,7 +208,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations**. **8 re
 - [Full Coordination Plan](./audit-recommendations-coordination.md)
 - [Progress Summary](./audit-summary.md)
 - [Quick Status](./coordination-status.md)
-- [Seed Data Playbook](../phase-1-1-mockdata.md)
+- [Seed Data Playbook](../planning/seed-data-playbook.md)
 - [Phase 1 Implementation Plan](../phase-1.md)
 
 ---

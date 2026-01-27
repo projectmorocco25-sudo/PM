@@ -430,8 +430,8 @@
 
 ## Related Wireframes
 
-- [WSL Submissions List](task-0.5.3.11-wsl-submissions-list.md) - Submissions list page
-- [WSL Submission Form](task-0.5.3.12-wsl-submission-form.md) - Create/edit submission
+- [WSL Submissions List](task-0.5.3.19-wsl-submissions-list.md) - Submissions list page
+- [WSL Submission Form](task-0.5.3.20-wsl-submission-form.md) - Create/edit submission
 - [Compliance Violations List](../breaches/task-0.5.3.14-compliance-violations-list.md) - Compliance violations list
 - [Compliance Violation Detail](../breaches/task-0.5.3.15-compliance-violation-detail.md) - Individual compliance violation detail
 

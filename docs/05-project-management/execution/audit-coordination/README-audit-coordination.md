@@ -40,7 +40,7 @@
 ## 📁 Key Files
 
 - **Main Plan:** `../phase-1.md` - All fixes applied
-- **Seed Playbook:** `../phase-1-1-mockdata.md` - Ready for review
+- **Seed Playbook:** `../planning/seed-data-playbook.md` - Ready for review
 - **Completion Report:** `./audit-completion-report.md` - Full details
 
 ---

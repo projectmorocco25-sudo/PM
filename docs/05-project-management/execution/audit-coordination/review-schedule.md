@@ -1,6 +1,6 @@
 # Seed Data Playbook - Review Schedule
 
-**Document:** `docs/05-project-management/phase-1-1-mockdata.md`  
+**Document:** `docs/05-project-management/planning/seed-data-playbook.md`  
 **Coordinator:** Hassan  
 **Created:** 2026-01-XX
 

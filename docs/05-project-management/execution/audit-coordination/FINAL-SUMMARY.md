@@ -55,7 +55,7 @@ All audit recommendations have been coordinated and implemented. **8 out of 9 re
 - ✅ **19 instances verified** - All include complete list of 9 roles (no "etc.")
 
 ### Seed Data Playbook
-- ✅ **File created** - `phase-1-1-mockdata.md`
+- ✅ **File created** - `planning/seed-data-playbook.md`
 - ✅ **29 references verified** - All point to existing file
 - ✅ **Content complete** - All 7 seed stages specified
 
@@ -63,7 +63,7 @@ All audit recommendations have been coordinated and implemented. **8 out of 9 re
 
 ## 📁 Documentation Created
 
-1. ✅ `phase-1-1-mockdata.md` - Seed data playbook (550+ lines)
+1. ✅ `planning/seed-data-playbook.md` - Seed data playbook (550+ lines)
 2. ✅ `audit-recommendations-coordination.md` - Coordination plan
 3. ✅ `audit-summary.md` - Progress summary
 4. ✅ `coordination-status.md` - Quick status
@@ -88,7 +88,7 @@ All audit recommendations have been coordinated and implemented. **8 out of 9 re
 ## ⏳ Pending Action
 
 ### Team Review Required
-**File:** `docs/05-project-management/phase-1-1-mockdata.md`
+**File:** `docs/05-project-management/planning/seed-data-playbook.md`
 
 **Reviewers:**
 - [ ] **Nadia** - Database integrity review
@@ -149,4 +149,4 @@ All audit recommendations have been coordinated and implemented. **8 out of 9 re
 - [Quick Reference](./README-audit-coordination.md)
 - [Completion Report](./audit-completion-report.md)
 - [Team Communication](./team-communication-audit-complete.md)
-- [Seed Data Playbook](../phase-1-1-mockdata.md)
+- [Seed Data Playbook](../planning/seed-data-playbook.md)

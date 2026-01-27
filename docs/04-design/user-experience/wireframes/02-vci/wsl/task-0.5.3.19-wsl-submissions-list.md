@@ -1,9 +1,8 @@
-# Task 0.5.3.13: WSL Submissions List Page Wireframe
+# Task 0.5.3.19: WSL Submissions List Page Wireframe
 
 **Status:** ✅ Complete  
-**Route:** `/vci/wsl`  
-**File:** `task-0.5.3.11-wsl-submissions-list.png`  
-**Note:** File name uses 0.5.3.11 but task number is 0.5.3.13 per phase-0-5-ui-ux-wireframes.md  
+**Route:** `/vci/submissions/wsl`  
+**File:** `task-0.5.3.19-wsl-submissions-list.png`  
 **Priority:** 🔴 Critical VCI Workflows
 
 **Design Approach:** Modern submission queue interface with week filters, deadline indicators, and role-based views. Professional, accessible, and optimized for weekly compliance monitoring workflows.
@@ -318,7 +317,7 @@
 
 ## Related Documents
 
-- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/vci/wsl`
+- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/vci/submissions/wsl`
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including WSL submission requirements
 - [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including submission policies
@@ -330,12 +329,11 @@
 
 ## Related Wireframes
 
-- [WSL Submission Form](task-0.5.3.12-wsl-submission-form.md) - Create/edit submission
+- [WSL Submission Form](task-0.5.3.20-wsl-submission-form.md) - Create/edit submission
 - [WSL Submission Detail](task-0.5.3.13-wsl-submission-detail.md) - Submission detail page
 - [Compliance Violations List](../breaches/task-0.5.3.14-compliance-violations-list.md) - Compliance violations triggered by WSL
 - [VCI Overview](../overview/task-0.5.3.0-vci-overview.md) - VCI module overview
 
 ---
 
-**Next:** [WSL Submission Form](task-0.5.3.12-wsl-submission-form.md)
-
+**Next:** [WSL Submission Form](task-0.5.3.20-wsl-submission-form.md)

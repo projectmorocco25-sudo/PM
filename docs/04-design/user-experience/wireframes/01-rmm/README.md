@@ -22,7 +22,7 @@ Registry Management Module (RMM) wireframes cover company, product, and SKU mana
 - [x] **Task 0.5.2.1f:** Appeal submission form (Company users - submit appeals with grounds, explanation, supporting documents) - [Wireframe](enforcement/task-0.5.2.1f-appeal-submission-form.md)
 
 ### RMM Overview
-- [ ] **Task 0.5.2.1:** RMM overview page (module summary, quick links, recent activity, statistics)
+- [x] **Task 0.5.2.16:** RMM overview page (module summary, quick links, recent activity, statistics) - [Wireframe](overview/task-0.5.2.1-rmm-overview.md) *(Note: Wireframe file uses task-0.5.2.1 in filename, but task ID is 0.5.2.16)*
 
 ### List & Detail Pages
 - [x] **Task 0.5.2.2:** Companies list page (table view, filters, search, pagination, role-based actions) - [Wireframe](companies/task-0.5.2.2-companies-list.md)

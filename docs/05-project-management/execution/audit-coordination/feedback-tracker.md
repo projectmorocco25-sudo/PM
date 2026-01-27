@@ -1,6 +1,6 @@
 # Seed Data Playbook - Feedback Tracker
 
-**Document:** `docs/05-project-management/phase-1-1-mockdata.md`  
+**Document:** `docs/05-project-management/planning/seed-data-playbook.md`  
 **Coordinator:** Hassan  
 **Status:** ⏳ **COLLECTING FEEDBACK**
 

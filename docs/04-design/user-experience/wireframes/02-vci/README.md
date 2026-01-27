@@ -29,9 +29,9 @@ Value Chain Intelligence (VCI) module wireframes cover AAMS, MSQ, and WSL submis
 - [ ] **Task 0.5.3.10:** MSQ correction interface (editable submitted data, grace period countdown, correction form)
 
 ### WSL Wireframes
-- [ ] **Task 0.5.3.11:** WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators)
-- [ ] **Task 0.5.3.12:** WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold, threshold compliance %, replenishment date, compliance violation reason)
-- [ ] **Task 0.5.3.13:** WSL submission detail page (submission data, compliance violation indicators, stock level visualization)
+- [x] **Task 0.5.3.19:** WSL submissions list page (my submissions, all submissions for MOH, week filter, deadline indicators) - [Wireframe](wsl/task-0.5.3.19-wsl-submissions-list.md)
+- [x] **Task 0.5.3.20:** WSL submission form (week ending date, **all SKUs with stock quantity entry** - SKU_ID + Quantity structure, threshold, threshold compliance %, replenishment date, compliance violation reason) - [Wireframe](wsl/task-0.5.3.20-wsl-submission-form.md)
+- [x] **Task 0.5.3.13:** WSL submission detail page (submission data, compliance violation indicators, stock level visualization) - [Wireframe](wsl/task-0.5.3.13-wsl-submission-detail.md)
 
 ### Compliance Violation Wireframes
 - [ ] **Task 0.5.3.14:** Compliance Violations list page (active compliance violations, resolved compliance violations, priority/company/SKU filters, date range)

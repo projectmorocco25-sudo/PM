@@ -17,7 +17,7 @@ Weekly submission workflow for stock levels with automatic breach detection (sto
 
 ### WSL Submissions List Page
 - **Route:** `/vci/submissions/wsl`
-- **Wireframe:** [task-0.5.3.13](../../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.11-wsl-submissions-list.md) ✅
+- **Wireframe:** [task-0.5.3.19](../../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.19-wsl-submissions-list.md) ✅
 - **Database:** `wsl_submissions`, `breaches`
 - **API:** `vci_list_wsl_submissions()`, `vci_get_wsl_submission()`
 - **Status:** ⚪ NOT STARTED
@@ -27,7 +27,7 @@ Weekly submission workflow for stock levels with automatic breach detection (sto
 
 ### WSL Submission Form
 - **Route:** `/vci/submissions/wsl/new`
-- **Wireframe:** [task-0.5.3.12](../../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.12-wsl-submission-form.md) ✅
+- **Wireframe:** [task-0.5.3.20](../../../04-design/user-experience/wireframes/02-vci/wsl/task-0.5.3.20-wsl-submission-form.md) ✅
 - **Database:** `wsl_submissions`, `breaches`
 - **API:** `vci_submit_wsl()`
 - **Status:** ⚪ NOT STARTED

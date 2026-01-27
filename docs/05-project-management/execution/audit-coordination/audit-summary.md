@@ -58,7 +58,7 @@ All issues are either completed or pending team review.
    - Phase 1.5 seed data gate explanations
    - Backend completion gate documentation
 
-2. ✅ `docs/05-project-management/phase-1-1-mockdata.md` - Created placeholder playbook
+2. ✅ `docs/05-project-management/planning/seed-data-playbook.md` - Created placeholder playbook
 
 3. ✅ `docs/05-project-management/execution/audit-coordination/audit-recommendations-coordination.md` - Coordination plan
 

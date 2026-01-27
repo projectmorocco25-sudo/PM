@@ -11,7 +11,7 @@
 ### Critical Issues
 
 - [ ] **Issue 1: Seed Data Playbook**
-  - [ ] File exists: `docs/05-project-management/phase-1-1-mockdata.md`
+  - [ ] File exists: `docs/05-project-management/planning/seed-data-playbook.md`
   - [ ] Playbook contains idempotency patterns with SQL examples
   - [ ] Playbook contains RLS validation procedures
   - [ ] All 7 seed stages are specified
@@ -85,7 +85,7 @@
 
 ### Main Files
 - [ ] `phase-1.md` - All fixes applied, no linter errors
-- [ ] `phase-1-1-mockdata.md` - Complete playbook created, no linter errors
+- [ ] `planning/seed-data-playbook.md` - Complete playbook created, no linter errors
 
 ### Coordination Documents
 - [ ] `audit-recommendations-coordination.md` - Coordination plan complete

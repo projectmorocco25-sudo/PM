@@ -196,7 +196,7 @@
 
 - **Next Level:** [Products Treemap (Level 2)](task-0.5.3.23-products-treemap.md) - Drill down from ATC to products
 - **Integration:** [Governance Dashboard](../overview/task-0.5.3.18-governance-dashboard.md) - Link from compliance overview
-- **Data Source:** [WSL Submissions List](../wsl/task-0.5.3.11-wsl-submissions-list.md) - Source of compliance data
+- **Data Source:** [WSL Submissions List](../wsl/task-0.5.3.19-wsl-submissions-list.md) - Source of compliance data
 
 ---
 

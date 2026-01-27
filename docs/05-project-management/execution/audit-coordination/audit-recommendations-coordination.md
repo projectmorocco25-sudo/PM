@@ -20,7 +20,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations** (3 Crit
 ### ✅ Issue 1: Missing Seed Data Playbook File
 **Status:** ✅ COMPLETED - Ready for Team Review  
 **Owner:** Hassan (with team input)  
-**Issue:** All seed data gate references point to `phase-1-1-mockdata.md` which didn't exist.
+**Issue:** All seed data gate references point to `planning/seed-data-playbook.md` which didn't exist.
 
 **References Found:**
 - Line 156: `seed_1_1_1_foundation`
@@ -32,7 +32,7 @@ Sami's compliance audit of `phase-1.md` identified **9 recommendations** (3 Crit
 - Line 1965: `seed_1_4_2_cmc`
 
 **Action Items:**
-- [x] **Hassan:** Create `docs/05-project-management/phase-1-1-mockdata.md` playbook file ✅
+- [x] **Hassan:** Create `docs/05-project-management/planning/seed-data-playbook.md` playbook file ✅
 - [x] **Hassan:** Complete playbook with detailed seed data specifications ✅:
   - Detailed scenario pack definitions ✅
   - Complete idempotency pattern examples (with SQL) ✅

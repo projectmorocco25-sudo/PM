@@ -1,7 +1,7 @@
 # Technical Foundation Reference
 
 **Last Updated:** 2026-01-15  
-**Reference:** [Phase 0 Technical Foundation](../Archive for now/phase-0-technical-foundation.md)
+**Reference:** [Phase 0 Technical Foundation](../Archive/phase-0-technical-foundation.md)
 
 ---
 
@@ -150,10 +150,10 @@
 - [Technical Decision Log](../../06-development/technical-decisions/decision-log.md)
 
 ### Subsequent Phase Documents
-- [Phase 0.5: UI/UX Wireframes](../Archive for now/phase-0-5-wireframes-catalog.md) ✅ COMPLETE
-- [Phase 0.6: Database Schema Audit](../Archive for now/phase-0-6-databases.md) ✅ COMPLETE
+- [Phase 0.5: UI/UX Wireframes](../Archive/phase-0-5-wireframes-catalog.md) ✅ COMPLETE
+- [Phase 0.6: Database Schema Audit](../Archive/phase-0-6-databases.md) ✅ COMPLETE
 - [Phase 1 Implementation Plan](../phase-1.md) ✅ APPROVED FOR IMPLEMENTATION
 
 ---
 
-**Reference:** [Phase 0 Technical Foundation](../Archive for now/phase-0-technical-foundation.md)
+**Reference:** [Phase 0 Technical Foundation](../Archive/phase-0-technical-foundation.md)

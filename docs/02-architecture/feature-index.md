@@ -10,6 +10,8 @@
 
 ## Overview
 
+**🎯 SINGLE SOURCE OF TRUTH:** This document (feature-index.md) is the **PRIMARY REFERENCE** for all feature-related artifacts. Use this document as the entry point for verification tasks and implementation planning.
+
 This index groups features by module and provides quick access to all related artifacts:
 - **Routes** - Frontend routes and pages
 - **Wireframes** - UI/UX design specifications
@@ -17,14 +19,78 @@ This index groups features by module and provides quick access to all related ar
 - **APIs** - RPC functions, Edge Functions, REST endpoints
 - **Status** - Implementation and completion status
 
-**For detailed information, see referenced documents:**
+**This document (feature-index.md) is the SINGLE SOURCE OF TRUTH for:**
+- ✅ Feature-to-wireframe mapping
+- ✅ Feature-to-database mapping  
+- ✅ Feature-to-API mapping
+- ✅ Feature implementation status
+- ✅ Feature ownership and phase assignment
+
+**For detailed specifications, see referenced documents:**
 - **Route definitions:** [routing-structure.md](./frontend/routing-structure.md) - SINGLE SOURCE OF TRUTH for route paths
 - **Route status:** [route-inventory.md](./frontend/route-inventory.md) - SINGLE SOURCE OF TRUTH for route implementation status
 - **Wireframe-route mapping:** [wireframe-route-mapping.md](./frontend/wireframe-route-mapping.md) - SINGLE SOURCE OF TRUTH for wireframe-route relationships
-- **Wireframes:** [Phase 0.5 Wireframes Catalog](../../05-project-management/phases/phase-0-5-wireframes-catalog.md)
+- **Wireframes:** [Wireframe Index](../../04-design/user-experience/wireframes/06-documentation/wireframe-index.md) | [Wireframes Directory](../../04-design/user-experience/wireframes/)
 - **Database:** [data-dictionary.md](./database/data-dictionary.md) | [schema-design.md](./database/schema-design.md)
 - **APIs:** [rpc-functions.md](./api/rpc-functions.md) | [api-specification.md](./api/api-specification.md)
-- **Implementation:** [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md)
+- **Implementation:** [Phase 1 Implementation Plan](../../05-project-management/phase-1.md)
+
+---
+
+## 🔍 Verification Workflow
+
+**⚠️ MANDATORY:** Before implementing ANY feature, complete the verification workflow below. This ensures all prerequisites are met before development begins.
+
+### Pre-Implementation Verification Steps
+
+1. **Wireframe Verification**
+   - Review wireframes listed in the feature table below
+   - Verify wireframe requirements (layout, interactions, states, role-based variations)
+   - Check wireframe annotations for edge cases and validation rules
+   - **Reference:** Use wireframe task IDs in the table, then navigate to [Wireframes Directory](../../04-design/user-experience/wireframes/) to find the full wireframe file
+
+2. **Database Schema Verification**
+   - Confirm all required tables/fields exist in [data-dictionary.md](./database/data-dictionary.md)
+   - Verify RLS policies are implemented for new tables
+   - Check foreign key constraints and indexes
+   - Validate data types match schema specifications
+   - **Reference:** Database tables listed in feature table below
+
+3. **API Contract Verification**
+   - Confirm all required RPC functions exist in [rpc-functions.md](./api/rpc-functions.md)
+   - Verify function signatures match requirements
+   - Check error handling and return types
+   - Validate API permissions and access controls
+   - **Reference:** API functions listed in feature table below
+
+### How to Use This Document for Verification
+
+1. **Find your feature** in the feature table below (organized by module)
+2. **Click the feature section anchor** (e.g., `#company-management`) to jump directly to the feature
+3. **Review the feature table row** for:
+   - Wireframe task ID(s) - Use these to locate wireframe files
+   - Database tables - Verify these exist in data-dictionary.md
+   - API functions - Verify these exist in rpc-functions.md
+4. **Follow the "Related Documentation" links** for detailed specifications
+5. **Complete verification tasks** in phase implementation plan before starting development
+
+### Verification Task Template
+
+When creating verification tasks in phase files, reference this document:
+
+```markdown
+- [ ] **Task X.Y.Za:** Verify wireframes for [Feature Name]
+  - 📐 **Feature Reference:** [Feature Name - feature-index.md#feature-anchor](#feature-anchor)
+  - 📐 **Wireframes:** [List wireframe task IDs from feature table]
+  
+- [ ] **Task X.Y.Zb:** Verify database schema for [Feature Name]
+  - 💾 **Feature Reference:** [Feature Name - feature-index.md#feature-anchor](#feature-anchor)
+  - 💾 **Database Tables:** [List tables from feature table]
+  
+- [ ] **Task X.Y.Zc:** Verify API contracts for [Feature Name]
+  - 🔌 **Feature Reference:** [Feature Name - feature-index.md#feature-anchor](#feature-anchor)
+  - 🔌 **API Functions:** [List functions from feature table]
+```
 
 ---
 
@@ -46,7 +112,7 @@ This index groups features by module and provides quick access to all related ar
 
 ## Core Foundation Features
 
-### Authentication & Access
+### Authentication & Access {#authentication-access}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -63,7 +129,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### Dashboard & Navigation
+### Dashboard & Navigation {#dashboard-navigation}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -83,7 +149,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### Communications
+### Communications {#communications}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -124,7 +190,7 @@ This index groups features by module and provides quick access to all related ar
 
 ## RMM Module Features
 
-### Company Management
+### Company Management {#company-management}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -159,7 +225,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### SKU Management
+### SKU Management {#sku-management}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -194,7 +260,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### Enforcement Module
+### Enforcement Module {#enforcement-module}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -235,7 +301,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### Threshold Management
+### Threshold Management {#threshold-management}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -260,7 +326,7 @@ This index groups features by module and provides quick access to all related ar
 | MSQ Submissions List | `/vci/submissions/msq` | task-0.5.3.9 ✅ | `msq_submissions` | `vci_list_msq_submissions`, `vci_get_msq_submission` | ⚠️ | Emma | 1.1.4 |
 | MSQ Submission Detail | `/vci/submissions/msq/[id]` | task-0.5.3.11 ✅ | `msq_submissions` | `vci_get_msq_submission` | ⚠️ | Emma | 1.1.4 |
 | Create MSQ Submission | `/vci/submissions/msq/new` | task-0.5.3.10 ✅ | `msq_submissions` | `vci_submit_msq` | ⚠️ | Emma | 1.1.4 |
-| MSQ Correction Interface | `/vci/submissions/msq/[id]/correct` | task-0.5.3.20 ✅ | `msq_submissions` | `vci_correct_msq_submission` | ⚠️ | Emma | 1.1.4 |
+| MSQ Correction Interface | `/vci/submissions/msq/[id]/correct` | task-0.5.3.12 ✅ | `msq_submissions` | `vci_correct_msq_submission` | ⚠️ | Emma | 1.1.4 |
 
 **Related Documentation:**
 - Routes: [route-inventory.md](./frontend/route-inventory.md#vci-routes)
@@ -270,13 +336,13 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### WSL (Weekly Stock Levels)
+### WSL (Weekly Stock Levels) {#wsl-workflow}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
-| WSL Submissions List | `/vci/submissions/wsl` | task-0.5.3.13 ✅ | `wsl_submissions`, `breaches` | `vci_list_wsl_submissions`, `vci_get_wsl_submission` | ⚠️ | Emma | 1.1.5 |
+| WSL Submissions List | `/vci/submissions/wsl` | task-0.5.3.19 ✅ | `wsl_submissions`, `breaches` | `vci_list_wsl_submissions`, `vci_get_wsl_submission` | ⚠️ | Emma | 1.1.5 |
 | WSL Submission Detail | `/vci/submissions/wsl/[id]` | task-0.5.3.13 ✅ | `wsl_submissions`, `breaches`, `thresholds` | `vci_get_wsl_submission`, `vci_get_wsl_breaches` | ⚠️ | Emma | 1.1.5 |
-| Create WSL Submission | `/vci/submissions/wsl/new` | task-0.5.3.12 ✅ | `wsl_submissions`, `breaches` | `vci_submit_wsl` | ⚠️ | Emma | 1.1.5 |
+| Create WSL Submission | `/vci/submissions/wsl/new` | task-0.5.3.20 ✅ | `wsl_submissions`, `breaches` | `vci_submit_wsl` | ⚠️ | Emma | 1.1.5 |
 
 **Related Documentation:**
 - Routes: [route-inventory.md](./frontend/route-inventory.md#vci-routes)
@@ -286,7 +352,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-### Compliance Violations (Breaches)
+### Compliance Violations (Breaches) {#compliance-violations-breaches}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -322,7 +388,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-## ECS Module Features
+## ECS Module Features {#ecs-module-features}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -373,7 +439,7 @@ This index groups features by module and provides quick access to all related ar
 
 ---
 
-## Support & Help Pages
+## Support & Help Pages {#support-help-pages}
 
 | Feature | Route | Wireframe | Database | API | Status | Owner | Phase |
 |---------|-------|-----------|----------|-----|--------|-------|-------|
@@ -428,10 +494,11 @@ This index groups features by module and provides quick access to all related ar
 
 ### Status Tracking Workflow
 
-1. **Check feature status** → This document
+1. **Check feature status** → This document (feature-index.md)
 2. **Review detailed artifacts** → Follow links to specific documentation
-3. **Check implementation status** → [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md)
+3. **Check implementation status** → [Phase 1 Implementation Plan](../../05-project-management/phase-1.md)
 4. **Verify compliance** → [Wireframe DB Compliance Rules](../../.cursor/rules/wireframe_db_compliance.md)
+5. **Complete verification tasks** → Use feature-index.md as reference for wireframe/database/API verification
 
 ---
 
@@ -445,8 +512,16 @@ This index groups features by module and provides quick access to all related ar
 4. **Keep cross-references updated** - If route/wireframe/database changes, update all related entries
 5. **Update ownership** if feature ownership changes
 6. **Track dependencies** - Update dependency matrix when new dependencies are identified
+7. **Convert wireframe references** - Gradually convert wireframe task IDs to full markdown links as wireframes are finalized
+8. **Maintain anchor IDs** - Keep anchor IDs consistent when reorganizing sections
 
 **Review cadence:** Monthly or after major phase completion
+
+**Note on Wireframe Links:**
+- Current format: `task-0.5.X.Y ✅` (task ID with status)
+- Target format: `[task-0.5.X.Y-description](../../04-design/user-experience/wireframes/...) ✅` (full markdown link)
+- Wireframe paths can be found via [Wireframe Index](../../04-design/user-experience/wireframes/06-documentation/wireframe-index.md)
+- Conversion to full links is in progress - use task IDs to locate wireframes until conversion is complete
 
 ---
 
@@ -460,8 +535,8 @@ This index groups features by module and provides quick access to all related ar
 - [RPC Functions](./api/rpc-functions.md) - Complete API specifications
 
 ### Project Management
-- [Phase 1 Implementation Plan](../../05-project-management/phases/Phase-1-Implementation-Plan.md) - Implementation tasks
-- [Phase 0.5 Wireframes Catalog](../../05-project-management/phases/phase-0-5-wireframes-catalog.md) - All wireframes
+- [Phase 1 Implementation Plan](../../05-project-management/phase-1.md) - Implementation tasks
+- [Wireframe Index](../../04-design/user-experience/wireframes/06-documentation/wireframe-index.md) - Complete wireframe index
 - [Module Dependency Diagram](./modules/module-dependency-diagram.md) - Module relationships
 
 ### Architecture

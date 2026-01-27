@@ -1,4 +1,4 @@
-# Phase 1.1 Seeded Supabase "Mock Data" Playbook
+# Seed Data Playbook
 
 **Owner:** Hassan (Seed Data & Testing Owner)  
 **Status:** ✅ **COMPLETE - Ready for Team Review**  
@@ -549,4 +549,4 @@ After applying each seed migration stage, complete this checklist:
 
 ---
 
-**Reference:** [Phase 1 Implementation Plan](./phase-1.md) for complete task list and dependencies.
+**Reference:** [Phase 1 Implementation Plan](../phase-1.md) for complete task list and dependencies.

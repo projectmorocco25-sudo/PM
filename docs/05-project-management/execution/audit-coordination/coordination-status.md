@@ -24,7 +24,7 @@
 
 ## ✅ Completed Work
 
-### 1. Seed Data Playbook (`phase-1-1-mockdata.md`)
+### 1. Seed Data Playbook (`planning/seed-data-playbook.md`)
 - ✅ Full playbook created with detailed specifications
 - ✅ Idempotency patterns with SQL examples
 - ✅ RLS validation procedures documented
@@ -66,7 +66,7 @@
 ## ⏳ Pending Team Review
 
 ### 1. Seed Data Playbook Review
-**File:** `docs/05-project-management/phase-1-1-mockdata.md`
+**File:** `docs/05-project-management/planning/seed-data-playbook.md`
 
 **Reviewers:**
 - [ ] **Nadia:** Database integrity (UPSERT patterns, foreign keys, constraints)
@@ -93,7 +93,7 @@
 ## Files Modified
 
 1. ✅ `phase-1.md` - All fixes applied
-2. ✅ `phase-1-1-mockdata.md` - Complete playbook created
+2. ✅ `planning/seed-data-playbook.md` - Complete playbook created
 3. ✅ `audit-recommendations-coordination.md` - Coordination plan
 4. ✅ `audit-summary.md` - Progress summary
 5. ✅ `coordination-status.md` - This status document
@@ -149,4 +149,4 @@
 **Reference:** 
 - [Full Coordination Plan](./audit-recommendations-coordination.md)
 - [Progress Summary](./audit-summary.md)
-- [Seed Data Playbook](../phase-1-1-mockdata.md)
+- [Seed Data Playbook](../planning/seed-data-playbook.md)

@@ -131,7 +131,7 @@
 - ✅ Phase 0 Sign-off: Complete
 
 **Completion Date:** Before Phase 0.5  
-**Reference:** [Phase 0 Technical Foundation](../Archive for now/phase-0-technical-foundation.md)
+**Reference:** [Phase 0 Technical Foundation](../Archive/phase-0-technical-foundation.md)
 
 ---
 

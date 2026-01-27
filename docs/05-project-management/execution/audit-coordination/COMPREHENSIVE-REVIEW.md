@@ -24,7 +24,7 @@ This comprehensive review covers:
 
 #### Issue 1: Seed Data Playbook
 **Status:** ✅ **COMPLETE**
-- ✅ File created: `phase-1-1-mockdata.md` (553 lines)
+- ✅ File created: `planning/seed-data-playbook.md` (553 lines)
 - ✅ Content comprehensive: Idempotency patterns, RLS validation, all 7 seed stages
 - ✅ SQL examples provided
 - ✅ Verification checklists included
@@ -152,7 +152,7 @@ This comprehensive review covers:
    - Role lists: ✅ (19 instances standardized)
    - Phase 1.5 explanations: ✅
 
-2. ✅ `phase-1-1-mockdata.md` - Complete playbook
+2. ✅ `planning/seed-data-playbook.md` - Complete playbook
    - 553 lines
    - All 7 seed stages
    - SQL examples

@@ -1,9 +1,8 @@
-# Task 0.5.3.14: WSL Submission Form Wireframe
+# Task 0.5.3.20: WSL Submission Form Wireframe
 
 **Status:** ✅ Complete  
-**Route:** `/vci/wsl/new` (create) or `/vci/wsl/[id]/edit` (edit draft)  
-**File:** `task-0.5.3.12-wsl-submission-form.png`  
-**Note:** File name uses 0.5.3.12 but task number is 0.5.3.14 per phase-0-5-ui-ux-wireframes.md  
+**Route:** `/vci/submissions/wsl/new` (create) or `/vci/submissions/wsl/[id]/edit` (edit draft)  
+**File:** `task-0.5.3.20-wsl-submission-form.png`  
 **Priority:** 🔴 Critical VCI Workflows
 
 **Design Approach:** Modern data entry form with SKU stock quantity table, validation, and bulk entry capabilities. Professional, accessible, and optimized for weekly compliance monitoring with deadline awareness.
@@ -452,7 +451,7 @@
 
 ## Related Documents
 
-- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/vci/wsl/new` or `/vci/wsl/[id]/edit`
+- [Routing Structure](../../../../02-architecture/frontend/routing-structure.md) - Route: `/vci/submissions/wsl/new` or `/vci/submissions/wsl/[id]/edit`
 - [Regulatory Framework](../../../../03-governance/regulatory-framework.md) - Comprehensive regulatory reference including DMP regulations
 - [Compliance Requirements](../../../../03-governance/compliance-requirements.md) - Detailed compliance requirements including WSL submission requirements
 - [Regulatory Policies](../../../../03-governance/regulatory-policies.md) - Regulatory policies including submission policies
@@ -464,7 +463,7 @@
 
 ## Related Wireframes
 
-- [WSL Submissions List](task-0.5.3.11-wsl-submissions-list.md) - Submissions list page
+- [WSL Submissions List](task-0.5.3.19-wsl-submissions-list.md) - Submissions list page
 - [WSL Submission Detail](task-0.5.3.13-wsl-submission-detail.md) - Submission detail page
 - [Compliance Violations List](../breaches/task-0.5.3.14-compliance-violations-list.md) - Compliance violations triggered by WSL
 - [VCI Overview](../overview/task-0.5.3.0-vci-overview.md) - VCI module overview
@@ -504,4 +503,3 @@ SKU002,Product B / 250mg / Capsule,600,400,67%,25/01/2025,Stock replenishment de
 ---
 
 **Next:** [WSL Submission Detail](task-0.5.3.13-wsl-submission-detail.md)
-

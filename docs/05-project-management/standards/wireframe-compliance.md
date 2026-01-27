@@ -197,7 +197,7 @@ If implementation must deviate from wireframe:
 
 ## Wireframe Catalog Reference
 
-**Complete Wireframe Catalog:** [Phase 0.5 Wireframes Catalog](../Archive for now/phase-0-5-wireframes-catalog.md)
+**Complete Wireframe Catalog:** [Phase 0.5 Wireframes Catalog](../Archive/phase-0-5-wireframes-catalog.md)
 
 **Wireframe Index:** `docs/04-design/user-experience/wireframes/06-documentation/wireframe-index.md`
 

@@ -59,8 +59,8 @@
 | `/rmm/skus` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.2.6 | None | 1.1.1.FIX |
 | `/vci` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | 📋 task-0.5.3.0 | Wireframe required | 1.1.1.FIX |
 | `/vci/submissions/aams` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.1 | None | 1.1.1.FIX |
-| `/vci/submissions/msq` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.7 | None | 1.1.1.FIX |
-| `/vci/submissions/wsl` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.13 | None | 1.1.1.FIX |
+| `/vci/submissions/msq` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.9 | None | 1.1.1.FIX |
+| `/vci/submissions/wsl` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.19 | None | 1.1.1.FIX |
 | `/vci/submissions/history` | ❌ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.28 | None | 1.1.1.FIX |
 | `/vci/thresholds` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.4 | None | 1.1.1.FIX |
 | `/vci/breaches` | ✅ | ✅ | ⚠️ Placeholder | ⚠️ Placeholder | ✅ task-0.5.3.14 | None | 1.1.1.FIX |

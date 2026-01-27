@@ -1,6 +1,6 @@
 # Seed Data Playbook - Review Assignments
 
-**Document:** `docs/05-project-management/phase-1-1-mockdata.md`  
+**Document:** `docs/05-project-management/planning/seed-data-playbook.md`  
 **Coordinator:** Hassan  
 **Status:** ⏳ **PENDING REVIEW**  
 **Created:** 2026-01-XX

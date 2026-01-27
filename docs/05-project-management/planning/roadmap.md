@@ -58,7 +58,7 @@
 - Testing framework
 - Technical decision log
 
-**Reference:** [Phase 0 Technical Foundation](../Archive for now/phase-0-technical-foundation.md)
+**Reference:** [Phase 0 Technical Foundation](../Archive/phase-0-technical-foundation.md)
 
 ---
 

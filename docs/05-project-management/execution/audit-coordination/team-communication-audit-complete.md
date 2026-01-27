@@ -16,7 +16,7 @@ Sami's compliance audit of `phase-1.md` has been coordinated and **8 out of 9 re
 ## ✅ What's Been Completed
 
 ### Critical Issues (All 3 Complete)
-1. ✅ **Seed Data Playbook** - Complete playbook created (`phase-1-1-mockdata.md`)
+1. ✅ **Seed Data Playbook** - Complete playbook created (`planning/seed-data-playbook.md`)
 2. ✅ **Integration Checkpoint Validation** - Explicit checkboxes added to all phase transitions
 3. ✅ **"Sami's Approval" Checkbox** - Added to all 12 compliance validation sections
 
@@ -35,7 +35,7 @@ Sami's compliance audit of `phase-1.md` has been coordinated and **8 out of 9 re
 
 ### Seed Data Playbook Review
 
-**File:** `docs/05-project-management/phase-1-1-mockdata.md`
+**File:** `docs/05-project-management/planning/seed-data-playbook.md`
 
 **Reviewers Needed:**
 - [ ] **Nadia** - Database integrity review (UPSERT patterns, foreign keys, constraints, deterministic UUID allocation)
@@ -66,7 +66,7 @@ Sami's compliance audit of `phase-1.md` has been coordinated and **8 out of 9 re
   - Backend completion gates added to all phases
 
 ### Seed Data Playbook (NEW)
-- `docs/05-project-management/phase-1-1-mockdata.md`
+- `docs/05-project-management/planning/seed-data-playbook.md`
   - Complete playbook with all specifications
   - Ready for team review
 
@@ -165,6 +165,6 @@ If you have questions about:
 **Thank you for your attention. Please complete playbook review at your earliest convenience.**
 
 **Reference Documents:**
-- [Seed Data Playbook](../phase-1-1-mockdata.md)
+- [Seed Data Playbook](../planning/seed-data-playbook.md)
 - [Phase 1 Implementation Plan](../phase-1.md)
 - [Completion Report](./audit-completion-report.md)

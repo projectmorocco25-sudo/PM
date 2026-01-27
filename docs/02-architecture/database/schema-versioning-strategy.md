@@ -519,7 +519,7 @@ SET
 
 - [Migration Strategy](./migration-strategy.md) - Comprehensive migration guide
 - [Database Schema Design](./schema-design.md) - Complete schema reference
-- [Phase 1.1 Seed Data Playbook](../05-project-management/phases/phase-1-1-mockdata.md) - Seed migration guidelines
+- [Seed Data Playbook](../05-project-management/planning/seed-data-playbook.md) - Seed migration guidelines
 - [Schema Updates - Phase 0.6](./schema-updates-phase0-6-critical-gaps.md) - Phase 0.6 migration examples
 
 ---

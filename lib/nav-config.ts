@@ -26,7 +26,8 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: "Communications", href: "/communications/inbox", icon: "MessageSquare", roles: "all" },
       { label: "Regulatory Activity History", href: "/history", icon: "History", roles: "all" },
       { label: "Notifications", href: "/notifications", icon: "Bell", roles: "all" },
-      { label: "Audit", href: "/audit/logs", icon: "Search", roles: "moh" },
+      { label: "Audit Logs", href: "/audit/logs", icon: "Search", roles: "moh" },
+      { label: "Audit Reports", href: "/audit/reports", icon: "FileText", roles: "moh" },
     ],
   },
   {

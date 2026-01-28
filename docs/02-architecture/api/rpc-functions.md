@@ -961,8 +961,9 @@ SELECT log_historical_data_access(
 | `shared_get_audit_logs` | `(p_table_name, p_user_id, p_start_date, p_end_date, p_limit, p_offset)` | `{ data, total }` |
 | `shared_get_audit_log_detail` | `(p_id uuid)` | single audit log or `{ error }` |
 | `shared_generate_audit_report` | same as `shared_get_audit_logs` | `{ data, total, generated_at }` |
+| `shared_get_history` | `(p_start_date, p_end_date, p_table_name, p_limit, p_offset)` | `{ data, total }` |
 
-All **SECURITY INVOKER**; RLS applies.
+`shared_get_history`: **SECURITY DEFINER**. Role-based: MOH/auditor → `audit_logs`; Company → `registry_submissions` (company-scoped). For /history page. Migration: `20260127151700_rpc_shared_get_history.sql`. All other shared: **SECURITY INVOKER**; RLS applies.
 
 ### Communications (1.1.1.2c)
 
@@ -977,8 +978,9 @@ All **SECURITY INVOKER**; RLS applies.
 | `communications_list_announcements` | `()` | `{ data: [...] }` |
 | `communications_archive_conversation` | `(p_conversation_id uuid)` | `{ success }` |
 | `communications_list_archived` | `()` | `{ data: [...] }` |
+| `communications_restore_conversation` | `(p_conversation_id uuid)` | `{ success }` |
 
-All **SECURITY INVOKER**; RLS applies.
+All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Task 1.1.1.24): MOH only; sets `archived_at` to NULL.
 
 ### System (1.1.1.2d, 1.1.1.17)
 

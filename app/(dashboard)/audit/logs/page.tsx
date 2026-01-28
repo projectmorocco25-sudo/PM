@@ -1,10 +1,15 @@
 /**
- * Task 1.1.1.12 placeholder. Route: /audit/logs
- * Wireframe: N/A (placeholder). Ref: routing-structure.md
+ * Wireframe: task-0.5.1.32-audit-logs-list.md
+ * Route: /audit/logs
+ * Implements: Audit logs list — filters, compliance banner, table, pagination, Export.
+ * API: shared_get_audit_logs. Table: audit_logs. MOH/Auditors only.
+ * Wireframe Link: docs/04-design/user-experience/wireframes/00-core-foundation/global/task-0.5.1.32-audit-logs-list.md
  */
 
-import { PlaceholderPage } from "@/components/PlaceholderPage";
+"use client";
+
+import { AuditLogsContent } from "./AuditLogsContent";
 
 export default function AuditLogsPage() {
-  return <PlaceholderPage title="Audit Logs" route="/audit/logs" />;
+  return <AuditLogsContent />;
 }

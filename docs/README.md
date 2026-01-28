@@ -145,6 +145,7 @@ Implementation code and configuration files live outside `/docs`:
 
 ## Quick Links
 
+- **[Business Logic](BUSINESS-LOGIC.md)** - Concise reference for all business rules (modules, roles, workflows, deadlines)
 - [Project Brief](00-overview/Project%20Brief%20–%20PM.md)
 - [Project Plan](05-project-management/project-plan.md)
 - [System Architecture](02-architecture/system-architecture.md)

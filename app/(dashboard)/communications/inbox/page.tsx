@@ -1,17 +1,15 @@
 /**
- * Task 1.1.1.12 placeholder. Route: /communications/inbox
- * Wireframe: N/A (placeholder). Ref: routing-structure.md
+ * Wireframe: task-0.5.1.24-communications-inbox-list.md
+ * Route: /communications/inbox
+ * Implements: Inbox list — breadcrumbs, New Message, Filters, search, conversation list.
+ * API: communications_list_conversations. Tables: conversations, messages.
+ * Wireframe Link: docs/04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.24-communications-inbox-list.md
  */
 
-import { PlaceholderPage } from "@/components/PlaceholderPage";
+"use client";
+
+import { InboxContent } from "./InboxContent";
 
 export default function InboxPage() {
-  return (
-    <PlaceholderPage
-      title="Inbox"
-      route="/communications/inbox"
-      backHref="/dashboard"
-      backLabel="Back to Dashboard"
-    />
-  );
+  return <InboxContent />;
 }

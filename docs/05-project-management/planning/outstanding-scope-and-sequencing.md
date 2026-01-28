@@ -26,7 +26,7 @@
 |------------------|---------------------|-----------------|-------|
 | **Submissions tab** | 0.5.1.18 – Submissions tab | 1.1.2.6–1.1.2.11 (registry workflow); RPC to **list** registry submissions (filter by status, company); 1.1.2.17 (Companies list) if linking to company. For **VCI** submission types (WSL, MSQ, AAMS): Phase 1.2 VCI submission workflows & list APIs. | Tab shows “My Submissions” with filter/sort, submission rows, View Details / Edit / Withdraw / Resubmit. Depends on registry + (optionally) VCI submissions. |
 | **Enforcement tab** | 0.5.1.18 – Enforcement tab | 1.1.2.31–1.1.2.36 (enforcement workflow RPCs); 1.1.2.37 (Enforcement dashboard page) or equivalent **list** enforcement actions APIs; enforcement RLS. | Tab shows company’s enforcement actions, filter by type/status, View Details / Appeal. |
-| **Activity tab** | 0.5.1.18 – Activity tab | **Activity feed API** (e.g. `shared_get_audit_logs`–style with filters for submissions / messages / enforcement) or unified activity RPC; 1.1.1.21 (Audit logs pages) if reusing audit. | Filter: All / Submissions / Messages / Enforcement; date range; list with “View Details” etc. |
+| **Activity tab** | 0.5.1.18 – Activity tab | **`shared_get_history`** (done, 1.1.1.20) or `shared_get_audit_logs`; 1.1.1.21 (Audit logs pages) if reusing audit. | Filter: All / Submissions / Messages / Enforcement; date range; list with “View Details” etc. |
 | **Regulatory Compliance Status** widget | 0.5.1.18 – Overview | Enforcement list RPC; optional compliance summary RPC. 1.1.2.31+ for enforcement data. | “Compliant / Non‑Compliant (X violations)”, active enforcement count, required actions, “View Detailed Compliance Status”. |
 | **Active Enforcement Actions** widget (full) | 0.5.1.18 – Overview | Same as Enforcement tab. | List of active actions with legal basis, appeal deadline, View Details / Appeal. |
 | **Key Metrics** (Compliance Score, Active Submissions, Pending Actions, Completed) | 0.5.1.18 – Key Metrics | Registry + enforcement list/count RPCs; optional aggregation RPC. | Four metric cards with counts and “View” links. |
@@ -72,16 +72,27 @@
 
 ---
 
-## 2. Other Outstanding Items
+## 2. Recently Completed (Update Sequencing / Dependencies)
 
-### 2.1 Core Layout & Navigation (from 1.1.1.9)
+| Completed item | Task | Notes |
+|----------------|------|-------|
+| **History overview** (`/history`) | 1.1.1.20 | Implemented. RPC `shared_get_history` (role-based: MOH → audit_logs, Company → registry_submissions). Date range, filters, timeline, Load More. |
+| **Audit Logs pages** (`/audit/logs`, `/audit/logs/[id]`, `/audit/reports`) | 1.1.1.21 | List (filters, compliance banner, pagination, Export → reports), Detail (old/new values, hash chain), Reports (Generate modal, CSV download). APIs: `shared_get_audit_logs`, `shared_get_audit_log_detail`, `shared_generate_audit_report`. MOH/Auditors only (`view_audit_logs`). |
+
+Use `shared_get_history` where a unified history/activity feed is needed (e.g. dashboard Activity tab). Use audit list/detail/reports (1.1.1.21) for MOH/auditor audit views; dashboard Activity tab or other UIs can link to `/audit/logs` or `/audit/reports` where appropriate.
+
+---
+
+## 3. Other Outstanding Items
+
+### 3.1 Core Layout & Navigation (from 1.1.1.9)
 
 | Outstanding item | Wireframe reference | Complete before | Notes |
 |------------------|---------------------|-----------------|-------|
 | **Breadcrumbs** (layout-level) | 0.5.1.14 | None (page-level breadcrumbs exist on dashboard). | Optional: centralise in layout; currently deferred to per-page. |
 | **Header search** (full-screen modal on mobile) | 0.5.1.15 | Search API or scope definition (global search vs module-specific). | Search trigger exists; modal + results not implemented. |
 
-### 2.2 Placeholder / Help Routes
+### 3.2 Placeholder / Help Routes
 
 | Outstanding item | Wireframe reference | Complete before | Notes |
 |------------------|---------------------|-----------------|-------|
@@ -89,7 +100,7 @@
 
 ---
 
-## 3. Summary: Suggested Order of Work
+## 4. Summary: Suggested Order of Work
 
 To minimise rework and support full dashboard wireframe scope:
 
@@ -100,7 +111,7 @@ To minimise rework and support full dashboard wireframe scope:
    Complete 1.1.2.37 (Enforcement dashboard) and any enforcement list/detail views used by both enforcement module and dashboard.
 
 3. **Activity feed**  
-   Define and implement an activity-feed or audit-style API (filters: submissions / messages / enforcement) so the dashboard Activity tab can be built.
+   `shared_get_history` (1.1.1.20) provides role-based history; use it for the dashboard Activity tab. Extend filters (e.g. messages) if needed.
 
 4. **Follow-up entity & RPCs**  
    Add follow-up data model and RPCs (create, list, assign, escalate) if MOH T1/T2 follow-up flows are in scope.
@@ -113,11 +124,13 @@ To minimise rework and support full dashboard wireframe scope:
 
 ---
 
-## 4. Changelog
+## 5. Changelog
 
 | Date | Change |
 |------|--------|
 | 2026-01-27 | Initial version. Dashboard (0.5.1.18–0.5.1.20) outstanding scope plus layout/search/help items; suggested sequencing. |
+| 2026-01-27 | **History overview (1.1.1.20)** completed. Added §2 "Recently Completed"; Activity tab "Complete before" updated to reference `shared_get_history`. |
+| 2026-01-27 | **Audit Logs pages (1.1.1.21)** completed. Added to §2 Recently Completed; list, detail, and reports available for MOH/auditors; dashboard or other UIs can link to audit routes. |
 
 ---
 

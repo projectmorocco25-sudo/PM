@@ -364,67 +364,67 @@ Before Phase 1.2 (VCI) can begin, validate:
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.19 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.1.20a:** Verify wireframes for History overview page
+- [x] **Task 1.1.1.20a:** Verify wireframes for History overview page
   - 📋 **Details:** [tasks/frontend/1.1.1.20-history-overview-page.md#task-111120a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.20-history-overview-page.md#task-111120a-verify-wireframes)
-- [ ] **Task 1.1.1.20b:** Verify database schema for History overview page
+- [x] **Task 1.1.1.20b:** Verify database schema for History overview page
   - 📋 **Details:** [tasks/frontend/1.1.1.20-history-overview-page.md#task-111120b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.20-history-overview-page.md#task-111120b-verify-database-schema)
-- [ ] **Task 1.1.1.20c:** Verify API contracts for History overview page
+- [x] **Task 1.1.1.20c:** Verify API contracts for History overview page
   - 📋 **Details:** [tasks/frontend/1.1.1.20-history-overview-page.md#task-111120c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.20-history-overview-page.md#task-111120c-verify-api-contracts)
-- [ ] **Task 1.1.1.20:** Implement History overview page (role-based)
+- [x] **Task 1.1.1.20:** Implement History overview page (role-based)
   - 📋 **Details:** [tasks/frontend/1.1.1.20-history-overview-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.20-history-overview-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.20a, 1.1.1.20b, 1.1.1.20c, 1.1.1.9, 1.1.1.2b
-- [ ] **Task 1.1.1.20-verify:** Verify compliance of History overview page implementation
+- [x] **Task 1.1.1.20-verify:** Verify compliance of History overview page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.20-history-overview-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.20-history-overview-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.20 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.21a:** Verify wireframes for Audit logs pages
+- [x] **Task 1.1.1.21a:** Verify wireframes for Audit logs pages
   - 📋 **Details:** [tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121a-verify-wireframes)
-- [ ] **Task 1.1.1.21b:** Verify database schema for Audit logs pages
+- [x] **Task 1.1.1.21b:** Verify database schema for Audit logs pages
   - 📋 **Details:** [tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121b-verify-database-schema)
-- [ ] **Task 1.1.1.21c:** Verify API contracts for Audit logs pages
+- [x] **Task 1.1.1.21c:** Verify API contracts for Audit logs pages
   - 📋 **Details:** [tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.21-audit-logs-pages.md#task-111121c-verify-api-contracts)
-- [ ] **Task 1.1.1.21:** Implement Audit logs pages
+- [x] **Task 1.1.1.21:** Implement Audit logs pages
   - 📋 **Details:** [tasks/frontend/1.1.1.21-audit-logs-pages.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.21-audit-logs-pages.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.21a, 1.1.1.21b, 1.1.1.21c, 1.1.1.9, 1.1.1.2b
-- [ ] **Task 1.1.1.21-verify:** Verify compliance of Audit logs pages implementation
+- [x] **Task 1.1.1.21-verify:** Verify compliance of Audit logs pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.21-audit-logs-pages.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.21-audit-logs-pages.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.21 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Communications Module
 
-- [ ] **Task 1.1.1.22a:** Verify wireframes for Communications inbox and conversation pages
+- [x] **Task 1.1.1.22a:** Verify wireframes for Communications inbox and conversation pages
   - 📋 **Details:** [tasks/frontend/1.1.1.22-communications-inbox.md#task-111122a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.22-communications-inbox.md#task-111122a-verify-wireframes)
-- [ ] **Task 1.1.1.22b:** Verify database schema for Communications inbox and conversation pages
+- [x] **Task 1.1.1.22b:** Verify database schema for Communications inbox and conversation pages
   - 📋 **Details:** [tasks/frontend/1.1.1.22-communications-inbox.md#task-111122b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.22-communications-inbox.md#task-111122b-verify-database-schema)
-- [ ] **Task 1.1.1.22c:** Verify API contracts for Communications inbox and conversation pages
+- [x] **Task 1.1.1.22c:** Verify API contracts for Communications inbox and conversation pages
   - 📋 **Details:** [tasks/frontend/1.1.1.22-communications-inbox.md#task-111122c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.22-communications-inbox.md#task-111122c-verify-api-contracts)
-- [ ] **Task 1.1.1.22:** Implement Communications inbox and conversation pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
+- [x] **Task 1.1.1.22:** Implement Communications inbox and conversation pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
   - 📋 **Details:** [tasks/frontend/1.1.1.22-communications-inbox.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.22-communications-inbox.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.22a, 1.1.1.22b, 1.1.1.22c, 1.1.1.9, 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
-- [ ] **Task 1.1.1.22-verify:** Verify compliance of Communications inbox and conversation pages implementation
+- [x] **Task 1.1.1.22-verify:** Verify compliance of Communications inbox and conversation pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.22-communications-inbox.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.22-communications-inbox.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.22 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.23a:** Verify wireframes for Communications compose and sent pages
+- [x] **Task 1.1.1.23a:** Verify wireframes for Communications compose and sent pages
   - 📋 **Details:** [tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123a-verify-wireframes)
-- [ ] **Task 1.1.1.23b:** Verify database schema for Communications compose and sent pages
+- [x] **Task 1.1.1.23b:** Verify database schema for Communications compose and sent pages
   - 📋 **Details:** [tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123b-verify-database-schema)
-- [ ] **Task 1.1.1.23c:** Verify API contracts for Communications compose and sent pages
+- [x] **Task 1.1.1.23c:** Verify API contracts for Communications compose and sent pages
   - 📋 **Details:** [tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.23-communications-compose-sent.md#task-111123c-verify-api-contracts)
-- [ ] **Task 1.1.1.23:** Implement Communications compose and sent pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
+- [x] **Task 1.1.1.23:** Implement Communications compose and sent pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
   - 📋 **Details:** [tasks/frontend/1.1.1.23-communications-compose-sent.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.23-communications-compose-sent.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.23a, 1.1.1.23b, 1.1.1.23c, 1.1.1.9, 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
-- [ ] **Task 1.1.1.23-verify:** Verify compliance of Communications compose and sent pages implementation
+- [x] **Task 1.1.1.23-verify:** Verify compliance of Communications compose and sent pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.23-communications-compose-sent.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.23-communications-compose-sent.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.23 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.24a:** Verify wireframes for Communications announcements and archived pages
+- [x] **Task 1.1.1.24a:** Verify wireframes for Communications announcements and archived pages
   - 📋 **Details:** [tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124a-verify-wireframes)
-- [ ] **Task 1.1.1.24b:** Verify database schema for Communications announcements and archived pages
+- [x] **Task 1.1.1.24b:** Verify database schema for Communications announcements and archived pages
   - 📋 **Details:** [tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124b-verify-database-schema)
-- [ ] **Task 1.1.1.24c:** Verify API contracts for Communications announcements and archived pages
+- [x] **Task 1.1.1.24c:** Verify API contracts for Communications announcements and archived pages
   - 📋 **Details:** [tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.24-communications-announcements-archived.md#task-111124c-verify-api-contracts)
-- [ ] **Task 1.1.1.24:** Implement Communications announcements and archived pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
+- [x] **Task 1.1.1.24:** Implement Communications announcements and archived pages ⚠️ **DEPENDS ON:** 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
   - 📋 **Details:** [tasks/frontend/1.1.1.24-communications-announcements-archived.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.24-communications-announcements-archived.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.24a, 1.1.1.24b, 1.1.1.24c, 1.1.1.9, 1.1.1.2a, 1.1.1.2c, 1.1.1.8a
-- [ ] **Task 1.1.1.24-verify:** Verify compliance of Communications announcements and archived pages implementation
+- [x] **Task 1.1.1.24-verify:** Verify compliance of Communications announcements and archived pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.24-communications-announcements-archived.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.24-communications-announcements-archived.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.24 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 

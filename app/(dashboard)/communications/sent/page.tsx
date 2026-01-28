@@ -1,17 +1,15 @@
 /**
- * Task 1.1.1.12 placeholder. Route: /communications/sent
- * Wireframe: N/A (placeholder). Ref: routing-structure.md
+ * Wireframe: task-0.5.1.27-sent-messages.md
+ * Route: /communications/sent
+ * Implements: Sent list — Filters, Search, To/Subject/Preview, status, timestamp.
+ * API: communications_list_sent. Tables: conversations, messages.
+ * Wireframe Link: docs/04-design/user-experience/wireframes/00-core-foundation/communications/task-0.5.1.27-sent-messages.md
  */
 
-import { PlaceholderPage } from "@/components/PlaceholderPage";
+"use client";
+
+import { SentContent } from "./SentContent";
 
 export default function CommunicationsSentPage() {
-  return (
-    <PlaceholderPage
-      title="Sent Messages"
-      route="/communications/sent"
-      backHref="/communications/inbox"
-      backLabel="Back to Inbox"
-    />
-  );
+  return <SentContent />;
 }

@@ -119,23 +119,40 @@ SELECT rmm_create_company(
 
 ### rmm_submit_registry_update(...)
 
-**Purpose:** Submit registry update (company, product, SKU)
+**Purpose:** Submit registry update (company, product, SKU) **including deletion requests**.
 
 **Parameters:**
-- `submission_type` (text) - Submission type
-- `entity_type` (text) - Entity type (company, product, sku)
-- `entity_id` (uuid) - Entity ID (for updates/deletes)
-- `submission_data` (jsonb) - Submission data
+- `submission_type` (text) - Submission type: `company_create`, `company_update`, `company_delete`, `product_create`, `product_update`, `product_delete`, `sku_create`, `sku_update`, `sku_delete`
+- `entity_type` (text) - Entity type (`company`, `product`, `sku`)
+- `entity_id` (uuid) - Entity ID (for updates/deletes) — **Required for deletion requests**
+- `submission_data` (jsonb) - Submission data (JSON). **For deletion requests, must include:**
+  - `reason` (text, required) - Reason for deletion
+  - `detailed_explanation` (text, optional) - Detailed explanation
 
 **Returns:** JSON with submission data
 
 **State Transition:** `draft` → `submitted`
 
+**Deletion requests:**
+- **Who can create:** Tier 2 Officer (or Company for their own entities, if allowed).
+- **Submission types:** `company_delete`, `product_delete`, `sku_delete`.
+- **Required fields:**
+  - `entity_id`: Must reference an existing entity.
+  - `submission_data.reason`: Mandatory reason for deletion.
+- **Workflow:** A deletion request follows the same workflow as other submissions:
+  1. Created in `draft` status.
+  2. Submitted → `submitted` status.
+  3. Tier 2 Officer verifies → `tier2_verified` status.
+  4. Tier 1 approves → `tier1_approved` status (issues command).
+  5. Tier 2 Registrar implements → `tier2_implemented` status → applies soft delete.
+  6. Completed → `completed` status.
+- **Audit:** All steps are logged; the final deletion is logged with `old_values` preserved (see audit-logging-spec).
+
 ---
 
 ### rmm_verify_registry_submission(submission_id uuid, comments text DEFAULT NULL)
 
-**Purpose:** Tier 2 Officer verifies registry submission
+**Purpose:** Tier 2 Officer verifies registry submission (including deletion requests).
 
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
@@ -149,11 +166,13 @@ SELECT rmm_create_company(
 - User must be Tier 2 Officer
 - Submission must be in `submitted` status
 
+**Deletion requests:** Tier 2 Officer can verify deletion requests. Verification confirms the deletion request is valid and properly documented. After verification, the deletion request moves to Tier 1 for approval.
+
 ---
 
 ### rmm_approve_registry_submission(submission_id uuid, comments text DEFAULT NULL)
 
-**Purpose:** Tier 1 approves registry submission
+**Purpose:** Tier 1 approves registry submission (including deletion requests).
 
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
@@ -167,11 +186,13 @@ SELECT rmm_create_company(
 - User must be Tier 1
 - Submission must be in `tier2_verified` or `tier2_peer_reviewed` status
 
+**Deletion requests:** Tier 1 approval of a deletion request is the "issue the command" step. Approval authorizes the Tier 2 Registrar to implement the deletion. After approval, the deletion request moves to the Tier 2 Registrar for implementation.
+
 ---
 
 ### rmm_implement_registry_update(submission_id uuid)
 
-**Purpose:** Tier 2 Registrar implements registry update
+**Purpose:** Tier 2 Registrar implements registry update (including approved deletions).
 
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
@@ -183,6 +204,34 @@ SELECT rmm_create_company(
 **Validation:**
 - User must be Tier 2 Registrar
 - Submission must be in `tier1_approved` status
+
+**Deletion implementation:**  
+When `submission_type` is `company_delete`, `product_delete`, or `sku_delete`:
+
+1. **Soft delete applied**
+   - **Products/SKUs:** Sets `deactivated_at` = current timestamp, `deactivated_by` = implementing user (Tier 2 Registrar), `deactivated_reason` = reason from `submission_data`.
+   - **Companies:** Uses suspension/deactivation semantics per schema (e.g. `suspended_at`, `suspended_by`, `suspended_reason` and/or `is_active`); entity record is retained.
+
+2. **Cascade deactivation**
+   - Company deletion → deactivates all products and SKUs for that company.
+   - Product deletion → deactivates all SKUs for that product.
+   - SKU deletion → no cascade (leaf entity).
+
+3. **Audit log entry**
+   - Creates an `audit_logs` row with:
+     - `operation_type` = `'DELETE'`
+     - `table_name` = entity table (`companies` / `products` / `skus`)
+     - `record_id` = entity ID
+     - `old_values` = full entity data before deletion (JSONB) — **mandatory**
+     - `new_values` = deactivation/suspension fields set
+     - `user_id` = implementing user
+   - Hash chain and retention follow audit-logging-spec (e.g. 7-year retention).
+
+4. **Submission status**
+   - Updates submission status to `tier2_implemented` and marks the submission as completed.
+
+5. **No hard deletes**
+   - Entity row remains in the database; only deactivation/suspension fields are set. All data is preserved for audit (see audit-logging-spec).
 
 ---
 
@@ -898,7 +947,7 @@ SELECT log_historical_data_access(
 
 ## Phase 1.1 Implementation (Tasks 1.1.1.2b–1.1.1.2e)
 
-**Migrations:** `20260127150900_rpc_shared_functions`, `20260127151000_rpc_communications_functions`, `20260127151100_rpc_system_status_function`, `20260127151200_rpc_authentication_function`.
+**Migrations:** `20260127150900_rpc_shared_functions`, `20260127151000_rpc_communications_functions`, `20260127151100_rpc_system_status_function`, `20260127151200_rpc_authentication_function`, `20260127151300_rpc_rmm_list_functions`, `20260127151500_rpc_system_get_status_public`.
 
 ### Shared (1.1.1.2b)
 
@@ -931,13 +980,16 @@ All **SECURITY INVOKER**; RLS applies.
 
 All **SECURITY INVOKER**; RLS applies.
 
-### System (1.1.1.2d)
+### System (1.1.1.2d, 1.1.1.17)
 
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `system_get_status` | `()` | `{ modules: [...], at }` |
+| `system_get_status_public` | `()` | `{ overall, components[], incidents[], maintenance[], at }` |
 
-**SECURITY INVOKER**; RLS on `system_config` (MOH Tier 1 / system_admin).
+**`system_get_status`:** SECURITY INVOKER; RLS on `system_config` (MOH Tier 1 / system_admin).
+
+**`system_get_status_public`:** SECURITY DEFINER. Public /status page (Task 1.1.1.17). Grant to `anon`, `authenticated`, `service_role`. Migration: `20260127151500_rpc_system_get_status_public`.
 
 ### Authentication (1.1.1.2e)
 
@@ -947,9 +999,20 @@ All **SECURITY INVOKER**; RLS applies.
 
 **SECURITY DEFINER**. Self-create only (`p_id = auth.uid()`). Upsert on conflict.
 
+### RMM List (1.1.1.11 — Dashboard)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_get_company` | `(p_id uuid)` | `{ company }` or `{ error, company_id }` |
+| `rmm_list_companies` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data: [...], total }` |
+| `rmm_list_products` | `(p_limit int, p_offset int, p_company_id uuid DEFAULT NULL)` | `{ data: [...], total }` |
+| `rmm_list_skus` | `(p_limit int, p_offset int, p_product_id uuid DEFAULT NULL)` | `{ data: [...], total }` |
+
+**Migration:** `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies. Used by dashboard.
+
 ---
 
-**Last Updated:** 2025-12-31  
+**Last Updated:** 2026-01-27  
 **Next Review Date:** [To be scheduled]  
 **Owner:** Maya
 

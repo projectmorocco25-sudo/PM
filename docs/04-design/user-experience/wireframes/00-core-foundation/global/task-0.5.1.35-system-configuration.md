@@ -138,6 +138,50 @@
 │ │ [View Regulatory Framework] [View Full Change Log]     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
+│ ┌─────────────────────────────────────────────────────────┐│
+│ │ User Management (If User Deletion Handled Here)          ││
+│ │                                                          ││
+│ │ ⚠️ Note: User deletion/deactivation workflow is being   ││
+│ │    finalized. This section will be implemented based on ││
+│ │    the decided workflow.                                ││
+│ │                                                          ││
+│ │ [If User Deletion Workflow Decided:]                    ││
+│ │                                                          ││
+│ │ User List                                                ││
+│ │ [Filter: All | MOH Users | Company Users | Active | Inactive]││
+│ │ [Search Users...]                                        ││
+│ │                                                          ││
+│ │ User: John Doe (john.doe@company.com)                   ││
+│ │   Role: Company User  Company: ABC Pharma               ││
+│ │   Status: Active                                        ││
+│ │   Actions: [View] [Edit] [Request Deactivation]         ││
+│ │                                                          ││
+│ │ User: Jane Smith (jane.smith@moh.gov.ma)                ││
+│ │   Role: MOH Tier 2 Officer                             ││
+│ │   Status: Active                                        ││
+│ │   Actions: [View] [Edit] [Request Deactivation]         ││
+│ │                                                          ││
+│ │ Pending Deactivation Requests (3)                       ││
+│ │ • User: John Doe                                        ││
+│ │   Requested by: Officer A (Tier 2 Officer)             ││
+│ │   Status: Awaiting Tier 1 Approval                      ││
+│ │   [Approve] [Reject] [View Details]                     ││
+│ │                                                          ││
+│ │ • User: Jane Smith                                      ││
+│ │   Requested by: Officer B (Tier 2 Officer)             ││
+│ │   Status: Awaiting Tier 1 Approval                      ││
+│ │   [Approve] [Reject] [View Details]                     ││
+│ │                                                          ││
+│ │ Deactivation History                                     ││
+│ │ • User: Bob Johnson                                     ││
+│ │   Deactivated: 2025-01-10                               ││
+│ │   Implemented by: Registrar C (Tier 2 Registrar)      ││
+│ │   Reason: User Request                                  ││
+│ │   [View Audit Log]                                       ││
+│ │                                                          ││
+│ │ [View All Users] [Export User List]                      ││
+│ └─────────────────────────────────────────────────────────┘│
+│                                                             │
 │ [Cancel]                                    [Save Changes] │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -205,6 +249,38 @@
 - **Actions:** Links to compliance details and regulatory framework
 - **Display:** Card section with clear status indicators
 - **Styling:** Status colors (green for complete, yellow for in progress, red for pending)
+
+### User Management Section (Conditional - If User Deletion Handled Here)
+- **Visibility:** Only if user deletion/deactivation is handled in system configuration
+- **Layout:** Full-width card section
+- **User List:**
+  - Table/list of all users (MOH and Company)
+  - Columns: Name, Email, Role, Company, Status, Actions
+  - Filters: Role, Company, Status (Active/Inactive)
+  - Search: Full-text search by name/email
+- **Actions:**
+  - **[Request Deactivation]:** Opens deletion request modal (Tier 2 Officer only)
+  - **[Approve Deactivation]:** Approves pending deactivation request (Tier 1 only)
+  - **[Implement Deactivation]:** Implements approved deactivation (Tier 2 Registrar only)
+  - **[View]:** View user details
+  - **[Edit]:** Edit user information
+- **Pending Deactivation Requests:**
+  - List of pending deactivation requests
+  - Shows: User, Requested by, Status, Actions
+  - Actions: Approve, Reject, View Details
+- **Deactivation History:**
+  - List of completed deactivations
+  - Shows: User, Deactivated date, Implemented by, Reason
+  - Link to audit log entry
+- **Workflow Display:**
+  - Shows deletion workflow: Request → Approve → Implement
+  - Shows audit trail links
+  - Shows deactivation reason (mandatory)
+- **Cascade Effects:**
+  - If user deactivation affects company access, show cascade information
+- **Note:** This section is conditional based on workflow decision. If user deletion is handled elsewhere, show note: "User management handled in [location]. See [link]."
+
+**⚠️ IMPLEMENTATION NOTE:** User deletion/deactivation workflow is not yet fully defined. This section should be implemented only after the workflow decision is made (see RMM-CRUD-DELETION-REVIEW.md Section 3.2). If user deletion is handled elsewhere (e.g., separate user management module), this section should show a note directing users to the correct location.
 
 ### Regulatory Compliance Section (Enhanced per Fatima's Requirements)
 - **CNDP Compliance (Law No. 09-08):**

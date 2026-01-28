@@ -186,6 +186,8 @@ When creating verification tasks in phase files, reference this document:
 - Database: [audit_logs table](./database/data-dictionary.md#audit_logs), [system_config table](./database/data-dictionary.md#system_config)
 - APIs: [shared audit functions](./api/rpc-functions.md#shared_functions)
 
+**Note:** Audit Logs List and Detail pages now explicitly support deletion audit entries with old_values display, deletion workflow steps, and deactivation details. See [WIREFRAMES-CRUD-DELETION-REVIEW.md](../../05-project-management/phase-1-1-rmm/WIREFRAMES-CRUD-DELETION-REVIEW.md) for deletion-specific updates.
+
 ---
 
 ## RMM Module Features
@@ -198,6 +200,7 @@ When creating verification tasks in phase files, reference this document:
 | Company Detail | `/rmm/companies/[id]` | task-0.5.2.3 ✅ | `companies`, `products`, `registry_submissions` | `rmm_get_company`, `rmm_list_company_products`, `rmm_get_company_history` | ⚠️ | Emma | 1.1.2 |
 | Create Company | `/rmm/companies/new` | task-0.5.2.8 ✅ | `companies`, `registry_submissions` | `rmm_create_company`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
 | Edit Company | `/rmm/companies/[id]/edit` | task-0.5.2.8 ✅ | `companies`, `registry_submissions` | `rmm_update_company`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
+| **Delete Company** | **N/A (Modal/Action)** | **task-0.5.1.19 ✅, task-0.5.1.20 ✅** | **`companies`, `registry_submissions`, `audit_logs`** | **`rmm_submit_registry_update` (company_delete), `rmm_verify_registry_submission`, `rmm_approve_registry_submission`, `rmm_implement_registry_update`** | **⚠️** | **Emma** | **1.1.2** |
 | RMM Overview | `/rmm` | task-0.5.2.16 ✅ | `companies`, `products`, `skus`, `registry_submissions` | `rmm_get_overview_stats` | ⚠️ | Emma | 1.1.2 |
 
 **Related Documentation:**
@@ -205,6 +208,7 @@ When creating verification tasks in phase files, reference this document:
 - Wireframes: [Company Wireframes](../../04-design/user-experience/wireframes/01-rmm/companies/)
 - Database: [companies table](./database/data-dictionary.md#companies), [registry_submissions table](./database/data-dictionary.md#registry-submissions)
 - APIs: [rmm_create_company](./api/rpc-functions.md#rmm_create_company), [rmm_submit_registry_update](./api/rpc-functions.md#rmm_submit_registry_update)
+- **Deletion Workflow:** [RMM-CRUD-DELETION-REVIEW.md](../../05-project-management/phase-1-1-rmm/RMM-CRUD-DELETION-REVIEW.md#31-company)
 
 ---
 
@@ -216,12 +220,14 @@ When creating verification tasks in phase files, reference this document:
 | Product Detail | `/rmm/products/[id]` | task-0.5.2.5 ✅ | `products`, `skus`, `registry_submissions` | `rmm_get_product`, `rmm_list_product_skus`, `rmm_get_product_history` | ⚠️ | Emma | 1.1.2 |
 | Create Product | `/rmm/products/new` | task-0.5.2.9 ✅ | `products`, `registry_submissions` | `rmm_create_product`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
 | Edit Product | `/rmm/products/[id]/edit` | task-0.5.2.9 ✅ | `products`, `registry_submissions` | `rmm_update_product`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
+| **Delete Product** | **N/A (Modal/Action)** | **task-0.5.1.19 ✅, task-0.5.1.20 ✅** | **`products`, `registry_submissions`, `audit_logs`** | **`rmm_submit_registry_update` (product_delete), `rmm_verify_registry_submission`, `rmm_approve_registry_submission`, `rmm_implement_registry_update`** | **⚠️** | **Emma** | **1.1.2** |
 
 **Related Documentation:**
 - Routes: [route-inventory.md](./frontend/route-inventory.md#rmm-routes)
 - Wireframes: [Product Wireframes](../../04-design/user-experience/wireframes/01-rmm/products/)
 - Database: [products table](./database/data-dictionary.md#products)
 - APIs: [rmm_create_product](./api/rpc-functions.md#rmm-module-functions)
+- **Deletion Workflow:** [RMM-CRUD-DELETION-REVIEW.md](../../05-project-management/phase-1-1-rmm/RMM-CRUD-DELETION-REVIEW.md#34-products)
 
 ---
 
@@ -233,12 +239,14 @@ When creating verification tasks in phase files, reference this document:
 | SKU Detail | `/rmm/skus/[id]` | task-0.5.2.7 ✅ | `skus`, `registry_submissions`, `thresholds` | `rmm_get_sku`, `rmm_get_sku_history`, `vci_get_sku_thresholds` | ⚠️ | Emma | 1.1.2 |
 | Create SKU | `/rmm/skus/new` | task-0.5.2.10 ✅ | `skus`, `registry_submissions` | `rmm_create_sku`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
 | Edit SKU | `/rmm/skus/[id]/edit` | task-0.5.2.10 ✅ | `skus`, `registry_submissions` | `rmm_update_sku`, `rmm_submit_registry_update` | ⚠️ | Emma | 1.1.2 |
+| **Delete SKU** | **N/A (Modal/Action)** | **task-0.5.1.19 ✅, task-0.5.1.20 ✅** | **`skus`, `registry_submissions`, `audit_logs`** | **`rmm_submit_registry_update` (sku_delete), `rmm_verify_registry_submission`, `rmm_approve_registry_submission`, `rmm_implement_registry_update`** | **⚠️** | **Emma** | **1.1.2** |
 
 **Related Documentation:**
 - Routes: [route-inventory.md](./frontend/route-inventory.md#rmm-routes)
 - Wireframes: [SKU Wireframes](../../04-design/user-experience/wireframes/01-rmm/skus/)
 - Database: [skus table](./database/data-dictionary.md#skus)
 - APIs: [rmm_create_sku](./api/rpc-functions.md#rmm-module-functions)
+- **Deletion Workflow:** [RMM-CRUD-DELETION-REVIEW.md](../../05-project-management/phase-1-1-rmm/RMM-CRUD-DELETION-REVIEW.md#35-skus)
 
 ---
 
@@ -251,12 +259,14 @@ When creating verification tasks in phase files, reference this document:
 | Verify Submission (Tier 2) | N/A (Modal/Action) | task-0.5.2.13 ✅ | `registry_submissions`, `approval_history` | `rmm_verify_registry_submission` | ⚠️ | Emma | 1.1.2 |
 | Approve Submission (Tier 1) | N/A (Modal/Action) | task-0.5.2.13 ✅ | `registry_submissions`, `approval_history` | `rmm_approve_registry_submission` | ⚠️ | Emma | 1.1.2 |
 | Implement Submission (Tier 2 Registrar) | N/A (Modal/Action) | task-0.5.2.13 ✅ | `registry_submissions`, `approval_history` | `rmm_implement_registry_update` | ⚠️ | Emma | 1.1.2 |
+| **Deletion Workflow** | **N/A (Integrated)** | **task-0.5.1.19 ✅, task-0.5.1.20 ✅** | **`registry_submissions`, `audit_logs`** | **Same as above (submission_type = *_delete)** | **⚠️** | **Emma** | **1.1.2** |
 
 **Related Documentation:**
 - Routes: [route-inventory.md](./frontend/route-inventory.md#rmm-routes)
 - Wireframes: [Registry Workflow Wireframes](../../04-design/user-experience/wireframes/01-rmm/workflow/)
 - Database: [registry_submissions table](./database/data-dictionary.md#registry-submissions), [approval_history table](./database/data-dictionary.md#approval-history)
 - APIs: [rmm workflow functions](./api/rpc-functions.md#rmm_verify_registry_submission), [workflow architecture](./workflow-architecture.md)
+- **Deletion Workflow:** [RMM-CRUD-DELETION-REVIEW.md](../../05-project-management/phase-1-1-rmm/RMM-CRUD-DELETION-REVIEW.md#4-deletion-workflow-unified), [registry-workflow.md](../../05-project-management/features/rmm/registry-workflow.md#deletion-workflow-company-product-sku)
 
 ---
 

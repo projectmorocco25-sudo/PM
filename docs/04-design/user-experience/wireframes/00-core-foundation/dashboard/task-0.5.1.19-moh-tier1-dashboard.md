@@ -81,9 +81,17 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ │              │ │   1h ago     │ │   2 SKUs     │        ││
 │ │ Active Subm: │ │   ⚠️ 2d deadline│ │   Legal: DMP Art.15│        ││
 │ │ 1,234        │ │              │ │              │        ││
-│ │              │ │ • Threshold  │ │ • XYZ Corp   │        ││
-│ │ [Details →] │ │   Medium     │ │   5 SKUs     │        ││
-│ │              │ │   2h ago     │ │   Legal: DMP Art.12│        ││
+│ │              │ │ ⚠️ Company  │ │ • XYZ Corp   │        ││
+│ │ [Details →] │ │   Deletion   │ │   5 SKUs     │        ││
+│ │              │ │   Request   │ │   Legal: DMP Art.12│        ││
+│ │              │ │   Company ABC│ │              │        ││
+│ │              │ │   Awaiting   │ │              │        ││
+│ │              │ │   Approval   │ │              │        ││
+│ │              │ │   [Approve]  │ │              │        ││
+│ │              │ │              │ │              │        ││
+│ │              │ │ • Threshold  │ │              │        ││
+│ │              │ │   Medium     │ │              │        ││
+│ │              │ │   2h ago     │ │              │        ││
 │ │              │ │   ⚠️ 3d deadline│ │              │        ││
 │ │              │ │              │ │              │        ││
 │ │              │ │ [View All →]│ │ [View All →]│        ││
@@ -289,6 +297,9 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ │                                                          ││
 │ │ [View All Companies →]                                  ││
 │ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ **Note:** Deletion requests may be visible in compliance context for companies/products/SKUs with compliance issues. Deletion requests are tracked separately from compliance violations.
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -348,6 +359,8 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 │ │                                                          ││
 │ │ [Load More] [Export List]                               ││
 │ └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│ **Note:** Deletion requests may appear in enforcement context if deletion is related to enforcement actions. Deletion workflow follows registry submission workflow, not enforcement workflow.
 │                                                             │
 │ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        ││
 │ │ Follow-up    │ │ Appeals      │ │ Audit Trail  │        ││
@@ -685,6 +698,62 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
 └─────────────────────────────────────────────────────────────┘
 ```
 
+### 6. Approve Deletion Request Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Approve Deletion Request                      [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ ⚠️ WARNING: This action will delete an entity    │  │
+│     │                                                   │  │
+│     │ Entity Type: Company                             │  │
+│     │ Entity Name: ABC Pharma                          │  │
+│     │ Entity ID: [Link to company detail]              │  │
+│     │                                                   │  │
+│     │ Deletion Request Details:                         │  │
+│     │ • Requested by: Officer A (Tier 2 Officer)      │  │
+│     │ • Requested at: 2025-01-15 10:30 AM             │  │
+│     │ • Verified by: Officer B (Tier 2 Officer)       │  │
+│     │ • Verified at: 2025-01-15 11:00 AM              │  │
+│     │ • Reason: [Deletion reason from submission]      │  │
+│     │                                                   │  │
+│     │ Cascade Effects:                                  │  │
+│     │ ⚠️ This deletion will cascade to:                │  │
+│     │   • 5 Products                                    │  │
+│     │   • 12 SKUs                                       │  │
+│     │   All will be deactivated (soft delete)          │  │
+│     │                                                   │  │
+│     │ Audit Information:                                │  │
+│     │ • All deletion steps will be logged              │  │
+│     │ • Old values will be preserved in audit_logs    │  │
+│     │ • Retention period: 7 years (Law No. 09-08)      │  │
+│     │                                                   │  │
+│     │ Approval Comments (Optional):                    │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ Approved per regulatory requirements.         ││  │
+│     │ │ Command issued to Tier 2 Registrar.          ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ☑ I understand this action cannot be undone     │  │
+│     │ ☑ I confirm the deletion is authorized          │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Approve & Issue Command]│  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Component Specifications:**
+- **Warning Section:** Red border, warning icon, prominent display
+- **Cascade Effects:** Show all entities that will be affected
+- **Audit Information:** Emphasize audit trail and retention
+- **Confirmation Checkboxes:** Required before approval
+- **Action Button:** "Approve & Issue Command" (green, primary)
+
 ---
 
 ## Component Specifications
@@ -750,13 +819,41 @@ This dashboard uses a **tabbed interface** to organize content by workflow, **mo
   - Red (<70%): Poor compliance, requires immediate action
 - **Action Link:** "[View Compliance Details]" to detailed compliance report
 
-### Pending Approvals Widget (Enhanced per Fatima's Requirement)
+### Pending Approvals Widget (Enhanced for Deletion Workflow)
 - **Layout:** Card widget
-- **Content:** List of pending approvals
+- **Content:** List of pending approvals (including deletion requests)
 - **Each Approval Item Shows:**
   - **Legal Basis Verification Status (Fatima's Requirement):** "✓ Verified" or "⚠️ Needs Verification"
   - **Regulatory Deadline Countdown (Fatima's Requirement):** "⚠️ [X]d deadline" indicator
   - **Regulatory Requirement Checklist Status (Fatima's Requirement):** "✓ Complete" or "⚠️ Incomplete"
+- **Deletion-Specific Approval Items (NEW):**
+  - **Format:** "Company Deletion Request - [Company Name]" or "Product Deletion Request - [Product Name]" or "SKU Deletion Request - [SKU Code]"
+  - **Status Badge:** "Awaiting Tier 1 Approval"
+  - **Entity Information:**
+    - Entity Type: Company/Product/SKU (badge)
+    - Entity Name/Code: Display name or code
+    - Entity ID: Link to entity detail page
+  - **Workflow Information:**
+    - Requested by: Tier 2 Officer name
+    - Requested at: Timestamp
+    - Verified by: Tier 2 Officer name (if verified)
+    - Verified at: Timestamp (if verified)
+  - **Regulatory Deadline:** Show if applicable (⚠️ [X]d deadline)
+  - **Action Buttons:**
+    - "[Approve & Issue Command]" - Primary button (green)
+    - "[Reject]" - Secondary button (red)
+    - "[View Details]" - Tertiary button (opens submission detail modal/page)
+  - **Visual Distinction:** 
+    - Deletion requests shown with ⚠️ warning icon
+    - Red border or background tint to indicate critical action
+    - "Deletion Request" badge in addition to entity type badge
+- **Filtering:**
+  - Filter by submission type: All, Create, Update, **Delete** (NEW)
+  - Filter by entity type: All, Company, Product, SKU
+  - Sort by: Priority (deletion requests first), Date, Entity Type
+- **Priority Indicators:**
+  - Deletion requests shown first (highest priority)
+  - Regulatory deadline urgency indicators (🔴 <3 days, 🟡 3-7 days)
 - **Priority:** Sort by regulatory deadline urgency (deadline-critical first)
 
 ### Module Activation Status Widget (Fatima's Requirement)

@@ -63,7 +63,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 **📁 Task Definitions:** All detailed task definitions are in `phase-1-1-rmm/tasks/` directory  
 **📋 Task Templates:** See `standards/task-templates/` for reusable task structures (all enforce **Supabase cloud-only, never local**)  
-**🔗 Task Registry:** This file serves as the index/registry of all tasks
+**🔗 Task Registry:** This file serves as the index/registry of all tasks  
+**📌 Outstanding Scope:** See [Outstanding Scope & Sequencing](./planning/outstanding-scope-and-sequencing.md) for deferred wireframe/feature items and suggested task sequencing before readdressing them.
 
 ---
 
@@ -210,156 +211,156 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### Layout & Navigation
 
-- [ ] **Task 1.1.1.9a:** Verify wireframes for core foundation layout
+- [x] **Task 1.1.1.9a:** Verify wireframes for core foundation layout
   - 📋 **Details:** [tasks/frontend/1.1.1.9-core-layout.md#task-11119a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.9-core-layout.md#task-11119a-verify-wireframes)
 
-- [ ] **Task 1.1.1.9b:** Verify database schema for core foundation layout
+- [x] **Task 1.1.1.9b:** Verify database schema for core foundation layout
   - 📋 **Details:** [tasks/frontend/1.1.1.9-core-layout.md#task-11119b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.9-core-layout.md#task-11119b-verify-database-schema)
 
-- [ ] **Task 1.1.1.9c:** Verify API contracts for core foundation layout
+- [x] **Task 1.1.1.9c:** Verify API contracts for core foundation layout
   - 📋 **Details:** [tasks/frontend/1.1.1.9-core-layout.md#task-11119c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.9-core-layout.md#task-11119c-verify-api-contracts)
 
-- [ ] **Task 1.1.1.9:** Create core foundation layout and navigation
+- [x] **Task 1.1.1.9:** Create core foundation layout and navigation
   - 📋 **Details:** [tasks/frontend/1.1.1.9-core-layout.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.9-core-layout.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.9a, 1.1.1.9b, 1.1.1.9c, 1.1.1.2b
 
-- [ ] **Task 1.1.1.9-verify:** Verify compliance of core foundation layout and navigation implementation
+- [x] **Task 1.1.1.9-verify:** Verify compliance of core foundation layout and navigation implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.9-core-layout.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.9-core-layout.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.9 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Authentication
 
-- [ ] **Task 1.1.1.10a:** Verify wireframes for authentication pages
+- [x] **Task 1.1.1.10a:** Verify wireframes for authentication pages
   - 📋 **Details:** [tasks/frontend/1.1.1.10-authentication.md#task-111110a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.10-authentication.md#task-111110a-verify-wireframes)
 
-- [ ] **Task 1.1.1.10b:** Verify database schema for authentication
+- [x] **Task 1.1.1.10b:** Verify database schema for authentication
   - 📋 **Details:** [tasks/frontend/1.1.1.10-authentication.md#task-111110b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.10-authentication.md#task-111110b-verify-database-schema)
 
-- [ ] **Task 1.1.1.10c:** Verify API contracts for authentication
+- [x] **Task 1.1.1.10c:** Verify API contracts for authentication
   - 📋 **Details:** [tasks/frontend/1.1.1.10-authentication.md#task-111110c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.10-authentication.md#task-111110c-verify-api-contracts)
 
-- [ ] **Task 1.1.1.10:** Implement authentication pages
+- [x] **Task 1.1.1.10:** Implement authentication pages
   - 📋 **Details:** [tasks/frontend/1.1.1.10-authentication.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.10-authentication.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.10a, 1.1.1.10b, 1.1.1.10c, 1.1.1.2e
 
-- [ ] **Task 1.1.1.10-verify:** Verify compliance of authentication pages implementation
+- [x] **Task 1.1.1.10-verify:** Verify compliance of authentication pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.10-authentication.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.10-authentication.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.10 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Dashboard & Public Pages
 
-- [ ] **Task 1.1.1.11a:** Verify wireframes for dashboard page
+- [x] **Task 1.1.1.11a:** Verify wireframes for dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#task-111111a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#task-111111a-verify-wireframes)
-- [ ] **Task 1.1.1.11b:** Verify database schema for dashboard page
+- [x] **Task 1.1.1.11b:** Verify database schema for dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#task-111111b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#task-111111b-verify-database-schema)
-- [ ] **Task 1.1.1.11c:** Verify API contracts for dashboard page
+- [x] **Task 1.1.1.11c:** Verify API contracts for dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#task-111111c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#task-111111c-verify-api-contracts)
-- [ ] **Task 1.1.1.11:** Implement dashboard page (role-based)
+- [x] **Task 1.1.1.11:** Implement dashboard page (role-based)
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.11a, 1.1.1.11b, 1.1.1.11c, 1.1.1.9, 1.1.1.2b
-- [ ] **Task 1.1.1.11-verify:** Verify compliance of dashboard page implementation
+- [x] **Task 1.1.1.11-verify:** Verify compliance of dashboard page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.11-dashboard-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.11-dashboard-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.11 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.1.12a:** Verify routes for placeholder pages
+- [x] **Task 1.1.1.12a:** Verify routes for placeholder pages
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-routes](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112a-verify-routes)
-- [ ] **Task 1.1.1.12b:** Verify database schema for placeholder pages
+- [x] **Task 1.1.1.12b:** Verify database schema for placeholder pages
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112b-verify-database-schema)
-- [ ] **Task 1.1.1.12c:** Verify API contracts for placeholder pages
+- [x] **Task 1.1.1.12c:** Verify API contracts for placeholder pages
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#task-111112c-verify-api-contracts)
-- [ ] **Task 1.1.1.12:** Implement placeholder pages for all routes (30 pages with route protection)
+- [x] **Task 1.1.1.12:** Implement placeholder pages for all routes (30 pages with route protection)
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.12a, 1.1.1.12b, 1.1.1.12c, 1.1.1.9
-- [ ] **Task 1.1.1.12-verify:** Verify compliance of placeholder pages implementation
+- [x] **Task 1.1.1.12-verify:** Verify compliance of placeholder pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.12-placeholder-pages.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.12-placeholder-pages.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.12 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.13a:** Verify wireframes for public homepage
+- [x] **Task 1.1.1.13a:** Verify wireframes for public homepage
   - 📋 **Details:** [tasks/frontend/1.1.1.13-public-homepage.md#task-111113a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.13-public-homepage.md#task-111113a-verify-wireframes)
-- [ ] **Task 1.1.1.13b:** Verify database schema for public homepage
+- [x] **Task 1.1.1.13b:** Verify database schema for public homepage
   - 📋 **Details:** [tasks/frontend/1.1.1.13-public-homepage.md#task-111113b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.13-public-homepage.md#task-111113b-verify-database-schema)
-- [ ] **Task 1.1.1.13c:** Verify API contracts for public homepage
+- [x] **Task 1.1.1.13c:** Verify API contracts for public homepage
   - 📋 **Details:** [tasks/frontend/1.1.1.13-public-homepage.md#task-111113c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.13-public-homepage.md#task-111113c-verify-api-contracts)
-- [ ] **Task 1.1.1.13:** Implement public homepage
+- [x] **Task 1.1.1.13:** Implement public homepage
   - 📋 **Details:** [tasks/frontend/1.1.1.13-public-homepage.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.13-public-homepage.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.13a, 1.1.1.13b, 1.1.1.13c, 1.1.1.9
-- [ ] **Task 1.1.1.13-verify:** Verify compliance of public homepage implementation
+- [x] **Task 1.1.1.13-verify:** Verify compliance of public homepage implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.13-public-homepage.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.13-public-homepage.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.13 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.1.14a:** Verify wireframes for About page
+- [x] **Task 1.1.1.14a:** Verify wireframes for About page
   - 📋 **Details:** [tasks/frontend/1.1.1.14-about-page.md#task-111114a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.14-about-page.md#task-111114a-verify-wireframes)
-- [ ] **Task 1.1.1.14b:** Verify database schema for About page
+- [x] **Task 1.1.1.14b:** Verify database schema for About page
   - 📋 **Details:** [tasks/frontend/1.1.1.14-about-page.md#task-111114b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.14-about-page.md#task-111114b-verify-database-schema)
-- [ ] **Task 1.1.1.14c:** Verify API contracts for About page
+- [x] **Task 1.1.1.14c:** Verify API contracts for About page
   - 📋 **Details:** [tasks/frontend/1.1.1.14-about-page.md#task-111114c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.14-about-page.md#task-111114c-verify-api-contracts)
-- [ ] **Task 1.1.1.14:** Implement About page
+- [x] **Task 1.1.1.14:** Implement About page
   - 📋 **Details:** [tasks/frontend/1.1.1.14-about-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.14-about-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.14a, 1.1.1.14b, 1.1.1.14c, 1.1.1.9
-- [ ] **Task 1.1.1.14-verify:** Verify compliance of About page implementation
+- [x] **Task 1.1.1.14-verify:** Verify compliance of About page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.14-about-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.14-about-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.14 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.15a:** Verify wireframes for Support center pages
+- [x] **Task 1.1.1.15a:** Verify wireframes for Support center pages
   - 📋 **Details:** [tasks/frontend/1.1.1.15-support-center-pages.md#task-111115a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.15-support-center-pages.md#task-111115a-verify-wireframes)
-- [ ] **Task 1.1.1.15b:** Verify database schema for Support center pages
+- [x] **Task 1.1.1.15b:** Verify database schema for Support center pages
   - 📋 **Details:** [tasks/frontend/1.1.1.15-support-center-pages.md#task-111115b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.15-support-center-pages.md#task-111115b-verify-database-schema)
-- [ ] **Task 1.1.1.15c:** Verify API contracts for Support center pages
+- [x] **Task 1.1.1.15c:** Verify API contracts for Support center pages
   - 📋 **Details:** [tasks/frontend/1.1.1.15-support-center-pages.md#task-111115c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.15-support-center-pages.md#task-111115c-verify-api-contracts)
-- [ ] **Task 1.1.1.15:** Implement Support center pages
+- [x] **Task 1.1.1.15:** Implement Support center pages
   - 📋 **Details:** [tasks/frontend/1.1.1.15-support-center-pages.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.15-support-center-pages.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.15a, 1.1.1.15b, 1.1.1.15c, 1.1.1.9
-- [ ] **Task 1.1.1.15-verify:** Verify compliance of Support center pages implementation
+- [x] **Task 1.1.1.15-verify:** Verify compliance of Support center pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.15-support-center-pages.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.15-support-center-pages.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.15 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.16a:** Verify wireframes for Legal pages
+- [x] **Task 1.1.1.16a:** Verify wireframes for Legal pages
   - 📋 **Details:** [tasks/frontend/1.1.1.16-legal-pages.md#task-111116a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.16-legal-pages.md#task-111116a-verify-wireframes)
-- [ ] **Task 1.1.1.16b:** Verify database schema for Legal pages
+- [x] **Task 1.1.1.16b:** Verify database schema for Legal pages
   - 📋 **Details:** [tasks/frontend/1.1.1.16-legal-pages.md#task-111116b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.16-legal-pages.md#task-111116b-verify-database-schema)
-- [ ] **Task 1.1.1.16c:** Verify API contracts for Legal pages
+- [x] **Task 1.1.1.16c:** Verify API contracts for Legal pages
   - 📋 **Details:** [tasks/frontend/1.1.1.16-legal-pages.md#task-111116c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.16-legal-pages.md#task-111116c-verify-api-contracts)
-- [ ] **Task 1.1.1.16:** Implement Legal pages
+- [x] **Task 1.1.1.16:** Implement Legal pages
   - 📋 **Details:** [tasks/frontend/1.1.1.16-legal-pages.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.16-legal-pages.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.16a, 1.1.1.16b, 1.1.1.16c, 1.1.1.9
-- [ ] **Task 1.1.1.16-verify:** Verify compliance of Legal pages implementation
+- [x] **Task 1.1.1.16-verify:** Verify compliance of Legal pages implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.16-legal-pages.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.16-legal-pages.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.16 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.1.17a:** Verify wireframes for System status page
+- [x] **Task 1.1.1.17a:** Verify wireframes for System status page
   - 📋 **Details:** [tasks/frontend/1.1.1.17-system-status-page.md#task-111117a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.17-system-status-page.md#task-111117a-verify-wireframes)
-- [ ] **Task 1.1.1.17b:** Verify database schema for System status page
+- [x] **Task 1.1.1.17b:** Verify database schema for System status page
   - 📋 **Details:** [tasks/frontend/1.1.1.17-system-status-page.md#task-111117b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.17-system-status-page.md#task-111117b-verify-database-schema)
-- [ ] **Task 1.1.1.17c:** Verify API contracts for System status page
+- [x] **Task 1.1.1.17c:** Verify API contracts for System status page
   - 📋 **Details:** [tasks/frontend/1.1.1.17-system-status-page.md#task-111117c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.17-system-status-page.md#task-111117c-verify-api-contracts)
-- [ ] **Task 1.1.1.17:** Implement System status page
+- [x] **Task 1.1.1.17:** Implement System status page
   - 📋 **Details:** [tasks/frontend/1.1.1.17-system-status-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.17-system-status-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.17a, 1.1.1.17b, 1.1.1.17c, 1.1.1.9, 1.1.1.2d
-- [ ] **Task 1.1.1.17-verify:** Verify compliance of System status page implementation
+- [x] **Task 1.1.1.17-verify:** Verify compliance of System status page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.17-system-status-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.17-system-status-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.17 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Core Dashboard Pages
 
-- [ ] **Task 1.1.1.18a:** Verify wireframes for User profile page
+- [x] **Task 1.1.1.18a:** Verify wireframes for User profile page
   - 📋 **Details:** [tasks/frontend/1.1.1.18-user-profile-page.md#task-111118a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.18-user-profile-page.md#task-111118a-verify-wireframes)
-- [ ] **Task 1.1.1.18b:** Verify database schema for User profile page
+- [x] **Task 1.1.1.18b:** Verify database schema for User profile page
   - 📋 **Details:** [tasks/frontend/1.1.1.18-user-profile-page.md#task-111118b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.18-user-profile-page.md#task-111118b-verify-database-schema)
-- [ ] **Task 1.1.1.18c:** Verify API contracts for User profile page
+- [x] **Task 1.1.1.18c:** Verify API contracts for User profile page
   - 📋 **Details:** [tasks/frontend/1.1.1.18-user-profile-page.md#task-111118c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.18-user-profile-page.md#task-111118c-verify-api-contracts)
-- [ ] **Task 1.1.1.18:** Implement User profile page
+- [x] **Task 1.1.1.18:** Implement User profile page
   - 📋 **Details:** [tasks/frontend/1.1.1.18-user-profile-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.18-user-profile-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.18a, 1.1.1.18b, 1.1.1.18c, 1.1.1.9, 1.1.1.2b
-- [ ] **Task 1.1.1.18-verify:** Verify compliance of User profile page implementation
+- [x] **Task 1.1.1.18-verify:** Verify compliance of User profile page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.18-user-profile-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.18-user-profile-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.18 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.1.19a:** Verify wireframes for Notifications page
+- [x] **Task 1.1.1.19a:** Verify wireframes for Notifications page
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#task-111119a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#task-111119a-verify-wireframes)
-- [ ] **Task 1.1.1.19b:** Verify database schema for Notifications page
+- [x] **Task 1.1.1.19b:** Verify database schema for Notifications page
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#task-111119b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#task-111119b-verify-database-schema)
-- [ ] **Task 1.1.1.19c:** Verify API contracts for Notifications page
+- [x] **Task 1.1.1.19c:** Verify API contracts for Notifications page
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#task-111119c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#task-111119c-verify-api-contracts)
-- [ ] **Task 1.1.1.19:** Implement Notifications page
+- [x] **Task 1.1.1.19:** Implement Notifications page
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.1.19a, 1.1.1.19b, 1.1.1.19c, 1.1.1.9, 1.1.1.2b
-- [ ] **Task 1.1.1.19-verify:** Verify compliance of Notifications page implementation
+- [x] **Task 1.1.1.19-verify:** Verify compliance of Notifications page implementation
   - 📋 **Details:** [tasks/frontend/1.1.1.19-notifications-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.1.19-notifications-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.1.19 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 

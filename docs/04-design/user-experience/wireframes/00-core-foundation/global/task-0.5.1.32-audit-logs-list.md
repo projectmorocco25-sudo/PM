@@ -30,6 +30,15 @@
 │ │                                                          ││
 │ │ • Regulatory Framework Changes: Last updated [date]     ││
 │ │   [View Regulatory Framework] [View Change Log]         ││
+│ │                                                          ││
+│ │ **Deletion Audit Information:**                          ││
+│ │ • All deletion operations are logged with old_values   ││
+│ │   preserved                                             ││
+│ │ • Deletion workflow steps (REQUEST, APPROVED,           ││
+│ │   IMPLEMENTED) are tracked separately                  ││
+│ │ • Deletion audit entries are retained for 7 years      ││
+│ │   minimum (Law No. 09-08)                              ││
+│ │ • No hard deletes are allowed for auditable records     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
@@ -57,6 +66,24 @@
 │ │                         Regulatory Update: DMP Art.20    ││
 │ │                         Effective: 2025-01-01            ││
 │ │                         Impact: 15 existing records      ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 2025-01-15     Officer A DELETE_REQUEST companies 78901 [View]││
+│ │ 10:30:00       MOH Tier 2 Company Deletion Requested    ││
+│ │                         Requested by: Officer A          ││
+│ │                         Entity: ABC Pharma               ││
+│ │                         Reason: Company closure           ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 2025-01-15     Admin     DELETE_APPROVED companies 78901 [View]││
+│ │ 11:00:00       MOH Tier 1 Company Deletion Approved      ││
+│ │                         Approved by: Admin               ││
+│ │                         Command issued to Tier 2 Registrar││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 2025-01-15     Registrar DELETE_IMPLEMENTED companies 78901 [View]││
+│ │ 11:30:00       MOH Tier 2 Company Deletion Implemented  ││
+│ │                         Implemented by: Registrar C       ││
+│ │                         Deactivated at: 2025-01-15 11:30││
+│ │                         Old Values: [View]              ││
+│ │                         Cascade: 5 products, 12 SKUs     ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
 │ [< Previous]  [1] [2] [3] ... [Next >]                    │
@@ -90,9 +117,36 @@
 - **Columns:** Timestamp, User, Action, Table, Record ID, Details
 - **Sortable:** All columns
 - **Pagination:** Page numbers or virtual scrolling
+- **DELETE Operations Display (ENHANCED):**
+  - **Operation Type:** Clearly show "DELETE" in Action column
+  - **Deletion Workflow Steps:**
+    - **DELETE_REQUEST:** "DELETE_REQUEST - [Entity Type] Deletion Requested"
+      - Shows: Tier 2 Officer requested deletion
+      - Details: "Requested by: [User], Entity: [Name], Reason: [Reason]"
+    - **DELETE_APPROVED:** "DELETE_APPROVED - [Entity Type] Deletion Approved"
+      - Shows: Tier 1 approved deletion and issued command
+      - Details: "Approved by: [User], Command issued to Tier 2 Registrar"
+    - **DELETE_IMPLEMENTED:** "DELETE_IMPLEMENTED - [Entity Type] Deletion Implemented"
+      - Shows: Tier 2 Registrar implemented deletion (soft delete)
+      - Details: "Implemented by: [User], Deactivated at: [Timestamp], Reason: [Reason]"
+  - **Entity Type Display:**
+    - Show entity type (Company/Product/SKU) prominently in Details column
+    - Link to entity detail page (if entity still accessible)
+  - **Old Values Display:**
+    - For DELETE operations, show "Old Values: [View]" link
+    - Clicking link expands to show preserved old_values JSON
+    - Old values are mandatory for deletions (audit requirement)
+  - **Deactivation Details:**
+    - Show deactivated_at timestamp
+    - Show deactivated_by (user who implemented)
+    - Show deactivated_reason (mandatory justification)
+  - **Cascade Effects:**
+    - If company deletion, show: "Cascade: 5 products, 12 SKUs deactivated"
+    - If product deletion, show: "Cascade: 3 SKUs deactivated"
 - **Regulatory Reference Display (Fatima's Requirement):**
   - All entries show regulatory framework reference when applicable
   - Format: "DMP Art.[X]" or "Law No. 09-08" displayed in Details column or as additional row
+  - For deletions: Show regulatory basis if applicable
 - **Enforcement Actions Display (Enhanced per Fatima's Requirements):**
   - **CREATE Action:**
     - Show: "Legal: [Regulation Article]"
@@ -124,7 +178,13 @@
 - **Date Range:** Date picker
 - **Table:** Dropdown (products, skus, companies, enforcement_actions, enforcement_action_appeals, regulatory_framework, etc.)
 - **User:** User selector
-- **Action:** CREATE, UPDATE, DELETE, APPROVE, EXECUTE, APPEAL, etc.
+- **Action:** CREATE, UPDATE, **DELETE** (NEW - explicit filter), APPROVE, EXECUTE, APPEAL, etc.
+- **Entity Type Filter (NEW):** Filter by entity type (Company, Product, SKU) - for deletion operations
+- **Deletion Workflow Status Filter (NEW):**
+  - All
+  - DELETE_REQUEST (Tier 2 Officer requested)
+  - DELETE_APPROVED (Tier 1 approved)
+  - DELETE_IMPLEMENTED (Tier 2 Registrar implemented)
 - **Enforcement Filter (Optional):** Filter by enforcement action type (warning, fine, suspension) when table is enforcement_actions
 - **Legal Basis Filter (Fatima's Requirement):** Filter by regulation article (DMP Art. 12, Art. 15, etc.)
 - **Compliance Status Filter (Fatima's Requirement):** 

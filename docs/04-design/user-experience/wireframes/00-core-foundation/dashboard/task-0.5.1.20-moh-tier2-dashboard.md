@@ -163,6 +163,15 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 │ │   Type: AAMS  Status: Pending Verification              ││
 │ │   [Verify] [Flag] [Request Info] [View Details]         ││
 │ │                                                          ││
+│ │ **Deletion Request Items (NEW):**                       ││
+│ │ ⚠️ Deletion Request - Company: ABC Pharma             ││
+│ │   Status: Deletion Request - Pending Verification        ││
+│ │   Entity Type: Company (badge)                         ││
+│ │   Requested by: Officer A (Tier 2 Officer)              ││
+│ │   Requested at: 2025-01-15 10:30 AM                     ││
+│ │   Reason: Company closure                               ││
+│ │   [Verify] [Flag] [Request Info] [View Details]         ││
+│ │                                                          ││
 │ │ [Load More] [Select All] [Bulk Actions ▼]              ││
 │ └─────────────────────────────────────────────────────────┘│
 │                                                             │
@@ -242,6 +251,9 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 │ │              │ │              │ │              │        ││
 │ │ [View All →]│ │              │ │ [View All →]│        ││
 │ └──────────────┘ └──────────────┘ └──────────────┘        ││
+│                                                             │
+│ **Note:** Pending Verifications widget includes deletion requests. Deletion requests are shown with ⚠️ icon and "Deletion Request" badge.
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -561,6 +573,68 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 └─────────────────────────────────────────────────────────────┘
 ```
 
+### 6. Request Deletion Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Request Deletion                               [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ Entity Type:                                     │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Company ▼]                                   ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options: Company, Product, SKU                   │  │
+│     │                                                   │  │
+│     │ Entity:                                          │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Select Entity ▼]                             ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Reason for Deletion (Required):                  │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Select Reason ▼]                             ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options:                                         │  │
+│     │ • Regulatory Non-Compliance                      │  │
+│     │ • Data Quality Issues                            │  │
+│     │ • Duplicate Entry                                │  │
+│     │ • Company Closure                                │  │
+│     │ • Product Discontinued                           │  │
+│     │ • Other                                          │  │
+│     │                                                   │  │
+│     │ Detailed Explanation (Required):                │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ Company has been closed and no longer         ││  │
+│     │ │ operates. All products and SKUs should be     ││  │
+│     │ │ deactivated.                                   ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ⚠️ Important Information:                        │  │
+│     │ • This will create a deletion request            │  │
+│     │ • Tier 1 must approve before deletion occurs     │  │
+│     │ • Tier 2 Registrar will implement the deletion  │  │
+│     │ • All deletions are kept for audit (7 years)    │  │
+│     │ • Cascade effects will be applied automatically │  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Request Deletion]│  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Component Specifications:**
+- **Entity Selection:** Dropdown with search/filter
+- **Reason Selection:** Dropdown with predefined reasons
+- **Detailed Explanation:** Required textarea (minimum 50 characters)
+- **Warning Section:** Info box explaining workflow and audit requirements
+- **Action Button:** "Request Deletion" (orange/warning color)
+
 ---
 
 ## Component Specifications
@@ -608,11 +682,31 @@ This dashboard uses a **tabbed interface** to organize content by workflow (Over
 ### Review Queue Widget (Enhanced per Fatima's Requirement)
 - **Layout:** Card widget
 - **Title:** "Review Queue (Sorted by Regulatory Deadline)"
-- **Content:** List of items requiring review
+- **Content:** List of items requiring review (including deletion requests)
 - **Sorting (Fatima's Requirement):** Primary sort by regulatory deadline urgency (deadline-critical first)
 - **Each Item Shows:**
   - **Regulatory Deadline Indicator:** 🔴 if <3 days, 🟡 if 3-7 days
   - Days until deadline
+- **Deletion Request Items (NEW):**
+  - **Format:** "Deletion Request - [Entity Type]: [Entity Name]"
+  - **Status Badge:** "Deletion Request - Pending Verification"
+  - **Entity Information:**
+    - Entity Type: Company/Product/SKU (badge)
+    - Entity Name/Code: Display name or code
+    - Entity ID: Link to entity detail page
+  - **Request Information:**
+    - Requested by: Tier 2 Officer name (self or other)
+    - Requested at: Timestamp
+    - Reason: Deletion reason (from submission_data)
+  - **Action Buttons:**
+    - "[Verify]" - Verify deletion request
+    - "[Flag]" - Flag for review
+    - "[Request Info]" - Request additional information
+    - "[View Details]" - View full submission details
+  - **Visual Distinction:**
+    - ⚠️ Warning icon
+    - Orange/yellow border or background tint
+    - "Deletion Request" badge
 
 ### Collapsible Sections
 - **Collapsed Height:** 64px (summary only)

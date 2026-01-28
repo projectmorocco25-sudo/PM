@@ -38,6 +38,29 @@
 │ │   Regulatory: Law No. 09-08 - 30-day appeal window      ││
 │ │   2 days ago                               [Mark read]    ││
 │ ├─────────────────────────────────────────────────────────┤│
+│ │ 🟡 Deletion Request Created - Company: ABC Pharma        ││
+│ │   A deletion request has been created for Company ABC    ││
+│ │   Pharma by Officer A (Tier 2 Officer)                   ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 🟡 Deletion Request Verified - Company: ABC Pharma      ││
+│ │   Deletion request for Company ABC Pharma has been       ││
+│ │   verified by Officer B (Tier 2 Officer)                ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ 🔴 URGENT - Deletion Request Approved - Company: ABC    ││
+│ │   Deletion request for Company ABC Pharma has been       ││
+│ │   approved by Admin (Tier 1). Command issued to Tier 2  ││
+│ │   Registrar.                                             ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
+│ │ ● Deletion Implemented - Company: ABC Pharma             ││
+│ │   Deletion for Company ABC Pharma has been implemented   ││
+│ │   by Registrar C (Tier 2 Registrar). Entity deactivated ││
+│ │   (soft delete).                                         ││
+│ │   [View Audit Log]                                       ││
+│ │   1 day ago                               [Mark read]    ││
+│ ├─────────────────────────────────────────────────────────┤│
 │ │ 🔴 URGENT - Appeal Window Open (Deadline Critical)       ││
 │ │   ⚠️ You have 23 days remaining to appeal               ││
 │ │   Enforcement Action: ENF-2025-001                      ││
@@ -148,9 +171,35 @@
   - **Regulatory Basis:** "Regulatory: [Regulation Article] - Appeal Process"
   - **Appeal Process Timeline:** "Review Timeline: 30 days (per regulatory requirement)"
   - **Legal Requirements:** Link to appeal submission requirements
+- **Deletion Notifications (NEW):**
+  - **Deletion Request Created:**
+    - **Title:** "Deletion Request Created - [Entity Type]: [Entity Name]"
+    - **Message:** "A deletion request has been created for [Entity Type] [Entity Name] by [Tier 2 Officer Name]"
+    - **Priority:** 🟡 HIGH (yellow border)
+    - **Action:** Navigate to `/rmm/submissions/[id]` (Tier 1 users)
+    - **Timestamp:** When deletion request was created
+  - **Deletion Request Verified:**
+    - **Title:** "Deletion Request Verified - [Entity Type]: [Entity Name]"
+    - **Message:** "Deletion request for [Entity Type] [Entity Name] has been verified by [Tier 2 Officer Name]"
+    - **Priority:** 🟡 HIGH (yellow border)
+    - **Action:** Navigate to `/rmm/submissions/[id]` (Tier 1 users)
+    - **Timestamp:** When deletion request was verified
+  - **Deletion Request Approved:**
+    - **Title:** "Deletion Request Approved - [Entity Type]: [Entity Name]"
+    - **Message:** "Deletion request for [Entity Type] [Entity Name] has been approved by [Tier 1 Name]. Command issued to Tier 2 Registrar."
+    - **Priority:** 🔴 URGENT (red border)
+    - **Action:** Navigate to `/rmm/submissions/[id]` (Tier 2 Registrar users)
+    - **Timestamp:** When deletion request was approved
+  - **Deletion Request Implemented:**
+    - **Title:** "Deletion Implemented - [Entity Type]: [Entity Name]"
+    - **Message:** "Deletion for [Entity Type] [Entity Name] has been implemented by [Tier 2 Registrar Name]. Entity deactivated (soft delete)."
+    - **Priority:** ⚪ NORMAL
+    - **Action:** Navigate to `/audit/logs/[id]` (all users)
+    - **Timestamp:** When deletion was implemented
+    - **Audit Link:** "View Audit Log" button
 
 ### Filters
-- **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, Threshold Reversion, System
+- **Type:** Submission, Breach, Message, Workflow, Enforcement Action, Appeal, Threshold Reversion, **Deletion** (NEW), System
 - **Status:** All, Unread, Read
 - **Date Range:** Last 7 days, Last 30 days, Custom
 - **Priority (Fatima's Requirement):** 

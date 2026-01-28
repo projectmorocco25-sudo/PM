@@ -1,7 +1,7 @@
 # Compliance Rules - Sami's Checklist
 
 **Owner:** Sami (Implementation Compliance Specialist)  
-**Last Updated:** 2026-01-15  
+**Last Updated:** 2026-01-27  
 **Purpose:** Complete compliance checklist that must be verified before EVERY implementation task
 
 ---
@@ -48,6 +48,7 @@
 - [ ] Wireframe task ID(s) identified
 - [ ] Wireframe requirements understood (layout, interactions, states, role-based variations)
 - [ ] Wireframe annotations reviewed
+- [ ] **No truncation** when reading any files in `docs/02-architecture`, `docs/04-design`, or `docs/05-project-management` (see Hard Gate "No Truncation When Reading Spec Files").
 
 ### 7. Data Source Verification
 - [ ] No local mock data used (NO `const mockData = [...]`, NO `mockData.ts`, NO runtime mocks)
@@ -94,6 +95,13 @@
   - Top-of-file comment in route/page file (preferred format), OR
   - Maintained mapping module (e.g., `src/wireframe-bindings.ts`)
 - ⚠️ **STOP:** If no wireframe exists, create/approve wireframe BEFORE coding
+
+### No Truncation When Reading Spec Files
+- ✅ **REQUIRED:** When reading any file under `docs/02-architecture`, `docs/04-design`, or `docs/05-project-management`, **do not truncate** (no line limit on Read; do not use `limit` to skip content).
+- ✅ **REQUIRED:** Read each file **in full**. Responsive behavior, interactions, states, role variations, accessibility, and edge cases often appear later in the file.
+- ✅ **REQUIRED:** If a file is large, read it in **successive full chunks** (e.g. 1–200, 201–400, …) and **use all chunks** before implementing or verifying. Never implement or verify from a partial read.
+- ❌ **NOT ALLOWED:** Using a `limit` (e.g. `limit: 80`) on the Read tool for these paths. Truncated reads skip critical details and violate compliance.
+- ⚠️ **STOP:** If you have not read the full file(s) from these directories that the task references, **STOP** and read them in full before proceeding.
 
 **Wireframe binding code example (preferred format):**
 ```typescript
@@ -203,6 +211,7 @@ Every frontend task PR must include:
 ### Wireframe Requirements
 - No wireframe link exists for the page/route being implemented. **STOP** and request/produce the wireframe first. Do not guess layouts, flows, or states.
 - Wireframe is ambiguous or missing a required state/role behavior. **STOP** and clarify with wireframe owner before proceeding.
+- Any file in `docs/02-architecture`, `docs/04-design`, or `docs/05-project-management` was read with truncation (e.g. `limit` on Read). **STOP** and re-read in full before implementing or verifying.
 
 ### Database & Schema Requirements
 - Required DB table/field/RPC does not exist yet. **STOP** and implement the missing backend task first. Do not create local mocks as a workaround.

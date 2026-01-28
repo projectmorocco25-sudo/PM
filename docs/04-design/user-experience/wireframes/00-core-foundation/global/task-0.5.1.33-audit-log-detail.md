@@ -18,27 +18,48 @@
 │ Audit Log Entry #12345                                      │
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐│
-│ │ Action: CREATE                                           ││
-│ │ Table: products                                          ││
-│ │ Record ID: 12345                                         ││
+│ │ Action: DELETE (Soft Delete/Deactivation) 🔴            ││
+│ │ Table: companies                                         ││
+│ │ Record ID: 78901                                         ││
 │ │                                                          ││
-│ │ User: John Doe (Company XYZ)                            ││
-│ │ Timestamp: 2025-01-01 10:30:45 UTC                      ││
+│ │ Entity Type: Company                                    ││
+│ │ Entity Name: ABC Pharma                                  ││
 │ │                                                          ││
-│ │ Old Values:                                             ││
-│ │ - (New record)                                          ││
+│ │ User: Registrar C (MOH Tier 2 Registrar)              ││
+│ │ Timestamp: 2025-01-15 11:30:00 UTC                      ││
 │ │                                                          ││
-│ │ New Values:                                             ││
-│ │ - Name: Product ABC                                      ││
-│ │ - Category: Pharmaceuticals                             ││
-│ │ - Status: Active                                        ││
+│ │ Old Values (Preserved for Audit):                       ││
+│ │ [Expandable JSON Viewer]                                 ││
+│ │ {                                                        ││
+│ │   "id": "78901",                                        ││
+│ │   "name": "ABC Pharma",                                 ││
+│ │   "registration_number": "REG123",                     ││
+│ │   ... (full entity data)                                ││
+│ │ }                                                        ││
+│ │ Note: These values are preserved for 7-year audit      ││
+│ │       retention (Law No. 09-08)                          ││
 │ │                                                          ││
-│ │ Related Entity (if enforcement_actions table):          ││
-│ │ - Action Type: Warning                                  ││
-│ │ - Company: Company XYZ                                   ││
-│ │ - Violation Type: Submission Non-Compliance             ││
-│ │ - Status: Executed                                      ││
-│ │ - [View Enforcement Action]                            ││
+│ │ Deactivation Details:                                   ││
+│ │ - deactivated_at: 2025-01-15 11:30:00 UTC              ││
+│ │ - deactivated_by: Registrar C (Tier 2 Registrar)       ││
+│ │ - deactivated_reason: Company closure                  ││
+│ │                                                          ││
+│ │ Cascade Effects:                                        ││
+│ │ - 5 products deactivated                                ││
+│ │ - 12 SKUs deactivated                                   ││
+│ │ [View Cascade Audit Logs]                               ││
+│ │                                                          ││
+│ │ Deletion Workflow Timeline:                             ││
+│ │ 1. Request: Tier 2 Officer A on 2025-01-15 10:30     ││
+│ │    Reason: Company closure                             ││
+│ │ 2. Verify: Tier 2 Officer B on 2025-01-15 10:45       ││
+│ │    Comments: Verified - company confirmed closed       ││
+│ │ 3. Approve: Tier 1 Admin on 2025-01-15 11:00          ││
+│ │    Comments: Approved per regulatory requirements       ││
+│ │    Note: Command issued to Tier 2 Registrar            ││
+│ │ 4. Implement: Tier 2 Registrar C on 2025-01-15 11:30  ││
+│ │    Action: Soft delete (deactivation) applied          ││
+│ │    Old values preserved in audit_logs                   ││
 │ │                                                          ││
 │ │ Hash Chain Verification:                                ││
 │ │ Previous Hash: abc123...                                ││
@@ -56,6 +77,16 @@
 │ │ • Regulatory Reference: [View Framework]               ││
 │ │ • [If Enforcement Action]: Legal Basis: DMP Art. [Y]  ││
 │ │                                                          ││
+│ │ [If DELETE Operation - Deletion-Specific Compliance:]   ││
+│ │ • Deletion Audit Compliance:                            ││
+│ │   This deletion is kept for audit per regulatory        ││
+│ │   requirements (Law No. 09-08)                          ││
+│ │   Old values preserved for 7-year retention period       ││
+│ │   Soft delete (deactivation) applied - no hard delete  ││
+│ │   All deletion workflow steps are logged and immutable  ││
+│ │   Cascade deactivation effects are tracked in separate   ││
+│ │   audit log entries                                      ││
+│ │                                                          ││
 │ │ [View Previous] [View Next] [View Hash Chain]          ││
 │ └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘
@@ -65,12 +96,52 @@
 
 ## Component Specifications
 
-### Log Entry Details
+### Log Entry Details (Enhanced for Deletion Operations)
 - **Action:** CREATE, UPDATE, DELETE, APPROVE, EXECUTE, APPEAL
 - **Table:** Table name (products, skus, companies, enforcement_actions, enforcement_action_appeals, etc.)
 - **Record ID:** Record identifier
-- **Old Values:** Previous state (JSON or formatted)
-- **New Values:** New state (JSON or formatted)
+- **Old Values:** Previous state (JSON or formatted) - **MANDATORY for DELETE operations**
+- **New Values:** New state (JSON or formatted) - For DELETE operations, shows deactivation fields
+- **DELETE Operation Details (NEW - Prominently Displayed):**
+  - **Action Badge:** "DELETE (Soft Delete/Deactivation)" - Red/warning color
+  - **Entity Type:** [Company/Product/SKU] - Prominent badge
+  - **Entity Name/Code:** Display name or code
+  - **Old Values Section (REQUIRED):**
+    - **Title:** "Old Values (Preserved for Audit)" - Emphasized
+    - **Content:** Full JSON of entity before deletion
+    - **Format:** Expandable JSON viewer with syntax highlighting
+    - **Note:** "These values are preserved for 7-year audit retention (Law No. 09-08)"
+  - **Deactivation Details Section:**
+    - **deactivated_at:** Timestamp when deletion was implemented
+    - **deactivated_by:** User who implemented deletion (Tier 2 Registrar)
+    - **deactivated_reason:** Mandatory justification for deletion
+  - **Cascade Effects Section (if applicable):**
+    - **Title:** "Cascade Deactivation Effects"
+    - **Content:**
+      - If company deletion: "5 products deactivated, 12 SKUs deactivated"
+      - If product deletion: "3 SKUs deactivated"
+      - Links to cascade audit log entries
+  - **Deletion Workflow Steps Section:**
+    - **Title:** "Deletion Workflow Timeline"
+    - **Steps:**
+      1. **Request:** 
+         - Who: Tier 2 Officer [Name]
+         - When: [Timestamp]
+         - Reason: [Reason from submission]
+      2. **Verify:**
+         - Who: Tier 2 Officer [Name]
+         - When: [Timestamp]
+         - Comments: [Verification comments]
+      3. **Approve & Issue Command:**
+         - Who: Tier 1 [Name]
+         - When: [Timestamp]
+         - Comments: [Approval comments]
+         - Note: "Command issued to Tier 2 Registrar"
+      4. **Implement:**
+         - Who: Tier 2 Registrar [Name]
+         - When: [Timestamp]
+         - Action: Soft delete (deactivation) applied
+         - Old values preserved in audit_logs
 - **Related Entity Section (if enforcement_actions table):**
   - **Action Type:** Warning, Fine, Suspension
   - **Company:** Company name (link to company detail)
@@ -88,11 +159,20 @@
 - **Current Hash:** Hash of current log entry
 - **Status:** Verified or Invalid
 
-### Compliance Information Section
+### Compliance Information Section (Enhanced for Deletion Operations)
 - **Retention Period:** Display retention period and expiration date (7 years from log entry date)
 - **CNDP Compliance Notice:** "This audit log entry contains personal data protected under Law No. 09-08 (Protection of Personal Data)"
 - **Data Subject Rights:** Information about data subject rights (if applicable to the log entry)
 - **Regulatory Reference:** Link to regulatory framework document
+- **Deletion-Specific Compliance Information (NEW):**
+  - **Title:** "Deletion Audit Compliance"
+  - **Content:**
+    - "This deletion is kept for audit per regulatory requirements (Law No. 09-08)"
+    - "Old values preserved for 7-year retention period"
+    - "Soft delete (deactivation) applied - no hard delete performed"
+    - "All deletion workflow steps are logged and immutable"
+    - "Cascade deactivation effects are tracked in separate audit log entries"
+  - **Visual:** Prominent info box with warning icon
 - **Display:** Section within log detail card, below hash chain verification
 - **Styling:** Info section with light background, clear labeling
 

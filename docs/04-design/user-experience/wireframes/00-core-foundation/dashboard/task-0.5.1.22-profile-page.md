@@ -244,13 +244,28 @@
 - **Click Action:** Trigger data export (GDPR/CNDP right to data portability)
 - **Loading State:** "Exporting..."
 
-**Delete Account Button:**
-- **Text:** "Delete Account"
+**Delete Account Button (ENHANCED):**
+- **Text:** "Delete Account" or "Request Account Deactivation" (based on user role)
 - **Variant:** Destructive (red)
 - **Width:** Full width
 - **Height:** 40px
-- **Click Action:** Show confirmation modal, then delete account
+- **Tooltip/Help Text (NEW):**
+  - **For Company Users:** "Account deactivation requires MOH approval. Contact MOH support or request deactivation through your company administrator."
+  - **For MOH Users:** "Account deactivation requires Tier 2 Officer request → Tier 1 approval → Tier 2 Registrar implementation. All deletions are kept for audit (7 years)."
+- **Click Action:** Show confirmation modal with workflow explanation
 - **Warning:** Must show confirmation with consequences
+- **Workflow Explanation (NEW):**
+  - **For Company Users:**
+    - "Account deactivation is handled by MOH administrators"
+    - "Contact MOH support for account deactivation requests"
+    - "All account changes are logged for audit purposes"
+  - **For MOH Users:**
+    - "Account deactivation follows regulatory workflow:"
+    - "1. Tier 2 Officer requests deactivation"
+    - "2. Tier 1 approves and issues command"
+    - "3. Tier 2 Registrar implements deactivation"
+    - "All steps are logged and kept for audit (7 years)"
+    - "⚠️ Note: User deletion/deactivation workflow is being finalized. This button may be disabled until workflow is documented."
 
 ---
 
@@ -283,6 +298,71 @@
 - **Focus state:** Input border changes to primary blue
 - **Disabled state:** Update password button disabled until requirements met
 - **Saved state:** Show confirmation message after save
+
+---
+
+### Account Deactivation Confirmation Modal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Backdrop: rgba(0,0,0,0.5)]                                 │
+│                                                             │
+│     ┌───────────────────────────────────────────────────┐  │
+│     │ Request Account Deactivation                   [×]│  │
+│     ├───────────────────────────────────────────────────┤  │
+│     │                                                   │  │
+│     │ ⚠️ WARNING: Account Deactivation                 │  │
+│     │                                                   │  │
+│     │ User: [User Name]                                 │  │
+│     │ Email: [User Email]                               │  │
+│     │ Role: [User Role]                                 │  │
+│     │                                                   │  │
+│     │ Workflow Information:                             │  │
+│     │ • This request will be submitted to MOH           │  │
+│     │ • Tier 2 Officer will review the request          │  │
+│     │ • Tier 1 must approve before deactivation        │  │
+│     │ • Tier 2 Registrar will implement deactivation   │  │
+│     │                                                   │  │
+│     │ Audit Information:                                │  │
+│     │ • All account changes are logged                  │  │
+│     │ • Account data retained for 7 years (audit)      │  │
+│     │ • Soft delete (deactivation) - no hard delete   │  │
+│     │                                                   │  │
+│     │ Reason for Deactivation (Required):              │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │ [Select Reason ▼]                             ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ Options:                                          │  │
+│     │ • User Request                                    │  │
+│     │ • Role Change Required                            │  │
+│     │ • Security Concern                                │  │
+│     │ • Other                                           │  │
+│     │                                                   │  │
+│     │ Additional Notes (Optional):                      │  │
+│     │ ┌───────────────────────────────────────────────┐│  │
+│     │ │                                                ││  │
+│     │ └───────────────────────────────────────────────┘│  │
+│     │                                                   │  │
+│     │ ☑ I understand this action requires approval     │  │
+│     │ ☑ I understand account data will be retained for audit│  │
+│     │                                                   │  │
+│     │                      [Cancel]  [Request Deactivation]│  │
+│     └───────────────────────────────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Component Specifications:**
+- **Warning Section:** Red border, warning icon
+- **Workflow Explanation:** Clear step-by-step workflow
+- **Audit Information:** Emphasize audit trail and retention
+- **Reason Selection:** Required dropdown
+- **Confirmation Checkboxes:** Required before submission
+- **Action Button:** "Request Deactivation" (orange/warning color)
+- **Note:** This modal is shown for MOH users. Company users see different message directing them to contact MOH support.
+
+**⚠️ IMPORTANT:** User deletion/deactivation workflow is not yet fully defined in the registry submission model. This wireframe reflects the intended workflow, but the actual implementation may vary based on the final workflow decision (see RMM-CRUD-DELETION-REVIEW.md Section 3.2).
 
 ---
 

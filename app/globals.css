@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --header-height: 64px;
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 64px;
+}
+
+body {
+  @apply text-[#111827] antialiased;
+}
+
+/* Focus ring per wireframe: 2px #3b82f6, offset 2px */
+*:focus-visible {
+  @apply outline-none ring-2 ring-[#3b82f6] ring-offset-2;
+}
+
+/* Thin scrollbar for sidebar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

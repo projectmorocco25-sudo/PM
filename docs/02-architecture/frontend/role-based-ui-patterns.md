@@ -405,9 +405,11 @@ export function MOHDashboard() {
 - View threshold reversion history (read-only)
 
 **Tier 2 Registrar Actions:**
-- Implement approved changes
+- Implement approved changes (including approved deletions: company, product, SKU)
 - Confirm completion
 - View approved items
+
+**RMM Deletion (Company, Product, SKU):** Tier 2 Officer can **request** deletion (create registry submission with submission_type = company_delete / product_delete / sku_delete). Tier 1 must **approve** and issue the command. Tier 2 Registrar **implements** the deletion (soft delete / deactivation). All deletions are kept for audit.
 
 **Implementation:**
 ```tsx

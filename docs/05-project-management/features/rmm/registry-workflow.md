@@ -54,12 +54,24 @@ Registry submission workflow with approval chains (Tier 2 → Tier 1 → Tier 2 
 ## Workflow States
 
 1. **draft** - Initial state when submission created
-2. **submitted** - Company submits for review
-3. **tier2_verified** - Tier 2 verifies submission
-4. **tier1_approved** - Tier 1 approves submission
-5. **tier2_implemented** - Tier 2 implements changes
+2. **submitted** - Company or Tier 2 Officer submits for review
+3. **tier2_verified** - Tier 2 Officer verifies submission
+4. **tier1_approved** - Tier 1 approves submission (issues command)
+5. **tier2_implemented** - Tier 2 Registrar implements changes
 6. **completed** - Workflow complete
 7. **rejected** - Submission rejected (can occur at Tier 1)
+
+---
+
+## Deletion Workflow (Company, Product, SKU)
+
+**Rule:** Tier 2 Officer can **request** deletion; Tier 1 must **approve** and **issue the command** to Tier 2 Registrar to **implement** the deletion. When deletion happens it must be **kept for audit**.
+
+- **Request:** Tier 2 Officer creates a registry submission with `submission_type` = `company_delete`, `product_delete`, or `sku_delete` (and corresponding `entity_type`, `entity_id`).
+- **Verify:** Tier 2 Officer verifies the submission (`rmm_verify_registry_submission`).
+- **Approve:** Tier 1 approves (`rmm_approve_registry_submission`) — this is the formal command to implement.
+- **Implement:** Tier 2 Registrar implements (`rmm_implement_registry_update`): applies **soft delete** (deactivation: `deactivated_at`, `deactivated_by`, `deactivated_reason`), respects cascade deactivation (company → products → SKUs), and completes the submission.
+- **Audit:** All steps and the final deactivation are logged; audit_logs retain operation_type and old_values (see [audit-logging-spec.md](../../02-architecture/security/audit-logging-spec.md)). No hard deletes of auditable records.
 
 ---
 

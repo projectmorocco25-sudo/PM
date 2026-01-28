@@ -70,6 +70,41 @@
 │ │          │ │ │ 2 days ago                              │ ││
 │ │          │ │ │ [View Enforcement Action]               │ ││
 │ │          │ │ └─────────────────────────────────────────┘ ││
+│ │          │ │                                             ││
+│ │          │ │ ┌─────────────────────────────────────────┐ ││
+│ │          │ │ │ ⚠️ Company Deletion Requested            │ ││
+│ │          │ │ │ DMP Regulation Article [X] - Registry   │ ││
+│ │          │ │ │ Deletion                                 │ ││
+│ │          │ │ │ Company ABC Pharma                      │ ││
+│ │          │ │ │ Requested by: Tier 2 Officer A          │ ││
+│ │          │ │ │ Reason: Company closure                 │ ││
+│ │          │ │ │ 1 day ago                               │ ││
+│ │          │ │ │ [View Submission]                       │ ││
+│ │          │ │ └─────────────────────────────────────────┘ ││
+│ │          │ │                                             ││
+│ │          │ │ ┌─────────────────────────────────────────┐ ││
+│ │          │ │ │ ✅ Company Deletion Approved             │ ││
+│ │          │ │ │ DMP Regulation Article [X] - Registry    │ ││
+│ │          │ │ │ Deletion Approval                        │ ││
+│ │          │ │ │ Company ABC Pharma                      │ ││
+│ │          │ │ │ Approved by: Tier 1 Admin               │ ││
+│ │          │ │ │ Command issued to Tier 2 Registrar     │ ││
+│ │          │ │ │ 1 day ago                               │ ││
+│ │          │ │ │ [View Submission]                       │ ││
+│ │          │ │ └─────────────────────────────────────────┘ ││
+│ │          │ │                                             ││
+│ │          │ │ ┌─────────────────────────────────────────┐ ││
+│ │          │ │ │ 🗑️ Company Deletion Implemented          │ ││
+│ │          │ │ │ DMP Regulation Article [X] - Registry    │ ││
+│ │          │ │ │ Deletion Implementation                 │ ││
+│ │          │ │ │ Company ABC Pharma                      │ ││
+│ │          │ │ │ Implemented by: Tier 2 Registrar C      │ ││
+│ │          │ │ │ Deactivation: Soft delete applied        │ ││
+│ │          │ │ │ Old Values: [View Old Values]           │ ││
+│ │          │ │ │ Cascade: 5 products, 12 SKUs deactivated│ ││
+│ │          │ │ │ 1 day ago                               │ ││
+│ │          │ │ │ [View Audit Log] [View Old Values]      │ ││
+│ │          │ │ └─────────────────────────────────────────┘ ││
 │ └──────────┘ └───────────────────────────────────────────┘│
 │                                                             │
 │ [Load More]                                                │
@@ -100,9 +135,19 @@
   - **Dismissible:** Can be dismissed but reappears on page reload (regulatory requirement visibility)
 
 ### Filters Sidebar
-- **Type Filter:** Submission, Breach, Export Request, Enforcement Action, Appeal, etc.
+- **Type Filter:** Submission, Breach, Export Request, Enforcement Action, **Deletion** (NEW), Appeal, etc.
 - **Entity Filter:** Product, SKU, Company, Enforcement Action, etc.
+  - **Deletion Entity Filter (NEW):** When Type = Deletion, filter by:
+    - All Deletions
+    - Company Deletions
+    - Product Deletions
+    - SKU Deletions
 - **Company Filter:** All companies (MOH) or own company (Company users)
+- **Deletion Workflow Status Filter (NEW):**
+  - All Deletion Steps
+  - Deletion Requested
+  - Deletion Approved
+  - Deletion Implemented
 - **Enforcement Filter (if Type = Enforcement):** Warning, Fine, Suspension
 - **Clear Filters Button**
 
@@ -118,6 +163,45 @@
   - **Entity Details:** Company, User, Action Type (for enforcement)
   - **Timestamp:** Relative time
   - **View Link:** Navigate to entity detail
+- **Deletion History Items (NEW):**
+  - **Format:** Timeline items for deletion workflow steps
+  - **Item 1: Deletion Requested**
+    - **Title:** "Company Deletion Requested" or "Product Deletion Requested" or "SKU Deletion Requested"
+    - **Icon:** ⚠️ Warning icon (red/orange)
+    - **Regulatory Reference:** "DMP Regulation Article [X] - Registry Deletion"
+    - **Details:**
+      - Entity Type: Company/Product/SKU
+      - Entity Name/Code: Display name or code
+      - Requested by: Tier 2 Officer [Name]
+      - Reason: [Deletion reason]
+    - **Timestamp:** When deletion was requested
+    - **Link:** "View Submission" → Navigate to `/rmm/submissions/[id]`
+  - **Item 2: Deletion Approved**
+    - **Title:** "Company Deletion Approved" or "Product Deletion Approved" or "SKU Deletion Approved"
+    - **Icon:** ✅ Approval icon (green)
+    - **Regulatory Reference:** "DMP Regulation Article [X] - Registry Deletion Approval"
+    - **Details:**
+      - Entity Type: Company/Product/SKU
+      - Entity Name/Code: Display name or code
+      - Approved by: Tier 1 [Name]
+      - Note: "Command issued to Tier 2 Registrar"
+    - **Timestamp:** When deletion was approved
+    - **Link:** "View Submission" → Navigate to `/rmm/submissions/[id]`
+  - **Item 3: Deletion Implemented**
+    - **Title:** "Company Deletion Implemented" or "Product Deletion Implemented" or "SKU Deletion Implemented"
+    - **Icon:** 🗑️ Delete icon (red)
+    - **Regulatory Reference:** "DMP Regulation Article [X] - Registry Deletion Implementation"
+    - **Details:**
+      - Entity Type: Company/Product/SKU
+      - Entity Name/Code: Display name or code
+      - Implemented by: Tier 2 Registrar [Name]
+      - Deactivation: Soft delete applied
+      - Old Values: "[View Old Values]" → Link to audit log detail showing preserved old_values
+      - Cascade Effects: "5 products, 12 SKUs deactivated" (if company deletion)
+    - **Timestamp:** When deletion was implemented
+    - **Links:**
+      - "View Audit Log" → Navigate to `/audit/logs/[id]`
+      - "View Old Values" → Navigate to audit log detail with old_values expanded
 - **Enforcement Action Items (Enhanced per Fatima's Requirements):**
   - **Format:** "⚠️ Enforcement Action Created" or "✅ Enforcement Action Executed"
   - **Legal Basis (REQUIRED):** 

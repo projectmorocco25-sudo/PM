@@ -437,6 +437,15 @@ Before Phase 1.2 (VCI) can begin, validate:
 **⚠️ Backend Completion Gate:** All backend tasks (1.1.2.1-1.1.2.15, 1.1.2.31-1.1.2.36) must be complete before frontend tasks begin.  
 **Task Directory:** `phase-1-1-rmm/tasks/`
 
+**Business logic ([BUSINESS-LOGIC.md](../BUSINESS-LOGIC.md)):**
+- **Enforcement:** **Warning** → Tier 2 may approve alone; **Fine** / **Suspension** → Tier 1 approval required. All Tier 1 enforcement actions require **mandatory justification (min 50 characters)**, logged in audit.
+- **30-day appeal window** from execution; company submits within 30 days; Tier 1 reviews within **14 business days** (target).
+- **Two-person rule** applies to: (1) company suspension, (2) company deletion, (3) product deactivation for critical medicines, (4) product deletion — **Tier 1 approval + Tier 2 Officer confirmation** before execution.
+- **MOH-originated** registry changes: **another** Tier 2 must peer-review before Tier 1 approval.
+- **Deletion requests:** explicit confirmation + **mandatory justification (min 50 characters)**; enhanced approval/impact warnings; optional pending period before permanent removal (or document as deferred).
+- **RMM timeframes (reference):** Verification 2–3 working days, approval 2 working days, implementation 1 working day.
+- **Role mapping (BUSINESS-LOGIC §3):** BUSINESS-LOGIC **"Company Admin"** maps to Phase 1.1 **Company Admin** (`company_admin`). BUSINESS-LOGIC **"Company Manager / User"** maps to Phase 1.1 **Company Manager** (`company_manager`) and **Company User** (`company_user`). See [role-based-ui-patterns](../02-architecture/frontend/role-based-ui-patterns.md), [security-architecture](../02-architecture/security/security-architecture.md).
+
 ---
 
 ### RMM Backend Tasks
@@ -487,6 +496,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### Registry Submission Workflow
 
+- **MOH-originated workflow:** Tier 2 submits → **another** Tier 2 peer-reviews → Tier 1 approves → Tier 2 Registrar implements. Per BUSINESS-LOGIC §4.2.
+
 - [ ] **Task 1.1.2.6:** Implement registry submission workflow - Create submission
   - 📋 **Details:** [tasks/backend/1.1.2.6-registry-submission-create.md](./phase-1-1-rmm/tasks/backend/1.1.2.6-registry-submission-create.md#implementation-task)
 - [ ] **Task 1.1.2.6-verify:** Verify compliance of registry submission creation
@@ -531,6 +542,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### Business Logic
 
+- **Deletion:** Mandatory justification (min 50 chars), explicit confirmation, enhanced warnings. **Two-person rule:** Enumerate the four critical actions (company suspension, company deletion, product deactivation for critical medicines, product deletion) and require Tier 1 + Tier 2 Officer.
+
 - [ ] **Task 1.1.2.13:** Implement cascade deactivation logic
   - 📋 **Details:** [tasks/backend/1.1.2.13-cascade-deactivation-logic.md](./phase-1-1-rmm/tasks/backend/1.1.2.13-cascade-deactivation-logic.md#implementation-task)
 - [ ] **Task 1.1.2.13-verify:** Verify compliance of cascade deactivation logic
@@ -552,6 +565,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 ---
 
 ### Enforcement Backend Tasks
+
+- **Enforcement types:** Warning (Tier 2 alone), Fine/Suspension (Tier 1). **Justification:** All Tier 1 enforcement actions require mandatory justification (min 50 chars), audited. **Appeal:** 30-day window from execution; Tier 1 review within 14 business days.
 
 - [ ] **Task 1.1.2.31:** Create Enforcement RPC function - Submit for review
   - 📋 **Details:** [tasks/backend/1.1.2.31-enforcement-submit-for-review.md](./phase-1-1-rmm/tasks/backend/1.1.2.31-enforcement-submit-for-review.md#implementation-task)
@@ -932,7 +947,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 ## Subphase 1.1.3: RMM Integration Testing & Seed Data (Week 4)
 
 **Status:** ⏳ **AWAITING IMPLEMENTATION**  
-**Prerequisites:** ✅ Subphases 1.1.1 and 1.1.2 complete
+**Prerequisites:** ✅ Subphases 1.1.1 and 1.1.2 complete  
+**Business logic:** Integration tests and documentation must align with [BUSINESS-LOGIC.md](../BUSINESS-LOGIC.md) (justification, two-person rule, appeal window, enforcement types, deletion safeguards). See Task 1.1.3.5, 1.1.3.9.
 
 ---
 
@@ -1004,6 +1020,7 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 ## Related Documents
 
+- [BUSINESS-LOGIC](../BUSINESS-LOGIC.md) — Business rules reference for Phase 1.1 implementation and verification
 - [Compliance Rules](./standards/compliance-rules.md) - Mandatory compliance checklist
 - [Feature Index](../02-architecture/feature-index.md) - Single source of truth for features
 - [Seed Data Playbook](./planning/seed-data-playbook.md) - Seed data strategy

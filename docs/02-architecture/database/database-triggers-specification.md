@@ -99,9 +99,13 @@ EXECUTE FUNCTION update_updated_at_column();
 
 #### 3.1. Cascade Soft Delete
 
-**Purpose:** When company is soft-deleted, soft-delete related records
+**Purpose:** When company or product is soft-deleted (is_active = false), cascade deactivation to related records.
 
-**Implementation:**
+**RMM implementation (Task 1.1.2.13):** Migration `20260129121300_cascade_deactivation_logic.sql`.
+- **Companies:** Trigger `cascade_deactivate_children_on_company` on `companies` (AFTER UPDATE OF is_active). Function `rmm_cascade_deactivate_children_on_company()`: when company is deactivated, updates all products (and their SKUs) for that company with `deactivated_at/by/reason` from company's `suspended_at/by/reason`.
+- **Products:** Trigger `cascade_deactivate_children_on_product` on `products` (AFTER UPDATE OF is_active). Function `rmm_cascade_deactivate_children_on_product()`: when product is deactivated, updates all SKUs for that product with `deactivated_at/by/reason`. Both functions use SECURITY DEFINER so cascade runs regardless of RLS.
+
+**Generic pattern (reference):**
 ```sql
 CREATE OR REPLACE FUNCTION cascade_soft_delete_company()
 RETURNS trigger
@@ -141,9 +145,13 @@ EXECUTE FUNCTION cascade_soft_delete_company();
 
 #### 3.2. Prevent Hard Delete of Critical Records
 
-**Purpose:** Prevent hard deletion of records that must be preserved for regulatory compliance
+**Purpose:** Prevent hard deletion of records that must be preserved for regulatory compliance. Soft delete only (deactivation/suspension via registry submission workflow).
 
-**Implementation:**
+**RMM implementation (Task 1.1.2.14):** Migration `20260129121400_soft_delete_safeguards.sql`.
+- **Function:** `rmm_prevent_hard_delete()` (SECURITY DEFINER). Raises exception with table name: "Hard delete not allowed on &lt;table&gt;. Use soft delete (deactivation/suspension via registry submission workflow) instead. Records must be preserved for audit."
+- **Triggers:** `prevent_hard_delete_companies` on `companies`, `prevent_hard_delete_products` on `products`, `prevent_hard_delete_skus` on `skus` (BEFORE DELETE FOR EACH ROW). Ensures records with registry submission history or referenced by other records are never hard-deleted.
+
+**Generic pattern (reference):**
 ```sql
 CREATE OR REPLACE FUNCTION prevent_hard_delete_companies()
 RETURNS trigger
@@ -151,16 +159,13 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
-  -- Prevent hard delete, require soft delete
   RAISE EXCEPTION 'Hard delete not allowed. Use soft delete (set is_active = false) instead.';
-  
   RETURN NULL;
 END;
 $$;
 
 CREATE TRIGGER prevent_hard_delete_companies_trigger
-BEFORE DELETE
-ON companies
+BEFORE DELETE ON companies
 FOR EACH ROW
 EXECUTE FUNCTION prevent_hard_delete_companies();
 ```

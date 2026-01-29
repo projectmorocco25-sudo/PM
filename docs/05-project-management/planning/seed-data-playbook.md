@@ -246,6 +246,8 @@ After applying each seed migration stage, complete this checklist:
 
 ## Stage: seed_1_1_2_rmm (Subphase 1.1.2)
 
+**Owner for applying and verifying this stage:** Hassan. Subphase 1.1.2 must not start until this stage is applied and verified (see phase-1-1-rmm.md prerequisites).
+
 **Purpose:** RMM module seed data (companies, products, SKUs, registry submissions).
 
 **Tables Touched:**

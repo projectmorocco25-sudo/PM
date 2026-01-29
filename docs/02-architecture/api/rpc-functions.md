@@ -91,6 +91,8 @@ SELECT shared_check_module_active('ecs');
 
 **Purpose:** Create new company
 
+**Migration:** `20260129120000_rpc_rmm_company_crud.sql` (Task 1.1.2.1). **SECURITY INVOKER**; RLS applies (MOH only).
+
 **Parameters:**
 - `name` (text) - Company name
 - `registration_number` (text) - Registration number
@@ -117,21 +119,44 @@ SELECT rmm_create_company(
 
 ---
 
-### rmm_submit_registry_update(...)
+### rmm_update_company(p_id uuid, p_name text DEFAULT NULL, ...)
 
-**Purpose:** Submit registry update (company, product, SKU) **including deletion requests**.
+**Purpose:** Update company. Only non-null parameters are updated.
+
+**Parameters:**
+- `p_id` (uuid) - Company ID (required)
+- `p_name` (text, optional) - Company name
+- `p_registration_number` (text, optional) - Registration number
+- `p_company_type` (text, optional) - Company type (ipc, wholesaler)
+- `p_address` (text, optional) - Company address
+- `p_contact_email` (text, optional) - Contact email
+- `p_contact_phone` (text, optional) - Contact phone
+
+**Returns:** JSON with `{ company }` or `{ error, message }` / `{ error, company_id }` (e.g. not_found)
+
+**Security:** SECURITY INVOKER (uses caller's permissions; RLS applies — MOH only for UPDATE)
+
+**Migration:** `20260129120000_rpc_rmm_company_crud.sql` (Task 1.1.2.1)
+
+---
+
+### rmm_submit_registry_update(submission_type text, entity_type text, entity_id uuid, submission_data jsonb)
+
+**Purpose:** Create draft registry submission (company-originated). Submit registry update (company, product, SKU) **including deletion requests**.
+
+**Migration:** `20260129120600_rpc_rmm_registry_submission_create.sql` (Task 1.1.2.6). **SECURITY DEFINER**; company users only; entity must belong to caller's company. Creates row in `registry_submissions` with status `draft`.
 
 **Parameters:**
 - `submission_type` (text) - Submission type: `company_create`, `company_update`, `company_delete`, `product_create`, `product_update`, `product_delete`, `sku_create`, `sku_update`, `sku_delete`
 - `entity_type` (text) - Entity type (`company`, `product`, `sku`)
-- `entity_id` (uuid) - Entity ID (for updates/deletes) — **Required for deletion requests**
+- `entity_id` (uuid) - Entity ID (for updates/deletes); null allowed for `company_create`, `product_create`, `sku_create`. **Required for deletion requests**
 - `submission_data` (jsonb) - Submission data (JSON). **For deletion requests, must include:**
-  - `reason` (text, required) - Reason for deletion
+  - `reason` (text, required, min 50 characters) - Reason for deletion (BUSINESS-LOGIC §4.3)
   - `detailed_explanation` (text, optional) - Detailed explanation
 
-**Returns:** JSON with submission data
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, created_at, updated_at } }` or `{ error, message }`
 
-**State Transition:** `draft` → `submitted`
+**State Transition:** Creates in `draft`; later workflow (Task 1.1.2.7+) moves `draft` → `submitted` → …
 
 **Deletion requests:**
 - **Who can create:** Tier 2 Officer (or Company for their own entities, if allowed).
@@ -154,19 +179,42 @@ SELECT rmm_create_company(
 
 **Purpose:** Tier 2 Officer verifies registry submission (including deletion requests).
 
+**Migration:** `20260129120700_rpc_rmm_verify_registry_submission.sql` (Task 1.1.2.7). **SECURITY DEFINER**; Tier 2 Officer (`tier2_officer`) only; updates `registry_submissions` (status, verified_by, verified_at) and inserts into `approvals`.
+
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
-- `comments` (text) - Verification comments
+- `comments` (text) - Verification comments (optional)
 
-**Returns:** JSON with updated submission
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, verified_by, verified_at, ... } }` or `{ error, message }` / `{ error, message, current_status }`
 
 **State Transition:** `submitted` → `tier2_verified`
 
 **Validation:**
-- User must be Tier 2 Officer
+- User must be Tier 2 Officer (`tier2_officer`)
 - Submission must be in `submitted` status
 
 **Deletion requests:** Tier 2 Officer can verify deletion requests. Verification confirms the deletion request is valid and properly documented. After verification, the deletion request moves to Tier 1 for approval.
+
+---
+
+### rmm_peer_review_registry_submission(submission_id uuid, comments text DEFAULT NULL)
+
+**Purpose:** Tier 2 Officer (different from submitter) peer reviews MOH-originated registry submission. Required for MOH submissions before Tier 1 approval (two-person rule).
+
+**Migration:** `20260129121200_rpc_rmm_moh_peer_review.sql` (Task 1.1.2.12). **SECURITY DEFINER**; Tier 2 Officer (`tier2_officer`) only; peer reviewer must be different from `submitted_by`; updates `registry_submissions` (status → `tier2_peer_reviewed`, verified_by, verified_at) and inserts into `approvals` with `approval_type = 'peer_review'`.
+
+**Parameters:**
+- `submission_id` (uuid) - Submission ID
+- `comments` (text) - Peer review comments (optional)
+
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, verified_by, verified_at, ... } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** `submitted` → `tier2_peer_reviewed`
+
+**Validation:**
+- User must be Tier 2 Officer (`tier2_officer`)
+- Submission must be in `submitted` status
+- Peer reviewer must be a different user than `submitted_by` (distinct Tier 2 for MOH submissions)
 
 ---
 
@@ -174,17 +222,19 @@ SELECT rmm_create_company(
 
 **Purpose:** Tier 1 approves registry submission (including deletion requests).
 
+**Migration:** `20260129120800_rpc_rmm_approve_registry_submission.sql` (Task 1.1.2.8), updated in `20260129121200_rpc_rmm_moh_peer_review.sql` (Task 1.1.2.12). **SECURITY DEFINER**; Tier 1 (`tier1`) only; updates `registry_submissions` (status, approved_by, approved_at) and inserts into `approvals`.
+
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
-- `comments` (text) - Approval comments
+- `comments` (text) - Approval comments (optional)
 
-**Returns:** JSON with updated submission
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, verified_by, verified_at, approved_by, approved_at, ... } }` or `{ error, message }` / `{ error, message, current_status }`
 
-**State Transition:** `tier2_verified` → `tier1_approved` (or `tier2_peer_reviewed` → `tier1_approved`)
+**State Transition:** `tier2_verified` or `tier2_peer_reviewed` → `tier1_approved`
 
 **Validation:**
-- User must be Tier 1
-- Submission must be in `tier2_verified` or `tier2_peer_reviewed` status
+- User must be Tier 1 (`tier1`)
+- Submission must be in `tier2_verified` (company path) or `tier2_peer_reviewed` (MOH peer-review path) status
 
 **Deletion requests:** Tier 1 approval of a deletion request is the "issue the command" step. Approval authorizes the Tier 2 Registrar to implement the deletion. After approval, the deletion request moves to the Tier 2 Registrar for implementation.
 
@@ -194,12 +244,16 @@ SELECT rmm_create_company(
 
 **Purpose:** Tier 2 Registrar implements registry update (including approved deletions).
 
+**Migration:** `20260129120900_rpc_rmm_implement_registry_update.sql` (Task 1.1.2.9), updated in `20260129121500_two_person_rule.sql` (Task 1.1.2.15). **SECURITY DEFINER**; Tier 2 Registrar (`tier2_registrar`) only; for **critical actions** (`company_delete`, `product_delete`) enforces **two-person rule** via `rmm_two_person_rule_satisfied` (Tier 2 Officer verification + Tier 1 approval, two different users) before implementing; applies create/update via existing CRUD RPCs; applies soft delete for delete types with cascade and `insert_audit_log`; updates `registry_submissions` (status, implemented_by, implemented_at) and inserts into `approvals`.
+
 **Parameters:**
 - `submission_id` (uuid) - Submission ID
 
-**Returns:** JSON with updated submission
+**Returns:** JSON with updated submission or `{ error: 'two_person_rule_not_satisfied', satisfied: false, message }` when the two-person rule is not satisfied for critical actions.
 
 **State Transition:** `tier1_approved` → `tier2_implemented`
+
+**Two-person rule (Task 1.1.2.15):** For `company_delete` (company suspension/deletion) and `product_delete` (product deactivation/deletion including critical medicines), implementation is blocked unless the submission has Tier 2 Officer verification (`verified_by` with role `tier2_officer`) and Tier 1 approval (`approved_by` with role `tier1`), and verifier ≠ approver.
 
 **Validation:**
 - User must be Tier 2 Registrar
@@ -232,6 +286,217 @@ When `submission_type` is `company_delete`, `product_delete`, or `sku_delete`:
 
 5. **No hard deletes**
    - Entity row remains in the database; only deactivation/suspension fields are set. All data is preserved for audit (see audit-logging-spec).
+
+---
+
+### rmm_complete_registry_submission(submission_id uuid)
+
+**Purpose:** Tier 2 Registrar marks registry submission as completed (workflow closure).
+
+**Migration:** `20260129121000_rpc_rmm_complete_registry_submission.sql` (Task 1.1.2.10). **SECURITY DEFINER**; Tier 2 Registrar (`tier2_registrar`) only; updates `registry_submissions` (status → `completed`, updated_at) and inserts into `approvals` with `approval_type = 'completion'`.
+
+**Parameters:**
+- `submission_id` (uuid) - Submission ID
+
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, verified_by, verified_at, approved_by, approved_at, implemented_by, implemented_at, rejection_reason, created_at, updated_at } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** `tier2_implemented` → `completed`
+
+**Validation:**
+- User must be Tier 2 Registrar (`tier2_registrar`)
+- Submission must be in `tier2_implemented` status
+
+---
+
+### rmm_two_person_rule_satisfied(submission_id uuid)
+
+**Purpose:** Check that a registry submission satisfies the two-person rule (Tier 2 Officer verification + Tier 1 approval, two different users). Used by `rmm_implement_registry_update` for critical actions and by frontend/tests.
+
+**Migration:** `20260129121500_two_person_rule.sql` (Task 1.1.2.15). **SECURITY DEFINER**; read-only check on `registry_submissions` and `users`.
+
+**Parameters:**
+- `submission_id` (uuid) - Submission ID
+
+**Returns:** `{ satisfied: true }` or `{ satisfied: false, message: "..." }` (e.g. verification/approval missing, same user, or role mismatch).
+
+**Validation:** Verifies `verified_by` and `approved_by` are set; `verified_by` has role `tier2_officer`; `approved_by` has role `tier1`; `verified_by` ≠ `approved_by`.
+
+---
+
+### rmm_reject_registry_submission(submission_id uuid, rejection_reason text)
+
+**Purpose:** Tier 2 Officer or Tier 1 rejects a registry submission (workflow rejection with reason).
+
+**Migration:** `20260129121100_rpc_rmm_reject_registry_submission.sql` (Task 1.1.2.11). **SECURITY DEFINER**; Tier 2 Officer (`tier2_officer`) or Tier 1 (`tier1`) only; updates `registry_submissions` (status → `rejected`, rejection_reason) and inserts into `approvals` with `approval_type = 'rejection'`.
+
+**Parameters:**
+- `submission_id` (uuid) - Submission ID
+- `rejection_reason` (text) - Mandatory reason for rejection (min 10 characters)
+
+**Returns:** JSON with `{ submission: { id, submission_type, entity_type, entity_id, submission_data, status, submitted_by, verified_by, verified_at, approved_by, approved_at, implemented_by, implemented_at, rejection_reason, created_at, updated_at } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** Any eligible status → `rejected`
+
+**Validation:**
+- User must be Tier 2 Officer or Tier 1
+- **Tier 2 Officer:** can reject only when status is `submitted`, `tier2_verified`, or `tier2_peer_reviewed`
+- **Tier 1:** can reject only when status is `tier2_verified`, `tier2_peer_reviewed`, or `tier1_approved`
+- Submission must not be `draft`, `rejected`, `completed`, or `tier2_implemented`
+- `rejection_reason` is required and must be at least 10 characters (trimmed)
+
+---
+
+## Enforcement Module Functions
+
+### enforcement_create_action(company_id uuid, action_type text, violation_type text, legal_basis text, justification text, ...)
+
+**Purpose:** Create a draft enforcement action. MOH only.
+
+**Migration:** `20260129121600_rpc_enforcement_submit_for_review.sql` (Task 1.1.2.31). **SECURITY DEFINER**; MOH roles only (`tier1`, `tier2_officer`, `tier2_registrar`, `system_admin`); creates row in `enforcement_actions` with status `draft`.
+
+**Parameters:**
+- `p_company_id` (uuid) - Company ID (required)
+- `p_action_type` (text) - `warning`, `fine`, or `suspension` (determines approval path: Warning → Tier 2; Fine/Suspension → Tier 1)
+- `p_violation_type` (text) - One of: `submission_non_compliance`, `threshold_breach`, `critical_medicine_non_compliance`, `export_violation`, `data_quality_issue`, `repeated_offender`
+- `p_legal_basis` (text) - Legal basis (required)
+- `p_justification` (text) - Justification (required; min 50 characters per BUSINESS-LOGIC)
+- `p_amount` (numeric, optional) - Amount (e.g. for fine)
+- `p_currency` (text, optional) - Default `MAD`
+- `p_notes` (text, optional)
+- `p_violation_reference_id` (uuid, optional)
+- `p_violation_reference_table` (text, optional)
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, ... } }` or `{ error, message }`
+
+**Validation:** Company must exist and be active; justification min 50 chars.
+
+---
+
+### enforcement_submit_action(action_id uuid)
+
+**Purpose:** Submit an enforcement action for review. Transitions draft → pending_review and records approval.
+
+**Migration:** `20260129121600_rpc_enforcement_submit_for_review.sql` (Task 1.1.2.31). **SECURITY DEFINER**; MOH only; action must be in `draft`; updates `enforcement_actions.status` to `pending_review` and inserts into `approvals` with `approval_type = 'submit'`.
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, status, ... } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** `draft` → `pending_review`
+
+**Validation:** Action must exist and be in `draft`. Approval path (Tier 2 vs Tier 1) is determined by `action_type` in review/approve RPCs (Tasks 1.1.2.32, 1.1.2.33).
+
+---
+
+### enforcement_review_action(action_id uuid, review_notes text DEFAULT NULL)
+
+**Purpose:** Tier 2 Officer reviews an enforcement action. Warning → approved (Tier 2 alone); Fine/Suspension → pending_approval (Tier 1 must approve).
+
+**Migration:** `20260129121700_rpc_enforcement_review_action.sql` (Task 1.1.2.32). **SECURITY DEFINER**; Tier 2 Officer (`tier2_officer`) only; action must be in `pending_review`; updates `enforcement_actions` (status, reviewed_by, reviewed_at, review_notes; for Warning also approved_by, approved_at) and inserts into `approvals` with `approval_type = 'review'`. Audit: existing AFTER UPDATE trigger on `enforcement_actions` logs row change (including review_notes).
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID
+- `p_review_notes` (text, optional for Warning) - For **Fine/Suspension**: mandatory justification (min 50 characters); stored in `review_notes` and audited via trigger.
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, status, reviewed_by, reviewed_at, review_notes, approved_by, approved_at, ... } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transitions:**
+- **Warning:** `pending_review` → `approved` (Tier 2 alone; sets approved_by = reviewer).
+- **Fine/Suspension:** `pending_review` → `pending_approval` (justification min 50 chars required).
+
+**Validation:** Action must exist and be in `pending_review`. For Fine/Suspension, `p_review_notes` (justification) required and min 50 characters.
+
+---
+
+### enforcement_approve_action(action_id uuid, approval_notes text)
+
+**Purpose:** Tier 1 approves an enforcement action (Fine/Suspension path). Enforces two-person rule (Tier 2 must have reviewed); requires justification (min 50 chars).
+
+**Migration:** `20260129121800_rpc_enforcement_approve_action.sql` (Task 1.1.2.33). **SECURITY DEFINER**; Tier 1 (`tier1`) only; action must be in `pending_approval`; **two-person rule:** `reviewed_by` must be set (Tier 2 Officer) and different from approver (Tier 1); updates `enforcement_actions` (status → `approved`, approved_by, approved_at, approval_notes) and inserts into `approvals` with `approval_type = 'approval'`. Audit: existing AFTER UPDATE trigger on `enforcement_actions` logs row change (including approval_notes).
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID
+- `p_approval_notes` (text, required) - Justification for Tier 1 approval (min 50 characters); stored in `approval_notes` and audited via trigger.
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, status, reviewed_by, approved_by, approval_notes, ... } }` or `{ error, message }` / `{ error, message, current_status }` / `{ error, two_person_rule, message }`
+
+**State Transition:** `pending_approval` → `approved`
+
+**Validation:** Action must exist and be in `pending_approval`. **Two-person rule:** `reviewed_by` must be set and be a Tier 2 Officer; approver must be Tier 1 and different from reviewer. `p_approval_notes` required and min 50 characters.
+
+---
+
+### enforcement_execute_action(action_id uuid, execution_notes text DEFAULT NULL)
+
+**Purpose:** Execute an approved enforcement action. MOH only. When Tier 1 executes, justification (execution_notes) min 50 chars required. Suspension applies to company (suspended_at, is_active=false; cascade deactivates products/SKUs).
+
+**Migration:** `20260129121900_rpc_enforcement_execute_action.sql` (Task 1.1.2.34). **SECURITY DEFINER**; MOH roles only (`tier1`, `tier2_officer`, `tier2_registrar`, `system_admin`); action must be in `approved`; **when Tier 1 executes:** `p_execution_notes` required and min 50 characters; updates `enforcement_actions` (status → `executed`, executed_by, executed_at, execution_notes) and inserts into `approvals` with `approval_type = 'execute'`. **Suspension:** updates `companies` (suspended_at, suspended_by, suspended_reason, is_active = false); cascade deactivation applies to products/SKUs. Audit: existing AFTER UPDATE triggers on `enforcement_actions` and `companies` log row changes.
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID
+- `p_execution_notes` (text, optional for Tier 2) - **When Tier 1 executes:** required justification (min 50 characters); stored in `execution_notes` and audited via trigger. Used as `suspended_reason` when action_type = suspension.
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, status, executed_by, executed_at, execution_notes, ... } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** `approved` → `executed`
+
+**Side effects:** For **suspension**, updates `companies` (suspended_at, suspended_by, suspended_reason, is_active = false); cascade deactivation applies to associated products and SKUs.
+
+**Validation:** Action must exist and be in `approved`. When caller is Tier 1, `p_execution_notes` required and min 50 characters.
+
+---
+
+### enforcement_submit_appeal(action_id uuid, appeal_reason text, evidence jsonb DEFAULT NULL)
+
+**Purpose:** Company users submit an appeal against an executed enforcement action. Appeal must be submitted within **30 days of execution** (BUSINESS-LOGIC); rejected after the window. One appeal per action.
+
+**Migration:** `20260129122000_rpc_enforcement_submit_appeal.sql` (Task 1.1.2.35). **SECURITY DEFINER**; company users only (`company_admin`, `company_manager`, `company_user`); action must belong to caller's company; action must be in `executed` status; **30-day window:** `executed_at` must be within last 30 days; creates row in `enforcement_action_appeals` (status `submitted`) and updates `enforcement_actions` (appeal_id, status → `appealed`). Audit: existing AFTER INSERT/UPDATE triggers on `enforcement_action_appeals` and `enforcement_actions` log changes.
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID (must be executed and belong to caller's company)
+- `p_appeal_reason` (text, required) - Appeal reason (min 20 characters)
+- `p_evidence` (jsonb, optional) - Supporting evidence
+
+**Returns:** JSON with `{ appeal: { id, enforcement_action_id, appeal_reason, evidence, status, submitted_by, submitted_at, ... }, action: { id, company_id, action_type, status, appeal_id, ... } }` or `{ error, message }` / `{ error, appeal_window_expired, message }` / `{ error, already_appealed, message }`
+
+**Validation:** Action must exist, be in `executed`, belong to caller's company. **30-day window:** `executed_at >= now() - 30 days`. No existing appeal for this action. `p_appeal_reason` required and min 20 characters.
+
+---
+
+### enforcement_review_appeal(appeal_id uuid, review_notes text DEFAULT NULL)
+
+**Purpose:** Tier 1 marks an enforcement appeal as under Tier 1 review (submitted/tier2_reviewed → tier1_reviewed). **SLA:** Tier 1 review target within **14 business days** (documented; not enforced in DB).
+
+**Migration:** `20260129122100_rpc_enforcement_resolve_appeal.sql` (Task 1.1.2.36). **SECURITY DEFINER**; Tier 1 (`tier1`) only; appeal must be in `submitted` or `tier2_reviewed`; updates `enforcement_action_appeals` (reviewed_by_tier1, reviewed_at_tier1, status → `tier1_reviewed`).
+
+**Parameters:** `p_appeal_id` (uuid), `p_review_notes` (text, optional).
+
+**Returns:** JSON with `{ appeal: { id, enforcement_action_id, status, reviewed_by_tier1, reviewed_at_tier1, ... } }` or error.
+
+---
+
+### enforcement_uphold_appeal(appeal_id uuid, resolution text)
+
+**Purpose:** Tier 1 upholds appeal (company wins). Appeal → `upheld`; enforcement action → `resolved`. If action was **suspension**, company is reinstated (is_active = true, suspended_* cleared). Resolution min 50 chars.
+
+**Migration:** `20260129122100_rpc_enforcement_resolve_appeal.sql` (Task 1.1.2.36). **SECURITY DEFINER**; Tier 1 only; appeal in `submitted`, `tier2_reviewed`, or `tier1_reviewed`; updates appeal (status → `upheld`, resolution, resolved_by, resolved_at), enforcement_actions (status → `resolved`, resolution, resolved_by, resolved_at); if action_type = suspension, updates companies (is_active = true, clear suspended_*).
+
+**Parameters:** `p_appeal_id` (uuid), `p_resolution` (text, required; min 50 characters).
+
+**Returns:** JSON with `{ appeal: { ... }, action: { ... } }` or error.
+
+---
+
+### enforcement_overturn_appeal(appeal_id uuid, resolution text)
+
+**Purpose:** Tier 1 overturns (rejects) appeal. Appeal → `rejected`; enforcement action → `resolved`. Resolution min 50 chars.
+
+**Migration:** `20260129122100_rpc_enforcement_resolve_appeal.sql` (Task 1.1.2.36). **SECURITY DEFINER**; Tier 1 only; appeal in `submitted`, `tier2_reviewed`, or `tier1_reviewed`; updates appeal (status → `rejected`, resolution, resolved_by, resolved_at), enforcement_actions (status → `resolved`, resolution, resolved_by, resolved_at).
+
+**Parameters:** `p_appeal_id` (uuid), `p_resolution` (text, required; min 50 characters).
+
+**Returns:** JSON with `{ appeal: { ... }, action: { ... } }` or error.
 
 ---
 
@@ -1012,9 +1277,83 @@ All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Ta
 
 **Migration:** `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies. Used by dashboard.
 
+### RMM Company CRUD (1.1.2.1)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_create_company` | `(p_name text, p_registration_number text, p_company_type text, p_address text DEFAULT NULL, p_contact_email text DEFAULT NULL, p_contact_phone text DEFAULT NULL)` | `{ company }` or `{ error, message }` |
+| `rmm_update_company` | `(p_id uuid, p_name text DEFAULT NULL, ...)` | `{ company }` or `{ error, company_id }` / `{ error, message }` |
+
+**Migration:** `20260129120000_rpc_rmm_company_crud.sql`. **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
+
+### RMM Product CRUD (1.1.2.2)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_get_product` | `(p_id uuid)` | `{ product }` or `{ error, product_id }` |
+| `rmm_create_product` | `(p_company_id uuid, p_name text, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT false)` | `{ product }` or `{ error, message }` |
+| `rmm_update_product` | `(p_id uuid, p_name text DEFAULT NULL, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT NULL)` | `{ product }` or `{ error, product_id }` / `{ error, message }` |
+| `rmm_list_products` | (existing) | `{ data: [...], total }` |
+
+**Migration:** `20260129120100_rpc_rmm_product_crud.sql` (get/create/update). `rmm_list_products` in `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
+
+### RMM SKU CRUD (1.1.2.3)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_get_sku` | `(p_id uuid)` | `{ sku }` or `{ error, sku_id }` |
+| `rmm_create_sku` | `(p_product_id uuid, p_sku_code text, p_name text, p_dosage_strength text, p_dosage_form text, p_pack_size text, p_unit_of_measure text, p_atc_code_id uuid DEFAULT NULL, p_is_moh_authorized_unregistered boolean DEFAULT false)` | `{ sku }` or `{ error, message }` |
+| `rmm_update_sku` | `(p_id uuid, p_sku_code text DEFAULT NULL, p_name text DEFAULT NULL, ...)` | `{ sku }` or `{ error, sku_id }` / `{ error, message }` |
+| `rmm_list_skus` | (existing) | `{ data: [...], total }` |
+
+**Migration:** `20260129120200_rpc_rmm_sku_crud.sql` (get/create/update). `rmm_list_skus` in `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
+
+### RMM Helper RPCs (1.1.2.3a)
+
+Helper functions for entity-scoped lists and history. List helpers wrap existing `rmm_list_products` / `rmm_list_skus` with required entity ID. History helpers use **SECURITY DEFINER** and role-based logic: MOH/auditor see `audit_logs` for the entity; Company users see `registry_submissions` for that entity only when they own it (company/product/sku).
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_list_company_products` | `(p_company_id uuid, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_list_product_skus` | `(p_product_id uuid, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_get_company_history` | `(p_company_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_get_product_history` | `(p_product_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_get_sku_history` | `(p_sku_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+
+- **List helpers:** **SECURITY INVOKER**; they call `rmm_list_products` / `rmm_list_skus`, so RLS applies. Used by Company detail, Company products, Product detail, SKU detail pages.
+- **History helpers:** **SECURITY DEFINER**. MOH/auditor: rows from `audit_logs` filtered by `table_name` and `record_id`. Company: rows from `registry_submissions` for that `entity_type`/`entity_id` only when the entity belongs to the user’s company.
+
+**Migration:** `20260129120300_rpc_rmm_helper_functions.sql` (Task 1.1.2.3a).
+
+### RMM ATC Code Management (1.1.2.4) — MOH Only
+
+ATC Code management RPCs. **List/get:** all authenticated (companies need list for SKU/product forms). **Create/update:** MOH only (RLS `atc_codes_insert_moh`, `atc_codes_update_moh`).
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_list_atc_codes` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_code_filter text DEFAULT NULL)` | `{ data, total }` |
+| `rmm_get_atc_code` | `(p_id uuid)` | `{ atc_code }` or `{ error, atc_code_id }` |
+| `rmm_create_atc_code` | `(p_code text, p_description text DEFAULT NULL, p_is_active boolean DEFAULT true)` | `{ atc_code }` or `{ error, message }` |
+| `rmm_update_atc_code` | `(p_id uuid, p_code text DEFAULT NULL, p_description text DEFAULT NULL, p_is_active boolean DEFAULT NULL)` | `{ atc_code }` or `{ error, atc_code_id }` / `{ error, message }` |
+
+**Migration:** `20260129120400_rpc_rmm_atc_code_management.sql` (Task 1.1.2.4). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
+
+### RMM Critical Medicine Management (1.1.2.5) — MOH Only
+
+Critical Medicine management RPCs. **List/get:** all authenticated. **Create/update:** MOH only (RLS `critical_medicines_insert_moh`, `critical_medicines_update_moh`). Create uses `auth.uid()` as `designated_by`.
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_list_critical_medicines` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_sku_id uuid DEFAULT NULL)` | `{ data, total }` |
+| `rmm_get_critical_medicine` | `(p_id uuid)` | `{ critical_medicine }` or `{ error, critical_medicine_id }` |
+| `rmm_create_critical_medicine` | `(p_sku_id uuid)` | `{ critical_medicine }` or `{ error, message }` |
+| `rmm_update_critical_medicine` | `(p_id uuid, p_is_active boolean DEFAULT NULL)` | `{ critical_medicine }` or `{ error, critical_medicine_id }` |
+
+**Migration:** `20260129120500_rpc_rmm_critical_medicine_management.sql` (Task 1.1.2.5). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
+
 ---
 
-**Last Updated:** 2026-01-27  
+**Last Updated:** 2026-01-29  
 **Next Review Date:** [To be scheduled]  
 **Owner:** Maya
 

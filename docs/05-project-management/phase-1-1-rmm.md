@@ -433,7 +433,7 @@ Before Phase 1.2 (VCI) can begin, validate:
 ## Subphase 1.1.2: RMM Module - Core Registry Management (Week 2-3)
 
 **Status:** ⏳ **AWAITING IMPLEMENTATION**  
-**Prerequisites:** ✅ Subphase 1.1.1 complete | ✅ Seed migration `seed_1_1_2_rmm` applied  
+**Prerequisites:** ✅ Subphase 1.1.1 complete | ✅ Seed migration `seed_1_1_2_rmm` applied and verified (owner: see [Seed Data Playbook](./planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112)). **Subphase 1.1.2 starts when:** Subphase 1.1.1 is complete and `seed_1_1_2_rmm` has been applied and verified.  
 **⚠️ Backend Completion Gate:** All backend tasks (1.1.2.1-1.1.2.15, 1.1.2.31-1.1.2.36) must be complete before frontend tasks begin.  
 **Task Directory:** `phase-1-1-rmm/tasks/`
 
@@ -446,51 +446,82 @@ Before Phase 1.2 (VCI) can begin, validate:
 - **RMM timeframes (reference):** Verification 2–3 working days, approval 2 working days, implementation 1 working day.
 - **Role mapping (BUSINESS-LOGIC §3):** BUSINESS-LOGIC **"Company Admin"** maps to Phase 1.1 **Company Admin** (`company_admin`). BUSINESS-LOGIC **"Company Manager / User"** maps to Phase 1.1 **Company Manager** (`company_manager`) and **Company User** (`company_user`). See [role-based-ui-patterns](../02-architecture/frontend/role-based-ui-patterns.md), [security-architecture](../02-architecture/security/security-architecture.md).
 
+**Implementation owners (by area):** Assign one owner per stream for accountability and parallel work. Assigned by Yasmine (PM). Update if needed.
+
+| Area | Owner | Tasks |
+|------|--------|--------|
+| RMM CRUD (backend) | Oliver | 1.1.2.1, 1.1.2.2, 1.1.2.3, 1.1.2.3a |
+| MOH reference data (backend) | Maya | 1.1.2.4, 1.1.2.5 |
+| Registry submission workflow (backend) | Oliver | 1.1.2.6–1.1.2.12 |
+| Business logic (backend) | Sami | 1.1.2.13, 1.1.2.14, 1.1.2.15 |
+| Enforcement (backend) | Oliver | 1.1.2.31–1.1.2.36 |
+| RMM layout & overview (frontend) | Oliver | 1.1.2.16, 1.1.2.16.1 |
+| Company (frontend) | Nadia | 1.1.2.17–1.1.2.19 |
+| Product (frontend) | Nadia | 1.1.2.20–1.1.2.22 |
+| SKU (frontend) | Nadia | 1.1.2.23–1.1.2.25 |
+| Registry submission (frontend) | Maya | 1.1.2.26–1.1.2.28 |
+| MOH-only pages (frontend) | Maya | 1.1.2.29, 1.1.2.30 |
+| Enforcement (frontend) | Oliver | 1.1.2.37–1.1.2.44 |
+
+**Verification (all tasks):** Sami (Compliance) + Oliver (Technical Review). See [Compliance Rules](./standards/compliance-rules.md).
+
+**Compliance verification batching:** Tasks may be verified by area or by PR when multiple tasks are implemented together. Sami (and Oliver) sign off once per area or per PR against the compliance checklist for those tasks. See [Compliance Rules](./standards/compliance-rules.md#implementation-summary-compliance-requirement-mandatory).
+
+**Subphase 1.1.2 pre-flight checklist (complete before starting implementation):**
+- [x] Subphase 1.1.1 complete (per phase doc).
+- [x] Seed: `seed_1_1_2_rmm` applied and verified (owner: see [Seed Data Playbook](./planning/seed-data-playbook.md#stage-seed_1_1_2_rmm-subphase-112)).
+- [x] [BUSINESS-LOGIC.md](../BUSINESS-LOGIC.md) and [Compliance Rules](./standards/compliance-rules.md) read by all implementers.
+- [x] Implementation owners assigned and documented (see table above).
+- [x] Sami's approval process agreed (per-task vs per-area/PR; backup if absent).
+- [x] Backend order (1.1.2.6–12, 13–15, 31–36) confirmed in task files.
+- [x] Verification batching approach agreed (by area; document refs per area).
+- [x] Compliance batching approach agreed (per area/PR; backup reviewer).
+
 ---
 
 ### RMM Backend Tasks
 
 #### Company Management
 
-- [ ] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD
+- [x] **Task 1.1.2.1:** Create RMM RPC functions - Company CRUD
   - 📋 **Details:** [tasks/backend/1.1.2.1-rmm-company-crud-rpc.md](./phase-1-1-rmm/tasks/backend/1.1.2.1-rmm-company-crud-rpc.md#implementation-task)
-- [ ] **Task 1.1.2.1-verify:** Verify compliance of Company CRUD RPC functions
+- [x] **Task 1.1.2.1-verify:** Verify compliance of Company CRUD RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.1-rmm-company-crud-rpc.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.1-rmm-company-crud-rpc.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.1 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Product Management
 
-- [ ] **Task 1.1.2.2:** Create RMM RPC functions - Product CRUD
+- [x] **Task 1.1.2.2:** Create RMM RPC functions - Product CRUD
   - 📋 **Details:** [tasks/backend/1.1.2.2-rmm-product-crud-rpc.md](./phase-1-1-rmm/tasks/backend/1.1.2.2-rmm-product-crud-rpc.md#implementation-task)
-- [ ] **Task 1.1.2.2-verify:** Verify compliance of Product CRUD RPC functions
+- [x] **Task 1.1.2.2-verify:** Verify compliance of Product CRUD RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.2-rmm-product-crud-rpc.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.2-rmm-product-crud-rpc.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.2 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### SKU Management
 
-- [ ] **Task 1.1.2.3:** Create RMM RPC functions - SKU CRUD
+- [x] **Task 1.1.2.3:** Create RMM RPC functions - SKU CRUD
   - 📋 **Details:** [tasks/backend/1.1.2.3-rmm-sku-crud-rpc.md](./phase-1-1-rmm/tasks/backend/1.1.2.3-rmm-sku-crud-rpc.md#implementation-task)
-- [ ] **Task 1.1.2.3-verify:** Verify compliance of SKU CRUD RPC functions
+- [x] **Task 1.1.2.3-verify:** Verify compliance of SKU CRUD RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.3-rmm-sku-crud-rpc.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.3-rmm-sku-crud-rpc.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.3 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.3a:** Create RMM helper RPC functions (history and relationship queries)
+- [x] **Task 1.1.2.3a:** Create RMM helper RPC functions (history and relationship queries)
   - 📋 **Details:** [tasks/backend/1.1.2.3a-rmm-helper-rpc-functions.md](./phase-1-1-rmm/tasks/backend/1.1.2.3a-rmm-helper-rpc-functions.md#implementation-task)
-- [ ] **Task 1.1.2.3a-verify:** Verify compliance of RMM helper RPC functions
+- [x] **Task 1.1.2.3a-verify:** Verify compliance of RMM helper RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.3a-rmm-helper-rpc-functions.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.3a-rmm-helper-rpc-functions.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.3a (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### MOH-Only Functions
 
-- [ ] **Task 1.1.2.4:** Create RMM RPC functions - ATC Code management (MOH only)
+- [x] **Task 1.1.2.4:** Create RMM RPC functions - ATC Code management (MOH only)
   - 📋 **Details:** [tasks/backend/1.1.2.4-rmm-atc-code-management-rpc.md](./phase-1-1-rmm/tasks/backend/1.1.2.4-rmm-atc-code-management-rpc.md#implementation-task)
-- [ ] **Task 1.1.2.4-verify:** Verify compliance of ATC Code management RPC functions
+- [x] **Task 1.1.2.4-verify:** Verify compliance of ATC Code management RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.4-rmm-atc-code-management-rpc.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.4-rmm-atc-code-management-rpc.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.4 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.5:** Create RMM RPC functions - Critical Medicine management (MOH only)
+- [x] **Task 1.1.2.5:** Create RMM RPC functions - Critical Medicine management (MOH only)
   - 📋 **Details:** [tasks/backend/1.1.2.5-rmm-critical-medicine-management-rpc.md](./phase-1-1-rmm/tasks/backend/1.1.2.5-rmm-critical-medicine-management-rpc.md#implementation-task)
-- [ ] **Task 1.1.2.5-verify:** Verify compliance of Critical Medicine management RPC functions
+- [x] **Task 1.1.2.5-verify:** Verify compliance of Critical Medicine management RPC functions
   - 📋 **Details:** [tasks/backend/1.1.2.5-rmm-critical-medicine-management-rpc.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.5-rmm-critical-medicine-management-rpc.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.5 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
@@ -498,45 +529,45 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 - **MOH-originated workflow:** Tier 2 submits → **another** Tier 2 peer-reviews → Tier 1 approves → Tier 2 Registrar implements. Per BUSINESS-LOGIC §4.2.
 
-- [ ] **Task 1.1.2.6:** Implement registry submission workflow - Create submission
+- [x] **Task 1.1.2.6:** Implement registry submission workflow - Create submission
   - 📋 **Details:** [tasks/backend/1.1.2.6-registry-submission-create.md](./phase-1-1-rmm/tasks/backend/1.1.2.6-registry-submission-create.md#implementation-task)
-- [ ] **Task 1.1.2.6-verify:** Verify compliance of registry submission creation
+- [x] **Task 1.1.2.6-verify:** Verify compliance of registry submission creation
   - 📋 **Details:** [tasks/backend/1.1.2.6-registry-submission-create.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.6-registry-submission-create.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.6 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.7:** Implement registry submission workflow - Tier 2 verification
+- [x] **Task 1.1.2.7:** Implement registry submission workflow - Tier 2 verification
   - 📋 **Details:** [tasks/backend/1.1.2.7-registry-submission-tier2-verification.md](./phase-1-1-rmm/tasks/backend/1.1.2.7-registry-submission-tier2-verification.md#implementation-task)
-- [ ] **Task 1.1.2.7-verify:** Verify compliance of Tier 2 verification
+- [x] **Task 1.1.2.7-verify:** Verify compliance of Tier 2 verification
   - 📋 **Details:** [tasks/backend/1.1.2.7-registry-submission-tier2-verification.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.7-registry-submission-tier2-verification.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.7 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.8:** Implement registry submission workflow - Tier 1 approval
+- [x] **Task 1.1.2.8:** Implement registry submission workflow - Tier 1 approval
   - 📋 **Details:** [tasks/backend/1.1.2.8-registry-submission-tier1-approval.md](./phase-1-1-rmm/tasks/backend/1.1.2.8-registry-submission-tier1-approval.md#implementation-task)
-- [ ] **Task 1.1.2.8-verify:** Verify compliance of Tier 1 approval
+- [x] **Task 1.1.2.8-verify:** Verify compliance of Tier 1 approval
   - 📋 **Details:** [tasks/backend/1.1.2.8-registry-submission-tier1-approval.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.8-registry-submission-tier1-approval.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.8 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.9:** Implement registry submission workflow - Tier 2 implementation
+- [x] **Task 1.1.2.9:** Implement registry submission workflow - Tier 2 implementation
   - 📋 **Details:** [tasks/backend/1.1.2.9-registry-submission-tier2-implementation.md](./phase-1-1-rmm/tasks/backend/1.1.2.9-registry-submission-tier2-implementation.md#implementation-task)
-- [ ] **Task 1.1.2.9-verify:** Verify compliance of Tier 2 implementation
+- [x] **Task 1.1.2.9-verify:** Verify compliance of Tier 2 implementation
   - 📋 **Details:** [tasks/backend/1.1.2.9-registry-submission-tier2-implementation.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.9-registry-submission-tier2-implementation.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.9 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.10:** Implement registry submission workflow - Completion
+- [x] **Task 1.1.2.10:** Implement registry submission workflow - Completion
   - 📋 **Details:** [tasks/backend/1.1.2.10-registry-submission-completion.md](./phase-1-1-rmm/tasks/backend/1.1.2.10-registry-submission-completion.md#implementation-task)
-- [ ] **Task 1.1.2.10-verify:** Verify compliance of registry submission completion
+- [x] **Task 1.1.2.10-verify:** Verify compliance of registry submission completion
   - 📋 **Details:** [tasks/backend/1.1.2.10-registry-submission-completion.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.10-registry-submission-completion.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.10 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.11:** Implement registry submission workflow - Rejection
+- [x] **Task 1.1.2.11:** Implement registry submission workflow - Rejection
   - 📋 **Details:** [tasks/backend/1.1.2.11-registry-submission-rejection.md](./phase-1-1-rmm/tasks/backend/1.1.2.11-registry-submission-rejection.md#implementation-task)
-- [ ] **Task 1.1.2.11-verify:** Verify compliance of registry submission rejection
+- [x] **Task 1.1.2.11-verify:** Verify compliance of registry submission rejection
   - 📋 **Details:** [tasks/backend/1.1.2.11-registry-submission-rejection.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.11-registry-submission-rejection.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.11 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.12:** Implement MOH submission workflow - Peer review
+- [x] **Task 1.1.2.12:** Implement MOH submission workflow - Peer review
   - 📋 **Details:** [tasks/backend/1.1.2.12-moh-submission-peer-review.md](./phase-1-1-rmm/tasks/backend/1.1.2.12-moh-submission-peer-review.md#implementation-task)
-- [ ] **Task 1.1.2.12-verify:** Verify compliance of MOH submission peer review
+- [x] **Task 1.1.2.12-verify:** Verify compliance of MOH submission peer review
   - 📋 **Details:** [tasks/backend/1.1.2.12-moh-submission-peer-review.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.12-moh-submission-peer-review.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.12 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
@@ -544,21 +575,21 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 - **Deletion:** Mandatory justification (min 50 chars), explicit confirmation, enhanced warnings. **Two-person rule:** Enumerate the four critical actions (company suspension, company deletion, product deactivation for critical medicines, product deletion) and require Tier 1 + Tier 2 Officer.
 
-- [ ] **Task 1.1.2.13:** Implement cascade deactivation logic
+- [x] **Task 1.1.2.13:** Implement cascade deactivation logic
   - 📋 **Details:** [tasks/backend/1.1.2.13-cascade-deactivation-logic.md](./phase-1-1-rmm/tasks/backend/1.1.2.13-cascade-deactivation-logic.md#implementation-task)
-- [ ] **Task 1.1.2.13-verify:** Verify compliance of cascade deactivation logic
+- [x] **Task 1.1.2.13-verify:** Verify compliance of cascade deactivation logic
   - 📋 **Details:** [tasks/backend/1.1.2.13-cascade-deactivation-logic.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.13-cascade-deactivation-logic.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.13 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.14:** Implement soft delete safeguards
+- [x] **Task 1.1.2.14:** Implement soft delete safeguards
   - 📋 **Details:** [tasks/backend/1.1.2.14-soft-delete-safeguards.md](./phase-1-1-rmm/tasks/backend/1.1.2.14-soft-delete-safeguards.md#implementation-task)
-- [ ] **Task 1.1.2.14-verify:** Verify compliance of soft delete safeguards
+- [x] **Task 1.1.2.14-verify:** Verify compliance of soft delete safeguards
   - 📋 **Details:** [tasks/backend/1.1.2.14-soft-delete-safeguards.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.14-soft-delete-safeguards.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.14 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.15:** Implement two-person rule for critical actions
+- [x] **Task 1.1.2.15:** Implement two-person rule for critical actions
   - 📋 **Details:** [tasks/backend/1.1.2.15-two-person-rule.md](./phase-1-1-rmm/tasks/backend/1.1.2.15-two-person-rule.md#implementation-task)
-- [ ] **Task 1.1.2.15-verify:** Verify compliance of two-person rule
+- [x] **Task 1.1.2.15-verify:** Verify compliance of two-person rule
   - 📋 **Details:** [tasks/backend/1.1.2.15-two-person-rule.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.15-two-person-rule.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.15 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
@@ -567,42 +598,49 @@ Before Phase 1.2 (VCI) can begin, validate:
 ### Enforcement Backend Tasks
 
 - **Enforcement types:** Warning (Tier 2 alone), Fine/Suspension (Tier 1). **Justification:** All Tier 1 enforcement actions require mandatory justification (min 50 chars), audited. **Appeal:** 30-day window from execution; Tier 1 review within 14 business days.
+- **📌 Outstanding scope:** Completion of 1.1.2.31–1.1.2.36 (with list/detail RPCs) unblocks Company Dashboard and MOH Tier 1 **Enforcement tabs**, **Appeal** modal, and **View Enforcement Details** modal ([outstanding-scope-and-sequencing.md](./planning/outstanding-scope-and-sequencing.md) §1.1, §1.2).
 
-- [ ] **Task 1.1.2.31:** Create Enforcement RPC function - Submit for review
+- [x] **Task 1.1.2.31:** Create Enforcement RPC function - Submit for review
   - 📋 **Details:** [tasks/backend/1.1.2.31-enforcement-submit-for-review.md](./phase-1-1-rmm/tasks/backend/1.1.2.31-enforcement-submit-for-review.md#implementation-task)
-- [ ] **Task 1.1.2.31-verify:** Verify compliance of Enforcement submit for review
+- [x] **Task 1.1.2.31-verify:** Verify compliance of Enforcement submit for review
   - 📋 **Details:** [tasks/backend/1.1.2.31-enforcement-submit-for-review.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.31-enforcement-submit-for-review.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.31 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129121600_rpc_enforcement_submit_for_review.sql` applied via Supabase MCP. RPCs documented in rpc-functions.md. Justification min 50 chars; MOH-only; approval path by action_type (Warning→Tier 2, Fine/Suspension→Tier 1) deferred to review/approve RPCs.
 
-- [ ] **Task 1.1.2.32:** Create Enforcement RPC function - Review action
+- [x] **Task 1.1.2.32:** Create Enforcement RPC function - Review action
   - 📋 **Details:** [tasks/backend/1.1.2.32-enforcement-review-action.md](./phase-1-1-rmm/tasks/backend/1.1.2.32-enforcement-review-action.md#implementation-task)
-- [ ] **Task 1.1.2.32-verify:** Verify compliance of Enforcement review action
+- [x] **Task 1.1.2.32-verify:** Verify compliance of Enforcement review action
   - 📋 **Details:** [tasks/backend/1.1.2.32-enforcement-review-action.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.32-enforcement-review-action.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.32 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129121700_rpc_enforcement_review_action.sql` applied via Supabase MCP. RPC documented in rpc-functions.md. Tier 2 Officer only; justification min 50 chars for Fine/Suspension (stored in review_notes, audited via audit_trigger).
 
-- [ ] **Task 1.1.2.33:** Create Enforcement RPC function - Approve action
+- [x] **Task 1.1.2.33:** Create Enforcement RPC function - Approve action
   - 📋 **Details:** [tasks/backend/1.1.2.33-enforcement-approve-action.md](./phase-1-1-rmm/tasks/backend/1.1.2.33-enforcement-approve-action.md#implementation-task)
-- [ ] **Task 1.1.2.33-verify:** Verify compliance of Enforcement approve action
+- [x] **Task 1.1.2.33-verify:** Verify compliance of Enforcement approve action
   - 📋 **Details:** [tasks/backend/1.1.2.33-enforcement-approve-action.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.33-enforcement-approve-action.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.33 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129121800_rpc_enforcement_approve_action.sql` applied via Supabase MCP. RPC documented in rpc-functions.md. Tier 1 only; two-person rule (Tier 2 reviewed before Tier 1); justification (approval_notes) min 50 chars.
 
-- [ ] **Task 1.1.2.34:** Create Enforcement RPC function - Execute action
+- [x] **Task 1.1.2.34:** Create Enforcement RPC function - Execute action
   - 📋 **Details:** [tasks/backend/1.1.2.34-enforcement-execute-action.md](./phase-1-1-rmm/tasks/backend/1.1.2.34-enforcement-execute-action.md#implementation-task)
-- [ ] **Task 1.1.2.34-verify:** Verify compliance of Enforcement execute action
+- [x] **Task 1.1.2.34-verify:** Verify compliance of Enforcement execute action
   - 📋 **Details:** [tasks/backend/1.1.2.34-enforcement-execute-action.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.34-enforcement-execute-action.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.34 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129121900_rpc_enforcement_execute_action.sql` applied via Supabase MCP. RPC documented in rpc-functions.md. MOH-only; Tier 1 execution justification min 50 chars; suspension applies to company (suspended_at, is_active=false).
 
-- [ ] **Task 1.1.2.35:** Create Enforcement RPC function - Appeal action
+- [x] **Task 1.1.2.35:** Create Enforcement RPC function - Appeal action
   - 📋 **Details:** [tasks/backend/1.1.2.35-enforcement-appeal-action.md](./phase-1-1-rmm/tasks/backend/1.1.2.35-enforcement-appeal-action.md#implementation-task)
-- [ ] **Task 1.1.2.35-verify:** Verify compliance of Enforcement appeal action
+- [x] **Task 1.1.2.35-verify:** Verify compliance of Enforcement appeal action
   - 📋 **Details:** [tasks/backend/1.1.2.35-enforcement-appeal-action.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.35-enforcement-appeal-action.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.35 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129122000_rpc_enforcement_submit_appeal.sql` applied via Supabase MCP. RPC documented in rpc-functions.md. Company users only; 30-day appeal window from execution enforced; one appeal per action.
 
-- [ ] **Task 1.1.2.36:** Create Enforcement RPC function - Resolve appeal
+- [x] **Task 1.1.2.36:** Create Enforcement RPC function - Resolve appeal
   - 📋 **Details:** [tasks/backend/1.1.2.36-enforcement-resolve-appeal.md](./phase-1-1-rmm/tasks/backend/1.1.2.36-enforcement-resolve-appeal.md#implementation-task)
-- [ ] **Task 1.1.2.36-verify:** Verify compliance of Enforcement resolve appeal
+- [x] **Task 1.1.2.36-verify:** Verify compliance of Enforcement resolve appeal
   - 📋 **Details:** [tasks/backend/1.1.2.36-enforcement-resolve-appeal.md#compliance-verification-task](./phase-1-1-rmm/tasks/backend/1.1.2.36-enforcement-resolve-appeal.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.36 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Migration `20260129122100_rpc_enforcement_resolve_appeal.sql` applied via Supabase MCP. Three RPCs documented in rpc-functions.md. Tier 1 only; 14 business days SLA documented; uphold/overturn with resolution min 50 chars; uphold reinstates company if suspension.
 
 ---
 
@@ -948,7 +986,8 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 **Status:** ⏳ **AWAITING IMPLEMENTATION**  
 **Prerequisites:** ✅ Subphases 1.1.1 and 1.1.2 complete  
-**Business logic:** Integration tests and documentation must align with [BUSINESS-LOGIC.md](../BUSINESS-LOGIC.md) (justification, two-person rule, appeal window, enforcement types, deletion safeguards). See Task 1.1.3.5, 1.1.3.9.
+**Business logic:** Integration tests and documentation must align with [BUSINESS-LOGIC.md](../BUSINESS-LOGIC.md) (justification, two-person rule, appeal window, enforcement types, deletion safeguards). See Task 1.1.3.5, 1.1.3.9.  
+**📌 Outstanding scope:** Completion of 1.1.3 supports future "Dashboard follow-up tasks" (Submissions tab, Enforcement tab, modals) per [outstanding-scope-and-sequencing.md](./planning/outstanding-scope-and-sequencing.md) §4.
 
 ---
 

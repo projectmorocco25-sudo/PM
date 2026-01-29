@@ -12,6 +12,15 @@
 
 ---
 
+## Approval process (Sami's sign-off)
+
+- **Per task:** Sami's approval is required before any task is considered complete. Compliance verification tasks (-verify) are owned by Sami (Compliance) + Oliver (Technical Review).
+- **Batching:** For Subphase 1.1.2 (and similar), compliance verification may be performed **per area** or **per PR** when multiple tasks are implemented together. Sami signs off once per area/PR against the compliance checklist for those tasks.
+- **Definition of done:** "Sami's approval" = compliance checklist for the task(s) or PR completed and signed off (by task, by area, or by PR when tasks are grouped).
+- **Backup reviewer:** If Sami is unavailable, Oliver (or designated deputy) may perform compliance sign-off so work does not stall. Document the backup in this section when designated.
+
+---
+
 ## Pre-Task Checklist
 
 ### 1. Sequential Task Verification

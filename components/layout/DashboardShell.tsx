@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
+import { Breadcrumbs } from "./Breadcrumbs";
 import { useSession } from "@/hooks/use-session";
 import { usePermissions } from "@/hooks/use-permissions";
 
@@ -73,7 +74,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <main
         className={`min-h-[calc(100vh-var(--header-height))] pt-[var(--header-height)] transition-[padding] duration-300 pl-0 ${sidebarExpanded ? "md:pl-[280px]" : "md:pl-[64px]"}`}
       >
-        <div className="mx-auto max-w-[1920px] p-4 md:p-6">
+        <div className="mx-auto max-w-[1920px] space-y-4 p-4 md:space-y-6 md:p-6">
+          <Breadcrumbs />
           {children}
         </div>
       </main>

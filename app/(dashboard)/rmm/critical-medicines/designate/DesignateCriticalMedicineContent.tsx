@@ -36,18 +36,35 @@ export function DesignateCriticalMedicineContent({
 }: DesignateCriticalMedicineContentProps) {
   const router = useRouter();
   const [designatingId, setDesignatingId] = useState<string | null>(null);
+  const [designateModalSkuId, setDesignateModalSkuId] = useState<string | null>(null);
+  const [designateJustification, setDesignateJustification] = useState("");
 
-  async function handleDesignate(skuId: string) {
+  function openDesignateModal(skuId: string) {
+    setDesignateModalSkuId(skuId);
+    setDesignateJustification("");
+  }
+
+  async function handleDesignateSubmit() {
+    const skuId = designateModalSkuId;
+    if (!skuId) return;
+    const justification = designateJustification.trim();
+    if (!justification) {
+      alert("Please provide a justification for designation (required).");
+      return;
+    }
     setDesignatingId(skuId);
     try {
       const supabase = createClient();
       const { data, error: rpcError } = await supabase.rpc("rmm_create_critical_medicine", {
         p_sku_id: skuId,
+        p_justification: justification,
       });
       const payload = data as { error?: string; message?: string } | null;
       if (rpcError || (payload && "error" in payload)) {
         alert(payload?.message ?? rpcError?.message ?? "Failed to designate");
       } else {
+        setDesignateModalSkuId(null);
+        setDesignateJustification("");
         router.push("/rmm/critical-medicines");
         router.refresh();
       }
@@ -157,8 +174,8 @@ export function DesignateCriticalMedicineContent({
                     <td className="whitespace-nowrap py-3 pl-3 pr-4 text-right">
                       <button
                         type="button"
-                        onClick={() => handleDesignate(sku.id)}
-                        disabled={designatingId === sku.id}
+                        onClick={() => openDesignateModal(sku.id)}
+                        disabled={!!designatingId}
                         className="rounded-md border border-[#3b82f6] bg-[#3b82f6] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#2563eb] disabled:opacity-50"
                       >
                         {designatingId === sku.id ? "Designating…" : "Designate"}
@@ -185,6 +202,52 @@ export function DesignateCriticalMedicineContent({
             </Link>
           </p>
         </>
+      )}
+
+      {designateModalSkuId && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="designate-justification-title"
+        >
+          <div className="w-full max-w-md rounded-lg border border-[#e5e7eb] bg-white p-6 shadow-xl">
+            <h2 id="designate-justification-title" className="text-lg font-semibold text-[#111827]">
+              Provide justification for designation
+            </h2>
+            <p className="mt-2 text-sm text-[#6b7280]">
+              Enter the reason for designating this SKU as a critical medicine (required). This is logged for audit.
+            </p>
+            <label className="mt-4 block text-sm font-medium text-[#111827]">
+              Justification <span className="text-[#dc2626]">(required)</span>
+            </label>
+            <textarea
+              value={designateJustification}
+              onChange={(e) => setDesignateJustification(e.target.value)}
+              placeholder="Enter reason for designation..."
+              rows={3}
+              className="mt-1 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm text-[#111827] focus:border-[#3b82f6] focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+              required
+            />
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => { setDesignateModalSkuId(null); setDesignateJustification(""); }}
+                className="rounded-md border border-[#d1d5db] bg-white px-4 py-2 text-sm font-medium text-[#374151] hover:bg-[#f9fafb]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleDesignateSubmit}
+                disabled={!!designatingId || !designateJustification.trim()}
+                className="rounded-md border border-[#3b82f6] bg-[#3b82f6] px-4 py-2 text-sm font-medium text-white hover:bg-[#2563eb] disabled:opacity-50"
+              >
+                {designatingId ? "Designating…" : "Submit"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -4,7 +4,7 @@
 
 **Last Updated:** 2026-01-29  
 **Status:** Living document — update as tasks complete or new gaps are identified.  
-**Related:** [phase-1-1-rmm.md](../phase-1-1-rmm.md) | [dependencies.md](./dependencies.md) | [roadmap.md](./roadmap.md)
+**Related:** [phase-1-1-rmm.md](../phase-1-1-rmm.md) | [dependencies.md](./dependencies.md) | [roadmap.md](./roadmap.md) | [team-suggestions-checklist.md](./team-suggestions-checklist.md) (implementation tracking)
 
 ---
 
@@ -26,7 +26,7 @@
 |------------------|---------------------|-----------------|-------|
 | **Submissions tab** | 0.5.1.18 – Submissions tab | 1.1.2.6–1.1.2.11 (registry workflow); RPC to **list** registry submissions (filter by status, company); 1.1.2.17 (Companies list) if linking to company. For **VCI** submission types (WSL, MSQ, AAMS): Phase 1.2 VCI submission workflows & list APIs. | Tab shows “My Submissions” with filter/sort, submission rows, View Details / Edit / Withdraw / Resubmit. Depends on registry + (optionally) VCI submissions. |
 | **Enforcement tab** | 0.5.1.18 – Enforcement tab | 1.1.2.31–1.1.2.36 (enforcement workflow RPCs); 1.1.2.37 (Enforcement dashboard page) or equivalent **list** enforcement actions APIs; enforcement RLS. | Tab shows company’s enforcement actions, filter by type/status, View Details / Appeal. |
-| **Activity tab** | 0.5.1.18 – Activity tab | **`shared_get_history`** (done, 1.1.1.20) or `shared_get_audit_logs`; 1.1.1.21 (Audit logs pages) if reusing audit. | Filter: All / Submissions / Messages / Enforcement; date range; list with “View Details” etc. |
+| **Activity tab** | 0.5.1.18 – Activity tab | ~~**`shared_get_history`** (done)~~ | ✅ **Implemented** (2026-01-29). Dashboard tab uses `shared_get_history`; date range; filter All/Submissions/Audit; list with View Details → `/history`. See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
 | **Regulatory Compliance Status** widget | 0.5.1.18 – Overview | Enforcement list RPC; optional compliance summary RPC. 1.1.2.31+ for enforcement data. | “Compliant / Non‑Compliant (X violations)”, active enforcement count, required actions, “View Detailed Compliance Status”. |
 | **Active Enforcement Actions** widget (full) | 0.5.1.18 – Overview | Same as Enforcement tab. | List of active actions with legal basis, appeal deadline, View Details / Appeal. |
 | **Key Metrics** (Compliance Score, Active Submissions, Pending Actions, Completed) | 0.5.1.18 – Key Metrics | Registry + enforcement list/count RPCs; optional aggregation RPC. | Four metric cards with counts and “View” links. |
@@ -89,7 +89,7 @@ Use `shared_get_history` where a unified history/activity feed is needed (e.g. d
 
 | Outstanding item | Wireframe reference | Complete before | Notes |
 |------------------|---------------------|-----------------|-------|
-| **Breadcrumbs** (layout-level) | 0.5.1.14 | None (page-level breadcrumbs exist on dashboard). | Optional: centralise in layout; currently deferred to per-page. |
+| **Breadcrumbs** (layout-level) | 0.5.1.14 | None | ✅ **Implemented** (2026-01-29). Path-derived breadcrumbs in dashboard layout (`Breadcrumbs` in `DashboardShell`). See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
 | **Header search** (full-screen modal on mobile) | 0.5.1.15 | Search API or scope definition (global search vs module-specific). | Search trigger exists; modal + results not implemented. |
 
 ### 3.2 Placeholder / Help Routes
@@ -108,8 +108,8 @@ Items explicitly deferred during implementation of Phase 1.1 tasks (1.1.2.29, 1.
 
 | Outstanding item | Wireframe reference | Complete before | Notes |
 |------------------|---------------------|-----------------|-------|
-| **Remove designation – justification** | task-0.5.2.15 – Remove flow | Optional: extend `rmm_update_critical_medicine` or approvals/audit to store removal reason. | Wireframe: "Provide reason for removal (required)". Current RPC only sets `is_active = false`; no justification param. Add backend param + UI field in Remove confirmation modal. |
-| **Designate – justification** | task-0.5.2.15 – Designate flow | Optional: extend `rmm_create_critical_medicine` (e.g. `p_justification text`) or store in audit. | Wireframe: "Provide Justification: Enter reason for designation (required)". Current RPC is `p_sku_id` only. Add param + UI in designate page/modal. |
+| **Remove designation – justification** | task-0.5.2.15 – Remove flow | — | ✅ **Implemented** (2026-01-29). Migration `20260129140000_critical_medicines_justification.sql`: `p_justification` on `rmm_update_critical_medicine`; column `justification` on `critical_medicines`. Remove modal has required "Reason for removal" field. See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
+| **Designate – justification** | task-0.5.2.15 – Designate flow | — | ✅ **Implemented** (2026-01-29). `rmm_create_critical_medicine` accepts `p_justification`; Designate flow opens modal with required "Justification" textarea before submit. See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
 
 ### 4.2 Enforcement Dashboard (Task 1.1.2.37)
 
@@ -117,8 +117,8 @@ Items explicitly deferred during implementation of Phase 1.1 tasks (1.1.2.29, 1.
 |------------------|---------------------|-----------------|-------|
 | **Enforcement Trends (Last 30 Days)** | task-0.5.2.0 – Trends section | Chart library (e.g. Recharts); optional RPC for daily counts by action type. | Multi-line chart: X = days 1–30, Y = count; lines for Warning (yellow), Fine (orange), Suspension (red). Hover tooltip; "View Full Trends Report" → `/enforcement/reports`. Not implemented (no chart library in project). |
 | **Violation Types (Last 30 Days)** | task-0.5.2.0 – Violation Types section | Chart library; RPC or query for violation_type counts (last 30d); `system_config` for ECS/CMC activation. | Horizontal bar chart: violation type (with DMP Art. ref + "View Regulation") vs count; sorted by frequency. Conditional bars: Export Violation (if ECS active), Data Quality Issue (if CMC active). Module check: `system_config` ecs.is_active, cmc.is_active. Not implemented. |
-| **Action Type Breakdown – chart** | task-0.5.2.0 – Action Type Breakdown | Chart library. | Wireframe: pie/donut chart + summary cards. Implemented as **summary cards only** (Warning/Fine/Suspension count + %). Pie/donut and "Click segment to filter" deferred. |
-| **Pending Approvals – urgency gauge** | task-0.5.2.0 – Pending widget | None. | Wireframe: circular/linear "urgency" gauge (e.g. 8 pending / 10 = 80%), color green/yellow/red, "Urgency: High" label. Current dashboard shows pending count only. |
+| **Action Type Breakdown – chart** | task-0.5.2.0 – Action Type Breakdown | — | ✅ **Implemented** (2026-01-29). Recharts donut + summary cards; Warning/Fine/Suspension with tooltip and legend. "Click segment to filter" deferred. See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
+| **Pending Approvals – urgency gauge** | task-0.5.2.0 – Pending widget | None | ✅ **Implemented** (2026-01-29). Linear gauge pending/10, green/yellow/red, "Urgency: Low/Medium/High" in Enforcement dashboard. See [team-suggestions-checklist.md](./team-suggestions-checklist.md). |
 | **Pending item – deadline/urgency indicators** | task-0.5.2.0 – Pending list | Optional: approval SLA or deadline field on enforcement_actions. | Wireframe: "⚠️ [X]d deadline", 🔴 &lt;3d / 🟡 3–7d / 🟢 &gt;7d. Requires deadline/SLA definition and data; current list has no deadline display. |
 
 ---
@@ -131,10 +131,10 @@ To minimise rework and support full dashboard wireframe scope:
    Complete 1.1.2.6–1.1.2.11 (registry workflow), 1.1.2.31–1.1.2.36 (enforcement), and any **list** RPCs for submissions and enforcement.
 
 2. **Enforcement dashboard & list UIs**  
-   Complete 1.1.2.37 (Enforcement dashboard) and any enforcement list/detail views used by both enforcement module and dashboard. **Deferred:** Trends chart, Violation Types chart, Action Type pie/donut, urgency gauge, deadline indicators (§4.2).
+   Complete 1.1.2.37 (Enforcement dashboard) and any enforcement list/detail views used by both enforcement module and dashboard. **Done:** Urgency gauge (§4.2), Action Type pie/donut (§4.2). **Deferred:** Trends chart, Violation Types chart, deadline indicators (§4.2).
 
 3. **Activity feed**  
-   `shared_get_history` (1.1.1.20) provides role-based history; use it for the dashboard Activity tab. Extend filters (e.g. messages) if needed.
+   ✅ **Done.** Dashboard Activity tab implemented (2026-01-29) using `shared_get_history` (1.1.1.20). Extend filters (e.g. messages) if needed later.
 
 4. **Follow-up entity & RPCs**  
    Add follow-up data model and RPCs (create, list, assign, escalate) if MOH T1/T2 follow-up flows are in scope.
@@ -147,7 +147,96 @@ To minimise rework and support full dashboard wireframe scope:
 
 ---
 
-## 6. Changelog
+## 6. What Still Needs to Be Implemented
+
+This section consolidates **all outstanding items** (not yet implemented). Use the *Blocked by* column to prioritise; implement backend/list RPCs first, then UI that consumes them. See §1–§4 for full notes and wireframe references.
+
+### 6.1 Company Dashboard (`/dashboard` — task-0.5.1.18)
+
+| Item | Blocked by |
+|------|------------|
+| **Submissions tab** | 1.1.2.6–1.1.2.11; list registry submissions RPC (filter by status, company); 1.1.2.17. VCI: Phase 1.2. |
+| **Enforcement tab** | 1.1.2.31–1.1.2.36, 1.1.2.37; list enforcement actions APIs; enforcement RLS. |
+| **Regulatory Compliance Status** widget | Enforcement list RPC; optional compliance summary RPC. |
+| **Active Enforcement Actions** widget (full) | Same as Enforcement tab. |
+| **Key Metrics** (Compliance Score, Active Submissions, Pending Actions, Completed) | Registry + enforcement list/count RPCs; optional aggregation RPC. |
+| **Appeal Enforcement Action** modal | 1.1.2.35; enforcement RPCs. |
+| **New Submission** modal (type selection) | 1.1.2.6; routes to WSL/MSQ/AAMS/ECS when Phase 1.2+. |
+| **View Enforcement Details** modal | Enforcement get-by-id/detail RPC; 1.1.2.31+. |
+
+### 6.2 MOH Tier 1 Dashboard (task-0.5.1.19)
+
+| Item | Blocked by |
+|------|------------|
+| **Compliance tab** | VCI breach/compliance APIs (Phase 1.2); list unsubmitted companies; enforcement list. |
+| **Enforcement tab** | 1.1.2.31–1.1.2.36, 1.1.2.37; enforcement list, pending approvals. |
+| **Modules tab** | 1.1.1.17; `system_config` / `shared_get_module_config`; RMM/VCI/ECS/CMC status. |
+| **Reports tab** | Governance/compliance report APIs; VCI/CMC data (Phase 1.2 / 1.4). |
+| **%SC (Submission Compliance)** widget | VCI submission + company data; %SC calculation (Phase 1.2 or CMC). |
+| **System Health** widget | 1.1.1.2d (`system_get_status`); optionally health checks. |
+| **Pending Approvals** (full), **Critical Compliance Violations** | 1.1.2.7–1.1.2.8; enforcement pending-approval list; VCI breach list. |
+| **Module Activation Status** widget | 1.1.1.17; `system_config`; `shared_get_module_config` / `shared_activate_module`. |
+| **Pending Threshold Reversions** widget | Thresholds (VCI/ECS) with `duration_type`, `revert_date`; reversion list RPC. |
+| **Alert Company** modal | Communications RPC (e.g. `communications_create_conversation` or alert API). |
+| **Assign Follow-up** modal | **Follow-up** entity + RPC (create, list, assign); user list for "Assign to". |
+| **Schedule Emergency Meeting** modal | Calendar/meeting API or placeholder. |
+| **Bulk Actions** modal | Same as Alert / Assign Follow-up; bulk APIs. |
+| **Quick Preview slide-over** | Company detail + enforcement + CMC snapshot APIs. |
+
+### 6.3 MOH Tier 2 Dashboard (task-0.5.1.20)
+
+| Item | Blocked by |
+|------|------------|
+| **Verification tab** | 1.1.2.7; **list submissions pending verification** RPC; registry workflow. |
+| **Follow-ups tab** | Follow-up entity + list RPC (same as MOH T1). |
+| **Analysis tab** | VCI breach/VCI SKU APIs; threshold reversions; report APIs (Phase 1.2+). |
+| **%SC** widget | Same as MOH T1. |
+| **Pending Verifications** widget | 1.1.2.7; list pending verification RPC. |
+| **Oversight Metrics** widget | Verification rate / avg time (registry or dedicated RPC). |
+| **Review Queue** widget | Same as Verification tab; sort by regulatory deadline. |
+| **Verify Submission** modal | 1.1.2.7; submission detail RPC. |
+| **Flag Submission** modal | **Flag** RPC (or extension of verification workflow); audit. |
+| **Request Information** modal | Communications RPC; link to submission. |
+| **Start Follow-up** modal | Same follow-up APIs as MOH T1. |
+| **Escalate to Tier 1** modal | Escalation RPC; transfer follow-up to Tier 1; notify. |
+
+### 6.4 Core Layout & Navigation (1.1.1.9)
+
+| Item | Blocked by |
+|------|------------|
+| **Header search** (full-screen modal on mobile) | Search API or scope definition (global vs module-specific). Search trigger exists; modal + results not implemented. |
+
+### 6.5 Placeholder / Help Routes
+
+| Item | Blocked by |
+|------|------------|
+| **Help & Support** (`/help/support`) | 1.1.1.15 (Support center pages) when scoped. Currently placeholder. |
+
+### 6.6 Enforcement Dashboard (Task 1.1.2.37 — deferred)
+
+| Item | Blocked by |
+|------|------------|
+| **Enforcement Trends (Last 30 Days)** | RPC for daily counts by action type (Recharts in place). |
+| **Violation Types (Last 30 Days)** | RPC or query for violation_type counts (last 30d); `system_config` for ECS/CMC activation. |
+| **Action Type – "Click segment to filter"** | UI only; optional enhancement. |
+| **Pending item – deadline/urgency indicators** | Approval SLA or deadline field on `enforcement_actions`; then UI (deadline badges). |
+
+### 6.7 Backend / data model (needed for above)
+
+| Item | Notes |
+|------|--------|
+| **List registry submissions** RPC | Filter by status, company; used by Dashboard Submissions tab, Verification tab. |
+| **List enforcement actions** (company-scoped) | For Company dashboard Enforcement tab and Active Enforcement Actions widget. |
+| **List submissions pending verification** RPC | For MOH T2 Verification tab and Pending Verifications widget. |
+| **Enforcement daily counts** RPC (optional) | For Enforcement Trends chart (last 30 days by action type). |
+| **Violation type counts** RPC/query (optional) | For Violation Types chart; conditional on ECS/CMC via `system_config`. |
+| **Follow-up entity + RPCs** | Create, list, assign, escalate; for MOH T1/T2 Follow-up tabs and modals. |
+| **Deadline/SLA on enforcement_actions** (optional) | For Pending item deadline/urgency indicators. |
+| **Search API or scope** | For Header search modal. |
+
+---
+
+## 7. Changelog
 
 | Date | Change |
 |------|--------|
@@ -155,6 +244,10 @@ To minimise rework and support full dashboard wireframe scope:
 | 2026-01-27 | **History overview (1.1.1.20)** completed. Added §2 "Recently Completed"; Activity tab "Complete before" updated to reference `shared_get_history`. |
 | 2026-01-27 | **Audit Logs pages (1.1.1.21)** completed. Added to §2 Recently Completed; list, detail, and reports available for MOH/auditors; dashboard or other UIs can link to audit routes. |
 | 2026-01-29 | **§4 Deferred from Phase 1.1 RMM/Enforcement** added. Critical Medicines (1.1.2.30): Remove/Designate justification (wireframe-required; RPCs have no param). Enforcement dashboard (1.1.2.37): Enforcement Trends chart, Violation Types chart, Action Type pie/donut, urgency gauge, pending deadline/urgency indicators. Summary §5 updated to reference §4.2. Section numbers 4→5, 5→6. |
+| 2026-01-29 | **Team suggestions implemented.** Dashboard Activity tab (§1.1), Pending Approvals urgency gauge (§4.2), layout-level breadcrumbs (§3.1). Related: [team-suggestions-checklist.md](./team-suggestions-checklist.md). §5 steps 2–3 updated (urgency gauge done; Activity tab done). |
+| 2026-01-29 | **Critical Medicines justification (§4.1)** implemented. Migration `20260129140000_critical_medicines_justification.sql`: column `justification`, `p_justification` on create/update RPCs. Remove modal: required reason. Designate: modal with required justification. |
+| 2026-01-29 | **Action Type Breakdown pie/donut (§4.2)** implemented. Recharts added; donut chart + summary cards on Enforcement dashboard; tooltip and legend. "Click segment to filter" deferred. |
+| 2026-01-29 | **§6 What Still Needs to Be Implemented** added. Single place listing all outstanding items by area (Company dashboard, MOH T1/T2, layout, enforcement deferred, backend/data model). Changelog renumbered to §7. |
 
 ---
 

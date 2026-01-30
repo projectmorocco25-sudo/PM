@@ -3,7 +3,7 @@
 /**
  * Wireframe: task-0.5.2.0-enforcement-dashboard.md
  * Route: /enforcement
- * Implements: Enforcement Dashboard — metrics, recent actions, pending approvals, compliance widget, action type breakdown.
+ * Implements: Enforcement Dashboard — metrics, recent actions, pending approvals, compliance widget, action type breakdown (cards + pie/donut).
  * Task: 1.1.2.37
  * API: enforcement_get_dashboard_stats, enforcement_list_recent_actions, enforcement_list_pending_approvals (hosted Supabase only). MOH only.
  * Wireframe Link: ../../../../docs/04-design/user-experience/wireframes/01-rmm/enforcement/task-0.5.2.0-enforcement-dashboard.md
@@ -11,6 +11,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
 const ACTION_TYPE_LABEL: Record<string, string> = {
   warning: "Warning",
@@ -166,6 +167,7 @@ export function EnforcementDashboardContent({
 
         <div className="min-h-[200px] rounded-lg border border-[#e5e7eb] bg-white p-4 shadow-sm">
           <h2 className="text-sm font-medium text-[#6b7280]">Pending Approvals</h2>
+          <PendingUrgencyGauge pendingCount={s.pending_count} />
           <p className="mt-2 text-3xl font-bold text-[#dc2626]" aria-live="polite">
             {s.pending_count}
           </p>
@@ -246,21 +248,48 @@ export function EnforcementDashboardContent({
 
       <div className="rounded-lg border border-[#e5e7eb] bg-white p-4 shadow-sm">
         <h2 className="text-sm font-medium text-[#6b7280]">Action Type Breakdown</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-[#fef3c7] bg-[#fef3c7] p-4">
-            <p className="text-sm font-medium text-[#111827]">⚠️ Warning</p>
-            <p className="text-2xl font-bold text-[#111827]">{s.warnings}</p>
-            <p className="text-sm text-[#6b7280]">({warningPct}%)</p>
-          </div>
-          <div className="rounded-lg border border-[#fed7aa] bg-[#fed7aa] p-4">
-            <p className="text-sm font-medium text-[#111827]">💰 Fine</p>
-            <p className="text-2xl font-bold text-[#111827]">{s.fines}</p>
-            <p className="text-sm text-[#6b7280]">({finePct}%)</p>
-          </div>
-          <div className="rounded-lg border border-[#fee2e2] bg-[#fee2e2] p-4">
-            <p className="text-sm font-medium text-[#111827]">🚫 Suspension</p>
-            <p className="text-2xl font-bold text-[#111827]">{s.suspensions}</p>
-            <p className="text-sm text-[#6b7280]">({suspensionPct}%)</p>
+        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+          {s.total > 0 ? (
+            <div className="h-[220px] w-full min-w-0 max-w-[280px] shrink-0 lg:mx-auto" aria-hidden>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={actionTypePieData(s.warnings, s.fines, s.suspensions)}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={56}
+                    outerRadius={88}
+                    paddingAngle={2}
+                    dataKey="value"
+                    nameKey="name"
+                    label={({ name, percent }) => (percent > 0 ? `${name} ${(percent * 100).toFixed(0)}%` : null)}
+                  >
+                    {actionTypePieData(s.warnings, s.fines, s.suspensions).map((entry) => (
+                      <Cell key={entry.name} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: number) => [value, "Count"]} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          ) : null}
+          <div className="grid flex-1 gap-4 sm:grid-cols-3">
+            <div className="rounded-lg border border-[#fef3c7] bg-[#fef3c7] p-4">
+              <p className="text-sm font-medium text-[#111827]">⚠️ Warning</p>
+              <p className="text-2xl font-bold text-[#111827]">{s.warnings}</p>
+              <p className="text-sm text-[#6b7280]">({warningPct}%)</p>
+            </div>
+            <div className="rounded-lg border border-[#fed7aa] bg-[#fed7aa] p-4">
+              <p className="text-sm font-medium text-[#111827]">💰 Fine</p>
+              <p className="text-2xl font-bold text-[#111827]">{s.fines}</p>
+              <p className="text-sm text-[#6b7280]">({finePct}%)</p>
+            </div>
+            <div className="rounded-lg border border-[#fee2e2] bg-[#fee2e2] p-4">
+              <p className="text-sm font-medium text-[#111827]">🚫 Suspension</p>
+              <p className="text-2xl font-bold text-[#111827]">{s.suspensions}</p>
+              <p className="text-sm text-[#6b7280]">({suspensionPct}%)</p>
+            </div>
           </div>
         </div>
         <Link
@@ -270,6 +299,41 @@ export function EnforcementDashboardContent({
           View Detailed Breakdown
         </Link>
       </div>
+    </div>
+  );
+}
+
+/** Wireframe task-0.5.2.0: Action Type Breakdown pie/donut data (filter out zeros). */
+function actionTypePieData(warnings: number, fines: number, suspensions: number): { name: string; value: number; color: string }[] {
+  return [
+    { name: "Warning", value: warnings, color: "#eab308" },
+    { name: "Fine", value: fines, color: "#f97316" },
+    { name: "Suspension", value: suspensions, color: "#dc2626" },
+  ].filter((d) => d.value > 0);
+}
+
+/** Wireframe task-0.5.2.0: urgency gauge — pending/10, green/yellow/red, Urgency label. */
+function PendingUrgencyGauge({ pendingCount }: { pendingCount: number }) {
+  const cap = 10;
+  const ratio = Math.min(pendingCount / cap, 1);
+  const pct = Math.round(ratio * 100);
+  const urgency = pendingCount <= 3 ? "Low" : pendingCount <= 7 ? "Medium" : "High";
+  const colorClass =
+    urgency === "Low" ? "text-[#16a34a] bg-[#dcfce7]" : urgency === "Medium" ? "text-[#ca8a04] bg-[#fef9c3]" : "text-[#dc2626] bg-[#fecaca]";
+  return (
+    <div className="mt-2 flex items-center gap-3">
+      <div className="relative h-10 w-24 overflow-hidden rounded-full border border-[#e5e7eb] bg-[#f3f4f6]">
+        <div
+          className={`h-full transition-all duration-300 ${
+            urgency === "Low" ? "bg-[#22c55e]" : urgency === "Medium" ? "bg-[#eab308]" : "bg-[#dc2626]"
+          }`}
+          style={{ width: `${pct}%` }}
+          aria-hidden
+        />
+      </div>
+      <span className={`rounded px-2 py-0.5 text-xs font-medium ${colorClass}`} aria-live="polite">
+        Urgency: {urgency}
+      </span>
     </div>
   );
 }

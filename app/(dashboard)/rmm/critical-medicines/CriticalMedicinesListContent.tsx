@@ -118,14 +118,22 @@ export function CriticalMedicinesListContent({
     setRemoveConfirmId(id);
   }
 
+  const [removeJustification, setRemoveJustification] = useState("");
+
   async function confirmRemove() {
     if (!removeConfirmId) return;
+    const reason = removeJustification.trim();
+    if (!reason) {
+      alert("Please provide a reason for removal (required).");
+      return;
+    }
     setRemovingId(removeConfirmId);
     try {
       const supabase = createClient();
       const { data, error } = await supabase.rpc("rmm_update_critical_medicine", {
         p_id: removeConfirmId,
         p_is_active: false,
+        p_justification: reason,
       });
       const payload = data as { error?: string; message?: string } | null;
       if (error || (payload && "error" in payload)) {
@@ -138,6 +146,7 @@ export function CriticalMedicinesListContent({
       alert("Failed to remove designation");
     } finally {
       setRemovingId(null);
+      setRemoveJustification("");
     }
   }
 
@@ -477,10 +486,21 @@ export function CriticalMedicinesListContent({
             <p className="mt-2 text-sm text-[#6b7280]">
               This will deactivate the critical medicine designation. The SKU will no longer receive the higher threshold multiplier. This action is logged for audit.
             </p>
+            <label className="mt-4 block text-sm font-medium text-[#111827]">
+              Provide reason for removal <span className="text-[#dc2626]">(required)</span>
+            </label>
+            <textarea
+              value={removeJustification}
+              onChange={(e) => setRemoveJustification(e.target.value)}
+              placeholder="Enter reason for removing this critical medicine designation..."
+              rows={3}
+              className="mt-1 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm text-[#111827] focus:border-[#3b82f6] focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+              required
+            />
             <div className="mt-4 flex justify-end gap-2">
               <button
                 type="button"
-                onClick={() => setRemoveConfirmId(null)}
+                onClick={() => { setRemoveConfirmId(null); setRemoveJustification(""); }}
                 className="rounded-md border border-[#d1d5db] bg-white px-4 py-2 text-sm font-medium text-[#374151] hover:bg-[#f9fafb]"
               >
                 Cancel
@@ -488,7 +508,7 @@ export function CriticalMedicinesListContent({
               <button
                 type="button"
                 onClick={confirmRemove}
-                disabled={!!removingId}
+                disabled={!!removingId || !removeJustification.trim()}
                 className="rounded-md border border-[#dc2626] bg-[#dc2626] px-4 py-2 text-sm font-medium text-white hover:bg-[#b91c1c] disabled:opacity-50"
               >
                 {removingId ? "Removing…" : "Remove"}

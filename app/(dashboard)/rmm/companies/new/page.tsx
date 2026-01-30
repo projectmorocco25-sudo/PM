@@ -1,17 +1,14 @@
 /**
- * Task 1.1.1.12 placeholder. Route: /rmm/companies/new
- * Wireframe: N/A (placeholder). Ref: routing-structure.md
+ * Wireframe: task-0.5.2.8-company-create-edit-form.md
+ * Route: /rmm/companies/new
+ * Implements: Company create form — Company Information, Contact Information, draft auto-save, validation.
+ * Task: 1.1.2.19
+ * API: rmm_create_company (hosted Supabase only). RLS applies (MOH only).
+ * Wireframe Link: ../../../../../docs/04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.8-company-create-edit-form.md
  */
 
-import { PlaceholderPage } from "@/components/PlaceholderPage";
+import { CompanyFormContent } from "../CompanyFormContent";
 
 export default function CompanyNewPage() {
-  return (
-    <PlaceholderPage
-      title="New Company"
-      route="/rmm/companies/new"
-      backHref="/rmm/companies"
-      backLabel="Back to Companies"
-    />
-  );
+  return <CompanyFormContent mode="create" />;
 }

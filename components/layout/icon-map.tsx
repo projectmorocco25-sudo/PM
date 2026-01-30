@@ -27,6 +27,9 @@ import {
   ChevronRight,
   Menu,
   X,
+  ClipboardList,
+  ListOrdered,
+  Pill,
   type LucideIcon,
 } from "lucide-react";
 
@@ -58,4 +61,7 @@ export const iconMap: Record<string, LucideIcon> = {
   ChevronRight,
   Menu,
   X,
+  ClipboardList,
+  ListOrdered,
+  Pill,
 };

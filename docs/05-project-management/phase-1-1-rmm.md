@@ -648,35 +648,35 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### Module Layout
 
-- [ ] **Task 1.1.2.16a:** Verify wireframes for RMM module layout
+- [x] **Task 1.1.2.16a:** Verify wireframes for RMM module layout
   - 📋 **Details:** [tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216a-verify-wireframes)
-- [ ] **Task 1.1.2.16b:** Verify database schema for RMM module layout
+- [x] **Task 1.1.2.16b:** Verify database schema for RMM module layout
   - 📋 **Details:** [tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216b-verify-database-schema)
-- [ ] **Task 1.1.2.16c:** Verify API contracts for RMM module layout
+- [x] **Task 1.1.2.16c:** Verify API contracts for RMM module layout
   - 📋 **Details:** [tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.16-rmm-module-layout.md#task-11216c-verify-api-contracts)
-- [ ] **Task 1.1.2.16:** Create RMM module layout and navigation ⚠️ **MUST BE FIRST**
+- [x] **Task 1.1.2.16:** Create RMM module layout and navigation ⚠️ **MUST BE FIRST**
   - 📋 **Details:** [tasks/frontend/1.1.2.16-rmm-module-layout.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16-rmm-module-layout.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.16a, 1.1.2.16b, 1.1.2.16c, 1.1.1.9
-- [ ] **Task 1.1.2.16-verify:** Verify compliance of RMM module layout
+- [x] **Task 1.1.2.16-verify:** Verify compliance of RMM module layout
   - 📋 **Details:** [tasks/frontend/1.1.2.16-rmm-module-layout.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16-rmm-module-layout.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.16 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### RMM Overview
 
-- [ ] **Task 1.1.2.16.1a:** Verify wireframes for RMM overview page
+- [x] **Task 1.1.2.16.1a:** Verify wireframes for RMM overview page
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161a-verify-wireframes)
 
-- [ ] **Task 1.1.2.16.1b:** Verify database schema for RMM overview page
+- [x] **Task 1.1.2.16.1b:** Verify database schema for RMM overview page
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161b-verify-database-schema)
 
-- [ ] **Task 1.1.2.16.1c:** Verify API contracts for RMM overview page
+- [x] **Task 1.1.2.16.1c:** Verify API contracts for RMM overview page
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#task-112161c-verify-api-contracts)
 
-- [ ] **Task 1.1.2.16.1:** Implement RMM overview page
+- [x] **Task 1.1.2.16.1:** Implement RMM overview page
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.16.1a, 1.1.2.16.1b, 1.1.2.16.1c, 1.1.2.16
 
-- [ ] **Task 1.1.2.16.1-verify:** Verify compliance of RMM overview page implementation
+- [x] **Task 1.1.2.16.1-verify:** Verify compliance of RMM overview page implementation
   - 📋 **Details:** [tasks/frontend/1.1.2.16.1-rmm-overview.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.16.1-rmm-overview.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.16.1 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
@@ -684,198 +684,200 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 #### Company Management
 
-- [ ] **Task 1.1.2.17a:** Verify wireframes for Companies list page
+- [x] **Task 1.1.2.17a:** Verify wireframes for Companies list page
   - 📋 **Details:** [tasks/frontend/1.1.2.17-companies-list-page.md#task-11217a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.17-companies-list-page.md#task-11217a-verify-wireframes)
-- [ ] **Task 1.1.2.17b:** Verify database schema for Companies list page
+- [x] **Task 1.1.2.17b:** Verify database schema for Companies list page
   - 📋 **Details:** [tasks/frontend/1.1.2.17-companies-list-page.md#task-11217b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.17-companies-list-page.md#task-11217b-verify-database-schema)
-- [ ] **Task 1.1.2.17c:** Verify API contracts for Companies list page
+- [x] **Task 1.1.2.17c:** Verify API contracts for Companies list page
   - 📋 **Details:** [tasks/frontend/1.1.2.17-companies-list-page.md#task-11217c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.17-companies-list-page.md#task-11217c-verify-api-contracts)
-- [ ] **Task 1.1.2.17:** Implement Companies list page
+- [x] **Task 1.1.2.17:** Implement Companies list page
   - 📋 **Details:** [tasks/frontend/1.1.2.17-companies-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.17-companies-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.17a, 1.1.2.17b, 1.1.2.17c, 1.1.2.16, 1.1.2.1
-- [ ] **Task 1.1.2.17-verify:** Verify compliance of Companies list page implementation
+- [x] **Task 1.1.2.17-verify:** Verify compliance of Companies list page implementation
   - 📋 **Details:** [tasks/frontend/1.1.2.17-companies-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.17-companies-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.17 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.18a:** Verify wireframes for Company detail page
+- [x] **Task 1.1.2.18a:** Verify wireframes for Company detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.18-company-detail-page.md#task-11218a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.18-company-detail-page.md#task-11218a-verify-wireframes)
-- [ ] **Task 1.1.2.18b:** Verify database schema for Company detail page
+- [x] **Task 1.1.2.18b:** Verify database schema for Company detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.18-company-detail-page.md#task-11218b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.18-company-detail-page.md#task-11218b-verify-database-schema)
-- [ ] **Task 1.1.2.18c:** Verify API contracts for Company detail page
+- [x] **Task 1.1.2.18c:** Verify API contracts for Company detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.18-company-detail-page.md#task-11218c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.18-company-detail-page.md#task-11218c-verify-api-contracts)
-- [ ] **Task 1.1.2.18:** Implement Company detail page
+- [x] **Task 1.1.2.18:** Implement Company detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.18-company-detail-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18-company-detail-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.18a, 1.1.2.18b, 1.1.2.18c, 1.1.2.16, 1.1.2.1, 1.1.2.3a
-- [ ] **Task 1.1.2.18-verify:** Verify compliance of Company detail page implementation
+- [x] **Task 1.1.2.18-verify:** Verify compliance of Company detail page implementation
   - 📋 **Details:** [tasks/frontend/1.1.2.18-company-detail-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18-company-detail-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.18 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
-- [ ] **Task 1.1.2.18a-a:** Verify wireframes for Company products page
-  - 📋 **Details:** [tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-a-verify-wireframes)
-- [ ] **Task 1.1.2.18a-b:** Verify database schema for Company products page
-  - 📋 **Details:** [tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-b-verify-database-schema)
-- [ ] **Task 1.1.2.18a-c:** Verify API contracts for Company products page
-  - 📋 **Details:** [tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.18a-company-products-page.md#task-11218a-c-verify-api-contracts)
-- [ ] **Task 1.1.2.18a:** Implement Company products page (Products tab view)
-  - 📋 **Details:** [tasks/frontend/1.1.2.18a-company-products-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18a-company-products-page.md#implementation-task)
-  - ⚠️ **DEPENDS ON:** 1.1.2.18a-a, 1.1.2.18a-b, 1.1.2.18a-c, 1.1.2.16, 1.1.2.18, 1.1.2.3a
-- [ ] **Task 1.1.2.18a-verify:** Verify compliance of Company products page
-  - 📋 **Details:** [tasks/frontend/1.1.2.18a-company-products-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18a-company-products-page.md#compliance-verification-task)
-  - ⚠️ **DEPENDS ON:** Task 1.1.2.18a (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.19a:** Verify wireframes for Company create/edit forms
+**Naming:** 1.1.2.18 = Company **detail** page; 1.1.2.18.1 = Company **products** page (Products tab on detail). Task 1.1.2.18.1 depends on 1.1.2.18.
+
+- [x] **Task 1.1.2.18.1a:** Verify wireframes for Company products page
+  - 📋 **Details:** [tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181a-verify-wireframes)
+- [x] **Task 1.1.2.18.1b:** Verify database schema for Company products page
+  - 📋 **Details:** [tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181b-verify-database-schema)
+- [x] **Task 1.1.2.18.1c:** Verify API contracts for Company products page
+  - 📋 **Details:** [tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.18.1-company-products-page.md#task-112181c-verify-api-contracts)
+- [x] **Task 1.1.2.18.1:** Implement Company products page (Products tab view)
+  - 📋 **Details:** [tasks/frontend/1.1.2.18.1-company-products-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18.1-company-products-page.md#implementation-task)
+  - ⚠️ **DEPENDS ON:** 1.1.2.18.1a, 1.1.2.18.1b, 1.1.2.18.1c, 1.1.2.16, 1.1.2.18, 1.1.2.3a
+- [x] **Task 1.1.2.18.1-verify:** Verify compliance of Company products page
+  - 📋 **Details:** [tasks/frontend/1.1.2.18.1-company-products-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.18.1-company-products-page.md#compliance-verification-task)
+  - ⚠️ **DEPENDS ON:** Task 1.1.2.18.1 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+- [x] **Task 1.1.2.19a:** Verify wireframes for Company create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219a-verify-wireframes)
-- [ ] **Task 1.1.2.19b:** Verify database schema for Company create/edit forms
+- [x] **Task 1.1.2.19b:** Verify database schema for Company create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219b-verify-database-schema)
-- [ ] **Task 1.1.2.19c:** Verify API contracts for Company create/edit forms
+- [x] **Task 1.1.2.19c:** Verify API contracts for Company create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.19-company-create-edit-forms.md#task-11219c-verify-api-contracts)
-- [ ] **Task 1.1.2.19:** Implement Company create/edit forms
+- [x] **Task 1.1.2.19:** Implement Company create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.19-company-create-edit-forms.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.19-company-create-edit-forms.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.19a, 1.1.2.19b, 1.1.2.19c, 1.1.2.16, 1.1.2.1
-- [ ] **Task 1.1.2.19-verify:** Verify compliance of Company create/edit forms
+- [x] **Task 1.1.2.19-verify:** Verify compliance of Company create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.19-company-create-edit-forms.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.19-company-create-edit-forms.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.19 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Product Management
 
-- [ ] **Task 1.1.2.20a:** Verify wireframes for Products list page
+- [x] **Task 1.1.2.20a:** Verify wireframes for Products list page
   - 📋 **Details:** [tasks/frontend/1.1.2.20-products-list-page.md#task-11220a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.20-products-list-page.md#task-11220a-verify-wireframes)
-- [ ] **Task 1.1.2.20b:** Verify database schema for Products list page
+- [x] **Task 1.1.2.20b:** Verify database schema for Products list page
   - 📋 **Details:** [tasks/frontend/1.1.2.20-products-list-page.md#task-11220b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.20-products-list-page.md#task-11220b-verify-database-schema)
-- [ ] **Task 1.1.2.20c:** Verify API contracts for Products list page
+- [x] **Task 1.1.2.20c:** Verify API contracts for Products list page
   - 📋 **Details:** [tasks/frontend/1.1.2.20-products-list-page.md#task-11220c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.20-products-list-page.md#task-11220c-verify-api-contracts)
-- [ ] **Task 1.1.2.20:** Implement Products list page
+- [x] **Task 1.1.2.20:** Implement Products list page
   - 📋 **Details:** [tasks/frontend/1.1.2.20-products-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.20-products-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.20a, 1.1.2.20b, 1.1.2.20c, 1.1.2.16, 1.1.2.2
-- [ ] **Task 1.1.2.20-verify:** Verify compliance of Products list page
+- [x] **Task 1.1.2.20-verify:** Verify compliance of Products list page
   - 📋 **Details:** [tasks/frontend/1.1.2.20-products-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.20-products-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.20 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.21a:** Verify wireframes for Product detail page
+- [x] **Task 1.1.2.21a:** Verify wireframes for Product detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.21-product-detail-page.md#task-11221a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.21-product-detail-page.md#task-11221a-verify-wireframes)
-- [ ] **Task 1.1.2.21b:** Verify database schema for Product detail page
+- [x] **Task 1.1.2.21b:** Verify database schema for Product detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.21-product-detail-page.md#task-11221b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.21-product-detail-page.md#task-11221b-verify-database-schema)
-- [ ] **Task 1.1.2.21c:** Verify API contracts for Product detail page
+- [x] **Task 1.1.2.21c:** Verify API contracts for Product detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.21-product-detail-page.md#task-11221c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.21-product-detail-page.md#task-11221c-verify-api-contracts)
-- [ ] **Task 1.1.2.21:** Implement Product detail page ⚠️ **DEPENDS ON:** 1.1.2.3a
+- [x] **Task 1.1.2.21:** Implement Product detail page ⚠️ **DEPENDS ON:** 1.1.2.3a
   - 📋 **Details:** [tasks/frontend/1.1.2.21-product-detail-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.21-product-detail-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.21a, 1.1.2.21b, 1.1.2.21c, 1.1.2.16, 1.1.2.2, 1.1.2.3a
-- [ ] **Task 1.1.2.21-verify:** Verify compliance of Product detail page
+- [x] **Task 1.1.2.21-verify:** Verify compliance of Product detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.21-product-detail-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.21-product-detail-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.21 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.22a:** Verify wireframes for Product create/edit forms
+- [x] **Task 1.1.2.22a:** Verify wireframes for Product create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222a-verify-wireframes)
-- [ ] **Task 1.1.2.22b:** Verify database schema for Product create/edit forms
+- [x] **Task 1.1.2.22b:** Verify database schema for Product create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222b-verify-database-schema)
-- [ ] **Task 1.1.2.22c:** Verify API contracts for Product create/edit forms
+- [x] **Task 1.1.2.22c:** Verify API contracts for Product create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.22-product-create-edit-forms.md#task-11222c-verify-api-contracts)
-- [ ] **Task 1.1.2.22:** Implement Product create/edit forms
+- [x] **Task 1.1.2.22:** Implement Product create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.22-product-create-edit-forms.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.22-product-create-edit-forms.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.22a, 1.1.2.22b, 1.1.2.22c, 1.1.2.16, 1.1.2.2, 1.1.2.4
-- [ ] **Task 1.1.2.22-verify:** Verify compliance of Product create/edit forms
+- [x] **Task 1.1.2.22-verify:** Verify compliance of Product create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.22-product-create-edit-forms.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.22-product-create-edit-forms.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.22 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### SKU Management
 
-- [ ] **Task 1.1.2.23a:** Verify wireframes for SKUs list page
+- [x] **Task 1.1.2.23a:** Verify wireframes for SKUs list page
   - 📋 **Details:** [tasks/frontend/1.1.2.23-skus-list-page.md#task-11223a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.23-skus-list-page.md#task-11223a-verify-wireframes)
-- [ ] **Task 1.1.2.23b:** Verify database schema for SKUs list page
+- [x] **Task 1.1.2.23b:** Verify database schema for SKUs list page
   - 📋 **Details:** [tasks/frontend/1.1.2.23-skus-list-page.md#task-11223b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.23-skus-list-page.md#task-11223b-verify-database-schema)
-- [ ] **Task 1.1.2.23c:** Verify API contracts for SKUs list page
+- [x] **Task 1.1.2.23c:** Verify API contracts for SKUs list page
   - 📋 **Details:** [tasks/frontend/1.1.2.23-skus-list-page.md#task-11223c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.23-skus-list-page.md#task-11223c-verify-api-contracts)
-- [ ] **Task 1.1.2.23:** Implement SKUs list page
+- [x] **Task 1.1.2.23:** Implement SKUs list page
   - 📋 **Details:** [tasks/frontend/1.1.2.23-skus-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.23-skus-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.23a, 1.1.2.23b, 1.1.2.23c, 1.1.2.16, 1.1.2.3
-- [ ] **Task 1.1.2.23-verify:** Verify compliance of SKUs list page
+- [x] **Task 1.1.2.23-verify:** Verify compliance of SKUs list page
   - 📋 **Details:** [tasks/frontend/1.1.2.23-skus-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.23-skus-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.23 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.24a:** Verify wireframes for SKU detail page
+- [x] **Task 1.1.2.24a:** Verify wireframes for SKU detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224a-verify-wireframes)
-- [ ] **Task 1.1.2.24b:** Verify database schema for SKU detail page
+- [x] **Task 1.1.2.24b:** Verify database schema for SKU detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224b-verify-database-schema)
-- [ ] **Task 1.1.2.24c:** Verify API contracts for SKU detail page
+- [x] **Task 1.1.2.24c:** Verify API contracts for SKU detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.24-sku-detail-page.md#task-11224c-verify-api-contracts)
-- [ ] **Task 1.1.2.24:** Implement SKU detail page ⚠️ **DEPENDS ON:** 1.1.2.3a
+- [x] **Task 1.1.2.24:** Implement SKU detail page ⚠️ **DEPENDS ON:** 1.1.2.3a
   - 📋 **Details:** [tasks/frontend/1.1.2.24-sku-detail-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.24-sku-detail-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.24a, 1.1.2.24b, 1.1.2.24c, 1.1.2.16, 1.1.2.3, 1.1.2.3a
-- [ ] **Task 1.1.2.24-verify:** Verify compliance of SKU detail page
+- [x] **Task 1.1.2.24-verify:** Verify compliance of SKU detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.24-sku-detail-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.24-sku-detail-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.24 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.25a:** Verify wireframes for SKU create/edit forms
+- [x] **Task 1.1.2.25a:** Verify wireframes for SKU create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225a-verify-wireframes)
-- [ ] **Task 1.1.2.25b:** Verify database schema for SKU create/edit forms
+- [x] **Task 1.1.2.25b:** Verify database schema for SKU create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225b-verify-database-schema)
-- [ ] **Task 1.1.2.25c:** Verify API contracts for SKU create/edit forms
+- [x] **Task 1.1.2.25c:** Verify API contracts for SKU create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.25-sku-create-edit-forms.md#task-11225c-verify-api-contracts)
-- [ ] **Task 1.1.2.25:** Implement SKU create/edit forms (include pharmaceutical attributes)
+- [x] **Task 1.1.2.25:** Implement SKU create/edit forms (include pharmaceutical attributes)
   - 📋 **Details:** [tasks/frontend/1.1.2.25-sku-create-edit-forms.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.25-sku-create-edit-forms.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.25a, 1.1.2.25b, 1.1.2.25c, 1.1.2.16, 1.1.2.3, 1.1.2.2
-- [ ] **Task 1.1.2.25-verify:** Verify compliance of SKU create/edit forms
+- [x] **Task 1.1.2.25-verify:** Verify compliance of SKU create/edit forms
   - 📋 **Details:** [tasks/frontend/1.1.2.25-sku-create-edit-forms.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.25-sku-create-edit-forms.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.25 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### Registry Submission Workflow
 
-- [ ] **Task 1.1.2.26a:** Verify wireframes for Registry submission list page
+- [x] **Task 1.1.2.26a:** Verify wireframes for Registry submission list page
   - 📋 **Details:** [tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226a-verify-wireframes)
-- [ ] **Task 1.1.2.26b:** Verify database schema for Registry submission list page
+- [x] **Task 1.1.2.26b:** Verify database schema for Registry submission list page
   - 📋 **Details:** [tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226b-verify-database-schema)
-- [ ] **Task 1.1.2.26c:** Verify API contracts for Registry submission list page
+- [x] **Task 1.1.2.26c:** Verify API contracts for Registry submission list page
   - 📋 **Details:** [tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.26-registry-submission-list-page.md#task-11226c-verify-api-contracts)
-- [ ] **Task 1.1.2.26:** Implement Registry submission list page
+- [x] **Task 1.1.2.26:** Implement Registry submission list page
   - 📋 **Details:** [tasks/frontend/1.1.2.26-registry-submission-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.26-registry-submission-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.26a, 1.1.2.26b, 1.1.2.26c, 1.1.2.16, 1.1.2.6
-- [ ] **Task 1.1.2.26-verify:** Verify compliance of Registry submission list page
+- [x] **Task 1.1.2.26-verify:** Verify compliance of Registry submission list page
   - 📋 **Details:** [tasks/frontend/1.1.2.26-registry-submission-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.26-registry-submission-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.26 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.27a:** Verify wireframes for Registry submission detail page
+- [x] **Task 1.1.2.27a:** Verify wireframes for Registry submission detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227a-verify-wireframes)
-- [ ] **Task 1.1.2.27b:** Verify database schema for Registry submission detail page
+- [x] **Task 1.1.2.27b:** Verify database schema for Registry submission detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227b-verify-database-schema)
-- [ ] **Task 1.1.2.27c:** Verify API contracts for Registry submission detail page
+- [x] **Task 1.1.2.27c:** Verify API contracts for Registry submission detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.27-registry-submission-detail-page.md#task-11227c-verify-api-contracts)
-- [ ] **Task 1.1.2.27:** Implement Registry submission detail page
+- [x] **Task 1.1.2.27:** Implement Registry submission detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.27-registry-submission-detail-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.27-registry-submission-detail-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.27a, 1.1.2.27b, 1.1.2.27c, 1.1.2.16, 1.1.2.6-1.1.2.11
-- [ ] **Task 1.1.2.27-verify:** Verify compliance of Registry submission detail page
+- [x] **Task 1.1.2.27-verify:** Verify compliance of Registry submission detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.27-registry-submission-detail-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.27-registry-submission-detail-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.27 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.28a:** Verify wireframes for Registry submission workflow actions
+- [x] **Task 1.1.2.28a:** Verify wireframes for Registry submission workflow actions
   - 📋 **Details:** [tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228a-verify-wireframes)
-- [ ] **Task 1.1.2.28b:** Verify database schema for Registry submission workflow actions
+- [x] **Task 1.1.2.28b:** Verify database schema for Registry submission workflow actions
   - 📋 **Details:** [tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228b-verify-database-schema)
-- [ ] **Task 1.1.2.28c:** Verify API contracts for Registry submission workflow actions
+- [x] **Task 1.1.2.28c:** Verify API contracts for Registry submission workflow actions
   - 📋 **Details:** [tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#task-11228c-verify-api-contracts)
-- [ ] **Task 1.1.2.28:** Implement Registry submission workflow actions
+- [x] **Task 1.1.2.28:** Implement Registry submission workflow actions
   - 📋 **Details:** [tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.28a, 1.1.2.28b, 1.1.2.28c, 1.1.2.16, 1.1.2.7-1.1.2.11
-- [ ] **Task 1.1.2.28-verify:** Verify compliance of Registry submission workflow actions
+- [x] **Task 1.1.2.28-verify:** Verify compliance of Registry submission workflow actions
   - 📋 **Details:** [tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.28-registry-submission-workflow-actions.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.28 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 
 #### MOH-Only Pages
 
-- [ ] **Task 1.1.2.29a:** Verify wireframes for ATC Codes list page
+- [x] **Task 1.1.2.29a:** Verify wireframes for ATC Codes list page
   - 📋 **Details:** [tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229a-verify-wireframes)
-- [ ] **Task 1.1.2.29b:** Verify database schema for ATC Codes list page
+- [x] **Task 1.1.2.29b:** Verify database schema for ATC Codes list page
   - 📋 **Details:** [tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229b-verify-database-schema)
-- [ ] **Task 1.1.2.29c:** Verify API contracts for ATC Codes list page
+- [x] **Task 1.1.2.29c:** Verify API contracts for ATC Codes list page
   - 📋 **Details:** [tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.29-atc-codes-list-page.md#task-11229c-verify-api-contracts)
-- [ ] **Task 1.1.2.29:** Implement ATC Codes list page (MOH only)
+- [x] **Task 1.1.2.29:** Implement ATC Codes list page (MOH only)
   - 📋 **Details:** [tasks/frontend/1.1.2.29-atc-codes-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.29-atc-codes-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.29a, 1.1.2.29b, 1.1.2.29c, 1.1.2.16, 1.1.2.4
-- [ ] **Task 1.1.2.29-verify:** Verify compliance of ATC Codes list page
+- [x] **Task 1.1.2.29-verify:** Verify compliance of ATC Codes list page
   - 📋 **Details:** [tasks/frontend/1.1.2.29-atc-codes-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.29-atc-codes-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.29 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.30a:** Verify wireframes for Critical Medicines list page
+- [x] **Task 1.1.2.30a:** Verify wireframes for Critical Medicines list page
   - 📋 **Details:** [tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230a-verify-wireframes)
-- [ ] **Task 1.1.2.30b:** Verify database schema for Critical Medicines list page
+- [x] **Task 1.1.2.30b:** Verify database schema for Critical Medicines list page
   - 📋 **Details:** [tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230b-verify-database-schema)
-- [ ] **Task 1.1.2.30c:** Verify API contracts for Critical Medicines list page
+- [x] **Task 1.1.2.30c:** Verify API contracts for Critical Medicines list page
   - 📋 **Details:** [tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.30-critical-medicines-list-page.md#task-11230c-verify-api-contracts)
-- [ ] **Task 1.1.2.30:** Implement Critical Medicines list page (MOH only)
+- [x] **Task 1.1.2.30:** Implement Critical Medicines list page (MOH only)
   - 📋 **Details:** [tasks/frontend/1.1.2.30-critical-medicines-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.30-critical-medicines-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.30a, 1.1.2.30b, 1.1.2.30c, 1.1.2.16, 1.1.2.5
-- [ ] **Task 1.1.2.30-verify:** Verify compliance of Critical Medicines list page
+- [x] **Task 1.1.2.30-verify:** Verify compliance of Critical Medicines list page
   - 📋 **Details:** [tasks/frontend/1.1.2.30-critical-medicines-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.30-critical-medicines-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.30 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
 

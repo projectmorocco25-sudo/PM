@@ -38,6 +38,9 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: "Companies", href: "/rmm/companies", icon: "Building2", roles: "all" },
       { label: "Products", href: "/rmm/products", icon: "Package", roles: "all" },
       { label: "SKUs", href: "/rmm/skus", icon: "Tag", roles: "all" },
+      { label: "Submissions", href: "/rmm/submissions", icon: "ClipboardList", roles: "all" },
+      { label: "ATC Codes", href: "/rmm/atc-codes", icon: "ListOrdered", roles: "moh" },
+      { label: "Critical Medicines", href: "/rmm/critical-medicines", icon: "Pill", roles: "moh" },
     ],
   },
   {

@@ -523,7 +523,7 @@ Before Phase 1.2 (VCI) can begin, the following must be validated:
   - 💾 **Database:** `companies`, `products`, `registry_submissions` ([feature-index.md](../../02-architecture/feature-index.md#company-management))
   - 🔌 **API:** `rmm_get_company()`, `rmm_list_company_products()`, `rmm_get_company_history()` ([feature-index.md](../../02-architecture/feature-index.md#company-management))
 
-- [ ] **Task 1.1.2.18a:** Implement Company products page (Products tab view) ⚠️ **DEPENDS ON:** Task 1.1.2.3a (RMM helper RPC functions)
+- [ ] **Task 1.1.2.18.1:** Implement Company products page (Products tab view) ⚠️ **DEPENDS ON:** Task 1.1.2.3a (RMM helper RPC functions)
   - 📐 **Wireframe:** [task-0.5.2.3](../../04-design/user-experience/wireframes/01-rmm/companies/task-0.5.2.3-company-detail.md) (Products tab)
   - 🛣️ **Route:** `/rmm/companies/[id]/products` ([routing-structure.md](../../02-architecture/frontend/routing-structure.md#rmm-routes))
   - 💾 **Database:** `companies`, `products` ([feature-index.md](../../02-architecture/feature-index.md#company-management))

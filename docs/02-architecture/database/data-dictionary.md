@@ -121,6 +121,7 @@ This data dictionary defines all fields across all database tables, including da
 | company_id | uuid | No | Company ID | Foreign key to companies.id |
 | name | text | No | Product name | Product name |
 | description | text | Yes | Product description | Product description |
+| atc_code_id | uuid | Yes | ATC code ID | Foreign key to atc_codes.id. Product-level classification (Task 1.1.2.22). |
 | is_critical_medicine | boolean | No | Critical medicine flag | Default: false |
 | is_active | boolean | No | Active status | Default: true. Deactivation cascades to SKUs |
 | deactivated_at | timestamptz | Yes | Deactivation timestamp | Set when product is deactivated |

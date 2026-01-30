@@ -55,7 +55,7 @@ Use this section to track completion. Check off each task when implemented (`[ ]
 
 ### Phase F — Naming (phase-1-1-rmm.md) *(skipped — not in scope)*
 
-- ~~**F.1**~~ — Add “Naming: 1.1.2.18 vs 1.1.2.18a” note to Subphase 1.1.2
+- ~~**F.1**~~ — Add “Naming: 1.1.2.18 vs 1.1.2.18.1” note to Subphase 1.1.2
 
 ### Phase G — Pre-flight checklist (phase-1-1-rmm.md)
 
@@ -292,16 +292,16 @@ Adjust “[Brief description]” per task (e.g. “Submit for review”, “Appe
 
 ## Phase F: Naming
 
-**Goal:** Avoid confusion between task 1.1.2.18 (Company detail) and 1.1.2.18a (Company products page).
+**Goal:** Avoid confusion between task 1.1.2.18 (Company detail) and 1.1.2.18.1 (Company products page).
 
-### Task F.1 — Add “Naming: 1.1.2.18 vs 1.1.2.18a” note to Subphase 1.1.2
+### Task F.1 — Add “Naming: 1.1.2.18 vs 1.1.2.18.1” note to Subphase 1.1.2
 
 **File:** `docs/05-project-management/phase-1-1-rmm.md`
 
-**Location:** In the “Company Management” frontend section, immediately before or after the line for “Task 1.1.2.18a: Implement Company products page”. Add a short note:
+**Location:** In the “Company Management” frontend section, immediately before or after the line for “Task 1.1.2.18.1: Implement Company products page”. Add a short note:
 
 ```markdown
-**Naming:** 1.1.2.18 = Company **detail** page; 1.1.2.18a = Company **products** page (Products tab on detail). Task 1.1.2.18a depends on 1.1.2.18.
+**Naming:** 1.1.2.18 = Company **detail** page; 1.1.2.18.1 = Company **products** page (Products tab on detail). Task 1.1.2.18.1 depends on 1.1.2.18.
 ```
 
 - ~~**F.1**~~ — Inserted naming note in Company Management frontend section.

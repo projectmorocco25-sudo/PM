@@ -175,6 +175,52 @@ SELECT rmm_create_company(
 
 ---
 
+### rmm_list_submissions_page(p_limit int, p_offset int, p_status text, p_entity_type text, p_date_from timestamptz, p_date_to timestamptz)
+
+**Purpose:** List registry submissions for the submissions list page with filters (status, entity type, date range). Returns entity display name, days until regulatory deadline (DMP Art. 10), and view_type (company | moh) for page title.
+
+**Migration:** `20260129123800_rmm_list_submissions_page.sql` (Task 1.1.2.26). **SECURITY INVOKER**; RLS applies — company users see only their submissions; MOH see all.
+
+**Parameters:**
+- `p_limit` (int, default 50) - Page size (1–500)
+- `p_offset` (int, default 0) - Offset for pagination
+- `p_status` (text, optional) - Filter by status: `all`, `draft`, `submitted`, `tier2_verified`, `tier1_approved`, `completed`, `rejected`. `tier2_verified` includes `tier2_peer_reviewed`
+- `p_entity_type` (text, optional) - Filter by entity type: `all`, `company`, `product`, `sku`
+- `p_date_from` (timestamptz, optional) - Filter submissions created on or after this date
+- `p_date_to` (timestamptz, optional) - Filter submissions created on or before this date
+
+**Returns:** JSON with `{ data: array of { id, submission_type, entity_type, entity_id, entity_display_name, status, created_at, updated_at, days_until_deadline }, total: number, view_type: 'company' | 'moh' }`
+
+**Security:** SECURITY INVOKER; RLS on `registry_submissions` enforces company isolation (company users) or system-wide (MOH).
+
+---
+
+### rmm_get_submission(p_id uuid)
+
+**Purpose:** Get a single registry submission by ID with entity display name, days until regulatory deadline (DMP Art. 10), and view_type (company | moh) for role-based UI.
+
+**Migration:** `20260129123900_rmm_get_submission_and_approval_history.sql` (Task 1.1.2.27). **SECURITY DEFINER**; explicit access check — MOH see any; company users see only same-company submissions or draft company_create where they are submitter.
+
+**Parameters:**
+- `p_id` (uuid) - Submission ID
+
+**Returns:** JSON object with submission fields (`id`, `submission_type`, `entity_type`, `entity_id`, `entity_display_name`, `submission_data`, `status`, `submitted_by`, `verified_by`, `verified_at`, `approved_by`, `approved_at`, `implemented_by`, `implemented_at`, `rejection_reason`, `created_at`, `updated_at`, `days_until_deadline`, `view_type`, `allowed_actions`) or `{ error: 'not_found' }`. `allowed_actions` is an array of strings (`verify`, `peer_review`, `approve`, `implement`, `reject`) based on current user role and submission status (Task 1.1.2.28).
+
+---
+
+### rmm_get_submission_approval_history(p_submission_id uuid)
+
+**Purpose:** Get approval history for a registry submission with approver name and role. Same access as `rmm_get_submission`.
+
+**Migration:** `20260129123900_rmm_get_submission_and_approval_history.sql` (Task 1.1.2.27). **SECURITY DEFINER**; same access check as `rmm_get_submission`.
+
+**Parameters:**
+- `p_submission_id` (uuid) - Submission ID
+
+**Returns:** JSON with `{ data: array of { id, submission_id, from_status, to_status, approval_type, comments, created_at, approver_name, approver_role } }` (newest first).
+
+---
+
 ### rmm_verify_registry_submission(submission_id uuid, comments text DEFAULT NULL)
 
 **Purpose:** Tier 2 Officer verifies registry submission (including deletion requests).
@@ -1271,7 +1317,8 @@ All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Ta
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `rmm_get_company` | `(p_id uuid)` | `{ company }` or `{ error, company_id }` |
-| `rmm_list_companies` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data: [...], total }` |
+| `rmm_get_company_for_detail` | `(p_id uuid)` | `{ company }` or `{ error, company_id }` — full fields, includes inactive (Task 1.1.2.18) |
+| `rmm_list_companies` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_search text DEFAULT NULL, p_company_type text DEFAULT NULL, p_status text DEFAULT 'active')` | `{ data: [...], total }`. Search: name/registration_number. type: ipc\|wholesaler. status: all\|active\|inactive. RLS applies. Task 1.1.2.17. |
 | `rmm_list_products` | `(p_limit int, p_offset int, p_company_id uuid DEFAULT NULL)` | `{ data: [...], total }` |
 | `rmm_list_skus` | `(p_limit int, p_offset int, p_product_id uuid DEFAULT NULL)` | `{ data: [...], total }` |
 
@@ -1282,7 +1329,7 @@ All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Ta
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `rmm_create_company` | `(p_name text, p_registration_number text, p_company_type text, p_address text DEFAULT NULL, p_contact_email text DEFAULT NULL, p_contact_phone text DEFAULT NULL)` | `{ company }` or `{ error, message }` |
-| `rmm_update_company` | `(p_id uuid, p_name text DEFAULT NULL, ...)` | `{ company }` or `{ error, company_id }` / `{ error, message }` |
+| `rmm_update_company` | `(p_id uuid, p_name text DEFAULT NULL, ..., p_is_active boolean DEFAULT NULL)` | `{ company }` or `{ error, company_id }` / `{ error, message }`. p_is_active for status (Task 1.1.2.19). |
 
 **Migration:** `20260129120000_rpc_rmm_company_crud.sql`. **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
 
@@ -1291,8 +1338,8 @@ All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Ta
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `rmm_get_product` | `(p_id uuid)` | `{ product }` or `{ error, product_id }` |
-| `rmm_create_product` | `(p_company_id uuid, p_name text, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT false)` | `{ product }` or `{ error, message }` |
-| `rmm_update_product` | `(p_id uuid, p_name text DEFAULT NULL, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT NULL)` | `{ product }` or `{ error, product_id }` / `{ error, message }` |
+| `rmm_create_product` | `(p_company_id uuid, p_name text, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT false, p_atc_code_id uuid DEFAULT NULL)` | `{ product }` or `{ error, message }`. Task 1.1.2.22. |
+| `rmm_update_product` | `(p_id uuid, p_name text DEFAULT NULL, p_description text DEFAULT NULL, p_is_critical_medicine boolean DEFAULT NULL, p_is_active boolean DEFAULT NULL, p_atc_code_id uuid DEFAULT NULL)` | `{ product }` or `{ error, product_id }` / `{ error, message }`. Task 1.1.2.22. |
 | `rmm_list_products` | (existing) | `{ data: [...], total }` |
 
 **Migration:** `20260129120100_rpc_rmm_product_crud.sql` (get/create/update). `rmm_list_products` in `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
@@ -1303,10 +1350,10 @@ All **SECURITY INVOKER**; RLS applies. `communications_restore_conversation` (Ta
 |----------|-----------|---------|
 | `rmm_get_sku` | `(p_id uuid)` | `{ sku }` or `{ error, sku_id }` |
 | `rmm_create_sku` | `(p_product_id uuid, p_sku_code text, p_name text, p_dosage_strength text, p_dosage_form text, p_pack_size text, p_unit_of_measure text, p_atc_code_id uuid DEFAULT NULL, p_is_moh_authorized_unregistered boolean DEFAULT false)` | `{ sku }` or `{ error, message }` |
-| `rmm_update_sku` | `(p_id uuid, p_sku_code text DEFAULT NULL, p_name text DEFAULT NULL, ...)` | `{ sku }` or `{ error, sku_id }` / `{ error, message }` |
+| `rmm_update_sku` | `(p_id uuid, p_sku_code text DEFAULT NULL, p_name text DEFAULT NULL, p_dosage_strength text DEFAULT NULL, p_dosage_form text DEFAULT NULL, p_pack_size text DEFAULT NULL, p_unit_of_measure text DEFAULT NULL, p_is_moh_authorized_unregistered boolean DEFAULT NULL, p_is_active boolean DEFAULT NULL)` | `{ sku }` or `{ error, sku_id }` / `{ error, message }`. p_is_active for status (Task 1.1.2.25). |
 | `rmm_list_skus` | (existing) | `{ data: [...], total }` |
 
-**Migration:** `20260129120200_rpc_rmm_sku_crud.sql` (get/create/update). `rmm_list_skus` in `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
+**Migration:** `20260129120200_rpc_rmm_sku_crud.sql` (get/create/update). `20260129123700_rmm_update_sku_is_active.sql` adds `p_is_active` (Task 1.1.2.25). `rmm_list_skus` in `20260127151300_rpc_rmm_list_functions.sql`. All **SECURITY INVOKER**; RLS applies (MOH only for INSERT/UPDATE).
 
 ### RMM Helper RPCs (1.1.2.3a)
 
@@ -1314,8 +1361,12 @@ Helper functions for entity-scoped lists and history. List helpers wrap existing
 
 | Function | Signature | Returns |
 |----------|-----------|---------|
-| `rmm_list_company_products` | `(p_company_id uuid, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_list_company_products` | `(p_company_id uuid, p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_search text DEFAULT NULL)` | `{ data, total }` or `{ error }`. Each row: id, company_id, name, description, is_critical_medicine, is_active, created_at, company_name, sku_count, atc_code. Task 1.1.2.18.1. |
+| `rmm_list_products_page` | `(p_limit int, p_offset int, p_search text, p_company_id uuid, p_status text, p_is_critical text, p_atc_code text)` | `{ data, total }`. Products list page: search, company/status/critical/ATC filters; sku_count, atc_code per row. RLS applies. Task 1.1.2.20. |
+| `rmm_list_skus_page` | `(p_limit int, p_offset int, p_search text, p_product_id uuid, p_status text, p_dosage_form text, p_atc_code text)` | `{ data, total }`. SKUs list page: search (code/name/dosage), product/status/dosage_form/ATC filters; atc_code per row. RLS applies. Task 1.1.2.23. |
 | `rmm_list_product_skus` | `(p_product_id uuid, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
+| `rmm_get_product_for_detail` | `(p_id uuid)` | `{ product }` or `{ error, product_id }`. Product includes atc_code, skus_total, skus_active. Includes inactive. RLS applies. Task 1.1.2.21. |
+| `rmm_get_sku_for_detail` | `(p_id uuid)` | `{ sku }` or `{ error, sku_id }`. SKU includes company_name, atc_code. Includes inactive. RLS applies. Task 1.1.2.24. |
 | `rmm_get_company_history` | `(p_company_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
 | `rmm_get_product_history` | `(p_product_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
 | `rmm_get_sku_history` | `(p_sku_id uuid, p_start_date timestamptz DEFAULT NULL, p_end_date timestamptz DEFAULT NULL, p_limit int DEFAULT 50, p_offset int DEFAULT 0)` | `{ data, total }` or `{ error }` |
@@ -1325,6 +1376,16 @@ Helper functions for entity-scoped lists and history. List helpers wrap existing
 
 **Migration:** `20260129120300_rpc_rmm_helper_functions.sql` (Task 1.1.2.3a).
 
+### RMM Overview (1.1.2.16.1)
+
+| Function | Signature | Returns |
+|----------|-----------|---------|
+| `rmm_get_overview_stats` | `(p_company_id uuid DEFAULT NULL)` | `{ companies_total, companies_active, companies_inactive, products_total, products_active, products_inactive, skus_total, skus_active, skus_inactive, submissions_pending, submissions_approved, submissions_rejected }` |
+
+- **SECURITY DEFINER.** Company users: stats for own company (from `users.company_id`). MOH: all stats. Used by RMM overview page (`/rmm/overview`).
+
+**Migration:** `20260129122200_rpc_rmm_get_overview_stats.sql` (Task 1.1.2.16.1).
+
 ### RMM ATC Code Management (1.1.2.4) — MOH Only
 
 ATC Code management RPCs. **List/get:** all authenticated (companies need list for SKU/product forms). **Create/update:** MOH only (RLS `atc_codes_insert_moh`, `atc_codes_update_moh`).
@@ -1332,11 +1393,12 @@ ATC Code management RPCs. **List/get:** all authenticated (companies need list f
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `rmm_list_atc_codes` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_code_filter text DEFAULT NULL)` | `{ data, total }` |
+| `rmm_list_atc_codes` | `(p_limit int, p_offset int, p_code_filter text, p_level int DEFAULT NULL, p_category text DEFAULT NULL)` | `{ data, total }` — each row includes computed `level` (1–5). Filters by code/description search, level (1–4), category (first letter). Task 1.1.2.29. |
 | `rmm_get_atc_code` | `(p_id uuid)` | `{ atc_code }` or `{ error, atc_code_id }` |
 | `rmm_create_atc_code` | `(p_code text, p_description text DEFAULT NULL, p_is_active boolean DEFAULT true)` | `{ atc_code }` or `{ error, message }` |
 | `rmm_update_atc_code` | `(p_id uuid, p_code text DEFAULT NULL, p_description text DEFAULT NULL, p_is_active boolean DEFAULT NULL)` | `{ atc_code }` or `{ error, atc_code_id }` / `{ error, message }` |
 
-**Migration:** `20260129120400_rpc_rmm_atc_code_management.sql` (Task 1.1.2.4). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
+**Migrations:** `20260129120400_rpc_rmm_atc_code_management.sql` (Task 1.1.2.4); `20260129124000_rmm_list_atc_codes_level_category.sql` (Task 1.1.2.29 — 5-arg overload). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
 
 ### RMM Critical Medicine Management (1.1.2.5) — MOH Only
 
@@ -1345,11 +1407,12 @@ Critical Medicine management RPCs. **List/get:** all authenticated. **Create/upd
 | Function | Signature | Returns |
 |----------|-----------|---------|
 | `rmm_list_critical_medicines` | `(p_limit int DEFAULT 50, p_offset int DEFAULT 0, p_sku_id uuid DEFAULT NULL)` | `{ data, total }` |
+| `rmm_list_critical_medicines` | `(p_limit, p_offset, p_sku_id, p_search text, p_status text, p_company_id uuid, p_atc_first_letter text, p_designated_from timestamptz, p_designated_to timestamptz)` | `{ data, total }` — list page: search (SKU/product/company), status (all/active/inactive), company, ATC first letter, date range; each row includes company_name. Task 1.1.2.30. |
 | `rmm_get_critical_medicine` | `(p_id uuid)` | `{ critical_medicine }` or `{ error, critical_medicine_id }` |
 | `rmm_create_critical_medicine` | `(p_sku_id uuid)` | `{ critical_medicine }` or `{ error, message }` |
 | `rmm_update_critical_medicine` | `(p_id uuid, p_is_active boolean DEFAULT NULL)` | `{ critical_medicine }` or `{ error, critical_medicine_id }` |
 
-**Migration:** `20260129120500_rpc_rmm_critical_medicine_management.sql` (Task 1.1.2.5). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
+**Migrations:** `20260129120500_rpc_rmm_critical_medicine_management.sql` (Task 1.1.2.5); `20260129125000_rmm_list_critical_medicines_page.sql` (Task 1.1.2.30 — 9-arg overload). All **SECURITY INVOKER**; RLS enforces MOH-only for create/update.
 
 ---
 

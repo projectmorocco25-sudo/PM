@@ -143,8 +143,8 @@ These tasks are missing required verification tasks and/or -verify tasks:
   - Missing: 1.1.2.18a, 1.1.2.18b, 1.1.2.18c, 1.1.2.18-verify
   - Missing: Proper structure
 
-- ❌ **Task 1.1.2.18a:** Implement Company products page
-  - Missing: 1.1.2.18a-a, 1.1.2.18a-b, 1.1.2.18a-c, 1.1.2.18a-verify
+- ❌ **Task 1.1.2.18.1:** Implement Company products page
+  - Missing: 1.1.2.18.1a, 1.1.2.18.1b, 1.1.2.18.1c, 1.1.2.18.1-verify
   - Missing: Proper structure
 
 - ❌ **Task 1.1.2.19:** Implement Company create/edit forms

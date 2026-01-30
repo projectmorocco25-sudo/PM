@@ -885,102 +885,106 @@ Before Phase 1.2 (VCI) can begin, validate:
 
 ### Enforcement Frontend Tasks
 
-- [ ] **Task 1.1.2.37a:** Verify wireframes for Enforcement dashboard page
+- [x] **Task 1.1.2.37a:** Verify wireframes for Enforcement dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237a-verify-wireframes)
-- [ ] **Task 1.1.2.37b:** Verify database schema for Enforcement dashboard page
+- [x] **Task 1.1.2.37b:** Verify database schema for Enforcement dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237b-verify-database-schema)
-- [ ] **Task 1.1.2.37c:** Verify API contracts for Enforcement dashboard page
+- [x] **Task 1.1.2.37c:** Verify API contracts for Enforcement dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#task-11237c-verify-api-contracts)
-- [ ] **Task 1.1.2.37:** Implement Enforcement dashboard page
+- [x] **Task 1.1.2.37:** Implement Enforcement dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.37a, 1.1.2.37b, 1.1.2.37c, 1.1.1.9, 1.1.2.31-1.1.2.36
-- [ ] **Task 1.1.2.37-verify:** Verify compliance of Enforcement dashboard page
+- [x] **Task 1.1.2.37-verify:** Verify compliance of Enforcement dashboard page
   - 📋 **Details:** [tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.37-enforcement-dashboard-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.37 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.38a:** Verify wireframes for Enforcement actions list page
+- [x] **Task 1.1.2.38a:** Verify wireframes for Enforcement actions list page
   - 📋 **Details:** [tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238a-verify-wireframes)
-- [ ] **Task 1.1.2.38b:** Verify database schema for Enforcement actions list page
+- [x] **Task 1.1.2.38b:** Verify database schema for Enforcement actions list page
   - 📋 **Details:** [tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238b-verify-database-schema)
-- [ ] **Task 1.1.2.38c:** Verify API contracts for Enforcement actions list page
+- [x] **Task 1.1.2.38c:** Verify API contracts for Enforcement actions list page
   - 📋 **Details:** [tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#task-11238c-verify-api-contracts)
-- [ ] **Task 1.1.2.38:** Implement Enforcement actions list page
+- [x] **Task 1.1.2.38:** Implement Enforcement actions list page
   - 📋 **Details:** [tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.38a, 1.1.2.38b, 1.1.2.38c, 1.1.1.9, 1.1.2.31
-- [ ] **Task 1.1.2.38-verify:** Verify compliance of Enforcement actions list page
+- [x] **Task 1.1.2.38-verify:** Verify compliance of Enforcement actions list page
   - 📋 **Details:** [tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.38-enforcement-actions-list-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.38 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.39a:** Verify wireframes for Enforcement action detail page
+- [x] **Task 1.1.2.39a:** Verify wireframes for Enforcement action detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239a-verify-wireframes)
-- [ ] **Task 1.1.2.39b:** Verify database schema for Enforcement action detail page
+- [x] **Task 1.1.2.39b:** Verify database schema for Enforcement action detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239b-verify-database-schema)
-- [ ] **Task 1.1.2.39c:** Verify API contracts for Enforcement action detail page
+- [x] **Task 1.1.2.39c:** Verify API contracts for Enforcement action detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#task-11239c-verify-api-contracts)
-- [ ] **Task 1.1.2.39:** Implement Enforcement action detail page
+- [x] **Task 1.1.2.39:** Implement Enforcement action detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.39a, 1.1.2.39b, 1.1.2.39c, 1.1.1.9, 1.1.2.31-1.1.2.36
-- [ ] **Task 1.1.2.39-verify:** Verify compliance of Enforcement action detail page
+- [x] **Task 1.1.2.39-verify:** Verify compliance of Enforcement action detail page
   - 📋 **Details:** [tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.39-enforcement-action-detail-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.39 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.40a:** Verify wireframes for Create enforcement action wizard
+- [x] **Task 1.1.2.40a:** Verify wireframes for Create enforcement action wizard
   - 📋 **Details:** [tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240a-verify-wireframes)
-- [ ] **Task 1.1.2.40b:** Verify database schema for Create enforcement action wizard
+- [x] **Task 1.1.2.40b:** Verify database schema for Create enforcement action wizard
   - 📋 **Details:** [tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240b-verify-database-schema)
-- [ ] **Task 1.1.2.40c:** Verify API contracts for Create enforcement action wizard
+- [x] **Task 1.1.2.40c:** Verify API contracts for Create enforcement action wizard
   - 📋 **Details:** [tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#task-11240c-verify-api-contracts)
-- [ ] **Task 1.1.2.40:** Implement Create enforcement action wizard
+- [x] **Task 1.1.2.40:** Implement Create enforcement action wizard
   - 📋 **Details:** [tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.40a, 1.1.2.40b, 1.1.2.40c, 1.1.1.9, 1.1.2.31
-- [ ] **Task 1.1.2.40-verify:** Verify compliance of Create enforcement action wizard
+- [x] **Task 1.1.2.40-verify:** Verify compliance of Create enforcement action wizard
   - 📋 **Details:** [tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.40-create-enforcement-action-wizard.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.40 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.41a:** Verify wireframes for Pending approvals page
+- [x] **Task 1.1.2.41a:** Verify wireframes for Pending approvals page
   - 📋 **Details:** [tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241a-verify-wireframes)
-- [ ] **Task 1.1.2.41b:** Verify database schema for Pending approvals page
+- [x] **Task 1.1.2.41b:** Verify database schema for Pending approvals page
   - 📋 **Details:** [tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241b-verify-database-schema)
-- [ ] **Task 1.1.2.41c:** Verify API contracts for Pending approvals page
+- [x] **Task 1.1.2.41c:** Verify API contracts for Pending approvals page
   - 📋 **Details:** [tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.41-pending-approvals-page.md#task-11241c-verify-api-contracts)
-- [ ] **Task 1.1.2.41:** Implement Pending approvals page
+- [x] **Task 1.1.2.41:** Implement Pending approvals page
   - 📋 **Details:** [tasks/frontend/1.1.2.41-pending-approvals-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.41-pending-approvals-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.41a, 1.1.2.41b, 1.1.2.41c, 1.1.1.9, 1.1.2.33, 1.1.2.15
-- [ ] **Task 1.1.2.41-verify:** Verify compliance of Pending approvals page
+- [x] **Task 1.1.2.41-verify:** Verify compliance of Pending approvals page
   - 📋 **Details:** [tasks/frontend/1.1.2.41-pending-approvals-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.41-pending-approvals-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.41 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.42a:** Verify wireframes for Enforcement reports page
+  - ✅ **Compliance:** Pending Approvals page at `/enforcement/pending-approvals` (MOH Tier 1 only); approval (min 50 chars) and reject (min 20 chars) modals; enforcement_approve_action, enforcement_reject_action, enforcement_list_pending_approvals, rmm_list_companies; wireframe binding in code; hosted Supabase only.
+- [x] **Task 1.1.2.42a:** Verify wireframes for Enforcement reports page
   - 📋 **Details:** [tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242a-verify-wireframes)
-- [ ] **Task 1.1.2.42b:** Verify database schema for Enforcement reports page
+- [x] **Task 1.1.2.42b:** Verify database schema for Enforcement reports page
   - 📋 **Details:** [tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242b-verify-database-schema)
-- [ ] **Task 1.1.2.42c:** Verify API contracts for Enforcement reports page
+- [x] **Task 1.1.2.42c:** Verify API contracts for Enforcement reports page
   - 📋 **Details:** [tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.42-enforcement-reports-page.md#task-11242c-verify-api-contracts)
-- [ ] **Task 1.1.2.42:** Implement Enforcement reports page
+- [x] **Task 1.1.2.42:** Implement Enforcement reports page
   - 📋 **Details:** [tasks/frontend/1.1.2.42-enforcement-reports-page.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.42-enforcement-reports-page.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.42a, 1.1.2.42b, 1.1.2.42c, 1.1.1.9, 1.1.2.31-1.1.2.36
-- [ ] **Task 1.1.2.42-verify:** Verify compliance of Enforcement reports page
+- [x] **Task 1.1.2.42-verify:** Verify compliance of Enforcement reports page
   - 📋 **Details:** [tasks/frontend/1.1.2.42-enforcement-reports-page.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.42-enforcement-reports-page.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.42 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.43a:** Verify wireframes for Appeal review interface
+  - ✅ **Compliance:** Enforcement Reports at `/enforcement/reports` (MOH Tier 1 and Tier 2 only); enforcement_get_reports, enforcement_get_analytics; date range (7d/30d/90d/12m); metrics cards, compliance section, trends table, top companies, fine analysis, appeal stats; wireframe binding in code; hosted Supabase only; migration applied via Supabase MCP.
+- [x] **Task 1.1.2.43a:** Verify wireframes for Appeal review interface
   - 📋 **Details:** [tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243a-verify-wireframes)
-- [ ] **Task 1.1.2.43b:** Verify database schema for Appeal review interface
+- [x] **Task 1.1.2.43b:** Verify database schema for Appeal review interface
   - 📋 **Details:** [tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243b-verify-database-schema)
-- [ ] **Task 1.1.2.43c:** Verify API contracts for Appeal review interface
+- [x] **Task 1.1.2.43c:** Verify API contracts for Appeal review interface
   - 📋 **Details:** [tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.43-appeal-review-interface.md#task-11243c-verify-api-contracts)
-- [ ] **Task 1.1.2.43:** Implement Appeal review interface (MOH Tier 1)
+- [x] **Task 1.1.2.43:** Implement Appeal review interface (MOH Tier 1)
   - 📋 **Details:** [tasks/frontend/1.1.2.43-appeal-review-interface.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.43-appeal-review-interface.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.43a, 1.1.2.43b, 1.1.2.43c, 1.1.1.9, 1.1.2.36
-- [ ] **Task 1.1.2.43-verify:** Verify compliance of Appeal review interface
+- [x] **Task 1.1.2.43-verify:** Verify compliance of Appeal review interface
   - 📋 **Details:** [tasks/frontend/1.1.2.43-appeal-review-interface.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.43-appeal-review-interface.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.43 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
-- [ ] **Task 1.1.2.44a:** Verify wireframes for Appeal submission form
+  - ✅ **Compliance:** Appeal Review at `/enforcement/actions/[id]/appeal/review` (MOH Tier 1 only); enforcement_get_action, enforcement_get_appeal_status, enforcement_uphold_appeal, enforcement_overturn_appeal; uphold / uphold with adjustment / overturn; justification min 50 chars; 14 business days SLA documented; wireframe binding in code; hosted Supabase only; no new migration (existing RPCs used).
+- [x] **Task 1.1.2.44a:** Verify wireframes for Appeal submission form
   - 📋 **Details:** [tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244a-verify-wireframes](./phase-1-1-rmm/tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244a-verify-wireframes)
-- [ ] **Task 1.1.2.44b:** Verify database schema for Appeal submission form
+- [x] **Task 1.1.2.44b:** Verify database schema for Appeal submission form
   - 📋 **Details:** [tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244b-verify-database-schema](./phase-1-1-rmm/tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244b-verify-database-schema)
-- [ ] **Task 1.1.2.44c:** Verify API contracts for Appeal submission form
+- [x] **Task 1.1.2.44c:** Verify API contracts for Appeal submission form
   - 📋 **Details:** [tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244c-verify-api-contracts](./phase-1-1-rmm/tasks/frontend/1.1.2.44-appeal-submission-form.md#task-11244c-verify-api-contracts)
-- [ ] **Task 1.1.2.44:** Implement Appeal submission form (Company users)
+- [x] **Task 1.1.2.44:** Implement Appeal submission form (Company users)
   - 📋 **Details:** [tasks/frontend/1.1.2.44-appeal-submission-form.md#implementation-task](./phase-1-1-rmm/tasks/frontend/1.1.2.44-appeal-submission-form.md#implementation-task)
   - ⚠️ **DEPENDS ON:** 1.1.2.44a, 1.1.2.44b, 1.1.2.44c, 1.1.1.9, 1.1.2.35
-- [ ] **Task 1.1.2.44-verify:** Verify compliance of Appeal submission form
+- [x] **Task 1.1.2.44-verify:** Verify compliance of Appeal submission form
   - 📋 **Details:** [tasks/frontend/1.1.2.44-appeal-submission-form.md#compliance-verification-task](./phase-1-1-rmm/tasks/frontend/1.1.2.44-appeal-submission-form.md#compliance-verification-task)
   - ⚠️ **DEPENDS ON:** Task 1.1.2.44 (implementation complete) | **Owner:** Sami (Compliance) + Oliver (Technical Review)
+  - ✅ **Compliance:** Appeal submission at `/enforcement/actions/[id]/appeal` (Company users only); 30-day window enforced; enforcement_get_action, enforcement_get_appeal_status, enforcement_submit_appeal; grounds dropdown, explanation min 50 chars, evidence (grounds in jsonb); wireframe binding in code; hosted Supabase only; no new migration (existing RPC used).
 
 ---
 

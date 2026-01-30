@@ -473,6 +473,24 @@ When `submission_type` is `company_delete`, `product_delete`, or `sku_delete`:
 
 ---
 
+### enforcement_reject_action(action_id uuid, rejection_reason text)
+
+**Purpose:** Tier 1 rejects a pending enforcement action (Fine/Suspension path). Sets status to `cancelled` and records rejection reason; inserts into `approvals` with `approval_type = 'rejection'`.
+
+**Migration:** `20260129129000_rpc_enforcement_reject_action.sql` (Task 1.1.2.41). **SECURITY DEFINER**; Tier 1 (`tier1`) only; action must be in `pending_approval`; updates `enforcement_actions` (status → `cancelled`, resolution, resolved_by, resolved_at) and inserts into `approvals` with `approval_type = 'rejection'`. Audit: existing AFTER UPDATE trigger on `enforcement_actions` logs row change.
+
+**Parameters:**
+- `p_action_id` (uuid) - Enforcement action ID
+- `p_rejection_reason` (text, required) - Rejection reason (min 20 characters); stored in `resolution` and in `approvals.comments`.
+
+**Returns:** JSON with `{ action: { id, company_id, action_type, violation_type, status, resolution, resolved_by, resolved_at, ... } }` or `{ error, message }` / `{ error, message, current_status }`
+
+**State Transition:** `pending_approval` → `cancelled`
+
+**Validation:** Action must exist and be in `pending_approval`. `p_rejection_reason` required and min 20 characters.
+
+---
+
 ### enforcement_execute_action(action_id uuid, execution_notes text DEFAULT NULL)
 
 **Purpose:** Execute an approved enforcement action. MOH only. When Tier 1 executes, justification (execution_notes) min 50 chars required. Suspension applies to company (suspended_at, is_active=false; cascade deactivates products/SKUs).
@@ -543,6 +561,126 @@ When `submission_type` is `company_delete`, `product_delete`, or `sku_delete`:
 **Parameters:** `p_appeal_id` (uuid), `p_resolution` (text, required; min 50 characters).
 
 **Returns:** JSON with `{ appeal: { ... }, action: { ... } }` or error.
+
+---
+
+### enforcement_get_dashboard_stats()
+
+**Purpose:** Return enforcement dashboard metrics. MOH only (tier1, tier2_officer, tier2_registrar, system_admin).
+
+**Migration:** `20260129126000_rpc_enforcement_dashboard.sql` (Task 1.1.2.37). **SECURITY DEFINER**; MOH only.
+
+**Parameters:** None.
+
+**Returns:** JSON with `recent_count`, `pending_count`, `warnings`, `fines`, `suspensions`, `total`, `legal_basis_compliance_pct`, `deadline_compliance_pct`, `regulatory_requirements_pct` or `{ error, message }`.
+
+---
+
+### enforcement_list_recent_actions(p_limit int DEFAULT 5)
+
+**Purpose:** List recent enforcement actions (executed/approved/resolved) for dashboard. MOH only.
+
+**Migration:** `20260129126000_rpc_enforcement_dashboard.sql` (Task 1.1.2.37). **SECURITY DEFINER**; MOH only.
+
+**Parameters:** `p_limit` (int, 1–50) — max rows (default 5).
+
+**Returns:** JSON with `{ data: [ { id, company_id, company_name, action_type, violation_type, status, amount, currency, legal_basis, executed_at, updated_at }, ... ] }` or `{ error, message }`.
+
+---
+
+### enforcement_list_pending_approvals(p_limit int DEFAULT 5)
+
+**Purpose:** List pending enforcement approvals (pending_review, pending_approval) for dashboard. MOH only.
+
+**Migration:** `20260129126000_rpc_enforcement_dashboard.sql` (Task 1.1.2.37). **SECURITY DEFINER**; MOH only.
+
+**Parameters:** `p_limit` (int, 1–50) — max rows (default 5).
+
+**Returns:** JSON with `{ data: [ { id, company_id, company_name, action_type, violation_type, status, amount, currency, legal_basis, created_at, updated_at }, ... ] }` or `{ error, message }`.
+
+---
+
+### enforcement_list_actions(p_search, p_action_types, p_status, p_company_id, p_date_from, p_date_to, p_limit, p_offset)
+
+**Purpose:** List enforcement actions with filters and pagination for the Enforcement Actions list page. MOH only (tier1, tier2_officer, tier2_registrar, system_admin).
+
+**Migration:** `20260129127000_rpc_enforcement_list_actions.sql` (Task 1.1.2.38). **SECURITY DEFINER**; MOH only.
+
+**Parameters:**
+- `p_search` (text, optional) — search in company name, violation_type, action_type, legal_basis
+- `p_action_types` (text[], optional) — filter by action_type (e.g. `ARRAY['warning','fine']`); NULL = all
+- `p_status` (text, default 'all') — `all`, `pending` (pending_review + pending_approval), `executed`, `appealed`, `resolved`, `cancelled`
+- `p_company_id` (uuid, optional) — filter by company
+- `p_date_from`, `p_date_to` (timestamptz, optional) — filter by created_at range
+- `p_limit` (int, default 20), `p_offset` (int, default 0) — pagination
+
+**Returns:** JSON with `{ data: [ { id, company_id, company_name, action_type, violation_type, legal_basis, amount, currency, status, executed_at, created_at, updated_at }, ... ] }`, `total` (bigint), or `{ error, message }`.
+
+**Access:** MOH Tier 1 and Tier 2 only. Excludes `draft` status.
+
+---
+
+### enforcement_get_reports(p_date_from timestamptz DEFAULT NULL, p_date_to timestamptz DEFAULT NULL)
+
+**Purpose:** Return enforcement reports summary for a date range (Enforcement Reports page). MOH Tier 1 and Tier 2 only. Default range: last 30 days if NULL.
+
+**Migration:** `20260129130000_rpc_enforcement_reports.sql` (Task 1.1.2.42). **SECURITY DEFINER**; MOH only (`tier1`, `tier2_officer`, `tier2_registrar`, `system_admin`). Reads from `enforcement_actions`, `companies`, `enforcement_action_appeals`.
+
+**Parameters:**
+- `p_date_from` (timestamptz, optional) — start of report period; NULL = 30 days before p_date_to
+- `p_date_to` (timestamptz, optional) — end of report period; NULL = now()
+
+**Returns:** JSON with `date_from`, `date_to`, `total_actions`, `previous_period_total`, `trend_pct`, `by_action_type` (warning, fine, suspension counts), `by_violation_type` (array of { violation_type, count }), `compliance` (legal_basis_pct, legal_basis_count, total_count, deadline_pct, legal_authority_pct, legal_authority_count), `top_companies` (array of { company_id, company_name, action_count } up to 10), `fine_analysis` (total_fines, average_fine, highest_fine, fine_count), `appeal_stats` (total_appeals, upheld_count, rejected_count), or `{ error, message }`.
+
+---
+
+### enforcement_get_analytics(p_date_from timestamptz DEFAULT NULL, p_date_to timestamptz DEFAULT NULL)
+
+**Purpose:** Return enforcement analytics (trends by month, fines by month) for charts on the Enforcement Reports page. MOH Tier 1 and Tier 2 only. Default range: last 12 months if NULL.
+
+**Migration:** `20260129130000_rpc_enforcement_reports.sql` (Task 1.1.2.42). **SECURITY DEFINER**; MOH only.
+
+**Parameters:**
+- `p_date_from` (timestamptz, optional) — start of analytics period; NULL = 12 months before p_date_to
+- `p_date_to` (timestamptz, optional) — end of analytics period; NULL = now()
+
+**Returns:** JSON with `date_from`, `date_to`, `trends` (array of { month, year, month_label, warning, fine, suspension, total } per month), `fines_by_month` (array of { month, year, month_label, total_amount, count } per month), or `{ error, message }`.
+
+---
+
+### enforcement_get_action(p_action_id uuid)
+
+**Purpose:** Get a single enforcement action for the detail page with company name and creator/reviewer/approver/executor names and roles.
+
+**Migration:** `20260129128000_rpc_enforcement_get_action_and_history.sql` (Task 1.1.2.39). **SECURITY DEFINER**; access: MOH (tier1, tier2_officer, tier2_registrar, auditor, system_admin) or same company (company_id = current_user_company_id()).
+
+**Parameters:** `p_action_id` (uuid) — enforcement action ID.
+
+**Returns:** JSON with `action` (full row), `company_name`, `created_by_name`, `created_by_role`, `reviewed_by_name`, `reviewed_by_role`, `approved_by_name`, `approved_by_role`, `executed_by_name`, `executed_by_role`, or `{ error, message }`.
+
+---
+
+### enforcement_get_action_history(p_action_id uuid)
+
+**Purpose:** Get approval chain (approval history) for an enforcement action.
+
+**Migration:** `20260129128000_rpc_enforcement_get_action_and_history.sql` (Task 1.1.2.39). **SECURITY DEFINER**; same access as enforcement_get_action.
+
+**Parameters:** `p_action_id` (uuid) — enforcement action ID.
+
+**Returns:** JSON with `{ data: [ { id, approval_type, from_status, to_status, approver_id, approver_name, approver_role, comments, created_at }, ... ] }` (ordered by created_at ASC), or `{ error, message }`.
+
+---
+
+### enforcement_get_appeal_status(p_action_id uuid)
+
+**Purpose:** Get appeal status for an enforcement action (appeal if any, appeal window remaining days if executed and no appeal).
+
+**Migration:** `20260129128000_rpc_enforcement_get_action_and_history.sql` (Task 1.1.2.39). **SECURITY DEFINER**; same access as enforcement_get_action.
+
+**Parameters:** `p_action_id` (uuid) — enforcement action ID.
+
+**Returns:** JSON with `appeal` (object or null), `appeal_window_remaining_days` (int or null), `executed_at` (timestamptz or null), or `{ error, message }`.
 
 ---
 

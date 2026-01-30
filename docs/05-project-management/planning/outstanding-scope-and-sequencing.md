@@ -2,7 +2,7 @@
 
 **Purpose:** Team best-practice pushback. This document records **outstanding wireframe/feature scope** (deferred or not yet scheduled) and suggests **which tasks should be completed before readdressing** each item. Use it to prioritise follow-up work and avoid implementing UI before backend or dependencies exist.
 
-**Last Updated:** 2026-01-27  
+**Last Updated:** 2026-01-29  
 **Status:** Living document — update as tasks complete or new gaps are identified.  
 **Related:** [phase-1-1-rmm.md](../phase-1-1-rmm.md) | [dependencies.md](./dependencies.md) | [roadmap.md](./roadmap.md)
 
@@ -100,7 +100,30 @@ Use `shared_get_history` where a unified history/activity feed is needed (e.g. d
 
 ---
 
-## 4. Summary: Suggested Order of Work
+## 4. Deferred from Phase 1.1 RMM / Enforcement Tasks
+
+Items explicitly deferred during implementation of Phase 1.1 tasks (1.1.2.29, 1.1.2.30, 1.1.2.37). Wireframes define them; implementation delivered core scope only.
+
+### 4.1 Critical Medicines (Task 1.1.2.30)
+
+| Outstanding item | Wireframe reference | Complete before | Notes |
+|------------------|---------------------|-----------------|-------|
+| **Remove designation – justification** | task-0.5.2.15 – Remove flow | Optional: extend `rmm_update_critical_medicine` or approvals/audit to store removal reason. | Wireframe: "Provide reason for removal (required)". Current RPC only sets `is_active = false`; no justification param. Add backend param + UI field in Remove confirmation modal. |
+| **Designate – justification** | task-0.5.2.15 – Designate flow | Optional: extend `rmm_create_critical_medicine` (e.g. `p_justification text`) or store in audit. | Wireframe: "Provide Justification: Enter reason for designation (required)". Current RPC is `p_sku_id` only. Add param + UI in designate page/modal. |
+
+### 4.2 Enforcement Dashboard (Task 1.1.2.37)
+
+| Outstanding item | Wireframe reference | Complete before | Notes |
+|------------------|---------------------|-----------------|-------|
+| **Enforcement Trends (Last 30 Days)** | task-0.5.2.0 – Trends section | Chart library (e.g. Recharts); optional RPC for daily counts by action type. | Multi-line chart: X = days 1–30, Y = count; lines for Warning (yellow), Fine (orange), Suspension (red). Hover tooltip; "View Full Trends Report" → `/enforcement/reports`. Not implemented (no chart library in project). |
+| **Violation Types (Last 30 Days)** | task-0.5.2.0 – Violation Types section | Chart library; RPC or query for violation_type counts (last 30d); `system_config` for ECS/CMC activation. | Horizontal bar chart: violation type (with DMP Art. ref + "View Regulation") vs count; sorted by frequency. Conditional bars: Export Violation (if ECS active), Data Quality Issue (if CMC active). Module check: `system_config` ecs.is_active, cmc.is_active. Not implemented. |
+| **Action Type Breakdown – chart** | task-0.5.2.0 – Action Type Breakdown | Chart library. | Wireframe: pie/donut chart + summary cards. Implemented as **summary cards only** (Warning/Fine/Suspension count + %). Pie/donut and "Click segment to filter" deferred. |
+| **Pending Approvals – urgency gauge** | task-0.5.2.0 – Pending widget | None. | Wireframe: circular/linear "urgency" gauge (e.g. 8 pending / 10 = 80%), color green/yellow/red, "Urgency: High" label. Current dashboard shows pending count only. |
+| **Pending item – deadline/urgency indicators** | task-0.5.2.0 – Pending list | Optional: approval SLA or deadline field on enforcement_actions. | Wireframe: "⚠️ [X]d deadline", 🔴 &lt;3d / 🟡 3–7d / 🟢 &gt;7d. Requires deadline/SLA definition and data; current list has no deadline display. |
+
+---
+
+## 5. Summary: Suggested Order of Work
 
 To minimise rework and support full dashboard wireframe scope:
 
@@ -108,7 +131,7 @@ To minimise rework and support full dashboard wireframe scope:
    Complete 1.1.2.6–1.1.2.11 (registry workflow), 1.1.2.31–1.1.2.36 (enforcement), and any **list** RPCs for submissions and enforcement.
 
 2. **Enforcement dashboard & list UIs**  
-   Complete 1.1.2.37 (Enforcement dashboard) and any enforcement list/detail views used by both enforcement module and dashboard.
+   Complete 1.1.2.37 (Enforcement dashboard) and any enforcement list/detail views used by both enforcement module and dashboard. **Deferred:** Trends chart, Violation Types chart, Action Type pie/donut, urgency gauge, deadline indicators (§4.2).
 
 3. **Activity feed**  
    `shared_get_history` (1.1.1.20) provides role-based history; use it for the dashboard Activity tab. Extend filters (e.g. messages) if needed.
@@ -124,13 +147,14 @@ To minimise rework and support full dashboard wireframe scope:
 
 ---
 
-## 5. Changelog
+## 6. Changelog
 
 | Date | Change |
 |------|--------|
 | 2026-01-27 | Initial version. Dashboard (0.5.1.18–0.5.1.20) outstanding scope plus layout/search/help items; suggested sequencing. |
 | 2026-01-27 | **History overview (1.1.1.20)** completed. Added §2 "Recently Completed"; Activity tab "Complete before" updated to reference `shared_get_history`. |
 | 2026-01-27 | **Audit Logs pages (1.1.1.21)** completed. Added to §2 Recently Completed; list, detail, and reports available for MOH/auditors; dashboard or other UIs can link to audit routes. |
+| 2026-01-29 | **§4 Deferred from Phase 1.1 RMM/Enforcement** added. Critical Medicines (1.1.2.30): Remove/Designate justification (wireframe-required; RPCs have no param). Enforcement dashboard (1.1.2.37): Enforcement Trends chart, Violation Types chart, Action Type pie/donut, urgency gauge, pending deadline/urgency indicators. Summary §5 updated to reference §4.2. Section numbers 4→5, 5→6. |
 
 ---
 
